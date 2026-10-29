@@ -8,5 +8,20 @@
   "note": "pipeline test: TikTok private + YouTube private, Instagram draft",
   "metricool_uuid": "-5127609779937652943",
   "youtube": "https://www.youtube.com/shorts/yH276oRRXME"
+ },
+ {
+  "date": "2026-10-29",
+  "category": "nature",
+  "slug": "dolphins",
+  "title": "How do dolphins sleep?",
+  "hook": "This dolphin is asleep. Why is its eye open?",
+  "metricool_uuid": "-9123563957108063420",
+  "scheduled": "2026-10-29T21:15:00+01:00",
+  "networks": [
+   "instagram",
+   "tiktok",
+   "youtube"
+  ],
+  "note": "first public reel, published by hand from the chat"
  }
 ]
