@@ -9,9 +9,10 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Read `schedule.json` and `log/published.json`.
 
 ## 1. Is today a publishing day?
-- `schedule.json` holds two fields: `daily_until` (a date) and `then_every_days` (default 2).
-- Up to and including `daily_until`, publish every day.
-- After that date, publish only if at least `then_every_days` days have passed since the last entry in `log/published.json`.
+- `schedule.json` holds two fields: `daily_first` (5) and `then_every_days` (2).
+- Count the published entries in `log/published.json`. Entries with a `note` that contains "test" don't count.
+- While that count is below `daily_first`, publish every day.
+- After that, publish only if at least `then_every_days` days have passed since the last published entry.
 - If today is not a publishing day, stop quietly: no notification, no commit.
 
 ## 2. Topic
