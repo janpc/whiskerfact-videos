@@ -1,0 +1,4 @@
+__pycache__/
+factory/out/*/
+factory/out/*.mp4
+factory/out/*.jpg
