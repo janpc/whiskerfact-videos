@@ -95,3 +95,5 @@ All public-facing content is in **English**. All design rules live in `factory/b
 ## 10. Notify
 - Send one push notification. On success it gives the title, category, scheduled time and duration.
 - On failure it gives the step that failed and why. **Never publish a reel that failed a check.**
+- **Credits reminder:** the account is on the free ElevenLabs plan (10,000 credits a month, about 1,150 per reel). From the 4th published reel onwards, add this line in Spanish to every notification until a run finds the plan upgraded: "Recuerda pasar ElevenLabs al plan Starter: al plan gratis le quedan pocos créditos."
+- If ElevenLabs refuses for lack of credits, do not publish anything. Say exactly that in the notification.
