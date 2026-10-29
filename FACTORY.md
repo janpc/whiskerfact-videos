@@ -26,7 +26,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Record both URLs for each claim. If a claim can't be confirmed twice, cut it.
 
 ## 4. Script
-- **Length:** 165–195 words, so the finished video lasts 65–75 s and is **always over 1 minute**. The renderer refuses to render under 61 s.
+- **Length:** 150–170 words. Brad reads at about 148 words per minute, so the finished video lasts 65–75 s and is **always over 1 minute**. The renderer refuses to render under 61 s.
 - **Language:** plain English that is not childish. Name each complex term, then explain it in one sentence.
 - **Structure** (see `brand.STRUCTURE`):
   - hook
@@ -42,15 +42,22 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - voice `Dslrhjl3ZpzrctukrQSN` (Brad)
   - model `eleven_v4`
   - flow `Q4RWsQia6pHRGabsab5B`
-- Generate the whole script, wrap line included, in **one** call.
+- Generate the whole script, wrap line included, in **one** call, with `generations_count: 1`. The default of 2 doubles the cost.
 - Poll `creative_get_flow_run_status` until it is done. Never repeat a generation call, because each call is charged.
 - Download the mp3 from its `storage.googleapis.com` URL to `factory/voice/<slug>_brad.mp3`.
-- Get word timings with `creative_transcribe_audio` (eleven_scribe_v1), connected from that node, and save them as `[[word, start, end], …]` in `factory/voice/<slug>_brad_words.json`.
+- Save the exact script as `factory/voice/<slug>_script.txt`.
+- Get free word timings with local forced alignment: `python3 align.py voice/<slug>_brad.mp3 voice/<slug>_script.txt voice/<slug>_brad_words.json`. Install it first with `NO_PROXY= pip install --break-system-packages pocketsphinx`.
+- If a proper name is missing from the dictionary, add its phones to `EXTRA_PHONES`.
+- Only if alignment fails, fall back to `creative_transcribe_audio` (about 400 credits).
 - If the free tier is "busy", wait about 10 minutes and poll or retry once. If it still fails, go to step 10.
 - The slogan audio is fixed: `factory/voice/slogan_brad.mp3`.
 
 ## 6. Build the reel
-- Use `factory/dolphins.py` (scenes and drawings) and `factory/dolphins_voice.py` (voice sync, subtitles and mix) as templates. Write `factory/reels/<slug>.py` and `factory/reels/<slug>_voice.py`.
+- Use `factory/pyramids.py` as the template: a single file that builds on `voice_reel.VoiceReel`. That module handles scene cuts, subtitles, the outro and the audio mix. Write `factory/<slug>.py` the same way.
+- Every scene starts with a distinctive word from the script.
+- Split long sentences into extra scenes (the hard limit is 8 s).
+- Sync animations to words with `V.word_time()`.
+- Run `python3 <slug>.py times`, then `preview t1 t2 ...`, then `render`.
 - The illustrations must be simple vector shapes drawn with PIL that show the real mechanism.
 - Keep the rhythm rules:
   - something changes at least every 2 s

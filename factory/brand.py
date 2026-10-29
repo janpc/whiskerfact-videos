@@ -9,7 +9,7 @@ W, H, FPS = 1080, 1920, 30
 ENCODE = dict(codec="libx264", preset="veryfast", crf=20, pix_fmt="yuv420p")
 DURATION = (65, 75)          # segundos, objetivo 68: TikTok (Creator Rewards) solo paga vídeos de MÁS de 1 minuto
 MIN_DURATION = 61            # límite duro con cierre incluido; el render se niega por debajo
-SCRIPT_WORDS = (165, 195)    # palabras del guion (con frase de cierre) para llegar a 65-75 s a 165 ppm
+SCRIPT_WORDS = (150, 170)    # palabras del guion (con frase de cierre): Brad lee a ~148 ppm -> 65-75 s con el cierre
 
 # ---------- zonas (px, eje y) ----------
 # Instagram/TikTok tapan arriba y abajo: nada importante fuera de SAFE.
