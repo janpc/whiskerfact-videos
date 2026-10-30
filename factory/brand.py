@@ -22,6 +22,12 @@ ZONES = {
     "caption":      (1390, 1540), # texto de pantalla o subtítulos de voz, máx. 2 líneas
 }
 TEXT_MAX_W = W - 2 * SAFE_SIDE   # 940
+# Botones de TikTok/Instagram/YouTube (me gusta, comentar, compartir) tapan la franja derecha de la mitad baja.
+# Por debajo de y=RAIL_TOP nada importante (subtítulos, etiquetas, partes clave del dibujo) pasa de x=SAFE_RIGHT_LOW.
+RAIL_TOP = 900
+SAFE_RIGHT_LOW = 900
+SUBS_MAX_W = 800                                  # subtítulos de voz: de x=85 a x=885
+SUBS_CENTER_X = (SAFE_SIDE + SAFE_RIGHT_LOW) / 2   # 485, desplazados a la izquierda de los botones
 ILLU_CENTER = (540, 1055)
 
 # ---------- color ----------

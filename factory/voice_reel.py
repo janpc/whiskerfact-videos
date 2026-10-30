@@ -79,7 +79,7 @@ class VoiceReel:
     def _blocks(self):
         R = self.R; f, size, lh = R.font("voicesub")
         blocks, cur = [], []
-        def fits(ws): return len(R.wrap(" ".join(w for w, _, _ in ws), f, B.TEXT_MAX_W)) <= 2
+        def fits(ws): return len(R.wrap(" ".join(w for w, _, _ in ws), f, B.SUBS_MAX_W)) <= 2
         for w in self.words:
             if cur and not fits(cur + [w]): blocks.append(cur); cur = []
             cur.append(w)
@@ -94,8 +94,8 @@ class VoiceReel:
             if not (t0 <= T < t1 + B.SUBS_BLOCK_EXIT): continue
             out_a = 1 - clamp((T - t1) / B.SUBS_BLOCK_EXIT)
             k = 0
-            for li, line in enumerate(R.wrap(" ".join(w for w, _, _ in words), f, B.TEXT_MAX_W)):
-                x = W / 2 - f.getlength(line) / 2
+            for li, line in enumerate(R.wrap(" ".join(w for w, _, _ in words), f, B.SUBS_MAX_W)):
+                x = B.SUBS_CENTER_X - f.getlength(line) / 2
                 for wtxt in line.split():
                     _, s, e = words[k]; k += 1
                     a = clamp((T - s) / B.SUBS_WORD_FADE) * out_a
