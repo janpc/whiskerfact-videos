@@ -296,7 +296,7 @@ def _(img, T, t, s, e):
     leader(img, (250, 852), g["M"], la, ACC_T)
     R.txt(img, "skin", 1000 - 100, "label", B.TEXT_2, a * clamp((t - 0.6) / 0.3), x=880, rise=False)
     R.chrome(img, T)
-    title(img, T, s, e, "One tiny muscle per hair")
+    title(img, T, s, e, "A tiny muscle at the root")
 V.sounds("skin", [(0.15, "whoosh", 0.6), (V.word_time("arrector") - V.sc["skin"][0], "click", 0.7)])
 
 @V.scene("bump")

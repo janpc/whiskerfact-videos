@@ -87,6 +87,12 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - every animation has its sound effect
 - The background uses the category colour (`brand.bg_for`). Subtitles appear word by word with the voice.
 - Close with the "gafas" outro: the narrated slogan, with the wink after the words.
+- **Big, rich drawings:**
+  - The main subject must fill the illustration box: at least 60% of its height (about 360 px tall) and 70% of its width. Use a close-up or a cutaway, not a thin strip across the screen.
+  - Add a second layer of detail where it helps: texture, small moving parts, labels with leader lines.
+  - The engine re-frames each scene automatically (`VoiceReel.autofit`). It scales the drawing up to 1.45× and centres it left of the app buttons, but it cannot make a weak drawing rich, so draw big from the start.
+  - Run `preview` and check that no scene shows more empty background than drawing in the band y 760–1370.
+- **Titles count as claims too:** on-screen titles and labels follow the same precision rules as the script ("A tiny muscle at the root", not "One tiny muscle per hair").
 - **App buttons:** the like, comment and share buttons cover the right edge of the lower half of the screen. Below y=900 (`brand.RAIL_TOP`), no subtitle, label or key part of a drawing may go past x=900 (`brand.SAFE_RIGHT_LOW`). Voice subtitles already respect this (`brand.SUBS_MAX_W`). Place drawings and labels centred slightly left.
 - Render a preview of 6–8 frames and **look at it**. Draw the rectangle x 900–1080, y 900–1700 over the preview frames and check that nothing important falls inside it. Fix any overlapping text, cropped drawings or unreadable colours before the full render.
 

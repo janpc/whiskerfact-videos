@@ -72,9 +72,61 @@ class VoiceReel:
                 out = self.draw[n](img, T, T - s, s, e)
                 img = out if out is not None else img
                 if n == "hook": img = self.R.punch(img, T, 0.0, dur=0.3, amt=0.06)   # golpe de entrada en el fotograma 0
+                elif self.autofit: img = self._fit(n, img)
                 if n != "hook": self._subs(img, T)
                 return img
         return self.R.bg.copy()
+
+    # ---------- encuadre automático de la ilustración ----------
+    # Los dibujos tienden a quedarse pequeños. Cada escena (menos el gancho) se reencuadra sola:
+    # se mide lo dibujado en la zona de ilustración en un fotograma representativo, y se escala
+    # (como mucho FIT_MAX) y centra para llenar la caja segura: a la izquierda de los botones de la app.
+    autofit = True
+    FIT_ZONE = (735, 1380)                     # y: bajo el subtítulo, sobre los subtítulos de voz
+    FIT_BOX = (70, 760, B.SAFE_RIGHT_LOW, 1370)  # x0, y0, x1, y1 donde debe caber el dibujo
+    FIT_MAX = 1.45
+    FIT_MIN = 0.92                             # no encoger más: un dibujo ancho no debe quedarse en una tira diminuta
+
+    def _content_mask(self, img):
+        y0, y1 = self.FIT_ZONE
+        a = np.asarray(img.convert("RGB"), dtype=np.int16)[y0:y1]
+        b = self.R.bg_arr[y0:y1].astype(np.int16)
+        d = np.abs(a - b).max(axis=2)
+        return np.clip((d - 6) / 18.0, 0, 1)        # 0 = fondo, 1 = dibujo (bordes suaves)
+
+    def _fit_params(self, n):
+        if not hasattr(self, "_fits"): self._fits = {}
+        if n in self._fits: return self._fits[n]
+        s, e = self.sc[n]
+        boxes = []
+        for k in (0.55, 0.8, 0.95):             # unión de varios momentos: lo que entra tarde también cuenta
+            img = self.R.bg.copy(); t = s + (e - s) * k
+            out = self.draw[n](img, t, t - s, s, e); img = out if out is not None else img
+            m = self._content_mask(img) > 0.5
+            ys, xs = np.nonzero(m)
+            if len(xs) > 200: boxes.append((xs.min(), ys.min() + self.FIT_ZONE[0], xs.max(), ys.max() + self.FIT_ZONE[0]))
+        if not boxes: self._fits[n] = None; return None
+        x0 = min(b[0] for b in boxes); y0 = min(b[1] for b in boxes); x1 = max(b[2] for b in boxes); y1 = max(b[3] for b in boxes)
+        bx0, by0, bx1, by1 = self.FIT_BOX
+        sc = max(self.FIT_MIN, min((bx1 - bx0) / max(1, x1 - x0), (by1 - by0) / max(1, y1 - y0), self.FIT_MAX))
+        self._fits[n] = (x0, y0, x1, y1, sc, (bx0 + bx1) / 2, (by0 + by1) / 2)
+        return self._fits[n]
+
+    def _fit(self, n, img):
+        p = self._fit_params(n)
+        if p is None: return img
+        x0, y0, x1, y1, sc, cx, cy = p
+        if abs(sc - 1) < 0.03 and abs((x0 + x1) / 2 - cx) < 10 and abs((y0 + y1) / 2 - cy) < 10: return img
+        zy0, zy1 = self.FIT_ZONE
+        alpha = (self._content_mask(img) * 255).astype(np.uint8)
+        layer = img.crop((0, zy0, W, zy1)).convert("RGBA"); layer.putalpha(Image.fromarray(alpha))
+        out = img.copy()
+        out.paste(self.R.bg.crop((0, zy0, W, zy1)), (0, zy0))        # limpia la zona y la vuelve a pintar escalada
+        nw, nh = int(W * sc), int((zy1 - zy0) * sc)
+        big = layer.resize((nw, nh), Image.LANCZOS)
+        ox = int(cx - ((x0 + x1) / 2) * sc); oy = int(cy - ((y0 + y1) / 2 - zy0) * sc)
+        out.alpha_composite(big, (ox, oy)) if (ox >= 0 and oy >= 0) else out.paste(big, (ox, oy), big)
+        return out
 
     # ---------- gancho ----------
     def hook_text(self, img, T, e, line1, line2, ask_word):
