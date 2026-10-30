@@ -1,7 +1,7 @@
 """Da ritmo a la voz antes de alinear: acorta las pausas largas y acelera un poco sin cambiar el tono.
   python3 tighten.py voice/<slug>_brad.mp3
 Guarda el original como voice/<slug>_brad_raw.mp3 y deja la versión ajustada en voice/<slug>_brad.mp3.
-Reglas (brand.py): ninguna pausa supera MAX_PAUSE y la voz sale a VOICE_TEMPO veces su velocidad.
+Reglas: las pausas se acortan en proporción (ver pause_target), ninguna supera MAX_PAUSE, y la voz sale a VOICE_TEMPO veces su velocidad.
 Siempre se ejecuta ANTES de align.py, para que los tiempos de cada palabra correspondan al audio final."""
 import os, shutil, subprocess, sys
 import numpy as np
@@ -16,7 +16,12 @@ def load(path):
                          capture_output=True, check=True).stdout
     return np.frombuffer(raw, np.float32).copy()
 
-def shorten_pauses(x, keep):
+def pause_target(gap):
+    """acorta en proporción: las pausas cortas casi no se tocan y las largas (fin de frase) conservan aire.
+    0,20 s -> 0,18 · 0,30 -> 0,24 · 0,45 -> 0,33 · 0,60 -> 0,42 · nunca más de 0,45"""
+    return min(gap, 0.15 + 0.6 * (gap - 0.15), 0.45) if gap > 0.15 else gap
+
+def shorten_pauses(x):
     win = int(0.01 * SR)
     n = len(x) // win
     rms = np.sqrt(np.mean(x[: n * win].reshape(n, win) ** 2, axis=1) + 1e-12)
@@ -29,9 +34,10 @@ def shorten_pauses(x, keep):
             while j < n and silent[j]: j += 1
             gap = (j - k) * win / SR
             inside = k > 0 and j < n                    # no tocar el silencio inicial ni el final
-            if inside and gap > keep:
+            target = pause_target(gap)
+            if inside and gap > target + 0.02:
                 a, b = k * win, j * win
-                half = int(keep * SR / 2)
+                half = int(target * SR / 2)
                 out.append(x[i:a + half])
                 tail = x[b - half:b].copy()
                 tail[:fade] *= np.linspace(0, 1, fade)  # unión sin clic
@@ -49,7 +55,7 @@ if __name__ == "__main__":
     raw = mp3.replace(".mp3", "_raw.mp3")
     if not os.path.exists(raw): shutil.copy(mp3, raw)       # nunca se pierde el original
     x = load(raw)
-    y = shorten_pauses(x, B.MAX_PAUSE * 0.6)
+    y = shorten_pauses(x)
     tmp = mp3 + ".wav.f32"
     y.astype(np.float32).tofile(tmp)
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", tmp,
