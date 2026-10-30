@@ -44,5 +44,28 @@
    "https://www.mentalfloss.com/article/541713/examples-ancient-graffiti"
   ],
   "metricool_uuid": "-2250303335964718877"
+ },
+ {
+  "date": "2026-10-30",
+  "category": "body",
+  "slug": "goosebumps",
+  "title": "Why do we get goosebumps?",
+  "hook": "Goosebumps evolved for fur. So why do we get them?",
+  "scheduled": "2026-10-30T18:00:00+01:00",
+  "networks": [
+   "instagram",
+   "tiktok",
+   "youtube"
+  ],
+  "sources": [
+   "https://www.livescience.com/32349-what-causes-goose-bumps.html",
+   "https://askdruniverse.wsu.edu/2021/03/09/why-do-we-get-goosebumps/",
+   "https://hscrb.harvard.edu/news/the-real-reason-behind-goosebumps",
+   "https://news.harvard.edu/gazette/?p=309236",
+   "https://nyscf.org/resources/why-do-we-get-goosebumps-the-answer-lies-with-the-stem-cells-that-grow-hair/",
+   "https://doi.org/10.1016/j.cell.2020.06.031"
+  ],
+  "metricool_uuid": "5999553319720537431",
+  "duration_s": 71.2
  }
 ]
