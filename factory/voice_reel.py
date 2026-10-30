@@ -200,7 +200,7 @@ class VoiceReel:
             bed = self._load(music_file, n, 0.0)
             t = np.arange(n) / SFX.SR
             bed = bed * np.clip((total - t) / 1.5, 0, 1)                  # fundido final con el cierre
-            bed = bed / (np.max(np.abs(bed)) or 1)
+            bed = bed * 10 ** ((-16.0 - 20 * np.log10(np.sqrt(np.mean(bed ** 2)) + 1e-9)) / 20)   # mismo volumen medio que la música sintetizada
         else:
             bed = M.upbeat_doc_bed(total, self.R.cat, swell_at=O - 8)[:n]
         bed = M.duck(bed, env, B.MUSIC_DUCK_DB) * 0.9 * 10 ** (B.MUSIC_UNDER_VOICE_DB / 20 + 0.25)
