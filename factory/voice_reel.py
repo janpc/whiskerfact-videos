@@ -85,7 +85,7 @@ class VoiceReel:
             cur.append(w)
             if w[0].rstrip('"”')[-1:] in ".?!" and len(cur) >= 3: blocks.append(cur); cur = []
         if cur: blocks.append(cur)
-        return [(b, b[0][1], (blocks[i + 1][0][1] - 0.05) if i + 1 < len(blocks) else b[-1][2] + 0.4) for i, b in enumerate(blocks)]
+        return [(b, b[0][1], (blocks[i + 1][0][1] - 0.05 - B.SUBS_BLOCK_EXIT) if i + 1 < len(blocks) else b[-1][2] + 0.4) for i, b in enumerate(blocks)]
 
     def _subs(self, img, T):
         R = self.R
