@@ -118,7 +118,11 @@ MASCOT = dict(
                sfx="sfx.OUTRO_GAFAS"),                  # igual en todos los vídeos
 )
 
-SLOGAN = "Class dismissed. Stay curious."   # palabra a palabra en GOLD bajo el gato
+SLOGAN = "Class dismissed. Stay curious."
+
+# borde oscuro en los textos (estilo del videoclip de la autora): legibles sobre paisajes y momentos psicodélicos
+TEXT_STROKE = {"voicesub": 4, "title": 3, "hook": 4, "subtitle": 3, "number": 4}
+TEXT_STROKE_COLOR = (44, 32, 30)   # palabra a palabra en GOLD bajo el gato
 
 # ---------- subtítulos ----------
 SUBS_MODE = "word"        # cada palabra aparece cuando se pronuncia

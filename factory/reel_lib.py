@@ -61,12 +61,13 @@ class Reel:
         lines = self.wrap(s, f, maxw)
         assert len(lines) <= B.MAX_LINES.get(style, 9), f"demasiadas líneas: {s!r} ({style})"
         asc, desc = f.getmetrics(); lhp = int(size * lh)
-        tw = int(max(f.getlength(l) for l in lines)) + 8; th = lhp * (len(lines) - 1) + asc + desc + 8
+        sw = B.TEXT_STROKE.get(style, 0)          # borde oscuro del estilo videoclip: se lee sobre cualquier fondo
+        tw = int(max(f.getlength(l) for l in lines)) + 8 + 2 * sw; th = lhp * (len(lines) - 1) + asc + desc + 8 + 2 * sw
         im = Image.new("RGBA", (tw, th), (0, 0, 0, 0)); dr = ImageDraw.Draw(im)
         for i, l in enumerate(lines):
             lw = f.getlength(l)
-            x = (tw - lw) / 2 if align == "center" else (0 if align == "left" else tw - lw)
-            dr.text((x, i * lhp), l, font=f, fill=color + (255,))
+            x = (tw - lw) / 2 if align == "center" else (sw if align == "left" else tw - lw - sw)
+            dr.text((x, i * lhp + sw), l, font=f, fill=color + (255,), stroke_width=sw, stroke_fill=B.TEXT_STROKE_COLOR + (255,))
         self._tc[key] = im
         return im
 

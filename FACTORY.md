@@ -97,6 +97,12 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - a visual punch about every 10 s
   - every animation has its sound effect
 - The background uses the category colour (`brand.bg_for`). Subtitles appear word by word with the voice.
+- **The look is the author's videoclip style (`factory/style.py`; reference: `factory/goosebumps.py`).** The engine already adds a dark brown outline to every drawing (`VoiceReel.INK`) and a dark stroke to titles and subtitles (`brand.TEXT_STROKE`). Each scene gets a backdrop with `@V.backdrop("<scene>")`:
+  - **Close-ups** (cutaways, diagrams, objects): `ST.card(img, CARD)`, the warm cream card. Labels on the card must be dark (`ST.OUTLINE`, or a dark accent such as `(176, 40, 58)`), never the light category colours, and thin elements that sit on the card (hair, lines) must be dark too.
+  - **Outdoor, animals, people, history scenes:** `ST.landscape(img, T)` (sunset, layered forests with parallax) or `ST.landscape(img, T, night=True)` (night with twinkling stars). Stand figures on the ground at y≈1330.
+  - **Sky, space, cold, mystery:** a night sky (`ST.sky` + `ST.stars`).
+  - **The surprising fact or the twist:** one psychedelic moment, `ST.wow_moment(img, T, t0, R.cat, "swirl"|"blobs"|"glitch", dur=1.3–1.6)`, inside that scene's backdrop. Use 1–2 per reel, never more; they last under 2 s.
+  - Mix the backdrops so that consecutive scenes don't all look the same, and keep the pace fast (the videoclip's slow rhythm is NOT copied).
 - Close with the outro (outro5, automatic via reel_lib.outro_frame): the new cat (mascot.py) says the slogan inside its circle with phoneme lip-sync, then winks and smiles. Never edit the outro per video.
 - **Big, rich drawings:**
   - The main subject must fill the illustration box: at least 60% of its height (about 360 px tall) and 70% of its width. Use a close-up or a cutaway, not a thin strip across the screen.

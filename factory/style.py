@@ -94,7 +94,7 @@ def swirl(T, cat, size=(W, H), cx=0.5, cy=0.5, bands=7, speed=1.6):
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
     dx, dy = xx / w - cx, (yy / h - cy) * h / w
     r = np.sqrt(dx * dx + dy * dy); ang = np.arctan2(dy, dx)
-    v = r * bands * 2 + 0.35 * np.sin(ang * 9 + r * 18 - T * 4) - T * speed + ang / math.pi
+    v = r * bands * 2 + 0.35 * np.sin(ang * 9 + r * 18 - T * 4) - T * speed + ang / (2 * math.pi) * len(pal)   # vuelta completa = paleta completa: sin costura
     idx = np.floor(v).astype(int) % len(pal)
     rgb = pal[idx]
     return Image.fromarray(rgb.astype(np.uint8)).resize(size, Image.BILINEAR).convert("RGBA")
@@ -102,7 +102,7 @@ def swirl(T, cat, size=(W, H), cx=0.5, cy=0.5, bands=7, speed=1.6):
 def blobs(T, cat, size=(W, H), scale=3.0):
     """manchas líquidas tipo camuflaje que fluyen (las «manchas» del videoclip)"""
     pal = np.array(cat_palette(cat), dtype=np.float32)
-    w, h = size[0] // 4, size[1] // 4
+    w, h = size[0] // 2, size[1] // 2                       # a media resolución: bordes limpios
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float32) / w * scale
     f = (np.sin(xx * 2.1 + T * 0.9) + np.sin(yy * 1.7 - T * 0.7) + np.sin((xx + yy) * 1.3 + T * 1.1)
          + np.sin(np.sqrt(xx * xx + yy * yy) * 2.5 - T * 1.3))
@@ -154,3 +154,23 @@ def card(img, box, color=CREAM, radius=36, a=1.0):
     d.rounded_rectangle([x0 + 10, y0 + 14, x1 + 10, y1 + 14], radius=radius, fill=(0, 0, 0, int(70 * a)))
     d.rounded_rectangle(box, radius=radius, fill=color + (int(255 * a),), outline=OUTLINE + (int(255 * a),), width=OUTLINE_W)
     img.alpha_composite(ov)
+
+# ---------- contorno automático (post-proceso) ----------
+def ink(img, mask, box, strength=0.95, thick=3, thresh=38):
+    """contorno marrón oscuro del videoclip sobre lo ilustrado:
+    - silueta: un aro de `thick` px POR FUERA de cada forma (las líneas finas y los textos quedan con borde, no tapados);
+    - bordes internos entre colores, solo dentro de formas grandes (no dentro de pelos, líneas ni letras).
+    img: RGBA a modificar; mask: array 0..1 (H,W) de lo que es dibujo; box: (x0,y0,x1,y1) zona a tratar."""
+    x0, y0, x1, y1 = box
+    a = np.asarray(img.convert("RGB"), dtype=np.int16)[y0:y1, x0:x1]
+    m = mask[y0:y1, x0:x1] > 0.5
+    mi = Image.fromarray((m * 255).astype(np.uint8))
+    ring = np.asarray(mi.filter(ImageFilter.MaxFilter(2 * thick - 1)), bool) & ~m
+    solid = np.asarray(mi.filter(ImageFilter.MinFilter(21)).filter(ImageFilter.MaxFilter(17)), bool)  # formas anchas (no letras ni pelos)
+    dx = np.zeros(m.shape, bool); dy = np.zeros(m.shape, bool)
+    dx[:, 1:] = np.abs(a[:, 1:] - a[:, :-1]).sum(-1) > thresh
+    dy[1:] = np.abs(a[1:] - a[:-1]).sum(-1) > thresh
+    inner = np.asarray(Image.fromarray(((dx | dy) & solid).astype(np.uint8) * 255).filter(ImageFilter.MaxFilter(thick)), bool) & solid
+    e = Image.fromarray(((ring | inner) * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.6)).point(lambda v: int(v * strength))
+    lay = Image.new("RGBA", (x1 - x0, y1 - y0), OUTLINE + (255,)); lay.putalpha(e)
+    img.alpha_composite(lay, (x0, y0))

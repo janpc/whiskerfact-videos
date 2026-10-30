@@ -19,7 +19,7 @@ import json, math, os, subprocess, sys
 import numpy as np
 from PIL import Image
 import brand as B, music as M, sfx as SFX
-from reel_lib import clamp, eo, W, FPS, HERE, outro_frame
+from reel_lib import clamp, eo, W, H, FPS, HERE, outro_frame
 import outro4
 
 SLOGAN_AT = 0.4                                  # el narrador empieza en cuanto el círculo aterriza
@@ -46,6 +46,7 @@ class VoiceReel:
         self.first = first
         R.total = self.outro_at + OUTRO_LEN
         self.draw = {}
+        self.backdrops = {}          # fondo propio por escena (paisaje, tarjeta crema, momento psicodélico) — style.py
         outro4.WORDS_A = [SLOGAN_AT + t for t in SLOGAN_WORDS[voice]]
         outro4.WINK = SLOGAN_AT + SLOGAN_END[voice] + 0.15
         import outro5
@@ -56,6 +57,12 @@ class VoiceReel:
     # ---------- escenas ----------
     def scene(self, name):
         def deco(fn): self.draw[name] = fn; return fn
+        return deco
+
+    def backdrop(self, name):
+        """fondo de una escena: fn(img, T, t). Se pinta DEBAJO de lo dibujado por la escena (que se recorta
+        comparándolo con el fondo de categoría), así el autoencuadre y el contorno siguen funcionando."""
+        def deco(fn): self.backdrops[name] = fn; return fn
         return deco
 
     def sounds(self, name, lst):
@@ -70,14 +77,58 @@ class VoiceReel:
         if T >= self.outro_at: return outro_frame(self.R, T - self.outro_at)
         for n, (s, e) in self.sc.items():
             if s <= T < e:
-                img = self.R.bg.copy()
-                out = self.draw[n](img, T, T - s, s, e)
-                img = out if out is not None else img
-                if n == "hook": img = self.R.punch(img, T, 0.0, dur=0.3, amt=0.06)   # golpe de entrada en el fotograma 0
-                elif self.autofit: img = self._fit(n, img)
+                if n in self.backdrops: img = self._layered(n, T, s, e)
+                else:
+                    img = self.R.bg.copy()
+                    out = self.draw[n](img, T, T - s, s, e)
+                    img = out if out is not None else img
+                    if n == "hook": img = self.R.punch(img, T, 0.0, dur=0.3, amt=0.06)   # golpe de entrada en el fotograma 0
+                    elif self.autofit: img = self._fit(n, img)
+                    img = self._styled(n, img, T, T - s)
                 if n != "hook": self._subs(img, T)
                 return img
         return self.R.bg.copy()
+
+    # ---------- estilo del videoclip (style.py): contorno oscuro + fondos propios ----------
+    INK = True
+    def _layered(self, n, T, s, e):
+        """escena con fondo propio: se dibuja sobre transparente (los fundidos de texto no se manchan del color de
+        categoría), se reencuadra, se le pone contorno y se compone sobre su fondo"""
+        import style as ST
+        lay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        out = self.draw[n](lay, T, T - s, s, e); lay = out if out is not None else lay
+        if n == "hook": lay = self.R.punch(lay, T, 0.0, dur=0.3, amt=0.06)
+        elif self.autofit:
+            p = self._fit_params(n)
+            if p is not None:
+                x0, y0, x1, y1, sc, cx, cy = p
+                zy0, zy1 = self.FIT_ZONE
+                zone = lay.crop((0, zy0, W, zy1))
+                big = zone.resize((int(W * sc), int((zy1 - zy0) * sc)), Image.LANCZOS)
+                lay.paste(Image.new("RGBA", (W, zy1 - zy0), (0, 0, 0, 0)), (0, zy0))
+                ox = int(cx - ((x0 + x1) / 2) * sc); oy = int(cy - ((y0 + y1) / 2 - zy0) * sc)
+                tmp = Image.new("RGBA", (W, H), (0, 0, 0, 0)); tmp.paste(big, (ox, oy)); lay.alpha_composite(tmp)
+        if self.INK:
+            mask = np.asarray(lay.split()[3], np.float32) / 255
+            ST.ink(lay, mask, (0, self.FIT_ZONE[0] - 20, W, self.FIT_ZONE[1] + 10))
+        bd = self.R.bg.copy(); self.backdrops[n](bd, T, T - s)
+        bd.alpha_composite(lay)
+        return bd
+
+    def _styled(self, n, img, T, t):
+        import style as ST
+        if not self.INK and n not in self.backdrops: return img
+        a = np.asarray(img.convert("RGB"), dtype=np.int16); b = self.R.bg_arr.astype(np.int16)
+        mask = np.clip((np.abs(a - b).max(axis=2) - 6) / 18.0, 0, 1)
+        if self.INK:   # contorno solo en la zona de ilustración (los textos de arriba y los subtítulos no)
+            ST.ink(img, mask, (0, self.FIT_ZONE[0] - 20, W, self.FIT_ZONE[1] + 10))
+            a = np.asarray(img.convert("RGB"), dtype=np.int16)
+            mask = np.clip((np.abs(a - b).max(axis=2) - 6) / 18.0, 0, 1)
+        if n in self.backdrops:
+            bd = self.R.bg.copy(); self.backdrops[n](bd, T, t)
+            bd.paste(img, (0, 0), Image.fromarray((mask * 255).astype(np.uint8)))
+            img = bd
+        return img
 
     # ---------- encuadre automático de la ilustración ----------
     # Los dibujos tienden a quedarse pequeños. Cada escena (menos el gancho) se reencuadra sola:

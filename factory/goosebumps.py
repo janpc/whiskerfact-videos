@@ -19,6 +19,7 @@ import math
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 import brand as B
+import style as ST
 from reel_lib import Reel, clamp, eo, eio, back_out, lerp, lerpc, win, W, H
 from voice_reel import VoiceReel
 
@@ -42,6 +43,12 @@ NERVE = (255, 214, 90)
 STEM = (110, 226, 150)
 FUR = (236, 168, 98)
 COLD = (150, 200, 255)
+# sobre la tarjeta crema (escenas de cerca, estilo videoclip)
+INK_T = ST.OUTLINE           # texto oscuro
+RED_T = (176, 40, 58)        # etiqueta de acento
+GOLD_T = (160, 112, 16)      # nervio
+STEM_T = (34, 130, 72)       # células madre
+HAIR_D = (92, 58, 40)        # pelo fuera de la piel, oscuro
 WARM = (255, 170, 80)
 
 # ---------- dibujo con antialias (2x dentro de una caja) ----------
@@ -139,7 +146,7 @@ def section(img, y0, k, a=1.0, mhi=0.0, nerve=0.0, reach=0.0, stem=0.0, glow_ste
     d = ImageDraw.Draw(lay)
     sway = 2 * math.sin(T * 2.2)
     tip = (E[0] - 190 * math.sin(ang + math.radians(sway)), E[1] - 190 * math.cos(ang + math.radians(sway)))
-    seg(d, P, s, [E, tip], HAIR, 9)
+    seg(d, P, s, [E, tip], HAIR_D, 9)
     lay = lay.resize((x1 - x0, y1 - y0b), Image.LANCZOS)
     if a < 1: lay.putalpha(lay.split()[3].point(lambda v: int(v * a)))
     img.alpha_composite(lay, (x0, y0b))
@@ -292,9 +299,9 @@ def _(img, T, t, s, e):
     at = wt("arrector", s)
     g = section(img, 1000, 0.0, a, mhi=clamp((T - at) / 0.3) * (0.6 + 0.4 * math.sin(T * 6)), T=T)
     la = a * clamp((T - at) / 0.3)
-    R.txt(img, "arrector pili", 800, "label", ACC_T, la, x=250, rise=False)
-    leader(img, (250, 852), g["M"], la, ACC_T)
-    R.txt(img, "skin", 1000 - 100, "label", B.TEXT_2, a * clamp((t - 0.6) / 0.3), x=880, rise=False)
+    R.txt(img, "arrector pili", 800, "label", RED_T, la, x=250, rise=False)
+    leader(img, (250, 852), g["M"], la, RED_T)
+    R.txt(img, "skin", 1000 - 100, "label", INK_T, a * clamp((t - 0.6) / 0.3), x=880, rise=False)
     R.chrome(img, T)
     title(img, T, s, e, "A tiny muscle at the root")
 V.sounds("skin", [(0.15, "whoosh", 0.6), (V.word_time("arrector") - V.sc["skin"][0], "click", 0.7)])
@@ -306,7 +313,7 @@ def _(img, T, t, s, e):
     k = eio((T - tt) / 1.4)
     g = section(img, 1000, k, a, mhi=clamp((T - tt) / 0.3), T=T)
     la = a * clamp((T - bt) / 0.25)
-    R.txt(img, "goosebump!", 860, "label", ACC_T, la, x=300, rise=False)
+    R.txt(img, "goosebump!", 860, "label", RED_T, la, x=300, rise=False)
     R.chrome(img, T)
     title(img, T, s, e, "Muscle pulls, hair stands")
     return R.punch(img, T, bt)
@@ -318,7 +325,7 @@ def _(img, T, t, s, e):
     nt = wt("wired", s) - 0.6
     nk = eo((T - nt) / 1.2)
     section(img, 1000, 0.0, a, nerve=nk, T=T)
-    R.txt(img, "nerve", 900, "label", NERVE, a * clamp((T - nt - 0.6) / 0.3), x=880, rise=False)
+    R.txt(img, "nerve", 900, "label", GOLD_T, a * clamp((T - nt - 0.6) / 0.3), x=880, rise=False)
     R.chrome(img, T)
     title(img, T, s, e, "1. The trigger")
 V.sounds("trigger", [(V.word_time("wired") - V.sc["trigger"][0] - 0.6, "whoosh", 0.6)])
@@ -413,11 +420,11 @@ def _(img, T, t, s, e):
     rt = wt("reaches", s); st = wt("stem", s); ft = wt("follicle", s)
     g = section(img, 1000, 0.25, a, nerve=1.0, reach=eo((T - rt) / 0.8), stem=eo((T - st) / 0.4), pulse=0.6, T=T)
     la = a * clamp((T - st) / 0.3)
-    R.txt(img, "stem cells", 800, "label", STEM, la, x=250, rise=False)
-    leader(img, (250, 852), g["S"], la, STEM)
+    R.txt(img, "stem cells", 800, "label", STEM_T, la, x=250, rise=False)
+    leader(img, (250, 852), g["S"], la, STEM_T)
     lf = a * clamp((T - ft) / 0.3)
-    R.txt(img, "hair follicle", 800, "label", B.TEXT_2, lf, x=840, rise=False)
-    leader(img, (840, 850), ((g["E"][0] + g["Bb"][0]) / 2 + 20, (g["E"][1] + g["Bb"][1]) / 2), lf)
+    R.txt(img, "hair follicle", 800, "label", INK_T, lf, x=840, rise=False)
+    leader(img, (840, 850), ((g["E"][0] + g["Bb"][0]) / 2 + 20, (g["E"][1] + g["Bb"][1]) / 2), lf, INK_T)
     R.chrome(img, T)
     title(img, T, s, e, "Same nerve, new target")
 V.sounds("reach", [(V.word_time("reaches") - V.sc["reach"][0], "whoosh", 0.6), (V.word_time("stem") - V.sc["reach"][0], "pop", 0.7),
@@ -457,6 +464,32 @@ def _(img, T, t, s, e):
     g = eo((T - ft) / 0.7) * (1 - eio((T - lt) / 0.8))
     finale(img, T, ghost=g)
 V.sounds("coat", [(V.word_time("fluffing") - V.sc["coat"][0], "whoosh", 0.7), (V.word_time("lost", after=V.sc["coat"][0]) - V.sc["coat"][0], "pop", 0.5)])
+
+# ---------- fondos del estilo videoclip (style.py) ----------
+CARD = (56, 742, 1024, 1384)
+def card_bg(img, T, t): ST.card(img, CARD)
+def night(img, T, t):
+    ST.sky(img, (20, 18, 60), ST.NIGHT, 0, H); ST.stars(img, T, 70, y1=H - 300)
+
+V.backdrop("hook")(night)
+for n in ("skin", "bump", "trigger", "reach"): V.backdrop(n)(card_bg)
+
+@V.backdrop("nerves")
+def _(img, T, t):
+    ST.card(img, CARD)
+    ST.wow_moment(img, T, V.word_time("emotions") - 0.1, R.cat, "blobs", dur=1.3)   # emociones fuertes: momento psicodélico
+
+for n in ("warm", "trap"): V.backdrop(n)(lambda img, T, t: ST.landscape(img, T, night=True))
+for n in ("bluff", "leftover", "wrap", "coat"): V.backdrop(n)(lambda img, T, t: ST.landscape(img, T))
+
+@V.backdrop("twist")
+def _(img, T, t):
+    night(img, T, t)
+    ST.wow_moment(img, T, V.sc["twist"][0], R.cat, "swirl", dur=1.5)               # el giro: remolino
+
+@V.backdrop("cold")
+def _(img, T, t):
+    night(img, T, t)
 
 if __name__ == "__main__":
     V.main()
