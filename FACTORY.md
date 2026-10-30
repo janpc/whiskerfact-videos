@@ -29,6 +29,21 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Every fact in the script must be confirmed by **two independent, reliable sources**, for example a university, a museum, NASA or NOAA, a peer-reviewed review, or Britannica.
 - Prefer recent sources and check that the fact is still current.
 - Record both URLs for each claim. If a claim can't be confirmed twice, cut it.
+- **Precision check: do this after writing the script (step 4) and before generating the voice.** Write `factory/voice/<slug>_claims.md` with one row per factual sentence of the script. Each row contains:
+  - the sentence;
+  - the exact supporting sentence quoted from source 1, with its URL;
+  - the exact supporting sentence quoted from source 2, with its URL;
+  - **match**: yes, or no plus the reason.
+- **Strictly flag these:**
+  - **Absolute words:** every, all, always, never, only, no one, first, biggest, fastest. The source must say exactly that. Otherwise soften the wording ("most", "almost", "one of the").
+  - **Numbers and dates:** they must match the sources. Round only in the safe direction ("about 10,000").
+  - **Cause and effect:** "X causes Y" needs a source that says so, not one that only shows a link.
+  - **Simplifications that become false:** "each hair has a muscle" is false, because eyelashes and eyebrows have none.
+  - **Popular myths:** check them against a debunk source.
+  - **Animal or mouse studies:** say so ("in mice").
+- **Independent review.** Then launch a separate reviewer (the Agent tool) that has not seen your drafting. Give it only the script and the source URLs, and ask it to find any sentence a pedantic expert would call wrong or misleading.
+- Fix every point it raises, or cut the sentence. Never generate the voice before the claims file is all "yes" and the reviewer has no open points.
+- Commit the claims file with the reel.
 
 ## 4. Script
 - **Length:** 150–170 words. Brad reads at about 148 words per minute, so the finished video lasts 65–75 s and is **always over 1 minute**. The renderer refuses to render under 61 s.
