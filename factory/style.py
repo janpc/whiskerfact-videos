@@ -131,17 +131,16 @@ def landscape(img, T, night=False, ground_y=1330, sky_kind=None, terrain="forest
     ImageDraw.Draw(img).rectangle([0, ground_y, W, H], fill=cols[3] if terrain == "waves" else GROUND)   # base oscura: los subtítulos se leen encima
 
 # ---------- momentos psicodélicos (para el giro / el dato sorprendente) ----------
-def swirl(T, cat, size=(W, H), cx=0.5, cy=0.5, bands=7, speed=1.6):
-    """remolino ondulado de bandas de color (como el remolino del videoclip, con la paleta de la categoría)"""
+def swirl(T, cat, size=(W, H), cx=0.5, cy=0.5, bands=5, speed=0.9):
+    """espiral de bandas de color que gira con suavidad (el remolino del videoclip, con la paleta de la categoría)"""
     pal = np.array(cat_palette(cat), dtype=np.float32)
-    w, h = size[0] // 4, size[1] // 4                       # se calcula a 1/4 y se escala: rápido y suave
+    w, h = size[0] // 2, size[1] // 2                       # a media resolución y escalado bilineal: bordes limpios
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
     dx, dy = xx / w - cx, (yy / h - cy) * h / w
     r = np.sqrt(dx * dx + dy * dy); ang = np.arctan2(dy, dx)
-    v = r * bands * 2 + 0.35 * np.sin(ang * 9 + r * 18 - T * 4) - T * speed + ang / (2 * math.pi) * len(pal)   # vuelta completa = paleta completa: sin costura
+    v = r * bands * 2 + 0.12 * np.sin(ang * 5 + T * 1.5) - T * speed + ang / (2 * math.pi) * len(pal)   # sin costura
     idx = np.floor(v).astype(int) % len(pal)
-    rgb = pal[idx]
-    return Image.fromarray(rgb.astype(np.uint8)).resize(size, Image.BILINEAR).convert("RGBA")
+    return Image.fromarray(pal[idx].astype(np.uint8)).resize(size, Image.BILINEAR).convert("RGBA")
 
 def blobs(T, cat, size=(W, H), scale=3.0):
     """manchas líquidas tipo camuflaje que fluyen (las «manchas» del videoclip)"""
@@ -174,14 +173,21 @@ def glow_silhouette(mask, T, cat, glow=(255, 250, 220)):
     fill.putalpha(mask); out.alpha_composite(fill)
     return out
 
-def wow_moment(img, T, t0, cat, kind="swirl", dur=1.6):
-    """fondo psicodélico breve que entra y sale en 0,2 s; devuelve la intensidad (0..1) para que la escena reaccione"""
-    k = min(1.0, max(0.0, (T - t0) / 0.2)) * min(1.0, max(0.0, (t0 + dur - T) / 0.2))
+def wow_moment(img, T, t0, cat, kind="swirl", dur=1.6, center=(W / 2, H / 2)):
+    """fondo psicodélico breve. Entra como un círculo que se abre desde el centro (0,25 s) y sale cerrándose:
+    nada de fundidos. Solo para el momento MÁS loco del vídeo. Devuelve la intensidad (0..1)."""
+    k = eo((T - t0) / 0.25) * eo((t0 + dur - T) / 0.25) if t0 <= T <= t0 + dur else 0.0
     if k <= 0: return 0.0
     bg = (swirl(T, cat) if kind == "swirl" else blobs(T, cat) if kind == "blobs" else glitch(T, cat))
-    if k < 1: bg.putalpha(int(255 * k))
+    if k < 1:
+        R = k * math.hypot(W, H) / 2 * 1.05
+        m = Image.new("L", (W, H), 0)
+        ImageDraw.Draw(m).ellipse([center[0] - R, center[1] - R, center[0] + R, center[1] + R], fill=255)
+        bg.putalpha(m)
     img.alpha_composite(bg)
     return k
+
+def eo(x): x = max(0.0, min(1.0, x)); return 1 - (1 - x) ** 3
 
 # ---------- contorno ----------
 def outlined_polygon(d, pts, fill, s=1, width=OUTLINE_W):

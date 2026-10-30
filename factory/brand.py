@@ -113,7 +113,7 @@ STRUCTURE = [   # (sección, inicio s, fin s)
 MASCOT = dict(
     name="Mr. Whiskerfact",
     file="out/mrwhiskerfact_avatar_v3.png",          # gato por piezas (mascot.py), también foto de perfil
-    hook=dict(size=260, pos=(70, 1260), enter=0.6),     # asoma abajo a la izquierda
+    hook=dict(size=260, pos=(70, 1420), enter=0.6),     # asoma abajo a la izquierda, DEBAJO del dibujo (nunca encima)
     outro=dict(module="outro5.frame", size=640, center=(540, 1060), dur=3.6,    # el gato dice el eslogan (labios sincronizados), guiña y sonríe
                sfx="sfx.OUTRO_GAFAS"),                  # igual en todos los vídeos
 )

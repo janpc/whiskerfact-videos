@@ -381,21 +381,54 @@ def _(img, T, t, s, e):
     return R.punch(img, T, bt)
 V.sounds("bluff", [(0.1, "pop", 0.6), (V.word_time("puffs") - V.sc["bluff"][0], "whoosh", 0.7), (V.word_time("bigger") - V.sc["bluff"][0], "pop", 0.8)])
 
+_body_cache = {}
+def body_mask(h=420):
+    """silueta humana sencilla y orgánica (formas unidas y suavizadas), máscara L de 300 x (h+40)"""
+    if h in _body_cache: return _body_cache[h]
+    s = h / 420; m = Image.new("L", (int(300 * s), int((h + 40))), 0); d = ImageDraw.Draw(m)
+    X = lambda v: v * s
+    d.ellipse([X(112), X(10), X(188), X(92)], fill=255)                          # cabeza
+    d.rounded_rectangle([X(134), X(80), X(166), X(118)], 10, fill=255)          # cuello
+    d.polygon([(X(92), X(122)), (X(208), X(122)), (X(196), X(262)), (X(104), X(262))], fill=255)   # torso
+    d.ellipse([X(88), X(110), X(212), X(160)], fill=255)                         # hombros
+    for sg in (-1, 1):
+        sx = 150 + sg * 62
+        d.line([(X(sx), X(132)), (X(sx + sg * 18), X(250))], fill=255, width=int(X(30)))   # brazos
+        d.ellipse([X(sx + sg * 18 - 15), X(238), X(sx + sg * 18 + 15), X(266)], fill=255)
+        d.line([(X(150 + sg * 26), X(250)), (X(150 + sg * 32), X(408))], fill=255, width=int(X(36)))   # piernas
+        d.ellipse([X(150 + sg * 32 - 24), X(396), X(150 + sg * 32 + 24), X(420)], fill=255)
+    m = m.filter(ImageFilter.GaussianBlur(6 * s)).point(lambda v: 255 if v > 110 else 0)
+    from skimage import measure
+    cont = max(measure.find_contours(np.asarray(m) > 0, 0.5), key=len)
+    _body_cache[h] = (m, cont)
+    return _body_cache[h]
+
+def furry_person(img, cx, base_y, fur=1.0, a=1.0, T=0.0, ghost=False):
+    """persona con un abrigo de pelo festoneado (como las copas de los árboles del videoclip) que encoge con `fur`"""
+    m, cont = body_mask(560)
+    w, h = m.size; ox, oy = int(cx - w / 2), int(base_y - h + 20)
+    pad = 60
+    lay = Image.new("RGBA", (w + 2 * pad, h + 2 * pad), (0, 0, 0, 0)); d = ImageDraw.Draw(lay)
+    if fur > 0.01:
+        r = 36 * fur
+        for col, kr in (((112, 70, 42), 1.0), ((150, 98, 60), 0.62)):        # pelo: capa oscura festoneada + capa clara
+            for i, (yy, xx) in enumerate(cont[::14]):
+                rr = r * kr * (0.85 + 0.2 * math.sin(i * 1.7 + T * 3))     # el pelo respira un poco
+                d.ellipse([xx + pad - rr, yy + pad - rr, xx + pad + rr, yy + pad + rr], fill=col + (255,))
+    if not ghost:
+        skin = Image.new("RGBA", m.size, (226, 170, 140, 255)); skin.putalpha(m)
+        lay.alpha_composite(skin, (pad, pad))
+    if ghost: lay.putalpha(lay.split()[3].point(lambda v: int(v * 0.35)))
+    if a < 1: lay.putalpha(lay.split()[3].point(lambda v: int(v * a)))
+    img.alpha_composite(lay, (ox - pad, oy - pad))
+
 @V.scene("leftover")
 def _(img, T, t, s, e):
     a = win(T, s, e)
     lt = wt("lost", s); ft = wt("leftover", s); at_ = wt("ancestors", s)
-    person(img, 290, 1330, 1.0, a * clamp((t - 0.2) / 0.4))
-    person(img, 790, 1330, 0.0, a * clamp((T - lt) / 0.4))
-    ak = eo((T - lt) / 0.6)
-    if ak > 0:
-        leader(img, (430, 1150), (430 + 220 * ak, 1150), a, ACC_T)
-        if ak > 0.9:
-            def fn(d, P, s2): d.polygon([P(650, 1150), P(624, 1134), P(624, 1166)], fill=ACC_T)
-            aa(img, (620, 1130, 656, 1170), fn, a)
-    R.txt(img, "hairy ancestors", 930, "label", B.TEXT_2, a * clamp((T - at_) / 0.3), x=290, rise=False)
-    R.txt(img, "us", 930, "label", B.TEXT_2, a * clamp((T - lt) / 0.3), x=790, rise=False)
-    R.txt(img, "a leftover", 770, "number", ACC_T, a * clamp((T - ft) / 0.25), rise=False)
+    fur = 1 - eio((T - lt) / 0.9)                                            # el abrigo de pelo se recoge
+    furry_person(img, 470, 1330, fur, a * eo(t / 0.3), T)
+    R.txt(img, "a leftover", 560, "number", ACC_T, a * clamp((T - ft) / 0.25), rise=False)
     R.chrome(img, T)
     title(img, T, s, e, "We lost the fur")
     return R.punch(img, T, ft)
@@ -474,10 +507,7 @@ def night(img, T, t):
 V.backdrop("hook")(night)
 for n in ("skin", "bump", "trigger", "reach"): V.backdrop(n)(card_bg)
 
-@V.backdrop("nerves")
-def _(img, T, t):
-    ST.card(img, CARD)
-    ST.wow_moment(img, T, V.word_time("emotions") - 0.1, R.cat, "blobs", dur=1.3)   # emociones fuertes: momento psicodélico
+V.backdrop("nerves")(card_bg)      # sin psicodelia aquí: es una explicación, se reserva para el giro
 
 for n in ("warm", "trap"): V.backdrop(n)(lambda img, T, t: ST.landscape(img, T, night=True))
 for n in ("bluff", "leftover", "wrap", "coat"): V.backdrop(n)(lambda img, T, t: ST.landscape(img, T))
