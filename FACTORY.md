@@ -66,7 +66,8 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - every animation has its sound effect
 - The background uses the category colour (`brand.bg_for`). Subtitles appear word by word with the voice.
 - Close with the "gafas" outro: the narrated slogan, with the wink after the words.
-- Render a preview of 6–8 frames and **look at it**. Fix any overlapping text, cropped drawings or unreadable colours before the full render.
+- **App buttons:** the like, comment and share buttons cover the right edge of the lower half of the screen. Below y=900 (`brand.RAIL_TOP`), no subtitle, label or key part of a drawing may go past x=900 (`brand.SAFE_RIGHT_LOW`). Voice subtitles already respect this (`brand.SUBS_MAX_W`). Place drawings and labels centred slightly left.
+- Render a preview of 6–8 frames and **look at it**. Draw the rectangle x 900–1080, y 900–1700 over the preview frames and check that nothing important falls inside it. Fix any overlapping text, cropped drawings or unreadable colours before the full render.
 
 ## 7. Upload
 - Copy the mp4 to `videos/<YYYY-MM-DD>_<slug>.mp4`, then commit and push to `main`.
