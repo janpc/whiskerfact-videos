@@ -66,16 +66,18 @@ class Cat:
         return img.resize((size, size), Image.LANCZOS) if size else img
 
     # ---------- labios: fonemas reales (pocketsphinx) -> bocas, con pocas formas y bien sincronizadas ----------
-    def lipsync(self, phones, fps, n, t_offset=0.0, rest="smile", min_frames=4, lead=1):
+    def lipsync(self, phones, fps, n, t_offset=0.0, rest="smile", min_frames=3, lead=1):
         """phones: [(fonema, t0, t1)] en s (phone_align). Devuelve n bocas, una por fotograma.
         - solo las vocales y los cierres visibles (m/b/p, f/v) cambian la boca; el resto de consonantes se funden
           con la vocal vecina -> muchos menos cambios;
-        - cada forma dura >= min_frames (4 = 0,13 s); los cierres m/b/p pueden durar 2 para que se vean;
+        - las consonantes largas (>= 0,09 s) cierran un poco la boca; las cortas no cuentan;
+        - cada forma dura >= min_frames (3 = 0,1 s); los cierres m/b/p pueden durar 2 para que se vean;
         - la boca va lead fotogramas por delante del sonido, como se hace en animación (se percibe sincronizada)."""
         segs = []
         for ph, a, b in phones:
             v = VISEME.get(ph)
             if v == "ah?": v = "ah" if b - a >= 0.12 else "a"            # vocal abierta larga = boca muy abierta
+            if v is None and ph in SOFT and b - a >= 0.09: v = "slight"    # consonante larga (la "ss", la "t" final): dientes juntos
             segs.append([v, a, b])
         # consonantes "neutras" (None) -> se quedan con la vocal anterior (o la siguiente al principio de palabra)
         for i, sg in enumerate(segs):
@@ -112,6 +114,7 @@ class Cat:
 VISEME = {"AA": "ah?", "AE": "ah?", "AH": "a", "AY": "ah?", "AW": "ah?", "EH": "e", "EY": "e", "IH": "e",
           "IY": "ee", "Y": "ee", "AO": "o", "OW": "o", "OY": "o", "UH": "o", "UW": "oo", "W": "oo", "ER": "o", "R": None,
           "M": "m", "B": "m", "P": "m", "F": "f", "V": "f", "SIL": "smile"}
+SOFT = {"S", "Z", "T", "D", "N", "K", "G", "L", "TH", "DH", "SH", "ZH", "CH", "JH", "NG", "HH"}
 
 def phone_align(mp3, text):
     """fonemas con tiempos (s) por alineación forzada local, gratis"""
