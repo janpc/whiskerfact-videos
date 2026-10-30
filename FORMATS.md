@@ -14,5 +14,5 @@ Each reel uses one format. They share the brand rules (colours, hook from frame 
 - The `myth` format needs a myth that is really widely believed (demand check), plus a source that addresses the myth directly.
 - `versus` must compare like with like, using the same units.
 - `quiz` options must all be plausible, and the wrong options must be verifiably wrong.
-- `what_if` must never be scary-for-effect, catastrophising, or about disasters that affect people (see PERSONALITY.md).
+- `what_if` must never be scary-for-effect or catastrophising. Real disasters and wars belong in neutral `explainer` or `myth` reels, never in hypotheticals.
 - Every format keeps the 65–75 s length, the precision check and the hard limits in PERSONALITY.md.

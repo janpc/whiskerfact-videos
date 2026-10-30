@@ -27,7 +27,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - A themed reel can use any category that fits.
 - Publish it no later than 14:00 Madrid on the event day. Never publish one after the event.
 - **Category:** otherwise, the next one in `brand.ROTATION` after the last *regular* (non-themed) log entry.
-- **Topic:** an evergreen curiosity in that category that is not already in the log, and that suits today's format (FORMATS.md). Skip anything that touches PERSONALITY.md's hard limits. It must be phrased as a question a curious adult would stop scrolling for.
+- **Topic:** an evergreen curiosity in that category that is not already in the log, and that suits today's format (FORMATS.md). Sensitive topics are fine if told neutrally (PERSONALITY.md); skip current political controversies. It must be phrased as a question a curious adult would stop scrolling for.
 - **Demand check:** pick from `growth/topics.md` first, taking the highest-scored idea for the category. Otherwise write 5 candidate questions and score each from 0 to 3 on three things:
   - **(a) People ask it:** the exact question, or a close variant, appears in search results as a common question ("People also ask", forums, Q&A sites, news explainers).
   - **(b) It has a surprising answer:** a twist the viewer would not guess.
