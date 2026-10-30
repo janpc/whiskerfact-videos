@@ -80,7 +80,21 @@
   "variants": {
    "time_slot": "18:00",
    "hook_style": "statement",
-   "caption_style": "teaser"
+   "caption_style": "teaser",
+   "look": {
+    "skies": [
+     "night",
+     "sunset"
+    ],
+    "terrains": [
+     "forest"
+    ],
+    "wow": [
+     "blobs",
+     "swirl"
+    ],
+    "card": true
+   }
   }
  }
 ]

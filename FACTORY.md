@@ -103,6 +103,12 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - **Sky, space, cold, mystery:** a night sky (`ST.sky` + `ST.stars`).
   - **The surprising fact or the twist:** one psychedelic moment, `ST.wow_moment(img, T, t0, R.cat, "swirl"|"blobs"|"glitch", dur=1.3–1.6)`, inside that scene's backdrop. Use 1–2 per reel, never more; they last under 2 s.
   - Mix the backdrops so that consecutive scenes don't all look the same, and keep the pace fast (the videoclip's slow rhythm is NOT copied).
+- **The style is a REFERENCE, not a template: no two reels may look the same.** What stays fixed is only the identity: outlines, flat colours, layered silhouettes, the cream close-up card, short psychedelic moments, the cat and the outro. Everything else changes with the topic:
+  - Pick the world of the topic: `ST.landscape(..., sky_kind=sunset|dawn|dusk|day|storm, terrain=forest|pines|autumn|hills|dunes|waves|city, seed=n)`. A desert reel uses dunes, an ocean reel waves, a history reel its own place, space a starry sky. You can also draw a new backdrop for the topic (a reef, a cave, a street, a lab) in the same flat layered style.
+  - Vary the psychedelic moment (`swirl`, `blobs` or `glitch`), where it falls and what it highlights.
+  - Vary the compositions: close-up versus wide shot, the side the subject sits on, and silhouettes against the sky versus objects on the card.
+  - Before building, read the last 3 log entries' `variants.look` and do NOT repeat the same combination of sky, terrain and psychedelic moment as the previous reel.
+  - Record it in the log as `variants.look`, for example `{"skies": ["night","sunset"], "terrains": ["forest"], "wow": ["blobs","swirl"], "card": true}`.
 - Close with the outro (outro5, automatic via reel_lib.outro_frame): the new cat (mascot.py) says the slogan inside its circle with phoneme lip-sync, then winks and smiles. Never edit the outro per video.
 - **Big, rich drawings:**
   - The main subject must fill the illustration box: at least 60% of its height (about 360 px tall) and 70% of its width. Use a close-up or a cutaway, not a thin strip across the screen.
@@ -183,7 +189,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - the date, category, slug, title, hook, sources (URLs), the Metricool uuid and the scheduled time
   - `duration_s`
   - `event` (themed reels only)
-  - `variants`, as in `{"time_slot": "20:30", "hook_style": "statement", "caption_style": "teaser"}`. The weekly review needs these to compare results.
+  - `variants`, as in `{"time_slot": "20:30", "hook_style": "statement", "caption_style": "teaser"}`. Include `format`, `personality`, `cta` and `look` too. The weekly review needs these to compare results.
 - Delete `videos/*.mp4` older than 7 days, then commit and push.
 
 ## 10. Notify

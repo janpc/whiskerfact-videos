@@ -76,15 +76,59 @@ def hills(img, base_y, amp, color, phase=0.0):
     pts = [(x, base_y - amp * (0.5 + 0.5 * math.sin(x / 260 + phase))) for x in range(-20, W + 40, 20)]
     ImageDraw.Draw(img).polygon(pts + [(W + 40, H), (-20, H)], fill=color)
 
-def landscape(img, T, night=False, ground_y=1330):
-    """paisaje completo en capas: cielo (atardecer o noche), 3 filas de bosque con parallax y suelo"""
+# cielos y terrenos para VARIAR: el videoclip es una referencia, no una plantilla
+SKIES = {
+    "sunset": SUNSET,
+    "dawn":   [(64, 84, 150), (150, 140, 190), (240, 180, 170), (252, 222, 170)],
+    "dusk":   [(30, 36, 90), (96, 60, 130), (200, 100, 120), (236, 150, 110)],
+    "day":    [(70, 140, 210), (120, 180, 230), (180, 216, 240), (220, 236, 246)],
+    "storm":  [(40, 44, 60), (70, 76, 96), (110, 116, 130), (150, 150, 160)],
+}
+TERRAINS = {   # 3 capas de lejos a cerca
+    "forest": FOREST,
+    "pines":  [(36, 76, 70), (28, 62, 58), (20, 48, 46), (14, 36, 34)],
+    "autumn": [(150, 80, 50), (120, 60, 40), (90, 44, 30), (60, 30, 22)],
+    "hills":  [(80, 110, 70), (60, 90, 56), (44, 70, 42), (30, 52, 30)],
+    "dunes":  [(214, 160, 100), (196, 140, 84), (170, 116, 66), (130, 86, 48)],
+    "waves":  [(60, 120, 170), (44, 100, 150), (30, 80, 128), (20, 60, 100)],
+    "city":   [(70, 64, 100), (54, 50, 84), (40, 36, 66), (28, 26, 48)],
+}
+
+def dunes(img, base_y, amp, color, T=0.0, speed=0.0, seed=1, waves=False):
+    """colinas suaves / dunas / olas en silueta con deriva para el parallax"""
+    rng = np.random.default_rng(seed); ph = rng.uniform(0, 6.3); f = rng.uniform(180, 300) if not waves else 90
+    sh = T * speed
+    pts = [(x, base_y - amp * (0.5 + 0.5 * math.sin((x + sh) / f + ph)) - (amp * 0.25 * math.sin((x + sh) / (f * 0.45) + ph * 2) if not waves else 0))
+           for x in range(-20, W + 40, 12)]
+    ImageDraw.Draw(img).polygon(pts + [(W + 40, H), (-20, H)], fill=color)
+
+def skyline(img, base_y, height, color, T=0.0, speed=0.0, seed=1):
+    """edificios en silueta (ciudad)"""
+    rng = np.random.default_rng(seed); d = ImageDraw.Draw(img); period = W + 300; sh = (T * speed) % period
+    x = 0
+    while x < period:
+        w = rng.uniform(50, 130); h = rng.uniform(0.35, 1.0) * height
+        xx = (x - sh) % period - 150
+        d.rectangle([xx, base_y - h, xx + w - 6, base_y + 400], fill=color)
+        x += w
+
+def landscape(img, T, night=False, ground_y=1330, sky_kind=None, terrain="forest", seed=0):
+    """paisaje completo en capas: cielo, 3 capas de terreno con parallax y suelo oscuro.
+    sky_kind: sunset | dawn | dusk | day | storm (por defecto sunset, o noche si night=True)
+    terrain: forest | pines | autumn | hills | dunes | waves | city. seed cambia la forma de las capas."""
     if night:
-        sky(img, (24, 22, 70), NIGHT, 0, ground_y); stars(img, T, y1=ground_y - 300)
+        sky(img, (24, 22, 70), NIGHT, 0, ground_y); stars(img, T, y1=ground_y - 300, seed=3 + seed)
     else:
-        sunset_sky(img, 0, ground_y)
-    for i, (c, h, sp) in enumerate(zip(FOREST, (300, 240, 190), (6, 12, 22))):
-        treeline(img, ground_y - 120 + i * 60, h, c, T, sp, seed=i + 2)
-    ImageDraw.Draw(img).rectangle([0, ground_y, W, H], fill=GROUND)   # suelo oscuro: los subtítulos blancos se leen encima
+        pal = SKIES[sky_kind or "sunset"]; n = len(pal) - 1; h = ground_y // n
+        for i in range(n): sky(img, pal[i], pal[i + 1], i * h, (i + 1) * h if i < n - 1 else ground_y)
+    cols = TERRAINS[terrain]
+    for i, (c, hh, sp) in enumerate(zip(cols, (300, 240, 190), (6, 12, 22))):
+        by = ground_y - 120 + i * 60
+        if terrain in ("forest", "autumn"): treeline(img, by, hh, c, T, sp, seed=i + 2 + seed)
+        elif terrain == "pines": treeline(img, by, hh * 1.2, c, T, sp, seed=i + 7 + seed, bumps=14)
+        elif terrain == "city": skyline(img, by, hh * 1.3, c, T, sp, seed=i + seed)
+        else: dunes(img, by, hh * (0.5 if terrain != "waves" else 0.25), c, T, sp * (4 if terrain == "waves" else 1), seed=i + seed, waves=terrain == "waves")
+    ImageDraw.Draw(img).rectangle([0, ground_y, W, H], fill=cols[3] if terrain == "waves" else GROUND)   # base oscura: los subtítulos se leen encima
 
 # ---------- momentos psicodélicos (para el giro / el dato sorprendente) ----------
 def swirl(T, cat, size=(W, H), cx=0.5, cy=0.5, bands=7, speed=1.6):
