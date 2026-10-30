@@ -1,1 +1,1 @@
-{"daily_first": 5, "then_every_days": 2}
+{"daily_first": 5, "then_every_days": [2, 3], "_about": "After the first 5 reels, alternate gaps of 2 and 3 days (about 12-13 reels a month, which fits the ElevenLabs Starter credits with composed music)."}

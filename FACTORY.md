@@ -9,10 +9,11 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Read `schedule.json` and `log/published.json`.
 
 ## 1. Is today a publishing day?
-- `schedule.json` holds two fields: `daily_first` (5) and `then_every_days` (2).
+- `schedule.json` holds two fields: `daily_first` (5) and `then_every_days` ([2, 3]).
 - Count the published entries in `log/published.json`. Entries with a `note` that contains "test" don't count.
 - While that count is below `daily_first`, publish every day.
-- After that, publish only if at least `then_every_days` days have passed since the last published entry.
+- After that, the gap since the last published reel must reach the next value in `then_every_days`, taken in turn (2, then 3, then 2…). That gives about 12–13 reels a month, which the ElevenLabs Starter credits cover with composed music.
+- A themed reel for a special date may break this rhythm by one day.
 - If today is not a publishing day, stop quietly: no notification, no commit.
 
 ## 2. Topic
@@ -94,6 +95,14 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - Run `preview` and check that no scene shows more empty background than drawing in the band y 760–1370.
 - **Titles count as claims too:** on-screen titles and labels follow the same precision rules as the script ("A tiny muscle at the root", not "One tiny muscle per hair").
 - **App buttons:** the like, comment and share buttons cover the right edge of the lower half of the screen. Below y=900 (`brand.RAIL_TOP`), no subtitle, label or key part of a drawing may go past x=900 (`brand.SAFE_RIGHT_LOW`). Voice subtitles already respect this (`brand.SUBS_MAX_W`). Place drawings and labels centred slightly left.
+- **Music (ElevenLabs, composed for this reel).** After the full render works with the voice, compose the music for the finished cut:
+  1. Commit `out/whiskerfact_<slug>/silent.mp4` to `videos/music_src/<slug>_silent.mp4` and push.
+  2. Use `creative_attach_reference_file` with its raw GitHub URL on flow `Q4RWsQia6pHRGabsab5B`.
+  3. Call `creative_generate_in_flow` with node_type `video-to-music`, model `eleven_video_to_music_v1`, `generations_count: 1` and the uploaded node as `connect_from`. It costs about 960 credits.
+  4. Write the prompt about **sound only**: genre, mood, instruments, tempo and how the energy moves with the story (for example, "lifts at each scene change, mystery at the twist, warm resolution"). It must be instrumental, with a sparse mid-range so the narrator sits on top. Match the mood to the topic and category; a space reel should not sound like a history reel.
+  5. Download the result to `voice/<slug>_music.mp3`. The engine then uses it automatically, matching its level and ducking it under the voice. Re-run `python3 <slug>.py mux`; there is no need to re-render.
+  6. Delete `videos/music_src/` in the next commit.
+  7. If music generation fails, keep the synthesized bed and say so in the notification. That alone is not a reason to skip publishing.
 - Render a preview of 6–8 frames and **look at it**. Draw the rectangle x 900–1080, y 900–1700 over the preview frames and check that nothing important falls inside it. Fix any overlapping text, cropped drawings or unreadable colours before the full render.
 
 ## 7. Upload
