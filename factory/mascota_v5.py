@@ -3,7 +3,7 @@ Semi-realista: proporciones de gato de verdad, línea negra fina y uniforme, rel
 ojos almendrados con pupila vertical, pelo con borde a mechones (como el pelo y las copas de sus árboles).
   python3 mascota_v3.py  -> out/mascota_v5_propuestas.png
 """
-import math, os
+import json, math, os
 import numpy as np
 from PIL import Image, ImageDraw
 import brand as B
@@ -81,27 +81,34 @@ def body(d, o):
 
 def head(d, wink=False):
     X = lambda x, sx: 540 + sx * (x - 540)
-    # orejas sobre una frente más estrecha
+    # silueta de cabeza + orejas sacada de la referencia de la autora (head_ref.json, simetrizada)
+    ref = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "head_ref.json")))
+    sil = spline([tuple(p) for p in ref["pts"]], n=6)
+    M = lambda xr, yr: (540 + (xr - ref["cx"]) * ref["sc"], 105 + (yr - ref["y0"]) * ref["sc"])
+    # sombra lateral: silueta en gris oscuro y, encima, la misma silueta desplazada a la izquierda en gris normal
+    big = d._image
+    m1 = Image.new("L", big.size, 0); ImageDraw.Draw(m1).polygon([P(*p) for p in sil], fill=255)
+    m2 = Image.new("L", big.size, 0); ImageDraw.Draw(m2).polygon([P(x - 40, y) for x, y in sil], fill=255)
+    big.paste(FUR_S, (0, 0), m1)
+    big.paste(FUR, (0, 0), Image.fromarray(np.minimum(np.asarray(m1), np.asarray(m2))))
+    d.line([P(*p) for p in sil] + [P(*sil[0])], fill=INK, width=int(LW * S), joint="curve")
+    # interior de las orejas con mechones
     for sx in (-1, 1):
-        shape(d, [(X(352, sx), 360), (X(346, sx), 250), (X(360, sx), 130), (X(378, sx), 122), (X(486, sx), 250)], FUR)
-        shape(d, [(X(366, sx), 300), (X(372, sx), 170), (X(384, sx), 164), (X(456, sx), 262)], EAR_IN, line=False)
-        tuft = [(X(366, sx), 300), (X(382, sx), 240), (X(392, sx), 292), (X(406, sx), 228), (X(416, sx), 290), (X(432, sx), 240), (X(438, sx), 292)]
-        d.polygon([P(*p) for p in tuft] + [P(X(438, sx), 312), P(X(366, sx), 312)], fill=FUR_L)
-        stroke(d, tuft, 2, smooth=False)
-    # cabeza: frente estrecha que se abre hacia unos mofletes anchos y mullidos (lo más ancho, a la altura de los
-    # bigotes), con mechones; luego se cierra en la barbilla
-    pts = spline([(540, 246), (640, 252), (708, 280), (742, 350), (768, 440), (812, 520), (836, 584),
-                  (820, 636), (772, 668), (700, 704), (620, 732), (540, 742), (460, 732), (380, 704), (308, 668),
-                  (260, 636), (244, 584), (268, 520), (312, 440), (338, 350), (372, 280), (440, 252)], n=12)
-    d.polygon([P(*p) for p in pts], fill=FUR)
-    d.line([P(*p) for p in pts] + [P(*pts[0])], fill=INK, width=int(LW * S), joint="curve")
-    d.polygon([P(*p) for p in spline([(690, 272), (740, 350), (780, 480), (812, 600), (700, 696), (770, 580), (730, 430)])], fill=FUR_S)
+        X = lambda x: 540 + sx * (x - 540)
+        e = [M(158, 104), M(165, 66), M(204, 100)]
+        e = [(X(x), y) for x, y in e]
+        d.polygon([P(*p) for p in e], fill=EAR_IN)
+        tip, b1, b2 = e[1], e[0], e[2]
+        for k in range(4):                                   # mechones finos saliendo del interior de la oreja
+            t = 0.2 + k * 0.2
+            bx, by = b1[0] + (b2[0] - b1[0]) * t, b1[1] + (b2[1] - b1[1]) * t
+            stroke(d, [(bx, by), (bx + (tip[0] - bx) * 0.45, by + (tip[1] - by) * 0.55)], 3, FUR_L, smooth=False)
     # rayas de la frente
-    for x0, top, w in ((506, 254, 14), (540, 248, 18), (574, 254, 14)):
+    for x0, top, w in ((506, 236, 14), (540, 230, 18), (574, 236, 14)):
         d.polygon([P(*p) for p in spline([(x0 - w / 2, top), (x0 + w / 2, top), (x0 + w / 4, top + 70), (x0, top + 76), (x0 - w / 4, top + 70)])], fill=STRIPE)
     # mofletes rosados
     for sx in (-1, 1):
-        d.ellipse([P(540 + sx * 190 - 50, 556), P(540 + sx * 190 + 50, 598)], fill=(236, 156, 166))
+        d.ellipse([P(540 + sx * 200 - 52, 560), P(540 + sx * 200 + 52, 602)], fill=(236, 156, 166))
     # hocico claro y redondeado
     shape(d, [(540, 572), (600, 580), (636, 612), (628, 660), (590, 694), (540, 704), (490, 694), (452, 660), (444, 612), (480, 580)], FUR_L, line=False)
     for sx in (-1, 1):
@@ -125,7 +132,7 @@ def head(d, wink=False):
             stroke(d, [(540 + sx * 96, 612 + dy * 0.5), (540 + sx * 200, 604 + dy), (540 + sx * 340, 598 + dy * 1.8)], 2.4)
     # ojos grandes y brillantes
     for sx in (-1, 1):
-        cx, cy = 540 + sx * 98, 448
+        cx, cy = 540 + sx * 118, 440
         if wink and sx == 1:
             stroke(d, [(cx - 44, cy + 6), (cx, cy - 16), (cx + 44, cy + 6)], 5); continue
         shape(d, [(cx - 52, cy), (cx - 32, cy - 44), (cx + 32, cy - 46), (cx + 54, cy - 2), (cx + 32, cy + 46), (cx - 32, cy + 46)], (252, 250, 244))
@@ -137,15 +144,15 @@ def head(d, wink=False):
         stroke(d, [(cx - 54, cy + 2), (cx - 32, cy - 48), (cx + 32, cy - 50), (cx + 56, cy - 2)], 5)
     # gafas: montura gruesa redondeada (como la referencia) pero en marrón oscuro
     for sx in (-1, 1):
-        cx = 540 + sx * 98
-        d.rounded_rectangle([P(cx - 80, 384), P(cx + 80, 512)], radius=50 * S, outline=INK, width=int(10 * S))
-        d.rounded_rectangle([P(cx - 76, 388), P(cx + 76, 508)], radius=46 * S, outline=(92, 60, 44), width=int(5 * S))
-        stroke(d, [(cx - 56, 408), (cx - 34, 398)], 4, (255, 255, 255))
-    stroke(d, [(520, 438), (540, 428), (560, 438)], 7)
-    stroke(d, [(362, 420), (318, 412)], 6); stroke(d, [(718, 420), (762, 412)], 6)
+        cx = 540 + sx * 118
+        d.rounded_rectangle([P(cx - 82, 376), P(cx + 82, 504)], radius=50 * S, outline=INK, width=int(10 * S))
+        d.rounded_rectangle([P(cx - 78, 380), P(cx + 78, 500)], radius=46 * S, outline=(92, 60, 44), width=int(5 * S))
+        stroke(d, [(cx - 58, 400), (cx - 36, 390)], 4, (255, 255, 255))
+    stroke(d, [(458, 430), (540, 420), (622, 430)], 7)
+    stroke(d, [(342, 416), (250, 404)], 6); stroke(d, [(738, 416), (830, 404)], 6)
     # cejas alegres
-    stroke(d, [(410, 360), (442, 348), (476, 352)], 5)
-    stroke(d, [(604, 342), (638, 332), (670, 344)], 5)
+    stroke(d, [(390, 348), (424, 336), (460, 340)], 5)
+    stroke(d, [(620, 330), (656, 320), (690, 332)], 5)
 
 def avatar(outfit="bomber", size=1080, wink=False):
     big = Image.new("RGBA", (1080 * S, 1080 * S), (0, 0, 0, 0)); d = ImageDraw.Draw(big)
