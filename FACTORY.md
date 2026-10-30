@@ -9,11 +9,11 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Read `schedule.json` and `log/published.json`.
 
 ## 1. Is today a publishing day?
-- `schedule.json` holds two fields: `daily_first` (5) and `then_every_days` ([2, 3]).
-- Count the published entries in `log/published.json`. Entries with a `note` that contains "test" don't count.
+- `schedule.json` holds `daily_first` (5) and `then_gaps` ([2, 3]).
+- Count the published entries in `log/published.json`. Entries with a `note` containing "test" don't count.
 - While that count is below `daily_first`, publish every day.
-- After that, the gap since the last published reel must reach the next value in `then_every_days`, taken in turn (2, then 3, then 2…). That gives about 12–13 reels a month, which the ElevenLabs Starter credits cover with composed music.
-- A themed reel for a special date may break this rhythm by one day.
+- After that, the gaps between reels alternate 2 days, then 3 days, and so on. Use the gap that follows the previous one, which gives about 12–13 reels a month.
+- Publish only if at least that many days have passed since the last published entry.
 - If today is not a publishing day, stop quietly: no notification, no commit.
 
 ## 2. Topic
@@ -104,6 +104,16 @@ All public-facing content is in **English**. All design rules live in `factory/b
   6. Delete `videos/music_src/` in the next commit.
   7. If music generation fails, keep the synthesized bed and say so in the notification. That alone is not a reason to skip publishing.
 - Render a preview of 6–8 frames and **look at it**. Draw the rectangle x 900–1080, y 900–1700 over the preview frames and check that nothing important falls inside it. Fix any overlapping text, cropped drawings or unreadable colours before the full render.
+
+## 6b. Music composed for this reel (ElevenLabs)
+- After the full render, upload the silent cut as `videos/music_src/<slug>_silent.mp4` (commit and push). Then attach it to flow `Q4RWsQia6pHRGabsab5B` with `creative_attach_reference_file` using its raw GitHub URL with the commit hash.
+- Run `creative_generate_in_flow` with these settings:
+  - `node_type: "video-to-music"`, `model_id: "eleven_video_to_music_v1"`, `generations_count: 1`, `connect_from` the attached node
+  - a 2–3 sentence **sound** prompt: genre and mood matching the category and topic, key instruments, tempo, how the energy moves (lift at scene changes, tension before the twist, warm resolution), "instrumental, sparse mid-range so a narrator sits on top"
+  - never repeat the call (about 960 credits)
+- Download the result to `factory/voice/<slug>_music.mp3`, then run `python3 <slug>.py mux`. The engine uses that file automatically and matches its loudness.
+- If music generation fails, publish with the synthesized bed: it's still a valid reel.
+- Delete `videos/music_src/*` older than 7 days during clean-up.
 
 ## 7. Upload
 - Copy the mp4 to `videos/<YYYY-MM-DD>_<slug>.mp4`, then commit and push to `main`.
