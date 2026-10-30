@@ -80,8 +80,17 @@ class Reel:
         ox = {"l": 0, "m": w / 2, "r": w}[anchor[0]]; oy = {"t": 0, "m": h / 2, "b": h}[anchor[1]]
         img.alpha_composite(spr, (int(x - ox), int(y - oy + dy)))
 
+    label_layer = None     # si VoiceReel lo pone, las etiquetas se dibujan aparte y van ENCIMA del contorno (no se emborronan)
     def txt(self, img, s, y, style, color=None, a=1.0, x=W / 2, anchor="mt", rise=True, maxw=B.TEXT_MAX_W, align="center"):
         color = color or B.TEXT
+        if style == "label" and self.label_layer is not None: img = self.label_layer
+        if style == "label" and sum(color) > 380 and a > 0.003:     # etiqueta clara: pastilla oscura detrás, se lee sobre cualquier fondo
+            spr = self.sprite(s, style, color, maxw, align); w, h = spr.size
+            ox = {"l": 0, "m": w / 2, "r": w}[anchor[0]]; oy = {"t": 0, "m": h / 2, "b": h}[anchor[1]]
+            dy = (1 - eo(a)) * B.RISE if rise else 0
+            pill = Image.new("RGBA", (w + 36, h + 14), (0, 0, 0, 0))
+            ImageDraw.Draw(pill).rounded_rectangle([0, 0, w + 35, h + 13], radius=(h + 14) // 2, fill=(30, 22, 22, 170))
+            self.put(img, pill, x - ox - 18 + (w + 36) / 2, y - oy - 2 + dy, a, "mt")
         self.put(img, self.sprite(s, style, color, maxw, align), x, y, a, anchor, dy=(1 - eo(a)) * B.RISE if rise else 0)
 
     def caption(self, img, text, t, t0, t1, style="body", y=None, wps=B.SUBS_NO_VOICE_WPS):

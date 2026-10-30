@@ -75,11 +75,12 @@ TYPE = {  # nombre: (peso, tamaño px, interlineado)
     "subtitle": ("Medium",   44, 1.25),
     "body":     ("SemiBold", 46, 1.25),   # texto en zona caption
     "voicesub": ("SemiBold", 54, 1.20),   # subtítulos de la voz
-    "label":    ("SemiBold", 38, 1.20),   # etiquetas de ilustración
+    "label":    ("Bold", 46, 1.20),       # etiquetas de ilustración (antes 38: se leían mal en el móvil)
     "brand":    ("SemiBold", 30, 1.00),   # nombre del canal, mayúsculas
     "chip":     ("Bold",     28, 1.00),   # pastilla de categoría
 }
 MAX_LINES = {"hook": 3, "title": 2, "subtitle": 2, "body": 2, "voicesub": 2, "label": 2}
+LABEL_MIN_ON = 1.5        # s: una etiqueta se queda en pantalla al menos esto (si no, no da tiempo a leerla)
 
 # ---------- movimiento ----------
 ENTER = 0.30      # s, entrada: fundido + subida de 30 px, ease-out cúbico

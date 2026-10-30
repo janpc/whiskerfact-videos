@@ -77,6 +77,7 @@ class VoiceReel:
         if T >= self.outro_at: return outro_frame(self.R, T - self.outro_at)
         for n, (s, e) in self.sc.items():
             if s <= T < e:
+                labels = Image.new("RGBA", (W, H), (0, 0, 0, 0)); self.R.label_layer = labels
                 if n in self.backdrops: img = self._layered(n, T, s, e)
                 else:
                     img = self.R.bg.copy()
@@ -85,12 +86,28 @@ class VoiceReel:
                     if n == "hook": img = self.R.punch(img, T, 0.0, dur=0.3, amt=0.06)   # golpe de entrada en el fotograma 0
                     elif self.autofit: img = self._fit(n, img)
                     img = self._styled(n, img, T, T - s)
+                self.R.label_layer = None
+                if n != "hook" and self.autofit: labels = self._fit_layer(n, labels)
+                img.alpha_composite(labels)                         # etiquetas encima del contorno, limpias
                 if n != "hook": self._subs(img, T)
                 return img
         return self.R.bg.copy()
 
     # ---------- estilo del videoclip (style.py): contorno oscuro + fondos propios ----------
     INK = True
+    def _fit_layer(self, n, lay):
+        """mismo reencuadre que _fit, para una capa transparente"""
+        p = self._fit_params(n)
+        if p is None: return lay
+        x0, y0, x1, y1, sc, cx, cy = p
+        zy0, zy1 = self.FIT_ZONE
+        zone = lay.crop((0, zy0, W, zy1))
+        big = zone.resize((int(W * sc), int((zy1 - zy0) * sc)), Image.LANCZOS)
+        lay = lay.copy(); lay.paste(Image.new("RGBA", (W, zy1 - zy0), (0, 0, 0, 0)), (0, zy0))
+        ox = int(cx - ((x0 + x1) / 2) * sc); oy = int(cy - ((y0 + y1) / 2 - zy0) * sc)
+        tmp = Image.new("RGBA", (W, H), (0, 0, 0, 0)); tmp.paste(big, (ox, oy)); lay.alpha_composite(tmp)
+        return lay
+
     def _layered(self, n, T, s, e):
         """escena con fondo propio: se dibuja sobre transparente (los fundidos de texto no se manchan del color de
         categoría), se reencuadra, se le pone contorno y se compone sobre su fondo"""
@@ -98,16 +115,7 @@ class VoiceReel:
         lay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
         out = self.draw[n](lay, T, T - s, s, e); lay = out if out is not None else lay
         if n == "hook": lay = self.R.punch(lay, T, 0.0, dur=0.3, amt=0.06)
-        elif self.autofit:
-            p = self._fit_params(n)
-            if p is not None:
-                x0, y0, x1, y1, sc, cx, cy = p
-                zy0, zy1 = self.FIT_ZONE
-                zone = lay.crop((0, zy0, W, zy1))
-                big = zone.resize((int(W * sc), int((zy1 - zy0) * sc)), Image.LANCZOS)
-                lay.paste(Image.new("RGBA", (W, zy1 - zy0), (0, 0, 0, 0)), (0, zy0))
-                ox = int(cx - ((x0 + x1) / 2) * sc); oy = int(cy - ((y0 + y1) / 2 - zy0) * sc)
-                tmp = Image.new("RGBA", (W, H), (0, 0, 0, 0)); tmp.paste(big, (ox, oy)); lay.alpha_composite(tmp)
+        elif self.autofit: lay = self._fit_layer(n, lay)
         if self.INK:
             mask = np.asarray(lay.split()[3], np.float32) / 255
             ST.ink(lay, mask, (0, self.FIT_ZONE[0] - 20, W, self.FIT_ZONE[1] + 10))
@@ -152,12 +160,14 @@ class VoiceReel:
         if n in self._fits: return self._fits[n]
         s, e = self.sc[n]
         boxes = []
+        keep, self.R.label_layer = self.R.label_layer, None      # las etiquetas cuentan para el encuadre
         for k in (0.55, 0.8, 0.95):             # unión de varios momentos: lo que entra tarde también cuenta
             img = self.R.bg.copy(); t = s + (e - s) * k
             out = self.draw[n](img, t, t - s, s, e); img = out if out is not None else img
             m = self._content_mask(img) > 0.5
             ys, xs = np.nonzero(m)
             if len(xs) > 200: boxes.append((xs.min(), ys.min() + self.FIT_ZONE[0], xs.max(), ys.max() + self.FIT_ZONE[0]))
+        self.R.label_layer = keep
         if not boxes: self._fits[n] = None; return None
         x0 = min(b[0] for b in boxes); y0 = min(b[1] for b in boxes); x1 = max(b[2] for b in boxes); y1 = max(b[3] for b in boxes)
         bx0, by0, bx1, by1 = self.FIT_BOX

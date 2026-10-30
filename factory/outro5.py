@@ -37,13 +37,18 @@ def mouths():
         _mouths = cat().lipsync(ph, FPS, n, SLOGAN_AT)
     return _mouths
 
+_m = Image.new("L", (2160, 2160), 0)
+from PIL import ImageDraw as _D
+_D.Draw(_m).ellipse([60, 60, 2100, 2100], fill=255)           # el aro dorado va de 24 a 52 (x2): recorte por dentro
+INNER = _m.resize((1080, 1080), Image.LANCZOS)
+
 def badge(face):
     """gato (1024) dentro del círculo navy con aro dorado (1080)"""
     im = o4.disc().copy()
     f = face.resize((980, 980), Image.LANCZOS)
     im.alpha_composite(f, (50, 40))                       # cabeza grande y centrada; los hombros los corta el círculo
     out = Image.new("RGBA", (1080, 1080), (0, 0, 0, 0))
-    out.paste(im, (0, 0), o4.MASK)
+    out.paste(im, (0, 0), INNER)                          # recortado al INTERIOR del aro: nada del gato asoma por fuera
     ring = Image.new("RGBA", (2160, 2160), (0, 0, 0, 0))
     from PIL import ImageDraw
     ImageDraw.Draw(ring).ellipse([24, 24, 2136, 2136], outline=B.GOLD, width=28)

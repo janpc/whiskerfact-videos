@@ -117,6 +117,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - Add a second layer of detail where it helps: texture, small moving parts, labels with leader lines.
   - The engine re-frames each scene automatically (`VoiceReel.autofit`). It scales the drawing up to 1.45× and centres it left of the app buttons, but it cannot make a weak drawing rich, so draw big from the start.
   - Run `preview` and check that no scene shows more empty background than drawing in the band y 760–1370.
+- **Labels must be readable on a phone:** use 3 words or fewer, keep each one on screen for at least 1.5 s (`brand.LABEL_MIN_ON`), and never show it only during a fast transition. Labels are 46 px bold. The engine draws them above the outlines, and a light label gets a dark pill behind it automatically. Never shrink them, and never use the "label" style for long sentences.
 - **Titles count as claims too:** on-screen titles and labels follow the same precision rules as the script ("A tiny muscle at the root", not "One tiny muscle per hair").
 - **App buttons:** the like, comment and share buttons cover the right edge of the lower half of the screen. Below y=900 (`brand.RAIL_TOP`), no subtitle, label or key part of a drawing may go past x=900 (`brand.SAFE_RIGHT_LOW`). Voice subtitles already respect this (`brand.SUBS_MAX_W`). Place drawings and labels centred slightly left.
 - **Music (ElevenLabs, composed for this reel).** After the full render works with the voice, compose the music for the finished cut:
