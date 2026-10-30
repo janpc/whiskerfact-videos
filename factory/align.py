@@ -8,6 +8,8 @@ import numpy as np
 EXTRA_PHONES = {   # pronunciaciones de nombres propios que no están en cmudict
     "khufu": "K UW F UW", "menkaure": "M EH N K AW R EY", "giza": "G IY Z AH",
     "whiskerfact": "W IH S K ER F AE K T",
+    "goosebumps": "G UW S B AH M P S", "arrector": "AH R EH K T ER", "pili": "P IH L AY",
+    "fluffing": "F L AH F IH NG", "hairier": "HH EH R IY ER",
 }
 LETTER = {"a": "AE", "b": "B", "c": "K", "d": "D", "e": "EH", "f": "F", "g": "G", "h": "HH", "i": "IH", "j": "JH", "k": "K",
           "l": "L", "m": "M", "n": "N", "o": "AA", "p": "P", "q": "K", "r": "R", "s": "S", "t": "T", "u": "AH", "v": "V",
