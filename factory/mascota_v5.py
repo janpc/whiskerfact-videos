@@ -81,44 +81,46 @@ def body(d, o):
 
 def head(d, wink=False):
     X = lambda x, sx: 540 + sx * (x - 540)
-    # orejas grandes de base ancha en las esquinas superiores, con mechones dentro
+    # orejas grandes en las esquinas: el borde exterior sube casi recto desde el lado de la cabeza
     for sx in (-1, 1):
-        shape(d, [(X(352, sx), 360), (X(350, sx), 230), (X(372, sx), 120), (X(394, sx), 112), (X(420, sx), 128), (X(478, sx), 236)], FUR)
-        shape(d, [(X(374, sx), 330), (X(380, sx), 180), (X(396, sx), 168), (X(452, sx), 252)], EAR_IN, line=False)
-        for k in range(3):
-            stroke(d, [(X(384 + k * 14, sx), 300), (X(392 + k * 14, sx), 224 + k * 8)], 2.2)
-    # cabeza: redonda arriba, ancha en los mofletes (mechones abajo a los lados), barbilla pequeña bajo el hocico
-    pts = spline([(540, 214), (640, 222), (716, 262), (758, 340), (770, 430), (764, 510), (790, 548), (758, 560),
-                  (770, 594), (720, 620), (660, 660), (600, 690), (540, 698), (480, 690), (420, 660), (360, 620),
-                  (310, 594), (322, 560), (290, 548), (316, 510), (310, 430), (322, 340), (364, 262), (440, 222)], n=10)
+        shape(d, [(X(300, sx), 380), (X(298, sx), 250), (X(318, sx), 126), (X(336, sx), 118), (X(470, sx), 250)], FUR)
+        shape(d, [(X(318, sx), 300), (X(330, sx), 166), (X(342, sx), 160), (X(436, sx), 262)], EAR_IN, line=False)
+        tuft = [(X(322, sx), 300), (X(340, sx), 236), (X(350, sx), 290), (X(366, sx), 222), (X(376, sx), 288), (X(394, sx), 236), (X(400, sx), 290)]
+        d.polygon([P(*p) for p in tuft] + [P(X(400, sx), 310), P(X(322, sx), 310)], fill=FUR_L)
+        stroke(d, tuft, 2, smooth=False)
+    # cabeza ancha (más ancha que alta): parte de arriba casi plana entre las orejas, lados casi rectos que se abren
+    # un poco en los mofletes, mandíbula en U ancha
+    pts = spline([(540, 246), (650, 250), (740, 286), (786, 380), (796, 480), (804, 556), (776, 626), (700, 680),
+                  (620, 708), (540, 714), (460, 708), (380, 680), (304, 626), (276, 556), (284, 480), (294, 380),
+                  (340, 286), (430, 250)], n=10)
     d.polygon([P(*p) for p in pts], fill=FUR)
     d.line([P(*p) for p in pts] + [P(*pts[0])], fill=INK, width=int(LW * S), joint="curve")
-    d.polygon([P(*p) for p in spline([(690, 252), (748, 330), (764, 450), (730, 600), (650, 670), (716, 560), (730, 420)])], fill=FUR_S)
+    d.polygon([P(*p) for p in spline([(716, 276), (780, 370), (798, 520), (760, 640), (660, 700), (740, 590), (760, 430)])], fill=FUR_S)
     # rayas de la frente
-    for x0, top, w in ((508, 228, 12), (540, 220, 16), (572, 228, 12)):
+    for x0, top, w in ((506, 254, 14), (540, 248, 18), (574, 254, 14)):
         d.polygon([P(*p) for p in spline([(x0 - w / 2, top), (x0 + w / 2, top), (x0 + w / 4, top + 70), (x0, top + 76), (x0 - w / 4, top + 70)])], fill=STRIPE)
     # mofletes rosados
     for sx in (-1, 1):
-        d.ellipse([P(540 + sx * 150 - 40, 520), P(540 + sx * 150 + 40, 556)], fill=(236, 156, 166))
+        d.ellipse([P(540 + sx * 172 - 44, 548), P(540 + sx * 172 + 44, 586)], fill=(236, 156, 166))
     # hocico: dos almohadillas redondas de bigotes (como la referencia) + barbilla
     for sx in (-1, 1):
-        shape(d, [(540 + sx * 4, 556), (540 + sx * 40, 548), (540 + sx * 70, 572), (540 + sx * 62, 610), (540 + sx * 24, 618), (540 + sx * 4, 600)], FUR_L)
-    shape(d, [(504, 612), (540, 606), (576, 612), (566, 644), (540, 654), (514, 644)], FUR_L)
+        shape(d, [(540 + sx * 4, 584), (540 + sx * 40, 576), (540 + sx * 70, 600), (540 + sx * 62, 638), (540 + sx * 24, 646), (540 + sx * 4, 628)], FUR_L)
+    shape(d, [(504, 640), (540, 634), (576, 640), (566, 672), (540, 682), (514, 672)], FUR_L)
     for sx in (-1, 1):
         for k in range(3):
-            cx, cy = 540 + sx * (30 + k * 12), 576 + k * 9
+            cx, cy = 540 + sx * (30 + k * 12), 604 + k * 9
             d.ellipse([P(cx - 3, cy - 3), P(cx + 3, cy + 3)], fill=(150, 146, 146))
     # nariz de corazón y sonrisa
-    shape(d, [(524, 532), (540, 528), (556, 532), (551, 546), (540, 556), (529, 546)], NOSE)
-    stroke(d, [(540, 556), (540, 572)])
-    shape(d, [(518, 600), (540, 598), (562, 600), (556, 618), (540, 626), (524, 618)], (150, 54, 68))
+    shape(d, [(524, 560), (540, 556), (556, 560), (551, 574), (540, 584), (529, 574)], NOSE)
+    stroke(d, [(540, 584), (540, 600)])
+    shape(d, [(518, 628), (540, 626), (562, 628), (556, 646), (540, 654), (524, 646)], (150, 54, 68))
     # bigotes
     for sx in (-1, 1):
         for dy in (0, 14, 28):
             stroke(d, [(540 + sx * 66, 580 + dy * 0.5), (540 + sx * 180, 574 + dy), (540 + sx * 290, 572 + dy * 1.6)], 2)
     # ojos grandes y brillantes
     for sx in (-1, 1):
-        cx, cy = 540 + sx * 92, 430
+        cx, cy = 540 + sx * 104, 448
         if wink and sx == 1:
             stroke(d, [(cx - 44, cy + 6), (cx, cy - 16), (cx + 44, cy + 6)], 5); continue
         shape(d, [(cx - 52, cy), (cx - 32, cy - 44), (cx + 32, cy - 46), (cx + 54, cy - 2), (cx + 32, cy + 46), (cx - 32, cy + 46)], (252, 250, 244))
@@ -130,15 +132,15 @@ def head(d, wink=False):
         stroke(d, [(cx - 54, cy + 2), (cx - 32, cy - 48), (cx + 32, cy - 50), (cx + 56, cy - 2)], 5)
     # gafas: montura gruesa redondeada (como la referencia) pero en marrón oscuro
     for sx in (-1, 1):
-        cx = 540 + sx * 92
-        d.rounded_rectangle([P(cx - 74, 368), P(cx + 74, 494)], radius=50 * S, outline=INK, width=int(10 * S))
-        d.rounded_rectangle([P(cx - 70, 372), P(cx + 70, 490)], radius=46 * S, outline=(92, 60, 44), width=int(5 * S))
-        stroke(d, [(cx - 50, 392), (cx - 28, 382)], 4, (255, 255, 255))
-    stroke(d, [(518, 420), (540, 410), (562, 420)], 7)
-    stroke(d, [(392, 404), (316, 396)], 6); stroke(d, [(688, 404), (764, 396)], 6)
+        cx = 540 + sx * 104
+        d.rounded_rectangle([P(cx - 80, 384), P(cx + 80, 512)], radius=50 * S, outline=INK, width=int(10 * S))
+        d.rounded_rectangle([P(cx - 76, 388), P(cx + 76, 508)], radius=46 * S, outline=(92, 60, 44), width=int(5 * S))
+        stroke(d, [(cx - 56, 408), (cx - 34, 398)], 4, (255, 255, 255))
+    stroke(d, [(520, 438), (540, 428), (560, 438)], 7)
+    stroke(d, [(356, 420), (290, 412)], 6); stroke(d, [(724, 420), (790, 412)], 6)
     # cejas alegres
-    stroke(d, [(424, 340), (452, 330), (482, 334)], 5)
-    stroke(d, [(598, 324), (628, 316), (656, 326)], 5)
+    stroke(d, [(410, 360), (442, 348), (476, 352)], 5)
+    stroke(d, [(604, 342), (638, 332), (670, 344)], 5)
 
 def avatar(outfit="bomber", size=1080, wink=False):
     big = Image.new("RGBA", (1080 * S, 1080 * S), (0, 0, 0, 0)); d = ImageDraw.Draw(big)
