@@ -20,7 +20,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - an event falls within the next 7 days;
   - fewer than that event's `reels` themed videos are already in the log (field `event`).
 - A themed reel can use any category that fits.
-- Publish it no later than the event day, before 14:00 Madrid. Never publish one after the event.
+- Publish it no later than 14:00 Madrid on the event day. Never publish one after the event.
 - **Category:** otherwise, the next one in `brand.ROTATION` after the last *regular* (non-themed) log entry.
 - **Topic:** an evergreen curiosity in that category that is not already in the log. It must be phrased as a question a curious adult would stop scrolling for.
 - **Hook:** at most 10 words, on screen from frame 0. Use the hook style that `growth/experiments.json` assigns today (see step 8).
