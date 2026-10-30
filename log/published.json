@@ -22,7 +22,12 @@
    "tiktok",
    "youtube"
   ],
-  "note": "first public reel, published by hand from the chat"
+  "note": "first public reel, published by hand from the chat",
+  "variants": {
+   "time_slot": "21:15",
+   "hook_style": "statement",
+   "caption_style": "teaser"
+  }
  },
  {
   "date": "2026-10-29",
@@ -43,7 +48,12 @@
    "https://egymonuments.gov.eg/en/monuments/workers-town-and-cemetery/",
    "https://www.mentalfloss.com/article/541713/examples-ancient-graffiti"
   ],
-  "metricool_uuid": "-2250303335964718877"
+  "metricool_uuid": "-2250303335964718877",
+  "variants": {
+   "time_slot": "22:30",
+   "hook_style": "statement",
+   "caption_style": "teaser"
+  }
  },
  {
   "date": "2026-10-30",
@@ -66,6 +76,11 @@
    "https://doi.org/10.1016/j.cell.2020.06.031"
   ],
   "metricool_uuid": "5999553319720537431",
-  "duration_s": 71.2
+  "duration_s": 71.2,
+  "variants": {
+   "time_slot": "18:00",
+   "hook_style": "statement",
+   "caption_style": "teaser"
+  }
  }
 ]

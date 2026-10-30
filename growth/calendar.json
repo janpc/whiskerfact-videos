@@ -1,0 +1,17 @@
+{
+ "_about": "Special dates. In the 7 days before each event, make 1 or 2 themed reels (never more), the last one published no later than the event day before 14:00 Madrid. A themed reel replaces the regular one that day; the category rotation resumes afterwards. Topic: a real, verifiable curiosity tied to the event (science of, history of, body during...). Keep the brand rules; small themed touches only (props, colours in the drawing, not the background).",
+ "events": [
+  {"name": "Halloween", "date": "2026-10-31", "reels": 1, "ideas": ["why pumpkins became jack-o'-lanterns (turnips in Ireland)", "why we enjoy being scared (adrenaline)", "do bats really drink blood?"]},
+  {"name": "Thanksgiving (US)", "date": "2026-11-26", "reels": 1, "ideas": ["does turkey really make you sleepy?", "what was actually eaten at the 1621 harvest feast"]},
+  {"name": "Christmas", "date": "2026-12-25", "reels": 2, "ideas": ["why every snowflake has six sides", "how reindeer eyes change colour in winter", "where the Christmas tree tradition came from"]},
+  {"name": "New Year", "date": "2027-01-01", "reels": 1, "ideas": ["how fireworks get their colours", "why we count down at midnight"]},
+  {"name": "Valentine's Day", "date": "2027-02-14", "reels": 1, "ideas": ["what love does to your brain", "why the heart shape looks nothing like a heart"]},
+  {"name": "St Patrick's Day", "date": "2027-03-17", "reels": 1, "ideas": ["why four-leaf clovers are so rare"]},
+  {"name": "Easter", "date": "2027-03-28", "reels": 1, "ideas": ["why eggs became an Easter symbol", "how chicks breathe inside the egg"]},
+  {"name": "Earth Day", "date": "2027-04-22", "reels": 1, "ideas": ["how much of Earth's oxygen comes from the ocean"]},
+  {"name": "Summer solstice", "date": "2027-06-21", "reels": 1, "ideas": ["why the longest day isn't the hottest"]},
+  {"name": "Independence Day (US)", "date": "2027-07-04", "reels": 1, "ideas": ["the science of fireworks"]},
+  {"name": "Back to school", "date": "2027-09-01", "reels": 1, "ideas": ["what sleep does for memory"]},
+  {"name": "Halloween", "date": "2027-10-31", "reels": 2, "ideas": []}
+ ]
+}

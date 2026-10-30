@@ -16,9 +16,14 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - If today is not a publishing day, stop quietly: no notification, no commit.
 
 ## 2. Topic
-- **Category:** the next one in `brand.ROTATION` after the category of the last log entry.
+- **Special dates first:** read `growth/calendar.json`. Make a themed reel today if both of these are true:
+  - an event falls within the next 7 days;
+  - fewer than that event's `reels` themed videos are already in the log (field `event`).
+- A themed reel can use any category that fits.
+- Publish it no later than the event day, before 14:00 Madrid. Never publish one after the event.
+- **Category:** otherwise, the next one in `brand.ROTATION` after the last *regular* (non-themed) log entry.
 - **Topic:** an evergreen curiosity in that category that is not already in the log. It must be phrased as a question a curious adult would stop scrolling for.
-- **Hook:** at most 10 words, on screen from frame 0. Either the question itself, or a surprising statement followed by the question.
+- **Hook:** at most 10 words, on screen from frame 0. Use the hook style that `growth/experiments.json` assigns today (see step 8).
 
 ## 3. Verify
 - Every fact in the script must be confirmed by **two independent, reliable sources**, for example a university, a museum, NASA or NOAA, a peer-reviewed review, or Britannica.
@@ -75,8 +80,10 @@ All public-facing content is in **English**. All design rules live in `factory/b
 
 ## 8. Publish (Metricool connector)
 - Call `createScheduledPost` with `blogId 7740980` and timezone `Europe/Madrid`. It must be a single post with providers tiktok, instagram and youtube.
-- **Time:** use `getBestTimeToPostByNetwork` for tiktok for today. Pick the highest-value hour between 13:00 and 22:00 that is at least 30 min from now.
-- **Text:** the hook, one short line, then 3–5 hashtags: `#mrwhiskerfact`, the category, the topic, `#didyouknow`.
+- **Experiments:** read `growth/experiments.json`. For every test with status `testing`, pick today's option by its `rule`, counting options already used in `log/published.json`. Choose them all before writing the script, because the hook style changes the script.
+- **Time:** use the `time_slots` option chosen today, on today's date (Madrid). If the test is `decided`, follow its rule.
+- **Special dates:** a themed reel goes in the earliest slot that still falls before the event.
+- **Text:** the hook, then one line in today's `caption_style`, then 3–5 hashtags: `#mrwhiskerfact`, the category, the topic and `#didyouknow`. Add the event hashtag on special dates.
 - **TikTok:** `tiktokData`:
   - `privacyOption PUBLIC_TO_EVERYONE`
   - `title` set to the question (required)
@@ -97,7 +104,11 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Metricool copies the video when the post is created, so the GitHub file only needs to exist at that moment.
 
 ## 9. Log and clean-up
-- Append to `log/published.json` the date, category, slug, title, hook, sources (URLs), the Metricool uuid and the scheduled time.
+- Append to `log/published.json`:
+  - the date, category, slug, title, hook, sources (URLs), the Metricool uuid and the scheduled time
+  - `duration_s`
+  - `event` (themed reels only)
+  - `variants`, as in `{"time_slot": "20:30", "hook_style": "statement", "caption_style": "teaser"}`. The weekly review needs these to compare results.
 - Delete `videos/*.mp4` older than 7 days, then commit and push.
 
 ## 10. Notify
