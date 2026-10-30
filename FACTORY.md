@@ -66,6 +66,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Poll `creative_get_flow_run_status` until it is done. Never repeat a generation call, because each call is charged.
 - Download the mp3 from its `storage.googleapis.com` URL to `factory/voice/<slug>_brad.mp3`.
 - Save the exact script as `factory/voice/<slug>_script.txt`.
+- Tighten the voice first: run `python3 tighten.py voice/<slug>_brad.mp3`. It shortens pauses to about 0.24 s, speeds the voice up by `brand.VOICE_TEMPO` and keeps the original as `_raw.mp3`. Always run it before alignment.
 - Get free word timings with local forced alignment: `python3 align.py voice/<slug>_brad.mp3 voice/<slug>_script.txt voice/<slug>_brad_words.json`. Install it first with `NO_PROXY= pip install --break-system-packages pocketsphinx`.
 - If a proper name is missing from the dictionary, add its phones to `EXTRA_PHONES`.
 - Only if alignment fails, fall back to `creative_transcribe_audio` (about 400 credits).

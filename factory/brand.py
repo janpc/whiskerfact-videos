@@ -9,7 +9,7 @@ W, H, FPS = 1080, 1920, 30
 ENCODE = dict(codec="libx264", preset="veryfast", crf=20, pix_fmt="yuv420p")
 DURATION = (65, 75)          # segundos, objetivo 68: TikTok (Creator Rewards) solo paga vídeos de MÁS de 1 minuto
 MIN_DURATION = 61            # límite duro con cierre incluido; el render se niega por debajo
-SCRIPT_WORDS = (150, 170)    # palabras del guion (con frase de cierre): Brad lee a ~148 ppm -> 65-75 s con el cierre
+SCRIPT_WORDS = (165, 190)    # palabras del guion (con frase de cierre): con tighten.py Brad va a ~170 ppm -> 65-75 s con el cierre
 
 # ---------- zonas (px, eje y) ----------
 # Instagram/TikTok tapan arriba y abajo: nada importante fuera de SAFE.
@@ -90,8 +90,9 @@ RISE = 30         # px
 MAX_STATIC = 2.0          # s máximos sin que cambie algo en pantalla
 SCENE_LEN = (3.0, 7.0)    # s, duración de cada escena (nunca más de 8)
 INTERRUPT_EVERY = 10.0    # s, un golpe visual (zoom, destello, reacción de la mascota)
-MAX_PAUSE = 0.4           # s máximos de silencio en la voz
-VOICE_WPM = (160, 175)    # palabras por minuto de la voz
+MAX_PAUSE = 0.4           # s máximos de silencio en la voz (tighten.py deja las pausas en ~0,24 s)
+VOICE_TEMPO = 1.07        # tighten.py acelera la voz un 7 % sin cambiar el tono
+VOICE_WPM = (165, 180)    # palabras por minuto de la voz, ya ajustada con tighten.py
 HOOK_MAX_WORDS = 10
 FIRST_CHANGE = 0.3        # s, primer cambio visual: algo se mueve casi de inmediato (golpe de entrada en 0)
 def read_time(text):          # tiempo mínimo en pantalla de un texto
