@@ -195,7 +195,14 @@ class VoiceReel:
                     (O + 1.6, SFX.clink(), 0.9), (O + outro4.WINK, SFX.sparkle(), 0.9)]
         fx = SFX.mix([(t, gens[nm](), g) for t, nm, g in kept] + outro_fx, total)[:n]
         fx = fx / (np.max(np.abs(fx)) or 1) * 0.9 * 10 ** (B.SFX_UNDER_VOICE_DB / 20) * (1 - 0.5 * env)
-        bed = M.upbeat_doc_bed(total, self.R.cat, swell_at=O - 8)[:n]
+        music_file = os.path.join(HERE, "voice", f"{self.slug}_music.mp3")   # música compuesta para este vídeo (ElevenLabs)
+        if os.path.exists(music_file):
+            bed = self._load(music_file, n, 0.0)
+            t = np.arange(n) / SFX.SR
+            bed = bed * np.clip((total - t) / 1.5, 0, 1)                  # fundido final con el cierre
+            bed = bed / (np.max(np.abs(bed)) or 1)
+        else:
+            bed = M.upbeat_doc_bed(total, self.R.cat, swell_at=O - 8)[:n]
         bed = M.duck(bed, env, B.MUSIC_DUCK_DB) * 0.9 * 10 ** (B.MUSIC_UNDER_VOICE_DB / 20 + 0.25)
         mix = voice * 0.9 + fx + bed
         SFX.write_wav(path, mix / max(1.0, np.max(np.abs(mix)) / 0.95))
