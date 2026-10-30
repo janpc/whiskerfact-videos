@@ -81,28 +81,28 @@ def body(d, o):
 
 def head(d, wink=False):
     X = lambda x, sx: 540 + sx * (x - 540)
-    # orejas grandes en las esquinas: el borde exterior sube casi recto desde el lado de la cabeza
+    # orejas sobre una frente más estrecha
     for sx in (-1, 1):
-        shape(d, [(X(300, sx), 380), (X(298, sx), 250), (X(318, sx), 126), (X(336, sx), 118), (X(470, sx), 250)], FUR)
-        shape(d, [(X(318, sx), 300), (X(330, sx), 166), (X(342, sx), 160), (X(436, sx), 262)], EAR_IN, line=False)
-        tuft = [(X(322, sx), 300), (X(340, sx), 236), (X(350, sx), 290), (X(366, sx), 222), (X(376, sx), 288), (X(394, sx), 236), (X(400, sx), 290)]
-        d.polygon([P(*p) for p in tuft] + [P(X(400, sx), 310), P(X(322, sx), 310)], fill=FUR_L)
+        shape(d, [(X(352, sx), 360), (X(346, sx), 250), (X(360, sx), 130), (X(378, sx), 122), (X(486, sx), 250)], FUR)
+        shape(d, [(X(366, sx), 300), (X(372, sx), 170), (X(384, sx), 164), (X(456, sx), 262)], EAR_IN, line=False)
+        tuft = [(X(366, sx), 300), (X(382, sx), 240), (X(392, sx), 292), (X(406, sx), 228), (X(416, sx), 290), (X(432, sx), 240), (X(438, sx), 292)]
+        d.polygon([P(*p) for p in tuft] + [P(X(438, sx), 312), P(X(366, sx), 312)], fill=FUR_L)
         stroke(d, tuft, 2, smooth=False)
-    # cabeza ancha (más ancha que alta): parte de arriba casi plana entre las orejas, lados casi rectos que se abren
-    # un poco en los mofletes, mandíbula en U ancha
-    # pentágono invertido con esquinas suaves: arriba ancho y casi plano, lados casi rectos, y se cierra en una barbilla redondeada
-    pts = spline([(540, 252), (680, 252), (770, 268), (796, 330), (800, 440), (796, 530), (760, 600), (690, 668),
-                  (610, 718), (540, 734), (470, 718), (390, 668), (320, 600), (284, 530), (280, 440), (284, 330),
-                  (310, 268), (400, 252)], n=10)
+    # cabeza: frente estrecha que se abre hacia unos mofletes anchos y mullidos (lo más ancho, a la altura de los
+    # bigotes), con mechones; luego se cierra en la barbilla
+    pts = spline([(540, 246), (640, 252), (708, 280), (742, 350), (764, 430), (800, 500), (842, 548), (818, 566),
+                  (852, 598), (814, 612), (830, 646), (770, 660), (700, 700), (620, 730), (540, 740), (460, 730),
+                  (380, 700), (310, 660), (250, 646), (266, 612), (228, 598), (262, 566), (238, 548), (280, 500),
+                  (316, 430), (338, 350), (372, 280), (440, 252)], n=10)
     d.polygon([P(*p) for p in pts], fill=FUR)
     d.line([P(*p) for p in pts] + [P(*pts[0])], fill=INK, width=int(LW * S), joint="curve")
-    d.polygon([P(*p) for p in spline([(730, 268), (792, 340), (798, 520), (750, 610), (640, 700), (730, 580), (760, 420)])], fill=FUR_S)
+    d.polygon([P(*p) for p in spline([(690, 272), (740, 350), (780, 480), (812, 600), (700, 696), (770, 580), (730, 430)])], fill=FUR_S)
     # rayas de la frente
     for x0, top, w in ((506, 254, 14), (540, 248, 18), (574, 254, 14)):
         d.polygon([P(*p) for p in spline([(x0 - w / 2, top), (x0 + w / 2, top), (x0 + w / 4, top + 70), (x0, top + 76), (x0 - w / 4, top + 70)])], fill=STRIPE)
     # mofletes rosados
     for sx in (-1, 1):
-        d.ellipse([P(540 + sx * 172 - 44, 548), P(540 + sx * 172 + 44, 586)], fill=(236, 156, 166))
+        d.ellipse([P(540 + sx * 190 - 50, 556), P(540 + sx * 190 + 50, 598)], fill=(236, 156, 166))
     # hocico claro y redondeado
     shape(d, [(540, 572), (600, 580), (636, 612), (628, 660), (590, 694), (540, 704), (490, 694), (452, 660), (444, 612), (480, 580)], FUR_L, line=False)
     for sx in (-1, 1):
@@ -123,10 +123,10 @@ def head(d, wink=False):
     # bigotes
     for sx in (-1, 1):
         for dy in (0, 14, 28):
-            stroke(d, [(540 + sx * 96, 612 + dy * 0.5), (540 + sx * 200, 604 + dy), (540 + sx * 300, 600 + dy * 1.6)], 2)
+            stroke(d, [(540 + sx * 96, 612 + dy * 0.5), (540 + sx * 200, 604 + dy), (540 + sx * 340, 598 + dy * 1.8)], 2.4)
     # ojos grandes y brillantes
     for sx in (-1, 1):
-        cx, cy = 540 + sx * 104, 448
+        cx, cy = 540 + sx * 98, 448
         if wink and sx == 1:
             stroke(d, [(cx - 44, cy + 6), (cx, cy - 16), (cx + 44, cy + 6)], 5); continue
         shape(d, [(cx - 52, cy), (cx - 32, cy - 44), (cx + 32, cy - 46), (cx + 54, cy - 2), (cx + 32, cy + 46), (cx - 32, cy + 46)], (252, 250, 244))
@@ -138,12 +138,12 @@ def head(d, wink=False):
         stroke(d, [(cx - 54, cy + 2), (cx - 32, cy - 48), (cx + 32, cy - 50), (cx + 56, cy - 2)], 5)
     # gafas: montura gruesa redondeada (como la referencia) pero en marrón oscuro
     for sx in (-1, 1):
-        cx = 540 + sx * 104
+        cx = 540 + sx * 98
         d.rounded_rectangle([P(cx - 80, 384), P(cx + 80, 512)], radius=50 * S, outline=INK, width=int(10 * S))
         d.rounded_rectangle([P(cx - 76, 388), P(cx + 76, 508)], radius=46 * S, outline=(92, 60, 44), width=int(5 * S))
         stroke(d, [(cx - 56, 408), (cx - 34, 398)], 4, (255, 255, 255))
     stroke(d, [(520, 438), (540, 428), (560, 438)], 7)
-    stroke(d, [(356, 420), (290, 412)], 6); stroke(d, [(724, 420), (790, 412)], 6)
+    stroke(d, [(362, 420), (318, 412)], 6); stroke(d, [(718, 420), (762, 412)], 6)
     # cejas alegres
     stroke(d, [(410, 360), (442, 348), (476, 352)], 5)
     stroke(d, [(604, 342), (638, 332), (670, 344)], 5)
