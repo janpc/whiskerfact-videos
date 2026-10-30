@@ -2,21 +2,73 @@
  "_about": "What the nightly run tests. The weekly review (REVIEW.md) reads the metrics, updates 'weights' and 'learned', and opens or closes tests. Times are Europe/Madrid; the audience is mostly US (NY = Madrid - 6 h, LA = Madrid - 9 h).",
  "time_slots": {
   "status": "testing",
-  "options": {"14:00": "8 am NY, morning commute", "17:30": "11:30 am NY, before lunch", "20:30": "2:30 pm NY, afternoon", "23:30": "5:30 pm NY, after work"},
-  "weights": {"14:00": 1, "17:30": 1, "20:30": 1, "23:30": 1},
+  "options": {
+   "14:00": "8 am NY, morning commute",
+   "17:30": "11:30 am NY, before lunch",
+   "20:30": "2:30 pm NY, afternoon",
+   "23:30": "5:30 pm NY, after work"
+  },
+  "weights": {
+   "14:00": 1,
+   "17:30": 1,
+   "20:30": 1,
+   "23:30": 1
+  },
   "rule": "Pick the slot with the fewest videos so far in the log (ties: higher weight, then earliest). Once a winner is declared, use it about 70% of the time and keep exploring the others."
  },
  "hook_style": {
   "status": "testing",
-  "options": {"question": "the hook is a direct question ('Why do cats purr?')", "statement": "a surprising statement, then the question ('Slaves didn't build the pyramids. So who did?')"},
-  "weights": {"question": 1, "statement": 1},
+  "options": {
+   "question": "the hook is a direct question ('Why do cats purr?')",
+   "statement": "a surprising statement, then the question ('Slaves didn't build the pyramids. So who did?')"
+  },
+  "weights": {
+   "question": 1,
+   "statement": 1
+  },
   "rule": "Alternate: use the option with fewer videos in the log."
  },
  "caption_style": {
   "status": "testing",
-  "options": {"teaser": "hook + one line that teases the twist, without giving the answer", "question_cta": "hook + a question inviting comments ('Did you know this? 👇')"},
-  "weights": {"teaser": 1, "question_cta": 1},
+  "options": {
+   "teaser": "hook + one line that teases the twist, without giving the answer",
+   "question_cta": "hook + a question inviting comments ('Did you know this? 👇')"
+  },
+  "weights": {
+   "teaser": 1,
+   "question_cta": 1
+  },
   "rule": "Alternate: use the option with fewer videos in the log."
  },
- "learned": []
+ "learned": [],
+ "format": {
+  "status": "testing",
+  "options": {
+   "explainer": "why/how explainer (FORMATS.md)",
+   "myth": "myth or fact",
+   "versus": "X vs Y in 3 rounds",
+   "what_if": "grounded hypothetical",
+   "quiz": "pop quiz with 3 options"
+  },
+  "weights": {
+   "explainer": 1,
+   "myth": 1,
+   "versus": 1,
+   "what_if": 1,
+   "quiz": 1
+  },
+  "rule": "Use the format with the fewest reels in the log (ties: the one used longest ago). Never the same format twice in a row. Themed (special-date) reels may use any format."
+ },
+ "personality": {
+  "status": "testing",
+  "options": {
+   "light": "1 signature touch",
+   "full": "2 signature touches"
+  },
+  "weights": {
+   "light": 1,
+   "full": 1
+  },
+  "rule": "Alternate. See PERSONALITY.md."
+ }
 }
