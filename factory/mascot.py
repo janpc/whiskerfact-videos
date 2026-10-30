@@ -65,41 +65,71 @@ class Cat:
         img.alpha_composite(self.mouth[mouth])
         return img.resize((size, size), Image.LANCZOS) if size else img
 
-    # ---------- labios ----------
-    @staticmethod
-    def shape_for(ch, loud):
-        if ch in "mbp": return "m"
-        if ch in "fv": return "f"
-        if ch in "ltdn": return "slight"          # la boca con lengua queda rara al hablar
-        if ch == "a": return "ah" if loud else "a"
-        if ch == "e": return "e"
-        if ch in "iy": return "ee"
-        if ch == "o": return "oo" if loud else "o"
-        if ch == "u": return "oo"
-        return "slight" if not loud else "a"
-
-    def lipsync(self, words, rms, fps, n, t_offset=0.0, rest="smile"):
-        """words: [(palabra, t0, t1)] en s; rms: volumen normalizado por fotograma (0..~1). Devuelve n bocas."""
-        raw = []
-        for i in range(n):
-            T, v = i / fps - t_offset, (rms[i] if i < len(rms) else 0)
-            cur = None
-            for w, a, b in words:
-                if a <= T < b:
-                    letters = [c for c in w.lower() if c.isalpha()] or ["e"]
-                    ch = letters[min(len(letters) - 1, int((T - a) / (b - a) * len(letters)))]
-                    cur = "smile" if v < 0.12 else self.shape_for(ch, v > 0.55)
-                    break
-            raw.append(cur or rest)
-        out, held = [], 99
-        for k in raw:                                       # mínimo 3 fotogramas por forma
-            if not out or (k != out[-1] and held >= 3):
-                if out and abs(OPEN[k] - OPEN[out[-1]]) >= 2:   # salto grande: una boca intermedia
-                    out.append("slight" if min(OPEN[k], OPEN[out[-1]]) == 0 else "a"); held = 1; continue
-                out.append(k); held = 1
-            else:
-                out.append(out[-1]); held += 1
+    # ---------- labios: fonemas reales (pocketsphinx) -> bocas, con pocas formas y bien sincronizadas ----------
+    def lipsync(self, phones, fps, n, t_offset=0.0, rest="smile", min_frames=4, lead=1):
+        """phones: [(fonema, t0, t1)] en s (phone_align). Devuelve n bocas, una por fotograma.
+        - solo las vocales y los cierres visibles (m/b/p, f/v) cambian la boca; el resto de consonantes se funden
+          con la vocal vecina -> muchos menos cambios;
+        - cada forma dura >= min_frames (4 = 0,13 s); los cierres m/b/p pueden durar 2 para que se vean;
+        - la boca va lead fotogramas por delante del sonido, como se hace en animación (se percibe sincronizada)."""
+        segs = []
+        for ph, a, b in phones:
+            v = VISEME.get(ph)
+            if v == "ah?": v = "ah" if b - a >= 0.12 else "a"            # vocal abierta larga = boca muy abierta
+            segs.append([v, a, b])
+        # consonantes "neutras" (None) -> se quedan con la vocal anterior (o la siguiente al principio de palabra)
+        for i, sg in enumerate(segs):
+            if sg[0] is None:
+                prev = next((segs[j][0] for j in range(i - 1, -1, -1) if segs[j][0] not in (None, rest)), None)
+                nxt = next((segs[j][0] for j in range(i + 1, len(segs)) if segs[j][0] not in (None,)), rest)
+                sg[0] = prev if prev and i > 0 and segs[i - 1][0] not in (rest,) else (nxt if nxt != rest else "slight")
+        frames = [rest] * n
+        for v, a, b in segs:
+            for i in range(max(0, int((a + t_offset) * fps) - lead), min(n, int((b + t_offset) * fps) - lead)):
+                frames[i] = v
+        # agrupar en tramos y fundir los demasiado cortos con el vecino más largo
+        runs = []
+        for f in frames:
+            if runs and runs[-1][0] == f: runs[-1][1] += 1
+            else: runs.append([f, 1])
+        changed = True
+        while changed:
+            changed = False
+            for i, (v, L) in enumerate(runs):
+                need = 2 if v in ("m", "f") else min_frames
+                if L < need and len(runs) > 1:
+                    j = i - 1 if i > 0 and (i == len(runs) - 1 or runs[i - 1][1] >= runs[i + 1][1]) else i + 1
+                    runs[j][1] += L; del runs[i]
+                    k = 0                                              # unir vecinos iguales
+                    while k < len(runs) - 1:
+                        if runs[k][0] == runs[k + 1][0]: runs[k][1] += runs[k + 1][1]; del runs[k + 1]
+                        else: k += 1
+                    changed = True; break
+        out = [v for v, L in runs for _ in range(L)]
         return out[:n]
+
+# fonema (ARPAbet) -> boca. None = consonante que no cambia la boca
+VISEME = {"AA": "ah?", "AE": "ah?", "AH": "a", "AY": "ah?", "AW": "ah?", "EH": "e", "EY": "e", "IH": "e",
+          "IY": "ee", "Y": "ee", "AO": "o", "OW": "o", "OY": "o", "UH": "o", "UW": "oo", "W": "oo", "ER": "o", "R": None,
+          "M": "m", "B": "m", "P": "m", "F": "f", "V": "f", "SIL": "smile"}
+
+def phone_align(mp3, text):
+    """fonemas con tiempos (s) por alineación forzada local, gratis"""
+    import re
+    from pocketsphinx import Decoder
+    from align import EXTRA_PHONES, LETTER, norm
+    pcm = subprocess.run(["ffmpeg", "-v", "error", "-i", mp3, "-ac", "1", "-ar", "16000", "-f", "s16le", "-"],
+                         capture_output=True, check=True).stdout
+    keys = [norm(t) for t in text.split() if norm(t)]
+    dec = Decoder(samprate=16000, bestpath=False, loglevel="FATAL")
+    for k in set(keys):
+        if dec.lookup_word(k) is None:
+            dec.add_word(k, EXTRA_PHONES.get(k) or " ".join(LETTER.get(c, "") for c in k if c in LETTER), True)
+    dec.set_align_text(" ".join(keys))
+    for _ in range(2):                                   # 1ª pasada: palabras; 2ª: fonemas
+        dec.start_utt(); dec.process_raw(pcm, full_utt=True); dec.end_utt()
+        if _ == 0: dec.set_alignment()
+    return [(p.name, p.start / 100, (p.start + p.duration) / 100) for w in dec.get_alignment() for p in w]
 
 def rms_track(path, fps, offset, n):
     raw = subprocess.run(["ffmpeg", "-v", "error", "-i", path, "-ac", "1", "-ar", "16000", "-f", "f32le", "-"],
@@ -113,14 +143,15 @@ def rms_track(path, fps, offset, n):
 if __name__ == "__main__":
     FPS, SIZE, CAT = 30, 1080, 900
     AT = 0.6
-    WORDS = [("class", 0.07, 0.36), ("dismissed", 0.38, 1.25), ("stay", 1.39, 1.60), ("curious", 1.62, 2.31)]
-    end = AT + WORDS[-1][2]
+    voice = os.path.join(HERE, "voice", "slogan_brad.mp3")
+    PH = phone_align(voice, "class dismissed stay curious")
+    end = AT + max(b for p, a, b in PH if p != "SIL")
     total = end + 5.4
     n = int(total * FPS)
-    voice = os.path.join(HERE, "voice", "slogan_brad.mp3")
     rms = rms_track(voice, FPS, AT, n)
     cat = Cat()
-    mouths = cat.lipsync(WORDS, rms, FPS, n, AT)
+    mouths = cat.lipsync(PH, FPS, n, AT)
+    print(' '.join(f'{v}x{sum(1 for _ in g)}' for v, g in __import__('itertools').groupby(mouths)))
     env = np.convolve(rms, np.ones(5) / 5, "same")
 
     def plan(T):
