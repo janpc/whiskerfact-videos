@@ -7,6 +7,7 @@ This is a one-shot task that runs about 30 minutes after a reel's scheduled time
    - from 3 hours before to 1 hour after the scheduled time
    - Find the post with the given Metricool **uuid**.
 2. For each provider (instagram, tiktok, youtube), read `status` and `publicUrl`.
+   - **TikTok link:** Metricool builds TikTok links with the display name, which gives a broken URL. Rebuild it as `https://www.tiktok.com/@mrwhiskerfact/video/<id>`, using the id from the provider's `id` field or the end of `publicUrl`.
    - **OK:** `PUBLISHED`, or TikTok `AWAITING_CONFIRMATION` with a published id.
    - **Still `PENDING`:** wait about 10 minutes and look once more. A second `PENDING` counts as a failure.
    - **Failure:** anything else (`ERROR`, `FAILED`, missing).
