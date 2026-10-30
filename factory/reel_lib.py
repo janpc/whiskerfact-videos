@@ -218,8 +218,8 @@ def _render_one(arg):
     return name
 
 def outro_frame(reel, t):
-    """cierre "gafas" con el fondo y la marca de la categoría del vídeo"""
-    import outro2, outro4
+    """cierre: el gato nuevo (mascot.py) dice el eslogan dentro de su círculo, con el fondo y la marca de la categoría"""
+    import outro2, outro5
     outro2.CAT = reel.cat
     outro2.BG = reel.bg
-    return outro4.frame_a(t)
+    return outro5.frame(t)

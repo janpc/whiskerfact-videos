@@ -48,6 +48,8 @@ class VoiceReel:
         self.draw = {}
         outro4.WORDS_A = [SLOGAN_AT + t for t in SLOGAN_WORDS[voice]]
         outro4.WINK = SLOGAN_AT + SLOGAN_END[voice] + 0.15
+        import outro5
+        outro5.WORDS, outro5.WINK, outro5.VOICE = outro4.WORDS_A, outro4.WINK, voice
         self.blocks = self._blocks()
         for n in names[1:]: R.sound(self.sc[n][0] + 0.05, "tap", 0.7)      # entra el título de cada escena
 
@@ -191,8 +193,8 @@ class VoiceReel:
         kept = []
         for e in sorted(self.R.events):
             if sum(1 for k in kept if e[0] - k[0] < 1.0) < B.SFX_MAX_PER_SECOND: kept.append(e)
-        outro_fx = [(O, SFX.whoosh(0.5), 0.6), (O + 0.42, SFX.pop(), 0.9), (O + 0.86, SFX.click(), 0.4),
-                    (O + 1.6, SFX.clink(), 0.9), (O + outro4.WINK, SFX.sparkle(), 0.9)]
+        outro_fx = [(O, SFX.whoosh(0.5), 0.6), (O + 0.42, SFX.pop(), 0.9),          # entra el círculo
+                    (O + outro4.WINK, SFX.sparkle(), 0.9)]                          # guiño (ya no hay gafas ni clink)
         fx = SFX.mix([(t, gens[nm](), g) for t, nm, g in kept] + outro_fx, total)[:n]
         fx = fx / (np.max(np.abs(fx)) or 1) * 0.9 * 10 ** (B.SFX_UNDER_VOICE_DB / 20) * (1 - 0.5 * env)
         music_file = os.path.join(HERE, "voice", f"{self.slug}_music.mp3")   # música compuesta para este vídeo (ElevenLabs)

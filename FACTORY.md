@@ -97,7 +97,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - a visual punch about every 10 s
   - every animation has its sound effect
 - The background uses the category colour (`brand.bg_for`). Subtitles appear word by word with the voice.
-- Close with the "gafas" outro: the narrated slogan, with the wink after the words.
+- Close with the outro (outro5, automatic via reel_lib.outro_frame): the new cat (mascot.py) says the slogan inside its circle with phoneme lip-sync, then winks and smiles. Never edit the outro per video.
 - **Big, rich drawings:**
   - The main subject must fill the illustration box: at least 60% of its height (about 360 px tall) and 70% of its width. Use a close-up or a cutaway, not a thin strip across the screen.
   - Add a second layer of detail where it helps: texture, small moving parts, labels with leader lines.
