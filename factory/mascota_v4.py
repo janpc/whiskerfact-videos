@@ -62,7 +62,6 @@ def body(d, o):
     # hombros y ropa (caída natural, como sus personajes)
     torso = [(190, 1090), (220, 930), (300, 860), (430, 820), (540, 828), (650, 820), (780, 860), (860, 930), (890, 1090)]
     shape(d, torso, o["top"])
-    d.polygon([P(*p) for p in spline([(170, 900), (260, 830), (300, 900), (260, 1090), (130, 1090)])], fill=o["top_s"])
     if o.get("under"):                                   # cazadora abierta con camiseta debajo
         shape(d, [(450, 795), (540, 820), (630, 795), (600, 1090), (480, 1090)], o["under"])
         stroke(d, [(450, 795), (470, 900), (480, 1090)]); stroke(d, [(630, 795), (612, 900), (600, 1090)])
@@ -82,27 +81,22 @@ def body(d, o):
             shape(d, [(x - 36, 790), (x + 36, 790), (x + 40, 870), (x - 40, 870)], (64, 64, 70))
 
 def head(d, wink=False):
-    # orejas: más cortas y redondeadas
+    # orejas en las esquinas de la cabeza: base ancha, punta algo redondeada; el borde exterior sigue el contorno
     for sx in (-1, 1):
-        base = 540 + sx * 200
-        shape(d, [(base - sx * 120, 300), (base - sx * 10, 150), (base + sx * 50, 130), (base + sx * 110, 330)], FUR)
-        shape(d, [(base - sx * 70, 290), (base + sx * 6, 190), (base + sx * 70, 300)], EAR_IN, line=False)
-        for k in range(2):
-            stroke(d, [(base + sx * (14 + k * 20), 286), (base + sx * (24 + k * 18), 236)], 2)
-    # cabeza grande y redonda, mejillas mullidas con 3 mechones suaves por lado
-    pts = spline([(540, 236), (690, 262), (800, 360), (842, 500), (836, 600), (868, 640), (820, 660), (842, 700),
-                  (770, 730), (660, 790), (540, 806), (420, 790), (310, 730), (238, 700), (260, 660), (212, 640),
-                  (244, 600), (238, 500), (280, 360), (390, 262)], n=10)
+        X = lambda x: 540 + sx * (x - 540)
+        shape(d, [(X(262), 450), (X(258), 300), (X(282), 172), (X(306), 156), (X(332), 166), (X(430), 262)], FUR)
+        shape(d, [(X(300), 330), (X(304), 216), (X(320), 204), (X(392), 276)], EAR_IN, line=False)
+        stroke(d, [(X(310), 300), (X(322), 250)], 2); stroke(d, [(X(334), 304), (X(348), 262)], 2)
+    # cabeza: óvalo ancho y suave (las cabezas de gato son más anchas que altas), mofletes integrados
+    pts = spline([(540, 258), (670, 270), (774, 322), (838, 420), (856, 540), (846, 620), (862, 662), (838, 684),
+                  (830, 716), (770, 760), (660, 798), (540, 810), (420, 798), (310, 760), (250, 716), (242, 684),
+                  (218, 662), (234, 620), (224, 540), (242, 420), (306, 322), (410, 270)], n=10)
     d.polygon([P(*p) for p in pts], fill=FUR)
     d.line([P(*p) for p in pts] + [P(*pts[0])], fill=INK, width=int(LW * S), joint="curve")
-    d.polygon([P(*p) for p in spline([(720, 290), (800, 380), (830, 520), (790, 680), (680, 770), (760, 640), (780, 480)])], fill=FUR_S)
+    d.polygon([P(*p) for p in spline([(730, 300), (814, 390), (846, 540), (812, 690), (700, 780), (776, 640), (796, 480)])], fill=FUR_S)
     # rayas de atigrado más suaves
     for x0, top, w in ((496, 262, 14), (540, 246, 18), (584, 262, 14)):
         d.polygon([P(*p) for p in spline([(x0 - w / 2, top), (x0 + w / 2, top), (x0 + w / 4, top + 84), (x0, top + 92), (x0 - w / 4, top + 84)])], fill=STRIPE)
-    for sx in (-1, 1):
-        for k in range(2):
-            y = 600 + k * 40
-            d.polygon([P(*p) for p in spline([(540 + sx * 300, y - 6), (540 + sx * 230, y), (540 + sx * 300, y + 12)])], fill=STRIPE)
     # mofletes sonrosados
     for sx in (-1, 1):
         d.ellipse([P(540 + sx * 205 - 52, 600), P(540 + sx * 205 + 52, 650)], fill=(236, 156, 166))
