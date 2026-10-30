@@ -22,10 +22,10 @@ import brand as B, music as M, sfx as SFX
 from reel_lib import clamp, eo, W, FPS, HERE, outro_frame
 import outro4
 
-SLOGAN_AT = 0.6
+SLOGAN_AT = 0.4                                  # el narrador empieza en cuanto el círculo aterriza
 SLOGAN_WORDS = {"brad": [0.07, 0.38, 1.39, 1.62]}   # inicio de cada palabra en voice/slogan_<voz>.mp3
 SLOGAN_END = {"brad": 2.31}
-OUTRO_LEN = 4.8
+OUTRO_LEN = B.MASCOT["outro"]["dur"]
 
 class VoiceReel:
     def __init__(self, R, slug, openers, voice="brad"):
@@ -47,7 +47,7 @@ class VoiceReel:
         R.total = self.outro_at + OUTRO_LEN
         self.draw = {}
         outro4.WORDS_A = [SLOGAN_AT + t for t in SLOGAN_WORDS[voice]]
-        outro4.WINK = SLOGAN_AT + SLOGAN_END[voice] + 0.2
+        outro4.WINK = SLOGAN_AT + SLOGAN_END[voice] + 0.15
         self.blocks = self._blocks()
         for n in names[1:]: R.sound(self.sc[n][0] + 0.05, "tap", 0.7)      # entra el título de cada escena
 
@@ -216,7 +216,7 @@ class VoiceReel:
         wav = os.path.join(out_dir, "audio_voice.wav"); self.build_audio(wav)
         final = os.path.join(HERE, "out", f"{self.name}.mp4")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", os.path.join(out_dir, "silent.mp4"), "-i", wav, "-map", "0:v", "-map", "1:a",
-                        "-c:v", "copy", "-af", f"loudnorm=I={B.VOICE_LUFS}:TP=-1.5", "-c:a", "aac", "-b:a", "160k", "-shortest",
+                        "-c:v", "copy", "-af", f"loudnorm=I={B.VOICE_LUFS}:TP=-2,alimiter=limit=0.79:level=disabled", "-c:a", "aac", "-b:a", "160k", "-shortest",
                         "-movflags", "+faststart", final], check=True)
         return final
 

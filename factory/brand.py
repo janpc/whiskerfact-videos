@@ -114,7 +114,7 @@ MASCOT = dict(
     name="Mr. Whiskerfact",
     file="out/mrwhiskerfact_avatar.png",
     hook=dict(size=260, pos=(70, 1260), enter=0.6),     # asoma abajo a la izquierda
-    outro=dict(module="outro4.frame_a", size=600, center=(540, 1060), dur=4.8,   # cierre "gafas" en su círculo; guiño tras la última palabra
+    outro=dict(module="outro4.frame_a", size=600, center=(540, 1060), dur=3.6,   # cierre "gafas" corto: guiño tras la última palabra y fuera (antes 4,8 s)
                sfx="sfx.OUTRO_GAFAS"),                  # igual en todos los vídeos
 )
 
