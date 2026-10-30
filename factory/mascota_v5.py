@@ -90,34 +90,40 @@ def head(d, wink=False):
         stroke(d, tuft, 2, smooth=False)
     # cabeza ancha (más ancha que alta): parte de arriba casi plana entre las orejas, lados casi rectos que se abren
     # un poco en los mofletes, mandíbula en U ancha
-    pts = spline([(540, 246), (650, 250), (740, 286), (786, 380), (796, 480), (804, 556), (776, 626), (700, 680),
-                  (620, 708), (540, 714), (460, 708), (380, 680), (304, 626), (276, 556), (284, 480), (294, 380),
-                  (340, 286), (430, 250)], n=10)
+    # pentágono invertido con esquinas suaves: arriba ancho y casi plano, lados casi rectos, y se cierra en una barbilla redondeada
+    pts = spline([(540, 252), (680, 252), (770, 268), (796, 330), (800, 440), (796, 530), (760, 600), (690, 668),
+                  (610, 718), (540, 734), (470, 718), (390, 668), (320, 600), (284, 530), (280, 440), (284, 330),
+                  (310, 268), (400, 252)], n=10)
     d.polygon([P(*p) for p in pts], fill=FUR)
     d.line([P(*p) for p in pts] + [P(*pts[0])], fill=INK, width=int(LW * S), joint="curve")
-    d.polygon([P(*p) for p in spline([(716, 276), (780, 370), (798, 520), (760, 640), (660, 700), (740, 590), (760, 430)])], fill=FUR_S)
+    d.polygon([P(*p) for p in spline([(730, 268), (792, 340), (798, 520), (750, 610), (640, 700), (730, 580), (760, 420)])], fill=FUR_S)
     # rayas de la frente
     for x0, top, w in ((506, 254, 14), (540, 248, 18), (574, 254, 14)):
         d.polygon([P(*p) for p in spline([(x0 - w / 2, top), (x0 + w / 2, top), (x0 + w / 4, top + 70), (x0, top + 76), (x0 - w / 4, top + 70)])], fill=STRIPE)
     # mofletes rosados
     for sx in (-1, 1):
         d.ellipse([P(540 + sx * 172 - 44, 548), P(540 + sx * 172 + 44, 586)], fill=(236, 156, 166))
-    # hocico: dos almohadillas redondas de bigotes (como la referencia) + barbilla
-    for sx in (-1, 1):
-        shape(d, [(540 + sx * 4, 584), (540 + sx * 40, 576), (540 + sx * 70, 600), (540 + sx * 62, 638), (540 + sx * 24, 646), (540 + sx * 4, 628)], FUR_L)
-    shape(d, [(504, 640), (540, 634), (576, 640), (566, 672), (540, 682), (514, 672)], FUR_L)
+    # hocico claro y redondeado
+    shape(d, [(540, 572), (600, 580), (636, 612), (628, 660), (590, 694), (540, 704), (490, 694), (452, 660), (444, 612), (480, 580)], FUR_L, line=False)
     for sx in (-1, 1):
         for k in range(3):
-            cx, cy = 540 + sx * (30 + k * 12), 604 + k * 9
+            cx, cy = 540 + sx * (66 + k * 14), 610 + k * 10
             d.ellipse([P(cx - 3, cy - 3), P(cx + 3, cy + 3)], fill=(150, 146, 146))
-    # nariz de corazón y sonrisa
-    shape(d, [(524, 560), (540, 556), (556, 560), (551, 574), (540, 584), (529, 574)], NOSE)
-    stroke(d, [(540, 584), (540, 600)])
-    shape(d, [(518, 628), (540, 626), (562, 628), (556, 646), (540, 654), (524, 646)], (150, 54, 68))
+    # nariz de corazón
+    shape(d, [(522, 556), (540, 551), (558, 556), (553, 572), (540, 583), (527, 572)], NOSE)
+    stroke(d, [(540, 583), (540, 598)])
+    # sonrisa grande y abierta: labio en W y boca en D con lengua
+    mouth = [(486, 602), (512, 606), (540, 598), (568, 606), (594, 602), (586, 640), (566, 668), (540, 678), (514, 668), (494, 640)]
+    shape(d, mouth, (128, 40, 56))
+    tongue = [(512, 660), (526, 646), (540, 650), (554, 646), (568, 660), (556, 674), (540, 678), (524, 674)]
+    d.polygon([P(*p) for p in spline(tongue)], fill=(236, 120, 136))
+    stroke(d, [(486, 602), (512, 610), (540, 598)], 4); stroke(d, [(540, 598), (568, 610), (594, 602)], 4)
+    for sx in (-1, 1):                                     # comisuras hacia arriba
+        stroke(d, [(540 + sx * 54, 602), (540 + sx * 64, 592)], 4)
     # bigotes
     for sx in (-1, 1):
         for dy in (0, 14, 28):
-            stroke(d, [(540 + sx * 66, 580 + dy * 0.5), (540 + sx * 180, 574 + dy), (540 + sx * 290, 572 + dy * 1.6)], 2)
+            stroke(d, [(540 + sx * 96, 612 + dy * 0.5), (540 + sx * 200, 604 + dy), (540 + sx * 300, 600 + dy * 1.6)], 2)
     # ojos grandes y brillantes
     for sx in (-1, 1):
         cx, cy = 540 + sx * 104, 448
