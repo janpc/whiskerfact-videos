@@ -24,6 +24,12 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Publish it no later than 14:00 Madrid on the event day. Never publish one after the event.
 - **Category:** otherwise, the next one in `brand.ROTATION` after the last *regular* (non-themed) log entry.
 - **Topic:** an evergreen curiosity in that category that is not already in the log. It must be phrased as a question a curious adult would stop scrolling for.
+- **Demand check:** pick from `growth/topics.md` first, taking the highest-scored idea for the category. Otherwise write 5 candidate questions and score each from 0 to 3 on three things:
+  - **(a) People ask it:** the exact question, or a close variant, appears in search results as a common question ("People also ask", forums, Q&A sites, news explainers).
+  - **(b) It has a surprising answer:** a twist the viewer would not guess.
+  - **(c) It's easy to show:** a clear mechanism to draw.
+- Use WebSearch for (a). Choose the highest total. Add the other 4 to `growth/topics.md` with their scores for later nights.
+- Avoid questions where the top results are debunks we can't verify, and topics that are a single trivia number with no "why".
 - **Hook:** at most 10 words. **Both lines are fully on screen from frame 0** (use `V.hook_text`), because viewers decide in the first second. The question never appears late, and something in the drawing moves within the first 0.3 s. The engine adds an entry punch at frame 0. The first frame is also the cover, so it must read well on its own. Use the hook style that `growth/experiments.json` assigns today (see step 8).
 
 ## 3. Verify
@@ -124,7 +130,16 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - **Experiments:** read `growth/experiments.json`. For every test with status `testing`, pick today's option by its `rule`, counting options already used in `log/published.json`. Choose them all before writing the script, because the hook style changes the script.
 - **Time:** use the `time_slots` option chosen today, on today's date (Madrid). If the test is `decided`, follow its rule.
 - **Special dates:** a themed reel goes in the earliest slot that still falls before the event.
-- **Text:** the hook, then one line in today's `caption_style`, then 3–5 hashtags: `#mrwhiskerfact`, the category, the topic and `#didyouknow`. Add the event hashtag on special dates.
+- **Text:** this is the same text for all three networks, and it is also the YouTube description. Write it in this order:
+  1. the hook;
+  2. one line in today's `caption_style`;
+  3. a call to action, rotating these (pick the one used least in the log, and record it as `variants.cta`):
+     - "🐱 Follow for more curious facts."
+     - "💾 Save this for your next trivia night."
+     - "👇 Tag someone who needs to know this.";
+  4. one short sources line naming the institutions, for example "Sources: Harvard, Cell (2020)". No URLs;
+  5. 3–5 hashtags: `#mrwhiskerfact`, the category, the topic and `#didyouknow`. Add the event hashtag on special dates.
+  Keep it under 400 characters.
 - **TikTok:** `tiktokData`:
   - `privacyOption PUBLIC_TO_EVERYONE`
   - `title` set to the question (required)
