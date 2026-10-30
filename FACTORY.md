@@ -144,6 +144,15 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - 5 tags
 - Metricool copies the video when the post is created, so the GitHub file only needs to exist at that moment.
 
+## 8b. Schedule the post check
+- Right after `createScheduledPost` succeeds, create a one-shot scheduled task with the Claude_Code_Remote connector (`create_trigger`):
+  - `run_once_at`: the publish time + 30 minutes (UTC)
+  - `name`: "Mr. Whiskerfact check <slug>"
+  - `notifications`: `{"push": true}`
+  - `initiation`: `"human_schedule"`
+  - prompt: "Clone janpc/whiskerfact-videos (attach it with push access if needed), read CHECK.md and follow it for the reel '<title>' (slug <slug>), Metricool uuid <uuid>, scheduled at <ISO time Europe/Madrid>. Never publish or edit posts."
+- **Safety net:** at the start of every nightly run, look in the log for any published entry from the last 3 days without a `check` field and with its time already passed. Run CHECK.md for it inline and include the result in tonight's notification.
+
 ## 9. Log and clean-up
 - Append to `log/published.json`:
   - the date, category, slug, title, hook, sources (URLs), the Metricool uuid and the scheduled time
