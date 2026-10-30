@@ -176,10 +176,7 @@ def _(img, T, t, s, e):
     ground(img, 1290)
     pyramid(img, CX - 20, 1290, 760, 1.0, build=0.35 + 0.65 * eo(t / 0.9))
     R.chrome(img, T)
-    fade = clamp((e - T) / B.EXIT)
-    l1 = "Slaves didn't build the pyramids."
-    R.txt(img, l1, TITLE_Y, "hook", B.TEXT, fade, rise=False)
-    R.txt(img, "So who did?", TITLE_Y + R.sprite(l1, "hook", B.TEXT).size[1] - 4, "hook", ACC_T, fade * clamp((T - V.word_time("So") + 0.1) / 0.2), rise=False)
+    V.hook_text(img, T, e, "Slaves didn't build the pyramids.", "So who did?", "So")
     R.hook_mascot(img, T, 0.6, e)
 V.sounds("hook", [(0.0, "whoosh", 0.7), (0.6, "pop", 0.8)])
 

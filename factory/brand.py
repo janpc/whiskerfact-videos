@@ -93,7 +93,7 @@ INTERRUPT_EVERY = 10.0    # s, un golpe visual (zoom, destello, reacción de la 
 MAX_PAUSE = 0.4           # s máximos de silencio en la voz
 VOICE_WPM = (160, 175)    # palabras por minuto de la voz
 HOOK_MAX_WORDS = 10
-FIRST_CHANGE = 1.0        # s, primer cambio visual tras el fotograma 0
+FIRST_CHANGE = 0.3        # s, primer cambio visual: algo se mueve casi de inmediato (golpe de entrada en 0)
 def read_time(text):          # tiempo mínimo en pantalla de un texto
     return 1.0 + 0.3 * len(text.split())
 MAX_TEXT_BLOCKS = 2           # bloques de texto a la vez, sin contar marca

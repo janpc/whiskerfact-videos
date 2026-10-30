@@ -23,7 +23,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Publish it no later than 14:00 Madrid on the event day. Never publish one after the event.
 - **Category:** otherwise, the next one in `brand.ROTATION` after the last *regular* (non-themed) log entry.
 - **Topic:** an evergreen curiosity in that category that is not already in the log. It must be phrased as a question a curious adult would stop scrolling for.
-- **Hook:** at most 10 words, on screen from frame 0. Use the hook style that `growth/experiments.json` assigns today (see step 8).
+- **Hook:** at most 10 words. **Both lines are fully on screen from frame 0** (use `V.hook_text`), because viewers decide in the first second. The question never appears late, and something in the drawing moves within the first 0.3 s. The engine adds an entry punch at frame 0. The first frame is also the cover, so it must read well on its own. Use the hook style that `growth/experiments.json` assigns today (see step 8).
 
 ## 3. Verify
 - Every fact in the script must be confirmed by **two independent, reliable sources**, for example a university, a museum, NASA or NOAA, a peer-reviewed review, or Britannica.

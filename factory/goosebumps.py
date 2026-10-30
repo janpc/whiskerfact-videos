@@ -279,17 +279,12 @@ def wt(word, s): return V.word_time(word, after=s)
 # ---------- escenas ----------
 @V.scene("hook")
 def _(img, T, t, s, e):
-    k = eio((t - 0.7) / 0.7)
+    k = eio((t - 0.15) / 0.6)          # los pelos se erizan nada más empezar
     skin_row(img, 1210, k, 130, T=T)
     R.chrome(img, T)
-    fade = clamp((e - T) / B.EXIT)
-    l1 = "Goosebumps evolved for fur."
-    R.txt(img, l1, TITLE_Y, "hook", B.TEXT, fade, rise=False)
-    R.txt(img, "So why do we get them?", TITLE_Y + R.sprite(l1, "hook", B.TEXT).size[1] - 4, "hook", ACC_T,
-          fade * clamp((T - V.word_time("So") + 0.1) / 0.2), rise=False)
+    V.hook_text(img, T, e, "Goosebumps evolved for fur.", "So why do we get them?", "So")
     R.hook_mascot(img, T, 0.6, e)
-    return R.punch(img, T, 0.7)
-V.sounds("hook", [(0.0, "whoosh", 0.7), (0.6, "pop", 0.8), (0.75, "whoosh", 0.6)])
+V.sounds("hook", [(0.0, "whoosh", 0.7), (0.15, "whoosh", 0.6), (0.6, "pop", 0.8)])
 
 @V.scene("skin")
 def _(img, T, t, s, e):

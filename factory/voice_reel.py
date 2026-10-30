@@ -15,7 +15,7 @@ Qué hace:
 - cierre "gafas" con el eslogan narrado y el guiño tras la última palabra;
 - audio: voz + efectos atenuados bajo la voz + música documental animada con ducking; loudnorm a brand.VOICE_LUFS.
 """
-import json, os, subprocess, sys
+import json, math, os, subprocess, sys
 import numpy as np
 from PIL import Image
 import brand as B, music as M, sfx as SFX
@@ -71,9 +71,24 @@ class VoiceReel:
                 img = self.R.bg.copy()
                 out = self.draw[n](img, T, T - s, s, e)
                 img = out if out is not None else img
+                if n == "hook": img = self.R.punch(img, T, 0.0, dur=0.3, amt=0.06)   # golpe de entrada en el fotograma 0
                 if n != "hook": self._subs(img, T)
                 return img
         return self.R.bg.copy()
+
+    # ---------- gancho ----------
+    def hook_text(self, img, T, e, line1, line2, ask_word):
+        """gancho completo y legible desde el fotograma 0: las dos líneas ya están en pantalla;
+        cuando el narrador dice `ask_word` la pregunta da un pequeño latido (no aparece tarde)"""
+        R = self.R
+        fade = clamp((e - T) / B.EXIT)
+        y = B.ZONES["title"][0] + 10
+        s1 = R.sprite(line1, "hook", B.TEXT); s2 = R.sprite(line2, "hook", R.acc_t)
+        R.put(img, s1, W / 2, y, fade, "mt")
+        tq = self.word_time(ask_word)
+        k = 1 + 0.08 * math.sin(math.pi * (T - tq) / 0.35) if tq <= T < tq + 0.35 else 1.0
+        spr = s2 if k == 1.0 else s2.resize((int(s2.size[0] * k), int(s2.size[1] * k)), Image.LANCZOS)
+        R.put(img, spr, W / 2, y + s1.size[1] - 4 + s2.size[1] / 2, fade, "mm")
 
     # ---------- subtítulos ----------
     def _blocks(self):
