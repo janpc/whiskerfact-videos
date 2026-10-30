@@ -81,28 +81,32 @@ def body(d, o):
 
 def head(d, wink=False):
     X = lambda x, sx: 540 + sx * (x - 540)
-    # silueta de cabeza + orejas sacada de la referencia de la autora (head_ref.json, simetrizada)
-    ref = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "head_ref.json")))
-    sil = spline([tuple(p) for p in ref["pts"]], n=6)
-    M = lambda xr, yr: (540 + (xr - ref["cx"]) * ref["sc"], 105 + (yr - ref["y0"]) * ref["sc"])
-    # sombra lateral: silueta en gris oscuro y, encima, la misma silueta desplazada a la izquierda en gris normal
+    # cabeza = dos circunferencias de distinto diámetro unidas con suavidad en los mofletes:
+    # una pequeña arriba (cráneo) y una mayor abajo (mofletes y hocico)
+    UP, LO = (540, 384, 228), (540, 540, 296, 210)     # arriba: círculo (cx, cy, r) · abajo: elipse ancha (cx, cy, rx, ry)
+    # orejas detrás, ancladas en la circunferencia de arriba
+    for sx in (-1, 1):
+        X = lambda x: 540 + sx * (x - 540)
+        shape(d, [(X(318), 360), (X(316), 150), (X(330), 104), (X(352), 100), (X(476), 196)], FUR)
+        e = [(X(340), 310), (X(340), 154), (X(352), 140), (X(448), 216)]
+        d.polygon([P(*p) for p in spline(e)], fill=EAR_IN)
+        for k in range(4):
+            t = 0.2 + k * 0.2
+            bx, by = X(340 + (448 - 340) * t), 310 + (216 - 310) * t
+            stroke(d, [(bx, by), (bx + (X(346) - bx) * 0.45, by + (150 - by) * 0.5)], 3, FUR_L, smooth=False)
+    from skimage import measure
+    from scipy import ndimage as ndi
+    yy, xx = np.mgrid[0:1080, 0:1080]
+    m = ((xx - UP[0]) ** 2 + (yy - UP[1]) ** 2 <= UP[2] ** 2) | (((xx - LO[0]) / LO[2]) ** 2 + ((yy - LO[1]) / LO[3]) ** 2 <= 1)
+    m = ndi.gaussian_filter(m.astype(float), 14) > 0.5      # une las dos curvas sin esquina
+    c = max(measure.find_contours(m.astype(float), 0.5), key=len)
+    sil = [(float(x), float(y)) for y, x in measure.approximate_polygon(c, tolerance=0.6)]
     big = d._image
     m1 = Image.new("L", big.size, 0); ImageDraw.Draw(m1).polygon([P(*p) for p in sil], fill=255)
     m2 = Image.new("L", big.size, 0); ImageDraw.Draw(m2).polygon([P(x - 22, y) for x, y in sil], fill=255)
     big.paste(FUR_S, (0, 0), m1)
     big.paste(FUR, (0, 0), Image.fromarray(np.minimum(np.asarray(m1), np.asarray(m2))))
     d.line([P(*p) for p in sil] + [P(*sil[0])], fill=INK, width=int(LW * S), joint="curve")
-    # interior de las orejas con mechones
-    for sx in (-1, 1):
-        X = lambda x: 540 + sx * (x - 540)
-        e = [M(158, 104), M(165, 66), M(204, 100)]
-        e = [(X(x), y) for x, y in e]
-        d.polygon([P(*p) for p in e], fill=EAR_IN)
-        tip, b1, b2 = e[1], e[0], e[2]
-        for k in range(4):                                   # mechones finos saliendo del interior de la oreja
-            t = 0.2 + k * 0.2
-            bx, by = b1[0] + (b2[0] - b1[0]) * t, b1[1] + (b2[1] - b1[1]) * t
-            stroke(d, [(bx, by), (bx + (tip[0] - bx) * 0.45, by + (tip[1] - by) * 0.55)], 3, FUR_L, smooth=False)
     # rayas de la frente
     for x0, top, w in ((508, 250, 14), (540, 244, 18), (572, 250, 14)):
         d.polygon([P(*p) for p in spline([(x0 - w / 2, top), (x0 + w / 2, top), (x0 + w / 4, top + 70), (x0, top + 76), (x0 - w / 4, top + 70)])], fill=STRIPE)
