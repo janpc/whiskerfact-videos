@@ -75,5 +75,42 @@
    "person"
   ],
   "source": "gemini"
+ },
+ "child_boy": {
+  "poses": {
+   "walk1": "child_boy/walk1.png",
+   "walk2": "child_boy/walk2.png",
+   "walk3": "child_boy/walk3.png",
+   "walk4": "child_boy/walk4.png",
+   "front": "child_boy/front.png",
+   "three_quarter": "child_boy/three_quarter.png",
+   "sit": "child_boy/sit.png",
+   "jump": "child_boy/jump.png"
+  },
+  "tags": [
+   "boy",
+   "child",
+   "person"
+  ],
+  "source": "gemini"
+ },
+ "child_girl": {
+  "poses": {
+   "talk": "child_girl/talk.png",
+   "point": "child_girl/point.png",
+   "think": "child_girl/think.png",
+   "happy": "child_girl/happy.png",
+   "scared": "child_girl/scared.png",
+   "surprised": "child_girl/surprised.png",
+   "wave": "child_girl/wave.png",
+   "cold": "child_girl/cold.png",
+   "shrug": "child_girl/shrug.png"
+  },
+  "tags": [
+   "child",
+   "girl",
+   "person"
+  ],
+  "source": "gemini"
  }
 }
