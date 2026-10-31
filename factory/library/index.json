@@ -179,5 +179,78 @@
    "prehistory"
   ],
   "source": "gemini"
+ },
+ "dog": {
+  "poses": {
+   "run1": "dog/run1.png",
+   "run2": "dog/run2.png",
+   "run3": "dog/run3.png",
+   "walk1": "dog/walk1.png",
+   "walk2": "dog/walk2.png",
+   "side": "dog/side.png",
+   "front": "dog/front.png",
+   "sit": "dog/sit.png",
+   "happy": "dog/happy.png",
+   "scared": "dog/scared.png",
+   "curious": "dog/curious.png",
+   "eat": "dog/eat.png",
+   "sleep": "dog/sleep.png",
+   "call": "dog/call.png",
+   "look_back": "dog/look_back.png",
+   "jump": "dog/jump.png"
+  },
+  "tags": [
+   "animal",
+   "dog",
+   "pet"
+  ],
+  "source": "gemini"
+ },
+ "mouse": {
+  "poses": {
+   "run1": "mouse/run1.png",
+   "run2": "mouse/run2.png",
+   "walk1": "mouse/walk1.png",
+   "walk2": "mouse/walk2.png",
+   "side": "mouse/side.png",
+   "front": "mouse/front.png",
+   "stand": "mouse/stand.png",
+   "lie": "mouse/lie.png",
+   "happy": "mouse/happy.png",
+   "scared": "mouse/scared.png",
+   "curious": "mouse/curious.png",
+   "eat": "mouse/eat.png",
+   "sleep": "mouse/sleep.png",
+   "call": "mouse/call.png",
+   "look_back": "mouse/look_back.png",
+   "jump": "mouse/jump.png",
+   "alert": "mouse/alert.png"
+  },
+  "tags": [
+   "animal",
+   "lab",
+   "mouse",
+   "rodent"
+  ],
+  "source": "gemini"
+ },
+ "monkey": {
+  "poses": {
+   "run1": "monkey/run1.png",
+   "run2": "monkey/run2.png",
+   "run3": "monkey/run3.png",
+   "walk1": "monkey/walk1.png",
+   "walk2": "monkey/walk2.png",
+   "walk3": "monkey/walk3.png",
+   "side": "monkey/side.png",
+   "front": "monkey/front.png",
+   "sit": "monkey/sit.png"
+  },
+  "tags": [
+   "animal",
+   "monkey",
+   "primate"
+  ],
+  "source": "gemini"
  }
 }
