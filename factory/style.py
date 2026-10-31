@@ -206,7 +206,7 @@ def card(img, box, color=CREAM, radius=36, a=1.0):
     img.alpha_composite(ov)
 
 # ---------- contorno automático (post-proceso) ----------
-def ink(img, mask, box, strength=0.95, thick=3, thresh=38):
+def ink(img, mask, box, strength=0.95, thick=3, thresh=38, exclude=None):
     """contorno marrón oscuro del videoclip sobre lo ilustrado:
     - silueta: un aro de `thick` px POR FUERA de cada forma (las líneas finas y los textos quedan con borde, no tapados);
     - bordes internos entre colores, solo dentro de formas grandes (no dentro de pelos, líneas ni letras).
@@ -221,6 +221,10 @@ def ink(img, mask, box, strength=0.95, thick=3, thresh=38):
     dx[:, 1:] = np.abs(a[:, 1:] - a[:, :-1]).sum(-1) > thresh
     dy[1:] = np.abs(a[1:] - a[:-1]).sum(-1) > thresh
     inner = np.asarray(Image.fromarray(((dx | dy) & solid).astype(np.uint8) * 255).filter(ImageFilter.MaxFilter(thick)), bool) & solid
-    e = Image.fromarray(((ring | inner) * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.6)).point(lambda v: int(v * strength))
+    edges = ring | inner
+    if exclude is not None:   # sprites de la biblioteca: ya tienen su propio contorno, no se les añade otro
+        ex = Image.fromarray((exclude[y0:y1, x0:x1] > 40).astype(np.uint8) * 255).filter(ImageFilter.MaxFilter(2 * thick + 3))
+        edges = edges & ~np.asarray(ex, bool)
+    e = Image.fromarray((edges * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.6)).point(lambda v: int(v * strength))
     lay = Image.new("RGBA", (x1 - x0, y1 - y0), OUTLINE + (255,)); lay.putalpha(e)
     img.alpha_composite(lay, (x0, y0))

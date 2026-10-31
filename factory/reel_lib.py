@@ -13,6 +13,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 QA_LOG = None            # qa.py lo convierte en lista para registrar cada texto pintado
 QA_META = {}
 QA_STATE = {"T": 0.0, "scene": None}
+NOINK = {"mask": None}   # VoiceReel la crea por fotograma; library.place marca ahí los personajes (sin contorno extra)
 
 def clamp(x, a=0.0, b=1.0): return max(a, min(b, x))
 def eo(x): x = clamp(x); return 1 - (1 - x) ** 3

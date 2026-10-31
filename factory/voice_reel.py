@@ -78,6 +78,7 @@ class VoiceReel:
         for n, (s, e) in self.sc.items():
             if s <= T < e:
                 import reel_lib as _RL; _RL.QA_STATE.update(T=T, scene=n)
+                _RL.NOINK["mask"] = Image.new("L", (W, H), 0)
                 labels = Image.new("RGBA", (W, H), (0, 0, 0, 0)); self.R.label_layer = labels
                 if n in self.backdrops: img = self._layered(n, T, s, e)
                 else:
@@ -119,10 +120,20 @@ class VoiceReel:
         elif self.autofit: lay = self._fit_layer(n, lay)
         if self.INK:
             mask = np.asarray(lay.split()[3], np.float32) / 255
-            ST.ink(lay, mask, (0, self.FIT_ZONE[0] - 20, W, self.FIT_ZONE[1] + 10))
+            ST.ink(lay, mask, (0, self.FIT_ZONE[0] - 20, W, self.FIT_ZONE[1] + 10), exclude=self._noink(n))
         bd = self.R.bg.copy(); self.backdrops[n](bd, T, T - s)
         bd.alpha_composite(lay)
         return bd
+
+    def _noink(self, n):
+        """máscara de los personajes de la biblioteca de este fotograma, con el mismo reencuadre que el dibujo"""
+        import reel_lib as _RL
+        m = _RL.NOINK["mask"]; _RL.NOINK["mask"] = None
+        if m is None or not m.getbbox(): return None
+        if n != "hook" and self.autofit:
+            lay = Image.new("RGBA", (W, H), (255, 255, 255, 0)); lay.putalpha(m)
+            m = self._fit_layer(n, lay).split()[3]
+        return np.asarray(m)
 
     def _styled(self, n, img, T, t):
         import style as ST
@@ -130,7 +141,7 @@ class VoiceReel:
         a = np.asarray(img.convert("RGB"), dtype=np.int16); b = self.R.bg_arr.astype(np.int16)
         mask = np.clip((np.abs(a - b).max(axis=2) - 6) / 18.0, 0, 1)
         if self.INK:   # contorno solo en la zona de ilustración (los textos de arriba y los subtítulos no)
-            ST.ink(img, mask, (0, self.FIT_ZONE[0] - 20, W, self.FIT_ZONE[1] + 10))
+            ST.ink(img, mask, (0, self.FIT_ZONE[0] - 20, W, self.FIT_ZONE[1] + 10), exclude=self._noink(n))
             a = np.asarray(img.convert("RGB"), dtype=np.int16)
             mask = np.clip((np.abs(a - b).max(axis=2) - 6) / 18.0, 0, 1)
         if n in self.backdrops:

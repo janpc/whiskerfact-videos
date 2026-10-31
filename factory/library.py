@@ -161,6 +161,15 @@ def place(img, name, pose, cx, base_y, height=None, flip=False, a=1.0, rot=0.0, 
         cols = np.nonzero(al.any(axis=0))[0]
         if len(cols): ox = (cols.min() + cols.max()) / 2
     img.alpha_composite(s, (int(cx - ox), int(y)))
+    try:
+        import reel_lib as _RL
+        if _RL.NOINK["mask"] is not None and img.size == _RL.NOINK["mask"].size:
+            m = _RL.NOINK["mask"]; region = (int(cx - ox), int(y))
+            tmp = Image.new("L", m.size, 0); tmp.paste(s.split()[3], region)
+            from PIL import ImageChops
+            _RL.NOINK["mask"] = ImageChops.lighter(m, tmp)
+    except ImportError:
+        pass
     return s.size
 
 if __name__ == "__main__":
