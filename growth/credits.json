@@ -2,10 +2,20 @@
  "_about": "Libro de créditos de ElevenLabs (no hay herramienta para leer el saldo: se apunta cada gasto y la dueña corrige el saldo real cuando lo ve). Cada run: añade sus gastos aquí, recalcula 'estimated_balance' y avisa si queda menos de 'warn_below'.",
  "plan": "Starter",
  "monthly_allowance": 30000,
- "balance_checked": {"value": null, "date": null, "note": "pendiente: la dueña dice el saldo real"},
- "estimated_balance": null,
+ "balance_checked": {
+  "value": 29337,
+  "date": "2026-10-31",
+  "note": "saldo real que marca ElevenLabs (dicho por la dueña)"
+ },
+ "estimated_balance": 29337,
  "warn_below": 8000,
  "image_budget_month": 4000,
- "costs_estimate": {"voice_reel": 1100, "music": 960, "image_text_only": 410, "image_with_reference": 1020, "transcribe_fallback": 400},
+ "costs_estimate": {
+  "voice_reel": 1100,
+  "music": 960,
+  "image_text_only": 410,
+  "image_with_reference": 1020,
+  "transcribe_fallback": 400
+ },
  "spent": []
 }

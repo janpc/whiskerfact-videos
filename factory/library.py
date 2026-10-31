@@ -1,15 +1,18 @@
 """Biblioteca de personajes (personas y animales) en el estilo del gato, para no dibujarlos con formas en código.
-Cada personaje es una hoja de 2x2 poses sobre verde (Gemini gratis a mano, o ElevenLabs puntualmente) recortada aquí.
+Cada personaje tiene 2 hojas de 3x3 poses sobre verde (Gemini gratis a mano, o ElevenLabs puntualmente), recortadas aquí:
+  hoja 1 «movimiento»: ciclo de andar/correr de perfil (4 fotogramas), quieto de perfil, de frente, 3/4, sentado/tumbado, salto/acción
+  hoja 2 «actuación»: expresiones y gestos (contento, asustado, sorprendido, pensando, señalando, hablando, ...)
 
-  python3 library.py add <hoja.png> <nombre> <pose1,pose2,pose3,pose4> [--tags a,b] [--source gemini|elevenlabs] [--grid 2x2]
+  python3 library.py add <hoja.png> <nombre> <pose1,...,pose9> [--tags a,b] [--source gemini|elevenlabs] [--grid 3x3]   (pose '-' = celda descartada)
   python3 library.py list
 En una escena:
   import library as LIB
   spr = LIB.get("dog", "side")            # RGBA recortado al contenido, None si no existe
   LIB.find("animal")                       # nombres con esa etiqueta
   LIB.place(img, "dog", "side", cx, base_y, height, flip=False, a=1.0, rot=0)   # lo pega con los pies en base_y
-Las poses son imágenes completas: para animar se cambia de pose (con un parpadeo de 2 fotogramas como mucho),
-y se mueve el sprite entero (andar = desplazar + leve bote; respirar = escala 1-2 %).
+Animar: andar/correr = recorrer walk1..walk4 (o run1..run4) a 8-10 fps mientras el sprite avanza; quieto = pose fija con
+respiración (escala 1-2 %) y algún cambio de expresión; los gestos se encadenan (front -> point -> front).
+Helper: LIB.cycle("dog", "run", T, fps=10) devuelve la pose del ciclo en el instante T.
 """
 import json, os, sys
 import numpy as np
@@ -33,14 +36,16 @@ def key(im):
     out.putalpha(out.split()[3].filter(ImageFilter.MinFilter(3)))
     return out
 
-def add(sheet, name, poses, tags=(), source="gemini", grid=(2, 2)):
+def add(sheet, name, poses, tags=(), source="gemini", grid=(3, 3)):
     im = Image.open(sheet).convert("RGB")
     cols, rows = grid
     cw, ch = im.width / cols, im.height / rows
     os.makedirs(os.path.join(DIR, name), exist_ok=True)
-    im.save(os.path.join(DIR, name, "sheet.png"))
+    k = len([f for f in os.listdir(os.path.join(DIR, name)) if f.startswith("sheet")]) + 1
+    im.save(os.path.join(DIR, name, f"sheet{k}.png"))                 # un personaje puede tener varias hojas
     saved = {}
     for i, pose in enumerate(poses):
+        if not pose or pose == "-": continue                            # celda que no sirve: se salta
         r, c = divmod(i, cols)
         cell = key(im.crop((round(c * cw) + 4, round(r * ch) + 4, round((c + 1) * cw) - 4, round((r + 1) * ch) - 4)))
         # quitar trozos sueltos (restos de la celda vecina): solo el componente grande
@@ -56,7 +61,9 @@ def add(sheet, name, poses, tags=(), source="gemini", grid=(2, 2)):
         if bb: cell = cell.crop(bb)
         p = os.path.join(name, f"{pose}.png"); cell.save(os.path.join(DIR, p)); saved[pose] = p
     idx = _index()
-    idx[name] = dict(poses=saved, tags=list(tags), source=source)
+    old = idx.get(name, dict(poses={}, tags=[], source=source))
+    old["poses"].update(saved); old["tags"] = sorted(set(old["tags"]) | set(tags))
+    idx[name] = old
     json.dump(idx, open(INDEX, "w"), indent=1)
     return saved
 
@@ -67,6 +74,11 @@ def get(name, pose):
     k = (name, pose)
     if k not in _cache: _cache[k] = Image.open(os.path.join(DIR, idx[name]["poses"][pose])).convert("RGBA")
     return _cache[k]
+
+def cycle(name, prefix, T, fps=9):
+    """nombre de la pose de un ciclo (walk1..walkN) para el instante T"""
+    poses = sorted(p for p in _index().get(name, {}).get("poses", {}) if p.startswith(prefix) and p[len(prefix):].isdigit())
+    return poses[int(T * fps) % len(poses)] if poses else None
 
 def find(tag):
     return [n for n, v in _index().items() if tag in v["tags"] or tag == n]
@@ -91,5 +103,5 @@ if __name__ == "__main__":
         sheet, name, poses = sys.argv[2], sys.argv[3], sys.argv[4].split(",")
         opts = dict(zip(sys.argv[5::2], sys.argv[6::2]))
         tags = opts.get("--tags", "").split(",") if opts.get("--tags") else []
-        grid = tuple(int(v) for v in opts.get("--grid", "2x2").split("x"))
+        grid = tuple(int(v) for v in opts.get("--grid", "3x3").split("x"))
         print(add(sheet, name, poses, tags, opts.get("--source", "gemini"), grid))
