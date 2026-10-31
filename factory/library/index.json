@@ -85,14 +85,25 @@
    "front": "child_boy/front.png",
    "three_quarter": "child_boy/three_quarter.png",
    "sit": "child_boy/sit.png",
-   "jump": "child_boy/jump.png"
+   "jump": "child_boy/jump.png",
+   "talk_close": "child_boy/talk_close.png",
+   "point_close": "child_boy/point_close.png",
+   "think_close": "child_boy/think_close.png",
+   "happy_close": "child_boy/happy_close.png",
+   "scared_close": "child_boy/scared_close.png",
+   "surprised_close": "child_boy/surprised_close.png",
+   "sad_close": "child_boy/sad_close.png",
+   "wave_close": "child_boy/wave_close.png",
+   "cold_close": "child_boy/cold_close.png",
+   "shrug_close": "child_boy/shrug_close.png"
   },
   "tags": [
    "boy",
    "child",
    "person"
   ],
-  "source": "gemini"
+  "source": "gemini",
+  "notes": "poses *_close are waist-up (cropped): use only as close-ups, anchored at the bottom of the frame or behind something"
  },
  "child_girl": {
   "poses": {
@@ -104,7 +115,16 @@
    "surprised": "child_girl/surprised.png",
    "wave": "child_girl/wave.png",
    "cold": "child_girl/cold.png",
-   "shrug": "child_girl/shrug.png"
+   "shrug": "child_girl/shrug.png",
+   "walk1": "child_girl/walk1.png",
+   "walk2": "child_girl/walk2.png",
+   "walk3": "child_girl/walk3.png",
+   "walk4": "child_girl/walk4.png",
+   "side": "child_girl/side.png",
+   "front": "child_girl/front.png",
+   "three_quarter": "child_girl/three_quarter.png",
+   "sit": "child_girl/sit.png",
+   "jump": "child_girl/jump.png"
   },
   "tags": [
    "child",
@@ -123,14 +143,24 @@
    "three_quarter": "ancient_youth/three_quarter.png",
    "front": "ancient_youth/front.png",
    "sit": "ancient_youth/sit.png",
-   "jump": "ancient_youth/jump.png"
+   "jump": "ancient_youth/jump.png",
+   "talk_close": "ancient_youth/talk_close.png",
+   "point_close": "ancient_youth/point_close.png",
+   "think_close": "ancient_youth/think_close.png",
+   "happy_close": "ancient_youth/happy_close.png",
+   "scared_close": "ancient_youth/scared_close.png",
+   "surprised_close": "ancient_youth/surprised_close.png",
+   "wave_close": "ancient_youth/wave_close.png",
+   "cold_close": "ancient_youth/cold_close.png",
+   "shrug_close": "ancient_youth/shrug_close.png"
   },
   "tags": [
    "ancient",
    "history",
    "person"
   ],
-  "source": "gemini"
+  "source": "gemini",
+  "notes": "poses *_close are knee-up (cropped): use only as close-ups"
  },
  "ancient_person": {
   "poses": {
@@ -224,7 +254,9 @@
    "call": "mouse/call.png",
    "look_back": "mouse/look_back.png",
    "jump": "mouse/jump.png",
-   "alert": "mouse/alert.png"
+   "alert": "mouse/alert.png",
+   "run3": "mouse/run3.png",
+   "run4": "mouse/run4.png"
   },
   "tags": [
    "animal",
