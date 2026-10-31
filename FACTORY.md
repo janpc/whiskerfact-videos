@@ -146,6 +146,20 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - If music generation fails, publish with the synthesized bed: it's still a valid reel.
 - Delete `videos/music_src/*` older than 7 days during clean-up.
 
+## 6c. Quality check (mandatory, after the final mix)
+- Run `python3 qa.py <slug>`. It samples every scene at 5 fps through the same engine and checks the final mp4:
+  - **text contrast**;
+  - **overlapping texts**;
+  - **texts under the app buttons or off screen**;
+  - **on-screen time** of labels (≥ 1.5 s) and titles (≥ 1.2 s);
+  - **drawings cut** by the band;
+  - **stretches where nothing moves**;
+  - **duration, black frames and loudness**.
+- It writes `out/<slug>_qa.md` and `out/<slug>_qa.jpg`, with the problems boxed in red.
+- **Any FALLO blocks publishing.** Fix the scene: hold the label longer, move it, give the text more room, split the scene. Re-render the affected scenes and run QA again until it exits with 0. AVISOS are allowed but must be looked at.
+- **Then look at `out/<slug>_qa.jpg` yourself**, and at a few full frames of each scene. Check what the script cannot see: does the drawing show the right thing, is anything ugly or confusing, does the animation read clearly?
+- Put the result in the log (`"qa": {"fails": 0, "warns": N}`), and add "QA ✅" (or the warnings, in short) to the notification.
+
 ## 7. Upload
 - Copy the mp4 to `videos/<YYYY-MM-DD>_<slug>.mp4`, then commit and push to `main`.
 - Check that `https://raw.githubusercontent.com/janpc/whiskerfact-videos/main/videos/<file>` returns 200.

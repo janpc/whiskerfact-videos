@@ -10,6 +10,10 @@ import sfx as SFX
 W, H, FPS = B.W, B.H, B.FPS
 HERE = os.path.dirname(os.path.abspath(__file__))
 
+QA_LOG = None            # qa.py lo convierte en lista para registrar cada texto pintado
+QA_META = {}
+QA_STATE = {"T": 0.0, "scene": None}
+
 def clamp(x, a=0.0, b=1.0): return max(a, min(b, x))
 def eo(x): x = clamp(x); return 1 - (1 - x) ** 3
 def eio(x): x = clamp(x); return x * x * (3 - 2 * x)
@@ -69,11 +73,20 @@ class Reel:
             x = (tw - lw) / 2 if align == "center" else (sw if align == "left" else tw - lw - sw)
             dr.text((x, i * lhp + sw), l, font=f, fill=color + (255,), stroke_width=sw, stroke_fill=B.TEXT_STROKE_COLOR + (255,))
         self._tc[key] = im
+        QA_META[id(im)] = (s, style, color)
         return im
 
     @staticmethod
     def put(img, spr, x, y, a=1.0, anchor="mt", dy=0.0):
         if a <= 0.003: return
+        if QA_LOG is not None and id(spr) in QA_META:          # control de calidad: qué texto, dónde y cuándo
+            w0, h0 = spr.size
+            ox0 = {"l": 0, "m": w0 / 2, "r": w0}[anchor[0]]; oy0 = {"t": 0, "m": h0 / 2, "b": h0}[anchor[1]]
+            t, st, col = QA_META[id(spr)]
+            bb = spr.getbbox() or (0, 0, w0, h0)                    # caja ajustada a las letras (sin márgenes)
+            X0, Y0 = x - ox0, y - oy0 + dy
+            QA_LOG.append(dict(T=QA_STATE["T"], scene=QA_STATE["scene"], text=t, style=st, color=col, a=a,
+                               box=(int(X0 + bb[0]), int(Y0 + bb[1]), int(X0 + bb[2]), int(Y0 + bb[3]))))
         if a < 1:
             spr = spr.copy(); spr.putalpha(spr.split()[3].point(lambda v: int(v * a)))
         w, h = spr.size

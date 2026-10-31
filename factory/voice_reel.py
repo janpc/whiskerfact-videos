@@ -77,6 +77,7 @@ class VoiceReel:
         if T >= self.outro_at: return outro_frame(self.R, T - self.outro_at)
         for n, (s, e) in self.sc.items():
             if s <= T < e:
+                import reel_lib as _RL; _RL.QA_STATE.update(T=T, scene=n)
                 labels = Image.new("RGBA", (W, H), (0, 0, 0, 0)); self.R.label_layer = labels
                 if n in self.backdrops: img = self._layered(n, T, s, e)
                 else:
@@ -175,6 +176,7 @@ class VoiceReel:
             # el dibujo se sale de la banda de ilustración: reencuadrar lo cortaría (la luna cortada de vampire_bats).
             # Se deja tal cual y se avisa: hay que bajar/subir ese elemento en la escena.
             print(f"AVISO encuadre: la escena '{n}' dibuja fuera de y {zy0}-{zy1}; no se reencuadra. Mueve el dibujo dentro de la banda.")
+            self.warnings = getattr(self, "warnings", []) + [f"la escena '{n}' dibuja fuera de la banda y {zy0}-{zy1} (no se reencuadra)"]
             self._fits[n] = None; return None
         bx0, by0, bx1, by1 = self.FIT_BOX
         sc = max(self.FIT_MIN, min((bx1 - bx0) / max(1, x1 - x0), (by1 - by0) / max(1, y1 - y0), self.FIT_MAX))
