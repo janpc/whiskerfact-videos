@@ -3,7 +3,7 @@ from PIL import Image, ImageDraw, ImageFont
 import brand as B
 OUT = "out/perfil/"
 NAVY = (16, 20, 44)
-av = Image.open("out/mrwhiskerfact_avatar.png").convert("RGBA")
+av = Image.open(B.MASCOT["file"]).convert("RGBA")   # gato nuevo (mascot.py)
 
 # foto de perfil: las redes la recortan en círculo; dejamos margen para que el aro dorado no se corte
 p = Image.new("RGB", (1080, 1080), NAVY)
