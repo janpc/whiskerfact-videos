@@ -1,1 +1,22 @@
-{}
+{
+ "vampire_bat": {
+  "poses": {
+   "fly1": "vampire_bat/fly1.png",
+   "fly2": "vampire_bat/fly2.png",
+   "fly3": "vampire_bat/fly3.png",
+   "fly4": "vampire_bat/fly4.png",
+   "fly_front": "vampire_bat/fly_front.png",
+   "hang": "vampire_bat/hang.png",
+   "walk": "vampire_bat/walk.png",
+   "hop": "vampire_bat/hop.png",
+   "sit": "vampire_bat/sit.png"
+  },
+  "tags": [
+   "animal",
+   "bat",
+   "halloween",
+   "night"
+  ],
+  "source": "elevenlabs"
+ }
+}

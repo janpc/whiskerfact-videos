@@ -36,10 +36,27 @@ def key(im):
     out.putalpha(out.split()[3].filter(ImageFilter.MinFilter(3)))
     return out
 
+def _cuts(im, cols, rows):
+    """bordes de las celdas: si la hoja trae líneas separadoras (Gemini a veces las dibuja y no son regulares) se usan;
+    si no, rejilla uniforme"""
+    a = np.asarray(im).astype(int)
+    green = (a[..., 1] - np.maximum(a[..., 0], a[..., 2])) > 60
+    def lines(frac_axis, n, length):
+        nong = 1 - green.mean(axis=frac_axis)                  # fracción no verde de cada fila/columna
+        cand = [i for i in range(length) if nong[i] > 0.9]
+        groups = []
+        for i in cand:
+            if groups and i - groups[-1][-1] <= 3: groups[-1].append(i)
+            else: groups.append([i])
+        inner = [int(np.mean(g)) for g in groups if 10 < np.mean(g) < length - 10]
+        if len(inner) == n - 1: return [0] + inner + [length]
+        return [round(k * length / n) for k in range(n + 1)]
+    return lines(0, cols, im.width), lines(1, rows, im.height)
+
 def add(sheet, name, poses, tags=(), source="gemini", grid=(3, 3)):
     im = Image.open(sheet).convert("RGB")
     cols, rows = grid
-    cw, ch = im.width / cols, im.height / rows
+    xs, ys = _cuts(im, cols, rows)
     os.makedirs(os.path.join(DIR, name), exist_ok=True)
     k = len([f for f in os.listdir(os.path.join(DIR, name)) if f.startswith("sheet")]) + 1
     im.save(os.path.join(DIR, name, f"sheet{k}.png"))                 # un personaje puede tener varias hojas
@@ -47,7 +64,7 @@ def add(sheet, name, poses, tags=(), source="gemini", grid=(3, 3)):
     for i, pose in enumerate(poses):
         if not pose or pose == "-": continue                            # celda que no sirve: se salta
         r, c = divmod(i, cols)
-        cell = key(im.crop((round(c * cw) + 4, round(r * ch) + 4, round((c + 1) * cw) - 4, round((r + 1) * ch) - 4)))
+        cell = key(im.crop((xs[c] + 6, ys[r] + 6, xs[c + 1] - 6, ys[r + 1] - 6)))
         # quitar trozos sueltos (restos de la celda vecina): solo el componente grande
         from scipy import ndimage
         m = np.asarray(cell.split()[3]) > 40
@@ -83,12 +100,14 @@ def cycle(name, prefix, T, fps=9):
 def find(tag):
     return [n for n, v in _index().items() if tag in v["tags"] or tag == n]
 
-def place(img, name, pose, cx, base_y, height, flip=False, a=1.0, rot=0.0):
-    """pega el personaje con la base (pies) en base_y, centrado en cx y con la altura dada"""
+def place(img, name, pose, cx, base_y, height=None, flip=False, a=1.0, rot=0.0, scale=None):
+    """pega el personaje con la base (pies) en base_y, centrado en cx.
+    height: altura en px de ESTA pose; scale: factor sobre el tamaño de la hoja (usa scale en ciclos y cambios
+    de pose para que el personaje no cambie de tamaño entre poses)"""
     spr = get(name, pose)
     if spr is None or a <= 0.003: return None
-    w = max(1, round(spr.width * height / spr.height))
-    s = spr.resize((w, int(height)), Image.LANCZOS)
+    k = scale if scale is not None else height / spr.height
+    s = spr.resize((max(1, round(spr.width * k)), max(1, round(spr.height * k))), Image.LANCZOS)
     if flip: s = s.transpose(Image.FLIP_LEFT_RIGHT)
     if rot: s = s.rotate(rot, Image.BICUBIC, expand=True)
     if a < 1: s.putalpha(s.split()[3].point(lambda v: int(v * a)))

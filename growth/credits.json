@@ -7,15 +7,22 @@
   "date": "2026-10-31",
   "note": "saldo real que marca ElevenLabs (dicho por la dueña)"
  },
- "estimated_balance": 29337,
+ "estimated_balance": 28728,
  "warn_below": 8000,
  "image_budget_month": 4000,
  "costs_estimate": {
   "voice_reel": 1100,
   "music": 960,
   "image_text_only": 410,
-  "image_with_reference": 1020,
+  "image_with_reference": 610,
   "transcribe_fallback": 400
  },
- "spent": []
+ "spent": [
+  {
+   "date": "2026-10-31",
+   "slug": "library",
+   "what": "vampire_bat sheet 1 (gemini-3.1-flash-image + style ref)",
+   "credits": 609
+  }
+ ]
 }
