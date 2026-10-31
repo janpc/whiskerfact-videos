@@ -170,6 +170,12 @@ class VoiceReel:
         self.R.label_layer = keep
         if not boxes: self._fits[n] = None; return None
         x0 = min(b[0] for b in boxes); y0 = min(b[1] for b in boxes); x1 = max(b[2] for b in boxes); y1 = max(b[3] for b in boxes)
+        zy0, zy1 = self.FIT_ZONE
+        if y0 <= zy0 + 3 or y1 >= zy1 - 3:
+            # el dibujo se sale de la banda de ilustración: reencuadrar lo cortaría (la luna cortada de vampire_bats).
+            # Se deja tal cual y se avisa: hay que bajar/subir ese elemento en la escena.
+            print(f"AVISO encuadre: la escena '{n}' dibuja fuera de y {zy0}-{zy1}; no se reencuadra. Mueve el dibujo dentro de la banda.")
+            self._fits[n] = None; return None
         bx0, by0, bx1, by1 = self.FIT_BOX
         sc = max(self.FIT_MIN, min((bx1 - bx0) / max(1, x1 - x0), (by1 - by0) / max(1, y1 - y0), self.FIT_MAX))
         self._fits[n] = (x0, y0, x1, y1, sc, (bx0 + bx1) / 2, (by0 + by1) / 2)
