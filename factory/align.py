@@ -10,6 +10,7 @@ EXTRA_PHONES = {   # pronunciaciones de nombres propios que no están en cmudict
     "whiskerfact": "W IH S K ER F AE K T",
     "goosebumps": "G UW S B AH M P S", "arrector": "AH R EH K T ER", "pili": "P IH L AY",
     "fluffing": "F L AH F IH NG", "hairier": "HH EH R IY ER",
+    "draculin": "D R AE K Y AH L IH N", "roostmates": "R UW S T M EY T S", "stoker's": "S T OW K ER Z",
 }
 LETTER = {"a": "AE", "b": "B", "c": "K", "d": "D", "e": "EH", "f": "F", "g": "G", "h": "HH", "i": "IH", "j": "JH", "k": "K",
           "l": "L", "m": "M", "n": "N", "o": "AA", "p": "P", "q": "K", "r": "R", "s": "S", "t": "T", "u": "AH", "v": "V",
