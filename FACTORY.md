@@ -21,6 +21,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Record `variants.format` and `variants.personality` in the log.
 
 ## 2. Topic
+- **Weekly plan first:** if `growth/week_plan.json` has an entry for today's date, use its topic, category and format. Still verify everything (step 3); if the topic fails verification, choose another one with the rules below and say so in the notification. Use the characters it lists from the library (`factory/library`).
 - **Special dates first:** read `growth/calendar.json`. Make a themed reel today if both of these are true:
   - an event falls within the next 7 days;
   - fewer than that event's `reels` themed videos are already in the log (field `event`).
