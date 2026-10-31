@@ -123,5 +123,59 @@
     "card": true
    }
   }
+ },
+ {
+  "date": "2026-10-31",
+  "category": "nature",
+  "slug": "vampire_bats",
+  "title": "Myth or fact: do bats drink blood?",
+  "hook": "Myth or fact: Do bats drink blood?",
+  "event": "Halloween",
+  "scheduled": "2026-10-31T14:00:00+01:00",
+  "networks": [
+   "instagram",
+   "tiktok",
+   "youtube"
+  ],
+  "sources": [
+   "https://www.usgs.gov/faqs/do-vampire-bats-really-exist",
+   "https://www.pbs.org/newshour/science/7-things-you-didnt-know-about-vampire-bats",
+   "https://news.cals.wisc.edu/2018/10/24/five-things-everyone-should-know-about-vampire-bats/",
+   "https://news.utk.edu/2024/10/28/the-conversation-vampire-bats-look-beyond-the-fangs-and-blood-to-see-animal-friendships-and-unique-adaptations/",
+   "https://www.batcon.org/bats-eat-what/",
+   "https://www.nationalgeographic.com/animals/article/151117-vampire-bats-blood-food-science-animals",
+   "https://cris.maastrichtuniversity.nl/en/publications/purification-and-partial-characterization-of-draculin-the-anticoa/",
+   "https://rom.on.ca/fr/node/22680",
+   "https://historytoday.com/node/55761",
+   "https://www.beardsleyzoo.org/blog/vampire-bats-vs-vampires"
+  ],
+  "metricool_uuid": "-6214231550598953360",
+  "duration_s": 70.4,
+  "variants": {
+   "time_slot": "14:00",
+   "hook_style": "question",
+   "caption_style": "question_cta",
+   "format": "myth",
+   "personality": "light",
+   "cta": "🐱 Follow for more curious facts.",
+   "look": {
+    "skies": [
+     "night",
+     "dusk"
+    ],
+    "terrains": [
+     "autumn"
+    ],
+    "wow": [
+     "glitch"
+    ],
+    "card": true
+   }
+  },
+  "music": "elevenlabs video-to-music",
+  "credits": {
+   "voice": 1027,
+   "music": 1056
+  }
  }
 ]
