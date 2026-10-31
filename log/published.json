@@ -176,6 +176,11 @@
   "credits": {
    "voice": 1027,
    "music": 1056
+  },
+  "qa": {
+   "fails": 0,
+   "warns": 6,
+   "note": "re-rendered 12:00 with library characters (v3); stamp text a bit blurry"
   }
  }
 ]

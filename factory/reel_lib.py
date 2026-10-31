@@ -94,6 +94,12 @@ class Reel:
         ox = {"l": 0, "m": w / 2, "r": w}[anchor[0]]; oy = {"t": 0, "m": h / 2, "b": h}[anchor[1]]
         img.alpha_composite(spr, (int(x - ox), int(y - oy + dy)))
 
+    def put_text(self, img, spr, x, y, a=1.0, anchor="mt", text=""):
+        """imagen que CONTIENE texto (sellos, carteles, números dentro del dibujo): va a la capa de etiquetas, así no
+        recibe el contorno automático (que emborrona las letras) y el control de calidad la ve como texto"""
+        if text: QA_META[id(spr)] = (text, "label", (40, 30, 30))
+        self.put(self.label_layer if self.label_layer is not None else img, spr, x, y, a, anchor)
+
     label_layer = None     # si VoiceReel lo pone, las etiquetas se dibujan aparte y van ENCIMA del contorno (no se emborronan)
     def txt(self, img, s, y, style, color=None, a=1.0, x=W / 2, anchor="mt", rise=True, maxw=B.TEXT_MAX_W, align="center"):
         color = color or B.TEXT
