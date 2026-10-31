@@ -292,5 +292,67 @@
    "primate"
   ],
   "source": "gemini"
+ },
+ "cow": {
+  "poses": {
+   "side": "cow/side.png",
+   "walk1": "cow/walk1.png",
+   "walk2": "cow/walk2.png",
+   "front": "cow/front.png",
+   "eat": "cow/eat.png",
+   "lie": "cow/lie.png",
+   "sleep": "cow/sleep.png",
+   "look_back": "cow/look_back.png",
+   "moo": "cow/moo.png"
+  },
+  "tags": [
+   "animal",
+   "cattle",
+   "cow",
+   "farm"
+  ],
+  "source": "gemini"
+ },
+ "vampire_count": {
+  "poses": {
+   "stand": "vampire_count/stand.png",
+   "cape_open": "vampire_count/cape_open.png",
+   "walk": "vampire_count/walk.png",
+   "sneak": "vampire_count/sneak.png",
+   "hide": "vampire_count/hide.png",
+   "point": "vampire_count/point.png",
+   "point2": "vampire_count/point2.png",
+   "laugh_close": "vampire_count/laugh_close.png",
+   "surprised_close": "vampire_count/surprised_close.png",
+   "shrug_close": "vampire_count/shrug_close.png",
+   "shrug2_close": "vampire_count/shrug2_close.png"
+  },
+  "tags": [
+   "dracula",
+   "halloween",
+   "history",
+   "person",
+   "vampire"
+  ],
+  "source": "gemini"
+ },
+ "dog_breeds": {
+  "poses": {
+   "beagle_run1": "dog_breeds/beagle_run1.png",
+   "beagle_run2": "dog_breeds/beagle_run2.png",
+   "dachshund": "dog_breeds/dachshund.png",
+   "boxer": "dog_breeds/boxer.png",
+   "terrier": "dog_breeds/terrier.png",
+   "doberman": "dog_breeds/doberman.png",
+   "pug": "dog_breeds/pug.png",
+   "pomeranian": "dog_breeds/pomeranian.png",
+   "shepherd": "dog_breeds/shepherd.png"
+  },
+  "tags": [
+   "animal",
+   "breeds",
+   "dog"
+  ],
+  "source": "gemini"
  }
 }

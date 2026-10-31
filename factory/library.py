@@ -53,6 +53,42 @@ def _cuts(im, cols, rows):
         return [round(k * length / n) for k in range(n + 1)]
     return lines(0, cols, im.width), lines(1, rows, im.height)
 
+def add_blobs(sheet, name, poses, tags=(), source="gemini", merge=6):
+    """hojas SIN rejilla fiable (Gemini a veces desborda las celdas): separa cada figura por manchas conectadas
+    (unidas con un margen `merge` px), ordenadas por filas y de izquierda a derecha"""
+    from scipy import ndimage
+    im = Image.open(sheet).convert("RGB")
+    full = key(im); al = np.asarray(full.split()[3]) > 60
+    lab, n = ndimage.label(ndimage.binary_dilation(al, iterations=merge))
+    objs = [(ndimage.find_objects(lab)[i], i + 1) for i in range(n)]
+    objs = [(sl, i) for sl, i in objs if (sl[0].stop - sl[0].start) * (sl[1].stop - sl[1].start) > 4000]
+    objs.sort(key=lambda o: (o[0][0].start + o[0][0].stop) / 2)
+    rows, cur = [], []
+    for o in objs:                                       # agrupar por filas (centros a < 1/3 de altura)
+        cy = (o[0][0].start + o[0][0].stop) / 2
+        if cur and abs(cy - np.mean([(c[0][0].start + c[0][0].stop) / 2 for c in cur])) > im.height / 6:
+            rows.append(cur); cur = []
+        cur.append(o)
+    rows.append(cur)
+    order = [o for r in rows for o in sorted(r, key=lambda o: o[0][1].start)]
+    os.makedirs(os.path.join(DIR, name), exist_ok=True)
+    k = len([f for f in os.listdir(os.path.join(DIR, name)) if f.startswith("sheet")]) + 1
+    im.save(os.path.join(DIR, name, f"sheet{k}.png"))
+    saved = {}
+    for (sl, i), pose in zip(order, poses):
+        if not pose or pose == "-": continue
+        m = (lab == i) & al
+        cell = full.copy(); a2 = np.asarray(cell.split()[3]).copy(); a2[~m] = 0; cell.putalpha(Image.fromarray(a2))
+        cell = cell.crop(cell.getbbox())
+        p = os.path.join(name, f"{pose}.png"); cell.save(os.path.join(DIR, p)); saved[pose] = p
+    idx = _index()
+    old = idx.get(name, dict(poses={}, tags=[], source=source))
+    old["poses"].update(saved); old["tags"] = sorted(set(old["tags"]) | set(tags))
+    idx[name] = old
+    json.dump(idx, open(INDEX, "w"), indent=1)
+    print(f"{len(order)} figuras encontradas")
+    return saved
+
 def add(sheet, name, poses, tags=(), source="gemini", grid=(3, 3)):
     im = Image.open(sheet).convert("RGB")
     cols, rows = grid
@@ -131,6 +167,11 @@ if __name__ == "__main__":
     cmd = sys.argv[1]
     if cmd == "list":
         for n, v in _index().items(): print(f"{n:16s} {v['source']:10s} {','.join(v['poses'])}  [{','.join(v['tags'])}]")
+    elif cmd == "blobs":
+        sheet, name, poses = sys.argv[2], sys.argv[3], sys.argv[4].split(",")
+        opts = dict(zip(sys.argv[5::2], sys.argv[6::2]))
+        tags = opts.get("--tags", "").split(",") if opts.get("--tags") else []
+        print(add_blobs(sheet, name, poses, tags, opts.get("--source", "gemini")))
     elif cmd == "add":
         sheet, name, poses = sys.argv[2], sys.argv[3], sys.argv[4].split(",")
         opts = dict(zip(sys.argv[5::2], sys.argv[6::2]))

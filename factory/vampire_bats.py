@@ -69,69 +69,55 @@ def rel(name, word): return V.word_time(word, after=V.sc[name][0]) - V.sc[name][
 BAT_WING = [(0.05, -0.02), (0.28, -0.20), (0.56, -0.04), (0.44, 0.10), (0.35, 0.03), (0.25, 0.14), (0.15, 0.06), (0.04, 0.12)]
 CAPE = [(0.10, -0.30), (0.24, -0.08), (0.30, 0.46), (0.24, 0.52), (0.18, 0.49), (0.12, 0.53), (0.06, 0.50), (0.0, 0.53)]
 
-def bat(img, cx, cy, size, flap=0.0, a=1.0, morph=1.0, col=BAT, eyes=True, belly=0.0, mouth=None):
-    """murciélago de frente con alas abiertas. flap: -1..1 (alas arriba/abajo).
-    morph: 0 = silueta del conde con capa, 1 = murciélago (transformación suave de la misma figura).
-    belly: 0..1, barriga llena (roja) · mouth: None o 'fangs'"""
-    m = eio(morph)
+# ---------- personajes de la biblioteca (factory/library): murciélago, conde vampiro y vaca ----------
+import library as LIB
+
+def _puff(img, cx, cy, r, k, a=1.0):
+    """nube de humo que tapa el cambio conde -> murciélago (k 0..1)"""
+    if k <= 0 or k >= 1: return
     def fn(d, P, s):
-        for sg in (-1, 1):
-            pts = []
-            for (bx, by), (cx0, cy0) in zip(BAT_WING, CAPE):
-                fx = bx * (1 + 0.0 * flap); fy = by - flap * 0.22 * (bx / 0.56)
-                x = lerp(cx0, fx, m); y = lerp(cy0, fy, m)
-                pts.append(P(cx + sg * x * size, cy + y * size))
-            d.polygon(pts, fill=lerpc(col, BAT_L, 0.25) if m > 0.5 else col)
-            # dedos de la membrana
-            if m > 0.4:
-                wr = pts[1]
-                for k in (2, 3, 5):
-                    d.line([wr, pts[k]], fill=col, width=int(5 * s))
-        # cuerpo
-        bw, bh = lerp(0.13, 0.11, m) * size, lerp(0.42, 0.17, m) * size
-        by0 = cy + lerp(0.05, 0.02, m) * size
-        d.ellipse([P(cx - bw, by0 - bh), P(cx + bw, by0 + bh)], fill=col)
+        for i in range(9):
+            an = i / 9 * 2 * math.pi
+            rr = r * (0.35 + 0.25 * math.sin(i * 1.7)) * (0.6 + 0.6 * k)
+            x, y = cx + math.cos(an) * r * 0.55 * k, cy + math.sin(an) * r * 0.45 * k
+            d.ellipse([P(x - rr, y - rr), P(x + rr, y + rr)], fill=(214, 206, 222, int(235 * (1 - k ** 2))))
+    aa(img, (cx - 2 * r, cy - 2 * r, cx + 2 * r, cy + 2 * r), fn, a)
+
+def bat(img, cx, cy, size, flap=0.0, a=1.0, morph=1.0, col=BAT, eyes=True, belly=0.0, mouth=None, side=False, flip=False, T=0.0):
+    """murciélago de la biblioteca. De frente (fly_front) por defecto; side=True: de perfil con su aleteo.
+    morph: 0 = el conde con la capa abierta, 1 = murciélago (el cambio se tapa con una nube de humo).
+    belly: 0..1, barriga llena (roja)."""
+    if a <= 0.003: return
+    m = eio(morph)
+    if m < 0.5:
+        spr = LIB.get("vampire_count", "cape_open")
+        k = 1.25 * size / spr.width
+        LIB.place(img, "vampire_count", "cape_open", cx, cy + 0.62 * size, scale=k, a=a)
+    else:
+        if side:
+            pose = ["fly1", "fly2", "fly3", "fly2"][int((T * 3) % 1 * 4)]     # 3 aleteos/s, tranquilo
+            spr = LIB.get("vampire_bat", pose); k = 1.0 * size / LIB.get("vampire_bat", "fly1").width
+            LIB.place(img, "vampire_bat", pose, cx, cy, scale=k, a=a, flip=flip, anchor="center")
+        else:
+            spr = LIB.get("vampire_bat", "fly_front"); k = 1.15 * size / spr.width
+            LIB.place(img, "vampire_bat", "fly_front", cx, cy, scale=k, a=a, anchor="center",
+                      squash=(1.0 + 0.04 * flap, 1.0 - 0.03 * flap))
         if belly > 0:
-            r = 0.075 * size * belly
-            d.ellipse([P(cx - r, by0 + 0.02 * size - r), P(cx + r, by0 + 0.02 * size + r)], fill=BLOOD)
-        # cabeza
-        hy = cy + lerp(-0.40, -0.13, m) * size; hr = lerp(0.085, 0.085, m) * size
-        if m < 0.9:   # cuello de la capa
-            k = 1 - m
-            for sg in (-1, 1):
-                d.polygon([P(cx + sg * 0.04 * size, hy + 0.06 * size), P(cx + sg * 0.17 * size * k, hy - 0.08 * size * k),
-                           P(cx + sg * 0.12 * size, hy + 0.12 * size)], fill=(150, 30, 50))
-        for sg in (-1, 1):   # orejas
-            el = 0.12 * size * m
-            d.polygon([P(cx + sg * 0.03 * size, hy - 0.04 * size), P(cx + sg * 0.075 * size, hy - 0.06 * size - el),
-                       P(cx + sg * 0.085 * size, hy - 0.0 * size)], fill=col)
-        d.ellipse([P(cx - hr, hy - hr), P(cx + hr, hy + hr)], fill=lerpc((210, 196, 186), col, m))
-        if eyes:
-            for sg in (-1, 1):
-                circ(d, P, cx + sg * 0.032 * size, hy - 0.01 * size, 0.014 * size, EYE if m > 0.5 else (40, 30, 40))
-        if mouth == "fangs" or m < 0.5:
-            for sg in (-1, 1):
-                d.polygon([P(cx + sg * 0.012 * size, hy + 0.035 * size), P(cx + sg * 0.03 * size, hy + 0.035 * size),
-                           P(cx + sg * 0.021 * size, hy + 0.07 * size)], fill=(250, 250, 250))
-    aa(img, (cx - 0.62 * size, cy - 0.62 * size, cx + 0.62 * size, cy + 0.62 * size), fn, a)
+            def fn(d, P, s):
+                r = 0.06 * size * belly
+                d.ellipse([P(cx - r, cy + 0.06 * size - r), P(cx + r, cy + 0.06 * size + r)], fill=BLOOD + (220,))
+            aa(img, (cx - 0.2 * size, cy - 0.1 * size, cx + 0.2 * size, cy + 0.3 * size), fn, a)
+    _puff(img, cx, cy, 0.45 * size, (morph - 0.3) / 0.4 if 0.3 < morph < 0.7 else 0, a)
 
 def hanging_bat(img, x, y, size, a=1.0, belly=0.0, mouth_open=0.0, col=BAT):
-    """murciélago colgado boca abajo, alas plegadas; (x, y) = patas en la rama"""
-    def fn(d, P, s):
-        d.line([P(x - 0.05 * size, y), P(x - 0.03 * size, y + 0.12 * size)], fill=col, width=int(8 * s))
-        d.line([P(x + 0.05 * size, y), P(x + 0.03 * size, y + 0.12 * size)], fill=col, width=int(8 * s))
-        d.ellipse([P(x - 0.22 * size, y + 0.08 * size), P(x + 0.22 * size, y + 0.72 * size)], fill=col)
-        d.ellipse([P(x - 0.15 * size, y + 0.16 * size), P(x + 0.15 * size, y + 0.62 * size)], fill=lerpc(col, BAT_L, 0.6))
-        if belly > 0:
-            r = 0.09 * size * belly; circ(d, P, x, y + 0.40 * size, r, BLOOD)
-        hy = y + 0.80 * size
-        for sg in (-1, 1):
-            d.polygon([P(x + sg * 0.04 * size, hy + 0.04 * size), P(x + sg * 0.11 * size, hy + 0.22 * size), P(x + sg * 0.13 * size, hy)], fill=col)
-        d.ellipse([P(x - 0.13 * size, hy - 0.12 * size), P(x + 0.13 * size, hy + 0.12 * size)], fill=col)
-        for sg in (-1, 1): circ(d, P, x + sg * 0.05 * size, hy + 0.02 * size, 0.022 * size, EYE)
-        if mouth_open > 0:
-            d.ellipse([P(x - 0.04 * size, hy - 0.10 * size - 0.03 * size * mouth_open), P(x + 0.04 * size, hy - 0.06 * size)], fill=(60, 20, 30))
-    aa(img, (x - 0.3 * size, y - 10, x + 0.3 * size, y + 0.98 * size), fn, a)
+    """murciélago colgado boca abajo (biblioteca); (x, y) = patas en la rama"""
+    spr = LIB.get("vampire_bat", "hang"); k = 0.98 * size / spr.height
+    LIB.place(img, "vampire_bat", "hang", x, y, scale=k, a=a, anchor="top")
+    if belly > 0:
+        def fn(d, P, s):
+            r = 0.08 * size * belly
+            d.ellipse([P(x - r, y + 0.42 * size - r), P(x + r, y + 0.42 * size + r)], fill=BLOOD + (220,))
+        aa(img, (x - 0.2 * size, y + 0.2 * size, x + 0.2 * size, y + 0.65 * size), fn, a)
 
 def moon(img, x, y, r, a=1.0):
     def fn(d, P, s):
@@ -154,28 +140,10 @@ def pumpkin(img, x, y, r, a=1.0, T=0.0):
                    P(x - 0.1 * r, y + 0.5 * r), P(x - 0.3 * r, y + 0.38 * r)], fill=g)
     aa(img, (x - 1.25 * r, y - 1.1 * r, x + 1.25 * r, y + 0.85 * r), fn, a)
 
-def cow(img, x, y, sc=1.0, a=1.0, T=0.0):
-    """vaca de perfil mirando a la izquierda; (x, y) = suelo bajo el centro"""
-    def fn(d, P, s):
-        X = lambda v: x + v * sc; Y = lambda v: y + v * sc
-        tail_sw = 10 * math.sin(T * 3)
-        d.line([P(X(160), Y(-210)), P(X(200 + tail_sw), Y(-100))], fill=COW, width=int(10 * s * sc))
-        circ(d, P, X(200 + tail_sw), Y(-92), 14 * sc, COW_SPOT)
-        for lx in (-130, -90, 90, 130):
-            d.rounded_rectangle([P(X(lx - 14), Y(-120)), P(X(lx + 14), Y(0))], radius=8 * s, fill=COW)
-            d.rectangle([P(X(lx - 14), Y(-18)), P(X(lx + 14), Y(0))], fill=COW_SPOT)
-        d.rounded_rectangle([P(X(-170), Y(-260)), P(X(170), Y(-100))], radius=70 * s * sc, fill=COW)
-        for ox, oy, rr in ((-60, -200, 42), (60, -170, 34), (120, -230, 26)):
-            d.ellipse([P(X(ox - rr * 1.3), Y(oy - rr)), P(X(ox + rr * 1.3), Y(oy + rr))], fill=COW_SPOT)
-        d.ellipse([P(X(-110), Y(-150)), P(X(-60), Y(-110))], fill=(240, 180, 190))       # ubre
-        bob = 4 * math.sin(T * 2)
-        d.polygon([P(X(-170), Y(-250)), P(X(-230), Y(-240 + bob)), P(X(-250), Y(-160 + bob)), P(X(-160), Y(-170))], fill=COW)
-        d.rounded_rectangle([P(X(-290), Y(-250 + bob)), P(X(-200), Y(-150 + bob))], radius=30 * s * sc, fill=COW)
-        d.rounded_rectangle([P(X(-300), Y(-195 + bob)), P(X(-240), Y(-145 + bob))], radius=22 * s * sc, fill=(240, 180, 190))
-        circ(d, P, X(-250), Y(-220 + bob), 7 * sc, (30, 26, 22))
-        d.polygon([P(X(-230), Y(-250 + bob)), P(X(-210), Y(-290 + bob)), P(X(-200), Y(-246 + bob))], fill=(236, 220, 180))
-        d.polygon([P(X(-220), Y(-240 + bob)), P(X(-180), Y(-252 + bob)), P(X(-200), Y(-222 + bob))], fill=COW)
-    aa(img, (x - 320 * sc, y - 310 * sc, x + 240 * sc, y + 6), fn, a)
+def cow(img, x, y, sc=1.0, a=1.0, T=0.0, pose="side"):
+    """vaca de la biblioteca mirando a la izquierda; (x, y) = suelo bajo el centro"""
+    spr = LIB.get("cow", pose); k = 520 * sc / spr.width
+    LIB.place(img, "cow", pose, x, y, scale=k, a=a, flip=True, squash=(1.0, 1.0 + 0.006 * math.sin(T * 2.5)))
 
 def paw(img, x, y, r, col, a=1.0):
     def fn(d, P, s):
@@ -329,19 +297,21 @@ GRID = [(160 + c * 112, 840 + r * 112) for r in range(5) for c in range(7)]
 RED3 = (9, 17, 26)
 
 def grid_bats(img, T, a, appear=1.0, dim=0.0, hi=0.0):
-    def fn(d, P, s):
-        for i, (gx, gy) in enumerate(GRID):
-            k = clamp(appear * 1.6 - i / len(GRID) * 0.6)
-            if k <= 0: continue
-            special = i in RED3
-            col = lerpc((150, 128, 170), BLOOD, hi) if special else lerpc((150, 128, 170), (70, 64, 96), dim)
-            sz = (44 + (16 * hi if special else 0)) * eo(k)
-            f = math.sin(T * 7 + i) * 0.5
-            for sg in (-1, 1):
-                d.polygon([P(gx, gy), P(gx + sg * sz * 0.6, gy - sz * (0.45 + 0.3 * f)), P(gx + sg * sz * 1.2, gy - sz * 0.1),
-                           P(gx + sg * sz * 0.8, gy + sz * 0.15), P(gx + sg * sz * 0.4, gy + sz * 0.05)], fill=col)
-            d.ellipse([P(gx - sz * 0.22, gy - sz * 0.35), P(gx + sz * 0.22, gy + sz * 0.3)], fill=col)
-    aa(img, (80, 760, 960, 1360), fn, a)
+    """rejilla de murciélagos de la biblioteca: muchas especies; las 3 que beben sangre se resaltan con un halo rojo"""
+    spr = LIB.get("vampire_bat", "fly_front")
+    for i, (gx, gy) in enumerate(GRID):
+        k = clamp(appear * 1.6 - i / len(GRID) * 0.6)
+        if k <= 0: continue
+        special = i in RED3
+        sz = (44 + (16 * hi if special else 0)) * eo(k)
+        if special and hi > 0:
+            def fn(d, P, s_, gx=gx, gy=gy, sz=sz):
+                r = sz * 1.15
+                d.ellipse([P(gx - r, gy - r), P(gx + r, gy + r)], fill=BLOOD + (int(170 * hi),))
+            aa(img, (gx - 2 * sz, gy - 2 * sz, gx + 2 * sz, gy + 2 * sz), fn, a)
+        al = a * (1 - 0.6 * dim if not special else 1)
+        LIB.place(img, "vampire_bat", "fly_front", gx, gy, scale=2.3 * sz / spr.width, a=al, anchor="center",
+                  squash=(1.0, 1.0 + 0.03 * math.sin(T * 3 + i)))
 
 @V.scene("species")
 def _(img, T, t, s, e):
@@ -372,7 +342,7 @@ def _(img, T, t, s, e):
     cow(img, 470, 1330, 1.25, a, T)
     u = eio(t / 3.4)
     bx, by = lerp(1000, 640, u), lerp(800, 1180, u) + 20 * math.sin(T * 5)
-    bat(img, bx, by, 220, flap_of(T, 6), a)
+    bat(img, bx, by, 240, 0, a, side=True, flip=True, T=T)
     R.txt(img, "livestock", 820, "label", B.TEXT, a * clamp((T - lt) / 0.3), x=300, rise=False)
     R.chrome(img, T)
     title(img, T, s, e, "Mostly livestock")
