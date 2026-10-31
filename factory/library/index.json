@@ -112,5 +112,63 @@
    "person"
   ],
   "source": "gemini"
+ },
+ "ancient_youth": {
+  "poses": {
+   "walk1": "ancient_youth/walk1.png",
+   "walk2": "ancient_youth/walk2.png",
+   "walk3": "ancient_youth/walk3.png",
+   "walk4": "ancient_youth/walk4.png",
+   "side": "ancient_youth/side.png",
+   "three_quarter": "ancient_youth/three_quarter.png",
+   "front": "ancient_youth/front.png",
+   "sit": "ancient_youth/sit.png",
+   "jump": "ancient_youth/jump.png"
+  },
+  "tags": [
+   "ancient",
+   "history",
+   "person"
+  ],
+  "source": "gemini"
+ },
+ "ancient_person": {
+  "poses": {
+   "talk": "ancient_person/talk.png",
+   "point": "ancient_person/point.png",
+   "think": "ancient_person/think.png",
+   "happy": "ancient_person/happy.png",
+   "scared": "ancient_person/scared.png",
+   "surprised": "ancient_person/surprised.png",
+   "wave": "ancient_person/wave.png",
+   "cold": "ancient_person/cold.png",
+   "shrug": "ancient_person/shrug.png"
+  },
+  "tags": [
+   "ancient",
+   "history",
+   "person"
+  ],
+  "source": "gemini"
+ },
+ "early_human": {
+  "poses": {
+   "walk1": "early_human/walk1.png",
+   "walk2": "early_human/walk2.png",
+   "walk3": "early_human/walk3.png",
+   "walk4": "early_human/walk4.png",
+   "side": "early_human/side.png",
+   "front": "early_human/front.png",
+   "three_quarter": "early_human/three_quarter.png",
+   "crouch": "early_human/crouch.png",
+   "jump": "early_human/jump.png"
+  },
+  "tags": [
+   "ancestor",
+   "evolution",
+   "person",
+   "prehistory"
+  ],
+  "source": "gemini"
  }
 }
