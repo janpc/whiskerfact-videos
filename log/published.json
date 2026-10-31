@@ -27,7 +27,16 @@
    "time_slot": "21:15",
    "hook_style": "statement",
    "caption_style": "teaser"
-  }
+  },
+  "check": {
+   "at": "2026-10-31T03:10:00+01:00",
+   "instagram": "PUBLISHED",
+   "tiktok": "PUBLISHED",
+   "youtube": "PUBLISHED"
+  },
+  "instagram": "https://www.instagram.com/reel/DfF19vRCTf6/",
+  "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7702186245866278166",
+  "youtube": "https://www.youtube.com/shorts/w7HBk7jpYxI"
  },
  {
   "date": "2026-10-29",
@@ -53,7 +62,16 @@
    "time_slot": "22:30",
    "hook_style": "statement",
    "caption_style": "teaser"
-  }
+  },
+  "check": {
+   "at": "2026-10-31T03:10:00+01:00",
+   "instagram": "PUBLISHED",
+   "tiktok": "PUBLISHED",
+   "youtube": "PUBLISHED"
+  },
+  "instagram": "https://www.instagram.com/reel/DfF-mIngA3l/",
+  "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7702205676885576982",
+  "youtube": "https://www.youtube.com/shorts/wjjQecABB-o"
  },
  {
   "date": "2026-10-30",
@@ -79,7 +97,12 @@
   "instagram": "https://www.instagram.com/reel/DfIEl-niq9d/",
   "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7702507305442495766",
   "youtube": "https://www.youtube.com/shorts/ZNNCwcTv_KM",
-  "check": {"at": "2026-10-30T18:31:20+01:00", "instagram": "PUBLISHED", "tiktok": "PUBLISHED", "youtube": "PUBLISHED"},
+  "check": {
+   "at": "2026-10-30T18:31:20+01:00",
+   "instagram": "PUBLISHED",
+   "tiktok": "PUBLISHED",
+   "youtube": "PUBLISHED"
+  },
   "duration_s": 62.9,
   "variants": {
    "time_slot": "18:00",
