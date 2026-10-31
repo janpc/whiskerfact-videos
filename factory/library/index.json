@@ -244,7 +244,15 @@
    "walk3": "monkey/walk3.png",
    "side": "monkey/side.png",
    "front": "monkey/front.png",
-   "sit": "monkey/sit.png"
+   "sit": "monkey/sit.png",
+   "happy": "monkey/happy.png",
+   "scared": "monkey/scared.png",
+   "curious": "monkey/curious.png",
+   "eat": "monkey/eat.png",
+   "sleep": "monkey/sleep.png",
+   "call": "monkey/call.png",
+   "look_back": "monkey/look_back.png",
+   "jump": "monkey/jump.png"
   },
   "tags": [
    "animal",
