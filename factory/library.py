@@ -92,6 +92,12 @@ def get(name, pose):
     if k not in _cache: _cache[k] = Image.open(os.path.join(DIR, idx[name]["poses"][pose])).convert("RGBA")
     return _cache[k]
 
+def stride(name, prefix="walk", scale=1.0):
+    """longitud de un paso (px): separación de los pies en la pose 1 del ciclo; avanzar stride por cada 4 dibujos
+    hace que los pies no patinen"""
+    spr = get(name, f"{prefix}1")
+    return 0.0 if spr is None else spr.width * 0.62 * scale
+
 def cycle(name, prefix, T, fps=9):
     """nombre de la pose de un ciclo (walk1..walkN) para el instante T"""
     poses = sorted(p for p in _index().get(name, {}).get("poses", {}) if p.startswith(prefix) and p[len(prefix):].isdigit())
@@ -100,7 +106,7 @@ def cycle(name, prefix, T, fps=9):
 def find(tag):
     return [n for n, v in _index().items() if tag in v["tags"] or tag == n]
 
-def place(img, name, pose, cx, base_y, height=None, flip=False, a=1.0, rot=0.0, scale=None, squash=(1.0, 1.0), anchor="bottom"):
+def place(img, name, pose, cx, base_y, height=None, flip=False, a=1.0, rot=0.0, scale=None, squash=(1.0, 1.0), anchor="bottom", xanchor="center"):
     """pega el personaje con la base (pies) en base_y, centrado en cx.
     height: altura en px de ESTA pose; scale: factor sobre el tamaño de la hoja (usa scale en ciclos y cambios
     de pose para que el personaje no cambie de tamaño entre poses)"""
@@ -113,7 +119,12 @@ def place(img, name, pose, cx, base_y, height=None, flip=False, a=1.0, rot=0.0, 
     if rot: s = s.rotate(rot, Image.BICUBIC, expand=True)
     if a < 1: s.putalpha(s.split()[3].point(lambda v: int(v * a)))
     y = base_y - s.height if anchor == "bottom" else (base_y - s.height / 2 if anchor == "center" else base_y)
-    img.alpha_composite(s, (int(cx - s.width / 2), int(y)))
+    ox = s.width / 2
+    if xanchor == "head":         # cx = centro de la cabeza: en los ciclos de andar el cuerpo no baila de lado a lado
+        al = np.asarray(s.split()[3])[: max(1, s.height // 5)] > 60
+        cols = np.nonzero(al.any(axis=0))[0]
+        if len(cols): ox = (cols.min() + cols.max()) / 2
+    img.alpha_composite(s, (int(cx - ox), int(y)))
     return s.size
 
 if __name__ == "__main__":

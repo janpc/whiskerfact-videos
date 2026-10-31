@@ -18,5 +18,62 @@
    "night"
   ],
   "source": "elevenlabs"
+ },
+ "scientist": {
+  "poses": {
+   "walk1": "scientist/walk1.png",
+   "walk2": "scientist/walk2.png",
+   "walk3": "scientist/walk3.png",
+   "walk4": "scientist/walk4.png",
+   "side": "scientist/side.png",
+   "front": "scientist/front.png",
+   "three_quarter": "scientist/three_quarter.png",
+   "sit": "scientist/sit.png",
+   "jump": "scientist/jump.png",
+   "talk": "scientist/talk.png",
+   "point": "scientist/point.png",
+   "think": "scientist/think.png",
+   "happy": "scientist/happy.png",
+   "scared": "scientist/scared.png",
+   "surprised": "scientist/surprised.png",
+   "wave": "scientist/wave.png",
+   "cold": "scientist/cold.png",
+   "shrug": "scientist/shrug.png"
+  },
+  "tags": [
+   "lab",
+   "person",
+   "scientist",
+   "woman"
+  ],
+  "source": "gemini"
+ },
+ "young_man": {
+  "poses": {
+   "walk1": "young_man/walk1.png",
+   "walk2": "young_man/walk2.png",
+   "walk3": "young_man/walk3.png",
+   "walk4": "young_man/walk4.png",
+   "side": "young_man/side.png",
+   "front": "young_man/front.png",
+   "three_quarter": "young_man/three_quarter.png",
+   "sit": "young_man/sit.png",
+   "jump": "young_man/jump.png",
+   "talk": "young_man/talk.png",
+   "point": "young_man/point.png",
+   "think": "young_man/think.png",
+   "happy": "young_man/happy.png",
+   "surprised": "young_man/surprised.png",
+   "wave": "young_man/wave.png",
+   "scared": "young_man/scared.png",
+   "cold": "young_man/cold.png",
+   "shrug": "young_man/shrug.png"
+  },
+  "tags": [
+   "casual",
+   "man",
+   "person"
+  ],
+  "source": "gemini"
  }
 }
