@@ -100,18 +100,20 @@ def cycle(name, prefix, T, fps=9):
 def find(tag):
     return [n for n, v in _index().items() if tag in v["tags"] or tag == n]
 
-def place(img, name, pose, cx, base_y, height=None, flip=False, a=1.0, rot=0.0, scale=None):
+def place(img, name, pose, cx, base_y, height=None, flip=False, a=1.0, rot=0.0, scale=None, squash=(1.0, 1.0), anchor="bottom"):
     """pega el personaje con la base (pies) en base_y, centrado en cx.
     height: altura en px de ESTA pose; scale: factor sobre el tamaño de la hoja (usa scale en ciclos y cambios
     de pose para que el personaje no cambie de tamaño entre poses)"""
     spr = get(name, pose)
     if spr is None or a <= 0.003: return None
     k = scale if scale is not None else height / spr.height
-    s = spr.resize((max(1, round(spr.width * k)), max(1, round(spr.height * k))), Image.LANCZOS)
+    sx, sy = squash
+    s = spr.resize((max(1, round(spr.width * k * sx)), max(1, round(spr.height * k * sy))), Image.LANCZOS)
     if flip: s = s.transpose(Image.FLIP_LEFT_RIGHT)
     if rot: s = s.rotate(rot, Image.BICUBIC, expand=True)
     if a < 1: s.putalpha(s.split()[3].point(lambda v: int(v * a)))
-    img.alpha_composite(s, (int(cx - s.width / 2), int(base_y - s.height)))
+    y = base_y - s.height if anchor == "bottom" else (base_y - s.height / 2 if anchor == "center" else base_y)
+    img.alpha_composite(s, (int(cx - s.width / 2), int(y)))
     return s.size
 
 if __name__ == "__main__":
@@ -124,3 +126,22 @@ if __name__ == "__main__":
         tags = opts.get("--tags", "").split(",") if opts.get("--tags") else []
         grid = tuple(int(v) for v in opts.get("--grid", "3x3").split("x"))
         print(add(sheet, name, poses, tags, opts.get("--source", "gemini"), grid))
+
+
+# ---------- ayudas de animación (principios clásicos: arcos, aceleración, anticipación, seguimiento) ----------
+import math
+def ease(t): t = min(1.0, max(0.0, t)); return t * t * (3 - 2 * t)
+
+def bezier(p0, p1, p2, p3, t):
+    """punto de una curva cúbica: las trayectorias van en ARCO, nunca en línea recta"""
+    u = 1 - t
+    return tuple(u ** 3 * a + 3 * u * u * t * b + 3 * u * t * t * c + t ** 3 * d for a, b, c, d in zip(p0, p1, p2, p3))
+
+def along(p, t, dt=0.01):
+    """posición y ángulo de la tangente (grados) en t de una curva bezier p=(p0,p1,p2,p3)"""
+    a = bezier(*p, max(0, t - dt)); b = bezier(*p, min(1, t + dt))
+    return bezier(*p, t), math.degrees(math.atan2(b[1] - a[1], b[0] - a[0]))
+
+def spring(t, amp=1.0, freq=3.0, damp=4.0):
+    """oscilación amortiguada para el seguimiento (balanceo al aterrizar, rebote al pararse)"""
+    return amp * math.exp(-damp * t) * math.cos(2 * math.pi * freq * t) if t >= 0 else 0.0
