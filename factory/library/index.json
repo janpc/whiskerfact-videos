@@ -161,7 +161,16 @@
    "front": "early_human/front.png",
    "three_quarter": "early_human/three_quarter.png",
    "crouch": "early_human/crouch.png",
-   "jump": "early_human/jump.png"
+   "jump": "early_human/jump.png",
+   "talk": "early_human/talk.png",
+   "point": "early_human/point.png",
+   "think": "early_human/think.png",
+   "happy": "early_human/happy.png",
+   "scared": "early_human/scared.png",
+   "surprised": "early_human/surprised.png",
+   "wave": "early_human/wave.png",
+   "cold": "early_human/cold.png",
+   "shrug": "early_human/shrug.png"
   },
   "tags": [
    "ancestor",
