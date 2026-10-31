@@ -103,6 +103,9 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - **Sky, space, cold, mystery:** a night sky (`ST.sky` + `ST.stars`).
   - **Psychedelic moments are rare and only for the truly crazy beat.** Use one only when the fact is genuinely mind-blowing (the twist, the "wait, what?" moment): `ST.wow_moment(img, T, t0, R.cat, "swirl"|"blobs"|"glitch", dur=1.3–1.6)`. Use 0–1 per reel; many reels have none. Never put one behind an explanation, a diagram or labels. It opens as a circle from the centre and closes the same way; it never fades.
   - **The hook cat never overlaps the drawing:** it sits bottom-left below the illustration (`brand.MASCOT["hook"]`). If the hook drawing reaches down there, move the drawing up.
+  - **Characters (people and animals) come from the library, not from code shapes.** Check `factory/library/index.json` first (`python3 library.py list`), then use `LIB.place(img, name, pose, cx, base_y, height, flip)` in the scene. Animate by moving, flipping and lightly scaling the sprite, and by switching poses; never redraw it with primitives.
+    - **If the reel needs a character that is not in the library** and it is central to the story, generate ONE sheet with ElevenLabs (`creative_generate_image`, `generations_count: 1`, model `gemini-3.1-flash-image`). Use the prompt template in `factory/library/PROMPT.md`, attaching `factory/library/STYLE_REF.png` as a reference when the monthly budget allows. Then add it to the library with `python3 library.py add ... --source elevenlabs` and commit it, so it is never paid for twice.
+    - **At most 1 image per reel.** Only generate it if `growth/credits.json` shows enough room: `estimated_balance` minus the image must stay above `warn_below`, and this month's image spending must stay under `image_budget_month`. If there is not enough room, use an object, a silhouette or a different staging instead of the character.
   - **Figures and people:** draw them as clean organic silhouettes (merged shapes, smoothed) in the flat layered style, not as stick or primitive shapes. Animate state changes as one smooth transformation of the same figure (for example, a scalloped fur coat that retracts), not as two figures with an arrow between them.
   - Mix the backdrops so that consecutive scenes don't all look the same, and keep the pace fast (the videoclip's slow rhythm is NOT copied).
 - **The style is a REFERENCE, not a template: no two reels may look the same.** What stays fixed is only the identity: outlines, flat colours, layered silhouettes, the cream close-up card, short psychedelic moments, the cat and the outro. Everything else changes with the topic:
@@ -199,5 +202,9 @@ All public-facing content is in **English**. All design rules live in `factory/b
 ## 10. Notify
 - Send one push notification. On success it gives the title, category, scheduled time and duration.
 - On failure it gives the step that failed and why. **Never publish a reel that failed a check.**
-- **Credits:** the account is on the ElevenLabs Starter plan, which allows commercial use. If a run finds that credits will not cover the next reel, say so in the notification: "Quedan pocos créditos de ElevenLabs para los próximos vídeos."
+- **Credits:** the account is on the ElevenLabs Starter plan, which allows commercial use. There is no tool that reads the balance, so `growth/credits.json` is the ledger:
+  - add one line to `spent` for every ElevenLabs call of the run: `{"date", "slug", "what", "credits"}`, using the real cost if the tool reports it, otherwise `costs_estimate`;
+  - subtract the run's total from `estimated_balance`;
+  - on the 1st of each month, add `monthly_allowance` (unused credits may roll over by the plan's rules; when the owner gives the real balance, overwrite `balance_checked` and `estimated_balance` with it).
+  If `estimated_balance` is below `warn_below`, or will not cover the next reel, add to the notification: "Quedan pocos créditos de ElevenLabs (~N). Dime el saldo real o recarga."
 - If ElevenLabs refuses for lack of credits, do not publish anything. Say exactly that in the notification.
