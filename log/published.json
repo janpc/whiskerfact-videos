@@ -181,6 +181,15 @@
    "fails": 0,
    "warns": 6,
    "note": "re-rendered 12:00 with library characters (v3); stamp text a bit blurry"
-  }
+  },
+  "check": {
+   "at": "2026-10-31T14:31:00+01:00",
+   "instagram": "PUBLISHED",
+   "tiktok": "PUBLISHED",
+   "youtube": "PUBLISHED"
+  },
+  "instagram": "https://www.instagram.com/reel/DfKORRfk3-v/",
+  "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7702817307227163927",
+  "youtube": "https://www.youtube.com/shorts/aiCyNNhNjm4"
  }
 ]
