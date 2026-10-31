@@ -3,3 +3,4 @@ factory/out/*/
 factory/out/*.mp4
 factory/out/*.jpg
 factory/library/_in/
+factory/out/*_qa.md
