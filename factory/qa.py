@@ -53,7 +53,7 @@ def run(slug):
     # 1) encuadre (calcula todos los reencuadres antes de registrar textos)
     for n in V.sc:
         if n != "hook": V._fit_params(n)          # el gancho nunca se reencuadra
-    for w in getattr(V, "warnings", []): fails.append(("—", f"Dibujo cortado: {w}"))
+    for w in getattr(V, "warnings", []): warns.append(("—", f"Fuera de la banda (no se reencuadra; mira que no tape textos ni quede pequeño): {w}"))
     # 2) muestreo
     RL.QA_LOG = []
     times = [i / FPS_QA for i in range(int(V.outro_at * FPS_QA))]

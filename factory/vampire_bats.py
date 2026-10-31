@@ -63,6 +63,9 @@ def title(img, T, s, e, text, color=B.TEXT, y=TITLE_Y, delay=0.0):
     R.txt(img, text, y, "title", color, win(T, s + delay, e))
 
 def wt(word, s): return V.word_time(word, after=s)
+def label_in(T, at, e):
+    """etiqueta que entra con su palabra, pero nunca tan tarde que no dé tiempo a leerla (>= 1,9 s en pantalla)"""
+    return clamp((T - min(at, e - 1.9)) / 0.3)
 def rel(name, word): return V.word_time(word, after=V.sc[name][0]) - V.sc[name][0]
 
 # ---------- murciélago: una sola figura que también sirve de capa del conde (morph) ----------
@@ -343,7 +346,7 @@ def _(img, T, t, s, e):
     u = eio(t / 3.4)
     bx, by = lerp(1000, 640, u), lerp(800, 1180, u) + 20 * math.sin(T * 5)
     bat(img, bx, by, 240, 0, a, side=True, flip=True, T=T)
-    R.txt(img, "livestock", 820, "label", B.TEXT, a * clamp((T - lt) / 0.3), x=300, rise=False)
+    R.txt(img, "livestock", 820, "label", B.TEXT, a * label_in(T, lt, e), x=300, rise=False)
     R.chrome(img, T)
     title(img, T, s, e, "Mostly livestock")
 V.sounds("cattle", [(0.1, "whoosh", 0.6), (rel("cattle", "livestock"), "pop", 0.7), (2.4, "whoosh", 0.5)])
@@ -372,7 +375,7 @@ def _(img, T, t, s, e):
     lick = 0.5 + 0.5 * math.sin((T - lt) * 14) if T >= lt else 0.0
     bat_head(img, lerp(200, 300, approach), 1110, 260, a, T, teeth=clamp((T - wt("teeth", s)) / 0.3), tongue=lick)
     R.txt(img, "small cut", 772, "label", RED_T, a * clamp((T - ct) / 0.3), x=720, rise=False)
-    R.txt(img, "laps it up", 772, "label", INK_T, a * clamp((T - lt) / 0.3), x=300, rise=False)
+    R.txt(img, "laps it up", 772, "label", INK_T, a * label_in(T, lt, e), x=300, rise=False)
     R.chrome(img, T)
     title(img, T, s, e, "Cut, then lap")
 V.sounds("cut", [(0.1, "whoosh", 0.5), (rel("cut", "cut"), "click", 0.8), (rel("cut", "laps"), "bubble", 0.6), (rel("cut", "laps") + 0.5, "bubble", 0.5)])
@@ -405,7 +408,7 @@ def _(img, T, t, s, e):
                 d.ellipse([P(xx - r, 1170 - r), P(xx + r, 1170 + r)], fill=BLOOD)
             d.line([P(200, 1170), P(800, 1170)], fill=BLOOD + (120,), width=int(8 * s2))
         aa(img, (180, 1140, 820, 1200), flow, a * fl)
-    R.txt(img, "draculin", 1220, "label", PURPLE_T, a * clamp((T - dt) / 0.3), x=500, rise=False)
+    R.txt(img, "draculin", 1220, "label", PURPLE_T, a * label_in(T, dt, e), x=500, rise=False)
     R.chrome(img, T)
     title(img, T, s, e, "Footnote")
     R.txt(img, "a blood-thinner in its spit", TITLE_Y + 110, "subtitle", ACC_T, win(T, ct - 0.4, e))
@@ -426,7 +429,7 @@ def _(img, T, t, s, e):
         d.rounded_rectangle([P(180, 1320), P(780, 1356)], radius=18 * s2, fill=(40, 30, 40))
         d.rounded_rectangle([P(186, 1326), P(186 + 588 * (1 - 0.92 * hungry), 1350)], radius=12 * s2, fill=lerpc((120, 220, 120), BLOOD, hungry))
     aa(img, (170, 1310, 790, 1366), bar, a * clamp((T - nt + 0.5) / 0.3))
-    R.txt(img, "2 nights", 800, "label", B.TEXT, a * clamp((T - nt) / 0.3), x=480, rise=False)
+    R.txt(img, "2 nights", 800, "label", B.TEXT, a * label_in(T, nt, e), x=480, rise=False)
     R.chrome(img, T)
     title(img, T, s, e, "The part movies skip")
     return R.punch(img, T, st)
@@ -447,7 +450,7 @@ def _(img, T, t, s, e):
             x = lerp(330, 650, u); y = 1150 - 80 * math.sin(u * math.pi)
             circ(d, P, x, y, 22, BLOOD)
         aa(img, (300, 1040, 690, 1190), drop, a)
-    R.txt(img, "shared meal", 1250, "label", B.TEXT, a * clamp((T - sh) / 0.3), x=490, rise=False)
+    R.txt(img, "shared meal", 1250, "label", B.TEXT, a * label_in(T, sh, e), x=490, rise=False)
     R.chrome(img, T)
     title(img, T, s, e, "Luckily, they share")
     return R.flash(img, T, sh + 0.2, strength=0.25)

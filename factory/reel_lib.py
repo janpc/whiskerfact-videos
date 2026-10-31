@@ -206,8 +206,11 @@ class Reel:
         from multiprocessing import Pool
         global _JOB
         _JOB = (frame_at, out_dir)
-        with Pool(2) as pool:
-            for n in pool.imap_unordered(_render_one, [(i, j) for i, j in enumerate(jobs)]): print("ok", n, flush=True)
+        only = [x for x in os.environ.get("ONLY", "").split(",") if x]     # ONLY=escena1,escena2: rehace solo esas
+        todo = [(i, j) for i, j in enumerate(jobs) if not only or j[0] in only
+                or not os.path.exists(os.path.join(out_dir, f"{i:02d}_{j[0]}.mp4"))]
+        with Pool(max(2, min(4, (os.cpu_count() or 2)))) as pool:
+            for n in pool.imap_unordered(_render_one, todo): print("ok", n, flush=True)
         lst = os.path.join(out_dir, "list.txt")
         with open(lst, "w") as f:
             for i, (n, _) in enumerate(jobs): f.write(f"file '{i:02d}_{n}.mp4'\n")
