@@ -219,6 +219,16 @@
    "caption_style": "question_cta",
    "cta": "💾 Save this for your next trivia night."
   },
-  "note": "log entry added by hand: the nightly run scheduled the post at 04:04 but did not finish (no log, no notification, no post-check)"
+  "note": "log entry added by hand: the nightly run scheduled the post at 04:04 but did not finish (no log, no notification, no post-check)",
+  "check": {
+   "at": "2026-11-01T17:41:00+01:00",
+   "instagram": "PUBLISHED",
+   "tiktok": "ERROR: Auto publish failed (503)",
+   "youtube": "PUBLISHED"
+  },
+  "urls": {
+   "instagram": "https://www.instagram.com/reel/DfNKpGHk3uq/",
+   "youtube": "https://www.youtube.com/shorts/fw1MAE300-c"
+  }
  }
 ]
