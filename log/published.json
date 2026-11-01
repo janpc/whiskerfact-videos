@@ -191,5 +191,34 @@
   "instagram": "https://www.instagram.com/reel/DfKORRfk3-v/",
   "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7702817307227163927",
   "youtube": "https://www.youtube.com/shorts/aiCyNNhNjm4"
+ },
+ {
+  "date": "2026-11-01",
+  "category": "space",
+  "slug": "hottest_planet",
+  "title": "Pop quiz: what's the hottest planet in our solar system?",
+  "hook": "Pop quiz: Hottest planet in our solar system?",
+  "scheduled": "2026-11-01T17:30:00+01:00",
+  "networks": [
+   "instagram",
+   "tiktok",
+   "youtube"
+  ],
+  "sources": [
+   "NASA (Mercury facts, Venus facts)",
+   "NASA Space Place",
+   "Royal Museums Greenwich",
+   "The Conversation (USC)",
+   "Live Science"
+  ],
+  "metricool_uuid": "-8569076783072063526",
+  "duration_s": 75.2,
+  "variants": {
+   "time_slot": "17:30",
+   "format": "quiz",
+   "caption_style": "question_cta",
+   "cta": "💾 Save this for your next trivia night."
+  },
+  "note": "log entry added by hand: the nightly run scheduled the post at 04:04 but did not finish (no log, no notification, no post-check)"
  }
 ]
