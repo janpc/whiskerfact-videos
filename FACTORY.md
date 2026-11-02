@@ -169,7 +169,12 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Check that `https://raw.githubusercontent.com/janpc/whiskerfact-videos/main/videos/<file>` returns 200.
 
 ## 8. Publish (Metricool connector)
-- Call `createScheduledPost` with `blogId 7740980` and timezone `Europe/Madrid`. It must be a single post with providers tiktok, instagram and youtube.
+- Call `createScheduledPost` with `blogId 7740980` and timezone `Europe/Madrid`. Create **two posts** with the same video, text and time (decision of 2/11/2026: TikTok videos posted by the API got 0 views, the first one posted by hand did get views):
+  1. **Instagram + YouTube:** one post with providers instagram and youtube, `autoPublish: true`.
+  2. **TikTok:** its own post with provider tiktok only. Choose the mode and record it as `variants.tiktok_mode`:
+     - `manual` (default): `autoPublish: false`. Metricool sends the owner a push notification at the scheduled time and she publishes it by hand from the Metricool app.
+     - `api` (test): `autoPublish: true`. Use it when the last 3 log entries with a `tiktok_mode` are all `manual` (so about 1 in every 4 reels), to check from time to time whether API posts get views now.
+  - Store both uuids in the log: `metricool_uuid` (Instagram + YouTube) and `metricool_uuid_tiktok`.
 - **Experiments:** read `growth/experiments.json`. For every test with status `testing`, pick today's option by its `rule`, counting options already used in `log/published.json`. Choose them all before writing the script, because the hook style changes the script.
 - **Time:** use the `time_slots` option chosen today, on today's date (Madrid). If the test is `decided`, follow its rule.
 - **Special dates:** a themed reel goes in the earliest slot that still falls before the event.
@@ -208,12 +213,12 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - `name`: "Mr. Whiskerfact check <slug>"
   - `notifications`: `{"push": true}`
   - `initiation`: `"human_schedule"`
-  - prompt: "Clone janpc/whiskerfact-videos (attach it with push access if needed), read CHECK.md and follow it for the reel '<title>' (slug <slug>), Metricool uuid <uuid>, scheduled at <ISO time Europe/Madrid>. Never publish or edit posts."
+  - prompt: "Clone janpc/whiskerfact-videos (attach it with push access if needed), read CHECK.md and follow it for the reel '<title>' (slug <slug>), Metricool uuid <uuid>, TikTok uuid <uuid_tiktok> (mode <tiktok_mode>), scheduled at <ISO time Europe/Madrid>. Never publish or edit posts."
 - **Safety net:** at the start of every nightly run, look in the log for any published entry from the last 3 days without a `check` field and with its time already passed. Run CHECK.md for it inline and include the result in tonight's notification.
 
 ## 9. Log and clean-up
 - Append to `log/published.json`:
-  - the date, category, slug, title, hook, sources (URLs), the Metricool uuid and the scheduled time
+  - the date, category, slug, title, hook, sources (URLs), both Metricool uuids and the scheduled time
   - `duration_s`
   - `event` (themed reels only)
   - `variants`, as in `{"time_slot": "20:30", "hook_style": "statement", "caption_style": "teaser"}`. Include `format`, `personality`, `cta` and `look` too. The weekly review needs these to compare results.

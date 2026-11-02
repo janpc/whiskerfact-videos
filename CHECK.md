@@ -5,7 +5,8 @@ This is a one-shot task that runs about 30 minutes after a reel's scheduled time
 1. Use the Metricool connector `getScheduledPosts` with these values:
    - brandId `7740980`, timezone `Europe/Madrid`, `extendedRange: true`
    - from 3 hours before to 1 hour after the scheduled time
-   - Find the post with the given Metricool **uuid**.
+   - Find the post with the given Metricool **uuid** (Instagram + YouTube) and, if given, the TikTok post with its own uuid.
+   - **TikTok in `manual` mode** (`autoPublish: false`): the owner publishes it by hand, so a non-published status is not a failure. Report it as "TikTok: pendiente de publicar a mano (aviso de Metricool)" and, if a TikTok id already appears, as published.
 2. For each provider (instagram, tiktok, youtube), read `status` and `publicUrl`.
    - **TikTok link:** Metricool builds TikTok links with the display name, which gives a broken URL. Rebuild it as `https://www.tiktok.com/@mrwhiskerfact/video/<id>`, using the id from the provider's `id` field or the end of `publicUrl`.
    - **OK:** `PUBLISHED`, or TikTok `AWAITING_CONFIRMATION` with a published id.

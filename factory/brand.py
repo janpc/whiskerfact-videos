@@ -162,7 +162,9 @@ PUBLISH = dict(
     networks=["tiktok", "instagram", "youtube"],      # TikTok, Instagram Reels, YouTube Shorts
     when="best_time",
     frequency=dict(daily_first_days=True, then_every_days=2),   # uno al día al arrancar, luego cada dos días                                 # getBestTimeToPostByNetwork, el mismo día del render
-    tiktok=dict(privacyOption="PUBLIC_TO_EVERYONE", autoAddMusic=False),
+    tiktok=dict(privacyOption="PUBLIC_TO_EVERYONE", autoAddMusic=False,
+                mode="manual",            # post aparte con autoPublish=False: aviso al móvil y ella publica a mano (2/11/2026)
+                api_test_every=4),        # 1 de cada 4 reels se publica por API para comprobar si ya tiene visitas
     youtube=dict(type="short", madeForKids=False, category="EDUCATION", privacy="public"),
     instagram=dict(type="REEL"),
     caption="hook + 1 línea + 3-5 hashtags (#mrwhiskerfact + categoría + tema)",
