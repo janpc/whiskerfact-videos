@@ -1,4 +1,4 @@
-# Character sheets (Gemini app, or ElevenLabs `creative_generate_image`)
+# Character, object and illustration sheets (Gemini app, or ElevenLabs `creative_generate_image`)
 
 Each character has TWO sheets of 3 × 3 poses: 1 = movement, 2 = acting.
 Attach `STYLE_REF.png` (the Mr. Whiskerfact sheet) as the style reference. For sheet 2, also attach that character's sheet 1, so it stays the same character.
@@ -27,5 +27,9 @@ happy, scared, curious, eat, sleep, call, look_back, jump, alert
 Cells: 1 "happy"; 2 "scared, fur/feathers puffed"; 3 "curious, head tilted"; 4 "eating"; 5 "sleeping curled up"; 6 "making its sound, mouth open"; 7 "looking back over its shoulder"; 8 "jumping"; 9 "alert, ears up".
 (Birds, fish and other non-walking animals: replace the cycle with their own one, e.g. fly1-fly4 wings up/mid/down/mid, swim1-swim4 tail positions.)
 
+## Object / illustration sheet (one sheet, 9 cells)
+For props, tools, food, vehicles, places or key illustrations that a reel needs. Same base prompt, but replace "NEW character: CHARACTER" with "NEW objects/illustrations: SUBJECT", keep the green background and the 3 × 3 grid, and describe each of the 9 cells as one separate item (or the same object from different angles or states, e.g. closed/open, full/empty). Several small items of the same reel can share a sheet. Scenes and landscapes: one per cell, filling the cell, still on flat green only where there is empty space.
+Pose names: one short name per cell (e.g. `lamp_on`, `lamp_off`). Tags: `object` or `illustration`, plus the topic.
+
 ## After generating
-`python3 library.py add sheet.png <name> <9 pose names, '-' for a bad cell> --tags person|animal,<more> --source gemini|elevenlabs`
+`python3 library.py add sheet.png <name> <9 pose names, '-' for a bad cell> --tags person|animal|object|illustration,<more> --source gemini|elevenlabs`
