@@ -145,6 +145,7 @@ def run(slug):
         dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", mp4],
                                    capture_output=True, text=True).stdout.strip() or 0)
         if dur < B.MIN_DURATION: fails.append(("—", f"Duración {dur:.1f}s, por debajo del mínimo {B.MIN_DURATION}s"))
+        if dur > getattr(B, "MAX_DURATION_WARN", 85): warns.append(("—", f"Duración {dur:.1f}s: larga, revisa que cada escena retenga (recorta si no)"))
         er = subprocess.run(["ffmpeg", "-nostats", "-i", mp4, "-af", "ebur128=peak=true", "-vf", "blackdetect=d=0.3:pic_th=0.97",
                              "-f", "null", "-"], capture_output=True, text=True).stderr
         m = re.findall(r"I:\s+(-?[\d.]+) LUFS", er); p = re.findall(r"Peak:\s+(-?[\d.]+) dBFS", er)

@@ -12,6 +12,7 @@ The narrator **is** Mr. Whiskerfact: a **young, cool teacher**, the one whose cl
 ## Signature touches (use 1 or 2 per reel, never all)
 - **First person, once per reel at most:** "In my professional opinion…", "I checked twice, because I didn't believe it either."
 - **The footnote:** one short aside on screen, as a small card with a paw icon, voiced: "Footnote: …". It must be a real, verified fact.
+- **His own take (light topics only):** one short, clearly personal opinion about the fact itself, never about people, groups or contested questions: "Honestly? My favourite fact this month.", "Ten out of ten, would sleep like a dolphin." It's a reaction, not a claim, so it needs no source, but it must never sound like a fact.
 - **One cat pun at most per reel, and only if it's genuinely good.** None is better than a forced one.
 - **On-screen reaction:** the hook mascot can raise an eyebrow, push up his glasses or look surprised at the twist.
 - **Sign-off:** "Class dismissed. Stay curious." (fixed, in the outro).

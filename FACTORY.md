@@ -58,14 +58,11 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Commit the claims file with the reel.
 
 ## 4. Script
-- **Length:** 150–170 words. Brad reads at about 148 words per minute, so the finished video lasts 65–75 s and is **always over 1 minute**. The renderer refuses to render under 61 s.
+- **Length:** set by the content and the format, but **retention comes first**: the shortest script that tells the whole story wins. Usually 160–190 words (63–75 s); up to about 230 words (85 s) only when every scene earns its place. Always **over 1 minute**: the renderer refuses to render under 61 s, and QA warns above 85 s.
+- **Retention rules (every format):** a new visual or idea at least every 3–4 s; no scene longer than ~8 s without a change; tease the payoff early ("the answer is weirder than you think") and pay it off late; cut any sentence that only repeats or warms up.
 - **Language:** plain English that is not childish. Name each complex term, then explain it in one sentence.
-- **Structure** (see `brand.STRUCTURE`):
-  - hook
-  - context
-  - 2–3 steps
-  - the surprising fact
-  - a **wrap line that answers the hook**, in the form "So next time you …, now you know. …"
+- **Structure:** use **the structure of today's format in `FORMATS.md`**, not one fixed template. `brand.STRUCTURE` is only the timing guide for `explainer`.
+- **Closing line:** one line before the slogan, from the closing bank in `FORMATS.md`. Never the same closing type as the previous reel, and avoid the type used most in the last 5 reels. Record it as `variants.closing`. Never announce the next video.
 - Never announce the next video.
 - Each scene opens with a distinctive first word, so scene cuts can be found in the transcript.
 
@@ -74,7 +71,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - voice `Dslrhjl3ZpzrctukrQSN` (Brad)
   - model `eleven_v4`
   - flow `Q4RWsQia6pHRGabsab5B`
-- Generate the whole script, wrap line included, in **one** call, with `generations_count: 1`. The default of 2 doubles the cost.
+- Generate the whole script, closing line included, in **one** call, with `generations_count: 1`. The default of 2 doubles the cost.
 - Poll `creative_get_flow_run_status` until it is done. Never repeat a generation call, because each call is charged.
 - Download the mp3 from its `storage.googleapis.com` URL to `factory/voice/<slug>_brad.mp3`.
 - Save the exact script as `factory/voice/<slug>_script.txt`.
@@ -221,7 +218,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - the date, category, slug, title, hook, sources (URLs), both Metricool uuids and the scheduled time
   - `duration_s`
   - `event` (themed reels only)
-  - `variants`, as in `{"time_slot": "20:30", "hook_style": "statement", "caption_style": "teaser"}`. Include `format`, `personality`, `cta` and `look` too. The weekly review needs these to compare results.
+  - `variants`, as in `{"time_slot": "20:30", "hook_style": "statement", "caption_style": "teaser"}`. Include `format`, `personality`, `cta`, `closing`, `tiktok_mode` and `look` too. The weekly review needs these to compare results.
 - Delete `videos/*.mp4` older than 7 days, then commit and push.
 
 ## 10. Notify

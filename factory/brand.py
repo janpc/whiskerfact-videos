@@ -7,9 +7,10 @@ nunca escritos a mano en la escena. Cambiar algo aquí lo cambia en todos.
 # ---------- lienzo ----------
 W, H, FPS = 1080, 1920, 30
 ENCODE = dict(codec="libx264", preset="veryfast", crf=20, pix_fmt="yuv420p")
-DURATION = (65, 75)          # segundos, objetivo 68: TikTok (Creator Rewards) solo paga vídeos de MÁS de 1 minuto
+DURATION = (62, 85)          # segundos (2/11/2026): la duración la pide el contenido, pero lo más corto que lo cuente entero gana. Normal 63-75; >80 solo si cada escena se gana su sitio
+MAX_DURATION_WARN = 85       # QA avisa por encima: retención
 MIN_DURATION = 61            # límite duro con cierre incluido; el render se niega por debajo
-SCRIPT_WORDS = (165, 190)    # palabras del guion (con frase de cierre): con tighten.py Brad va a ~170 ppm -> 65-75 s con el cierre
+SCRIPT_WORDS = (160, 230)    # palabras del guion (con frase de cierre): con tighten.py Brad va a ~170 ppm -> 65-75 s con el cierre
 
 # ---------- zonas (px, eje y) ----------
 # Instagram/TikTok tapan arriba y abajo: nada importante fuera de SAFE.
