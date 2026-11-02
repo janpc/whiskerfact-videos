@@ -10,6 +10,8 @@ It never changes the brand rules (`factory/brand.py`) or the run book's quality 
   - **Instagram Reels:** `IGRE02`, `IGRE03`, `IGRE23` views, `IGRE11` reach, `IGRE24` average watch time, `IGRE27` retention, `IGRE28` 3-second view rate, `IGRE12` saves, `IGRE21` shares.
   - **YouTube:** `YTVV02`, `YTVV17` title, `YTVV06` views, `YTVV08` average view duration, `YTVV09` likes, `YTVV11` comments.
   - **Follower growth:** if available, list the evolution metrics with `getAnalyticsAvailableMetrics` and pick follower counts.
+- **TikTok mode (manual vs api):** compare views of reels with `variants.tiktok_mode` `manual` against `api`. If API posts get views comparable to manual ones in 2+ tests, suggest to the owner going back to automatic TikTok.
+- **Audience country:** Metricool doesn't give TikTok viewer countries. Ask the owner in the notification, once a month, for the top viewer countries from TikTok Studio, and note them in `growth/insights.md`. Use Instagram/YouTube country data if Metricool lists it. Goal: check that an English channel from a Spanish account reaches English-speaking viewers.
 - Match each row to its log entry by publish time, title or description.
 - Ignore videos younger than 72 h, because their numbers are still moving.
 - Save a dated snapshot to `growth/metrics/<YYYY-MM-DD>.json`.
