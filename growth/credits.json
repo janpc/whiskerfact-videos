@@ -7,7 +7,7 @@
   "date": "2026-11-02",
   "note": "saldo real que marca ElevenLabs (dicho por la dueña)"
  },
- "estimated_balance": 26522,
+ "estimated_balance": 25201,
  "warn_below": 8000,
  "image_budget_month": 4000,
  "costs_estimate": {
@@ -23,6 +23,12 @@
    "slug": "library",
    "what": "vampire_bat sheet 1 (gemini-3.1-flash-image + style ref)",
    "credits": 609
+  },
+  {
+   "date": "2026-11-03",
+   "slug": "wifi_bands",
+   "what": "voice (eleven_v4, Brad, 1 take)",
+   "credits": 1321
   }
  ],
  "renewal_day": 30,

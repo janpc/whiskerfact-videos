@@ -1,0 +1,12 @@
+Two point four or five gigahertz? Which classic Wi-Fi band actually wins?
+Quick translation: gigahertz means the radio wave wiggles billions of times per second. Three rounds. Let's go.
+Round one: speed. Up close, five gigahertz usually moves more data every second, so big downloads and video calls fly. Point to five.
+Round two: range. Higher-frequency waves fade faster, and they have a harder time getting through walls and furniture.
+Meanwhile, two point four usually reaches farther, often all the way to the back bedroom. Point to two point four.
+Round three: crowding. In most setups, two point four has just three channels that don't overlap. Picture a three-lane highway at rush hour.
+Five gigahertz has many more of those lanes, often around twenty, depending on your country and router. Point to five.
+Now the weird part. Your microwave oven runs at about two point four five gigahertz. Right inside the two point four band.
+Heat up leftovers, and the oven's radio noise can make nearby Wi-Fi stutter. Bluetooth and old cordless phones share that band too.
+Honestly? Best plot twist in tech. Final score: five gigahertz wins, two to one.
+But my take? Use both: five near the router, two point four for the far rooms.
+Next time your stream freezes on two point four while the popcorn pops, check the microwave.
