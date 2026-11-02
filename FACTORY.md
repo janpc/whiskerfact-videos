@@ -232,6 +232,6 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - **Credits:** the account is on the ElevenLabs Starter plan, which allows commercial use. There is no tool that reads the balance, so `growth/credits.json` is the ledger:
   - (done right after each call, see step 0) one line in `spent` for every ElevenLabs call of the run: `{"date", "slug", "what", "credits"}`, using the real cost if the tool reports it, otherwise `costs_estimate`;
   - subtract the run's total from `estimated_balance`;
-  - credits renew on the plan's billing date, which is not known here: never add credits on your own. When the owner gives the real balance, overwrite `balance_checked` and `estimated_balance` with it.
+  - credits renew on day `renewal_day` (30) of each month: the first run on or after that day (and not yet done this month) sets `estimated_balance` to `monthly_allowance`, notes it in `spent` as a renewal line, and asks the owner for the real balance in the notification. Never add credits otherwise. When the owner gives the real balance, overwrite `balance_checked` and `estimated_balance` with it.
   If `estimated_balance` is below `warn_below`, or will not cover the next reel, add to the notification: "Quedan pocos créditos de ElevenLabs (~N). Dime el saldo real o recarga."
 - If ElevenLabs refuses for lack of credits, do not publish anything. Say exactly that in the notification.

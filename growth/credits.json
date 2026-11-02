@@ -24,5 +24,7 @@
    "what": "vampire_bat sheet 1 (gemini-3.1-flash-image + style ref)",
    "credits": 609
   }
- ]
+ ],
+ "renewal_day": 30,
+ "renewal_note": "el plan se renueva el día 30 de cada mes (dicho por la dueña el 2/11/2026). El primer run en o después del día 30 pone estimated_balance a monthly_allowance (30000, sin contar posibles créditos acumulados) y pide el saldo real en el aviso."
 }
