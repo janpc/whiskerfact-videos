@@ -354,5 +354,30 @@
    "dog"
   ],
   "source": "gemini"
+ },
+ "wifi_objects": {
+  "poses": {
+   "router": "wifi_objects/router.png",
+   "router_side": "wifi_objects/router_side.png",
+   "phone": "wifi_objects/phone.png",
+   "phone_back": "wifi_objects/phone_back.png",
+   "laptop": "wifi_objects/laptop.png",
+   "microwave": "wifi_objects/microwave.png",
+   "microwave_open": "wifi_objects/microwave_open.png",
+   "microwave_open2": "wifi_objects/microwave_open2.png",
+   "wall_brick": "wifi_objects/wall_brick.png",
+   "wall_concrete": "wifi_objects/wall_concrete.png",
+   "clock": "wifi_objects/clock.png",
+   "armchair": "wifi_objects/armchair.png",
+   "printer": "wifi_objects/printer.png",
+   "folder": "wifi_objects/folder.png",
+   "clock2": "wifi_objects/clock2.png"
+  },
+  "tags": [
+   "home",
+   "object",
+   "tech"
+  ],
+  "source": "gemini"
  }
 }

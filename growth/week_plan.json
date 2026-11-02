@@ -7,10 +7,8 @@
   "characters": [
    "young_man"
   ],
-  "missing": [
-   "wifi_objects"
-  ],
-  "notes": "Rounds in the same units: speed (max data rate), range through walls, crowding (non-overlapping channels). Twist: microwave ovens also run near 2.4 GHz, which is why they can disturb Wi-Fi (FCC / router makers). Do NOT use the 'water resonance' myth. Router, phone, laptop, microwave and wall come from the library sheet wifi_objects.",
+  "missing": [],
+  "notes": "Rounds in the same units: speed (max data rate), range through walls, crowding (non-overlapping channels). Twist: microwave ovens also run near 2.4 GHz, which is why they can disturb Wi-Fi (FCC / router makers). Do NOT use the 'water resonance' myth. Router, phone, laptop, microwave and wall come from the library sheet wifi_objects. Library sheet wifi_objects is in: router, router_side, phone, phone_back, laptop, microwave, microwave_open, microwave_open2, wall_brick, wall_concrete, clock, armchair, printer, folder, clock2.",
   "objects": [
    "wifi_objects"
   ],
