@@ -3,11 +3,11 @@
  "plan": "Starter",
  "monthly_allowance": 30000,
  "balance_checked": {
-  "value": 29337,
-  "date": "2026-10-31",
+  "value": 26522,
+  "date": "2026-11-02",
   "note": "saldo real que marca ElevenLabs (dicho por la dueña)"
  },
- "estimated_balance": 28728,
+ "estimated_balance": 26522,
  "warn_below": 8000,
  "image_budget_month": 4000,
  "costs_estimate": {
