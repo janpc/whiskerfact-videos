@@ -4,26 +4,57 @@
   "topic": "2.4 GHz vs 5 GHz Wi-Fi: which one is better?",
   "category": "tech",
   "format": "versus",
-  "characters": ["young_man"],
-  "missing": [],
-  "notes": "Rounds in the same units: speed (max data rate), range through walls, crowding (non-overlapping channels). Twist: microwave ovens also run near 2.4 GHz, which is why they can disturb Wi-Fi (FCC / router makers). Do NOT use the 'water resonance' myth. Router, phone and wall are drawn objects."
+  "characters": [
+   "young_man"
+  ],
+  "missing": [
+   "wifi_objects"
+  ],
+  "notes": "Rounds in the same units: speed (max data rate), range through walls, crowding (non-overlapping channels). Twist: microwave ovens also run near 2.4 GHz, which is why they can disturb Wi-Fi (FCC / router makers). Do NOT use the 'water resonance' myth. Router, phone, laptop, microwave and wall come from the library sheet wifi_objects.",
+  "objects": [
+   "wifi_objects"
+  ],
+  "illustrations": []
  },
  {
   "date": "2026-11-06",
   "topic": "What if you dug a hole straight through the Earth and jumped in?",
   "category": "science",
   "format": "what_if",
-  "characters": ["child_girl", "scientist"],
-  "missing": [],
-  "notes": "Grounded physics thought experiment (gravity tunnel): about 42 min in a uniform Earth, about 38 min with Earth's real density (Klotz, American Journal of Physics 2015; Live Science). Say 'physicists calculate'. Not scary: idealised tunnel, no air, no heat. child_girl uses jump/scared/happy, scientist explains."
+  "characters": [
+   "child_girl",
+   "scientist"
+  ],
+  "missing": [
+   "earth_tunnel_items"
+  ],
+  "notes": "Grounded physics thought experiment (gravity tunnel): about 42 min in a uniform Earth, about 38 min with Earth's real density (Klotz, American Journal of Physics 2015; Live Science). Say 'physicists calculate'. Not scary: idealised tunnel, no air, no heat. child_girl uses jump/scared/happy, scientist explains.",
+  "objects": [
+   "earth_tunnel_items"
+  ],
+  "illustrations": [
+   "earth_tunnel_items"
+  ]
  },
  {
   "date": "2026-11-08",
   "topic": "Myth or fact: cats can see in total darkness",
   "category": "nature",
   "format": "myth",
-  "characters": ["cat", "mouse"],
-  "missing": ["cat"],
-  "notes": "From backlog 'Why do cats' eyes glow in the dark?' (score 8): verdict MYTH. They need a little light; the tapetum lucidum reflects it back (the glow) and rod-rich retinas help. Sources to check: Cornell Feline Health Center, Merck Vet Manual / university vet schools. The cat must be an ordinary house cat, clearly not Mr. Whiskerfact. If the cat sheet is not in the library by the night, stage with eyes/silhouette only."
+  "characters": [
+   "cat",
+   "mouse"
+  ],
+  "missing": [
+   "cat",
+   "cat_eye_night_items"
+  ],
+  "notes": "From backlog 'Why do cats' eyes glow in the dark?' (score 8): verdict MYTH. They need a little light; the tapetum lucidum reflects it back (the glow) and rod-rich retinas help. Sources to check: Cornell Feline Health Center, Merck Vet Manual / university vet schools. The cat must be an ordinary house cat, clearly not Mr. Whiskerfact. If the cat sheet is not in the library by the night, stage with eyes/silhouette only.",
+  "objects": [
+   "cat_eye_night_items"
+  ],
+  "illustrations": [
+   "cat_eye_night_items"
+  ]
  }
 ]
