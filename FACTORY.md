@@ -7,6 +7,10 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Clone this repo and work in `factory/`. Python 3, PIL, numpy, scipy and ffmpeg are expected. Install anything missing with `pip install --break-system-packages`.
 - Read `factory/brand.py` fully before writing anything.
 - Read `schedule.json` and `log/published.json`.
+- **Write as you go** (2/11/2026: a run once stalled after scheduling and left no log, no credits and no check). Never keep important state only for the end of the run:
+  - **Credits:** right after each ElevenLabs call (voice, music, image, transcription), add its line to `growth/credits.json` and update `estimated_balance` (rules in step 10), then commit and push.
+  - **Log:** right after scheduling the posts (step 8), write the log entry (step 9) and push, before anything else.
+  - Keep the run lean: no extra renders or reviews beyond what this file asks. The whole run should finish in well under 3 hours.
 
 ## 1. Is today a publishing day?
 - `schedule.json` holds `daily_first` (5) and `then_gaps` ([2, 3]).
@@ -172,6 +176,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
      - `manual` (default): `autoPublish: false`. Metricool sends the owner a push notification at the scheduled time and she publishes it by hand from the Metricool app.
      - `api` (test): `autoPublish: true`. Use it when the last 3 log entries with a `tiktok_mode` are all `manual` (so about 1 in every 4 reels), to check from time to time whether API posts get views now.
   - Store both uuids in the log: `metricool_uuid` (Instagram + YouTube) and `metricool_uuid_tiktok`.
+- **Immediately after both posts are created**, append the log entry with everything known so far (step 9 fields), commit and push. Then go on to 8b. Step 9 only completes it.
 - **Experiments:** read `growth/experiments.json`. For every test with status `testing`, pick today's option by its `rule`, counting options already used in `log/published.json`. Choose them all before writing the script, because the hook style changes the script.
 - **Time:** use the `time_slots` option chosen today, on today's date (Madrid). If the test is `decided`, follow its rule.
 - **Special dates:** a themed reel goes in the earliest slot that still falls before the event.
@@ -214,7 +219,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - **Safety net:** at the start of every nightly run, look in the log for any published entry from the last 3 days without a `check` field and with its time already passed. Run CHECK.md for it inline and include the result in tonight's notification.
 
 ## 9. Log and clean-up
-- Append to `log/published.json`:
+- Complete the entry written in step 8 in `log/published.json` (append it now if it is somehow missing):
   - the date, category, slug, title, hook, sources (URLs), both Metricool uuids and the scheduled time
   - `duration_s`
   - `event` (themed reels only)
@@ -225,7 +230,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Send one push notification. On success it gives the title, category, scheduled time and duration.
 - On failure it gives the step that failed and why. **Never publish a reel that failed a check.**
 - **Credits:** the account is on the ElevenLabs Starter plan, which allows commercial use. There is no tool that reads the balance, so `growth/credits.json` is the ledger:
-  - add one line to `spent` for every ElevenLabs call of the run: `{"date", "slug", "what", "credits"}`, using the real cost if the tool reports it, otherwise `costs_estimate`;
+  - (done right after each call, see step 0) one line in `spent` for every ElevenLabs call of the run: `{"date", "slug", "what", "credits"}`, using the real cost if the tool reports it, otherwise `costs_estimate`;
   - subtract the run's total from `estimated_balance`;
   - credits renew on the plan's billing date, which is not known here: never add credits on your own. When the owner gives the real balance, overwrite `balance_checked` and `estimated_balance` with it.
   If `estimated_balance` is below `warn_below`, or will not cover the next reel, add to the notification: "Quedan pocos créditos de ElevenLabs (~N). Dime el saldo real o recarga."
