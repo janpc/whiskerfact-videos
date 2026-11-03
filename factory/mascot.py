@@ -129,8 +129,10 @@ class Cat4(Cat):
         self.mouth.update({k: ld(v) for k, v in ex["mouths"].items()})
         self.bodies = {k: ld(f"body_{k}.png") for k in ex["bodies"]}
 
-    def frame_body(self, pose="stand_front", mouth="smile", eyes=None, gaze=(0, 0), size=None, outline=6):
-        """gato con cuerpo, recortado al contenido; size = alto en px; outline = grosor del contorno plano de la silueta (0 = sin)"""
+    def frame_body(self, pose="stand_front", mouth="smile", eyes=None, gaze=(0, 0), size=None, outline=6, fixed=None, scale=None):
+        """gato con cuerpo, recortado al contenido; size = alto en px; outline = grosor del contorno plano de la silueta (0 = sin).
+        fixed=(x0,y0,x1,y1) recorta SIEMPRE esa caja del lienzo (1400x1900; cabeza en (188,0)) en vez del contenido: la cabeza queda en el mismo sitio en
+        todas las poses (necesario para fundir entre poses); scale = factor de escala sobre el lienzo."""
         head = self.base.copy()
         head.alpha_composite(self._eyes_layer(gaze) if eyes is None else (self.eyes4.get(eyes) or self.eyes[eyes]))
         head.alpha_composite(self.mouth[mouth])
@@ -139,8 +141,9 @@ class Cat4(Cat):
         head.putalpha(Image.fromarray((a * ramp).astype(np.uint8)))
         out = Image.new("RGBA", (1400, 1900), (0, 0, 0, 0))
         out.alpha_composite(self.bodies[pose]); out.alpha_composite(head, (188, 0))
-        out = out.crop(out.getbbox())
-        if size:
+        out = out.crop(fixed or out.getbbox())
+        if scale: out = out.resize((round(out.width * scale), round(out.height * scale)), Image.LANCZOS)
+        elif size:
             sc = size / out.height; out = out.resize((round(out.width * sc), size), Image.LANCZOS)
         if outline:
             from PIL import ImageFilter

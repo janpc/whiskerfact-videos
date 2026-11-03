@@ -55,3 +55,9 @@ Perfectly flat pure green background (#00FF00). No labels, text, borders, ground
 - Hoja de **bocas con actitud** (formato de `v3/sheet_mouths.png`, 4x3): sonrisa torcida, plana, preocupada, risa grande. Las 12 bocas actuales ya cubren los fonemas.
 - Hoja de **cuerpo entero** (de pie, caminando, sentado) para la clase del gato.
 - Recortar las hojas nuevas (ampliar `parts.py`), integrarlas en `mascot.py` y hacer la prueba de un fotograma antes de tocar la fábrica.
+
+## 4. Lección de la hoja de cuerpos (3/11/2026)
+
+Gemini cortó brazos, patas y cola en el borde de la celda en 6 poses (`point_right`, `paw_up`, `shrug`, `explain`, `stand_back`, `hands_on_hips`), así que `v4/expressions.json` solo usa las 5 limpias (`stand`, `arms_crossed`, `stand_front`, `book`, `wave`; `wave` es más baja que las demás y queda fuera del vídeo de prueba). Al regenerar los cuerpos, añadir al prompt:
+`Leave a clear empty margin of green around each body: no arm, paw, tail or sleeve may touch or cross the edge of its cell. Draw each body smaller if needed so everything fits inside its own cell.`
+y pedir hojas de 2x2 (cuerpos más grandes y con más resolución). El vídeo de prueba usa una caja fija del lienzo (`Cat4.frame_body(..., fixed=(0,0,1400,1700), scale=...)`) para que la cabeza no se mueva entre poses y se pueda fundir.

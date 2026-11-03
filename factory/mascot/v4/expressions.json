@@ -1,12 +1,44 @@
 {
-  "eyes": {
-    "surprised": "eyes_01.png", "skeptical": "eyes_03.png", "amused": "eyes_04.png", "deadpan": "eyes_05.png",
-    "sly": "eyes_06.png", "proud": "eyes_07.png", "happy_closed": "eyes_08.png", "excited": "eyes_11.png", "happy": "eyes_14.png",
-    "curious": "eyes2_01.png", "thinking": "eyes2_02.png", "worried": "eyes2_05.png", "worried_big": "eyes2_07.png"
-  },
-  "mouths": {
-    "smirk": "mouth_01.png", "flat": "mouth_02.png", "worry": "mouth_03.png", "laugh": "mouth_04.png", "grin": "mouth_05.png",
-    "frown": "mouth_06.png", "smile2": "mouth_07.png", "clench": "mouth_09.png", "tongue": "mouth_10.png"
-  },
-  "bodies": ["stand", "arms_crossed", "point_right", "paw_up", "shrug", "explain", "stand_back", "hands_on_hips", "stand_front", "book", "wave"]
+ "eyes": {
+  "surprised": "eyes_01.png",
+  "skeptical": "eyes_03.png",
+  "amused": "eyes_04.png",
+  "deadpan": "eyes_05.png",
+  "sly": "eyes_06.png",
+  "proud": "eyes_07.png",
+  "happy_closed": "eyes_08.png",
+  "excited": "eyes_11.png",
+  "happy": "eyes_14.png",
+  "curious": "eyes2_01.png",
+  "thinking": "eyes2_02.png",
+  "worried": "eyes2_05.png",
+  "worried_big": "eyes2_07.png"
+ },
+ "mouths": {
+  "smirk": "mouth_01.png",
+  "flat": "mouth_02.png",
+  "worry": "mouth_03.png",
+  "laugh": "mouth_04.png",
+  "grin": "mouth_05.png",
+  "frown": "mouth_06.png",
+  "smile2": "mouth_07.png",
+  "clench": "mouth_09.png",
+  "tongue": "mouth_10.png"
+ },
+ "bodies": [
+  "stand",
+  "arms_crossed",
+  "stand_front",
+  "book",
+  "wave"
+ ],
+ "bodies_clipped": [
+  "point_right",
+  "paw_up",
+  "shrug",
+  "explain",
+  "stand_back",
+  "hands_on_hips"
+ ],
+ "note": "bodies_clipped: la hoja de Gemini corta brazos/patas/cola en el borde de la celda; no usar hasta regenerarlos con margen (ver PROMPTS_V4.md). body_<pose>.png existen igualmente."
 }
