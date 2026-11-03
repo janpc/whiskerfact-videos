@@ -132,7 +132,7 @@ class Cat4(Cat):
     def frame_body(self, pose="stand_front", mouth="smile", eyes=None, gaze=(0, 0), size=None, outline=6):
         """gato con cuerpo, recortado al contenido; size = alto en px; outline = grosor del contorno plano de la silueta (0 = sin)"""
         head = self.base.copy()
-        head.alpha_composite(self._eyes_layer(gaze) if eyes is None else self.eyes4[eyes])
+        head.alpha_composite(self._eyes_layer(gaze) if eyes is None else (self.eyes4.get(eyes) or self.eyes[eyes]))
         head.alpha_composite(self.mouth[mouth])
         a = np.asarray(head.split()[3]).astype(np.float32)
         ramp = np.clip((self.CUT[1] - np.arange(head.height)) / (self.CUT[1] - self.CUT[0]), 0, 1)[:, None]
