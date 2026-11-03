@@ -290,6 +290,16 @@
       "warns": 9,
       "note": "QA repetido sobre la mezcla final con música y microondas corregido (sprite sin la raya de la tapa); 3/11 12:23"
     },
-    "note_v2": "Vídeo reemplazado en los dos posts de Metricool a las 12:24 (versión final con música); las uuid no cambian."
+    "note_v2": "Vídeo reemplazado en los dos posts de Metricool a las 12:24 (versión final con música); las uuid no cambian.",
+    "check": {
+      "at": "2026-11-03T21:05:00+01:00",
+      "instagram": "PUBLISHED",
+      "tiktok": "PUBLISHED (sin id/URL pública en Metricool)",
+      "youtube": "PUBLISHED"
+    },
+    "urls": {
+      "instagram": "https://www.instagram.com/reel/DfSoxCUAMKY/",
+      "youtube": "https://www.youtube.com/shorts/6y_YJ15LTqE"
+    }
   }
 ]
