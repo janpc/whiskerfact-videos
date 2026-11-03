@@ -2,7 +2,7 @@
   python3 wifi_bands_v4.py preview | clip <t0> [s] | render
 Cambios respecto a wifi_bands.py (que no se toca):
 - gato v4 con cuerpo (rebeca), con sincronía labial por fonemas, SOLO en gancho, giro, marcador, «My take» y cierre (no siempre);
-  junto a la tarjeta o en la ciudad, siempre por encima de y=1510 (las apps ponen la descripción abajo a la izquierda); brazos cruzados solo en «My take»
+  junto a la tarjeta o en la ciudad, detrás de un mostrador plano y siempre por encima de y=1525 (las apps ponen la descripción abajo a la izquierda); brazos cruzados solo en «My take»
 - color dominante por escena (cambia con el momento del vídeo); letra Londrina Solid; tarjeta plana sin sombra; grano plano sutil
 - gancho, giro y cierre: paisaje de ciudad (fondo complejo) con el gato más grande
 """
@@ -106,7 +106,8 @@ POSE_FADE = 0.2
 CARD_DEF, FIT_DEF = (56, 742, 1024, 1384), (70, 760, B.SAFE_RIGHT_LOW, 1370)
 def draw_cat(im, n, s, T):
     mode = CAT_MODE[n]
-    sc, cx, top, cut = (0.36, 255, 1190, 1510) if mode == "low" else (0.27, 190, 940, 1384)
+    # el gato va DETRÁS de un mostrador plano (como en el fotograma aprobado): se ve entero hasta el pecho, sin cortes ni desvanecidos
+    sc, cx, top, dk = (0.36, 225, 1120, (24, 1478, 430, 1522)) if mode == "low" else (0.27, 180, 940, (20, 1330, 330, 1384))
     i = min(int((T - s) * FPS), len(MOUTH[n]) - 1) if MOUTH.get(n) else 0
     mouth = MOUTH[n][i] if MOUTH.get(n) else "smile"
     eyes = "closed" if blinking(T) else EYES[n]
@@ -118,10 +119,13 @@ def draw_cat(im, n, s, T):
     cc = c.resize((round(c.width * br), round(c.height * br)), Image.LANCZOS)
     x0 = round(cx - 700 * sc - (cc.width - c.width) / 2); y0 = round(top - (cc.height - c.height))
     ys = (np.arange(cc.height) + y0)[:, None]                         # el corte de la cintura se desvanece (nada llega a la zona de descripción)
-    fade = np.clip((cut - ys) / 50.0, 0, 1)
+    fade = (ys < dk[1] + 12).astype(np.float32)                      # lo que queda bajo el mostrador no se ve
     al = np.asarray(cc.split()[3]).astype(np.float32) * fade
     cc = cc.copy(); cc.putalpha(Image.fromarray(al.astype(np.uint8)))
     im.alpha_composite(cc, (x0, y0)) if x0 >= 0 else im.paste(cc, (x0, y0), cc)
+    d = ImageDraw.Draw(im)
+    d.rounded_rectangle(dk, radius=14, fill=(176, 120, 72, 255), outline=(58, 36, 30, 255), width=6)
+    d.rectangle((dk[0] + 8, dk[1] + 6, dk[2] - 8, dk[1] + 14), fill=(196, 140, 90, 255))
 
 _orig = V.frame_at
 def frame_at(T):
@@ -129,8 +133,8 @@ def frame_at(T):
     if n in GR: R.bg_arr, R.bg = GR[n][0], GR[n][1]
     else: R.bg_arr, R.bg = ORIG_BG
     mode = CAT_MODE.get(n)
-    WB.CARD = (336, 742, 1024, 1384) if mode == "side" else CARD_DEF
-    V.FIT_BOX = (350, 760, B.SAFE_RIGHT_LOW, 1370) if mode == "side" else FIT_DEF
+    WB.CARD = (356, 742, 1024, 1384) if mode == "side" else CARD_DEF
+    V.FIT_BOX = (372, 760, B.SAFE_RIGHT_LOW, 1370) if mode == "side" else FIT_DEF
     V.FIT_MIN = 0.92
     narrow = mode == "low"
     V.blocks = BLOCKS_NARROW if narrow else BLOCKS_WIDE
