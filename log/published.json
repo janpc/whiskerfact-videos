@@ -280,10 +280,10 @@
     "card": true
    }
   },
-  "music": "synthesized bed (descarga de ElevenLabs bloqueada: elevenlabsusercontent.com 403)",
+  "music": "composed (ElevenLabs video-to-music, generation 6cwFwa7U54uhLNPmCec2; downloaded on 3/11 after the 403 and remixed)",
   "credits": {
    "voice": 1321,
-   "music": 0
+   "music": 1284
   },
   "qa": {
    "fails": 0,
