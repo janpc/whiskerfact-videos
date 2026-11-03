@@ -110,6 +110,47 @@ class Cat:
         out = [v for v, L in runs for _ in range(L)]
         return out[:n]
 
+class Cat4(Cat):
+    """Gato v4 (mascot/v4): cuerpo con rebeca + cejas expresivas + bocas con actitud, encima del v3 (todo lo demás, p. ej. lipsync, igual).
+      cat = Cat4(); img = cat.frame_body("stand_front", mouth="laugh", eyes="amused", gaze=(0.3, 0), size=900, outline=6)
+    eyes: None = pupilas dibujadas con mirada, o un nombre de v4/expressions.json (surprised, skeptical, amused, deadpan, sly, proud,
+    happy_closed, excited, happy, curious, thinking, worried, worried_big). mouth: las 12 de v3 o las de v4 (smirk, flat, worry, laugh,
+    grin, frown, smile2, clench, tongue)."""
+    D4 = os.path.join(HERE, "mascot", "v4")
+    CUT = (790, 835)           # corte suave de la cabeza por el cuello (lienzo de la base)
+    INK = (58, 36, 30)
+
+    def __init__(self):
+        super().__init__()
+        import json
+        ex = json.load(open(os.path.join(self.D4, "expressions.json")))
+        ld = lambda f: Image.open(os.path.join(self.D4, f)).convert("RGBA")
+        self.eyes4 = {k: ld(v) for k, v in ex["eyes"].items()}
+        self.mouth.update({k: ld(v) for k, v in ex["mouths"].items()})
+        self.bodies = {k: ld(f"body_{k}.png") for k in ex["bodies"]}
+
+    def frame_body(self, pose="stand_front", mouth="smile", eyes=None, gaze=(0, 0), size=None, outline=6):
+        """gato con cuerpo, recortado al contenido; size = alto en px; outline = grosor del contorno plano de la silueta (0 = sin)"""
+        head = self.base.copy()
+        head.alpha_composite(self._eyes_layer(gaze) if eyes is None else self.eyes4[eyes])
+        head.alpha_composite(self.mouth[mouth])
+        a = np.asarray(head.split()[3]).astype(np.float32)
+        ramp = np.clip((self.CUT[1] - np.arange(head.height)) / (self.CUT[1] - self.CUT[0]), 0, 1)[:, None]
+        head.putalpha(Image.fromarray((a * ramp).astype(np.uint8)))
+        out = Image.new("RGBA", (1400, 1900), (0, 0, 0, 0))
+        out.alpha_composite(self.bodies[pose]); out.alpha_composite(head, (188, 0))
+        out = out.crop(out.getbbox())
+        if size:
+            sc = size / out.height; out = out.resize((round(out.width * sc), size), Image.LANCZOS)
+        if outline:
+            from PIL import ImageFilter
+            px = outline
+            big = out.split()[3].filter(ImageFilter.MaxFilter(px * 2 + 1))
+            o = Image.new("RGBA", out.size, self.INK + (255,)); o.putalpha(big)
+            res = Image.new("RGBA", (out.width + 2 * px, out.height + 2 * px), (0, 0, 0, 0))
+            res.alpha_composite(o, (px, px)); res.alpha_composite(out, (px, px)); out = res
+        return out
+
 # fonema (ARPAbet) -> boca. None = consonante que no cambia la boca
 VISEME = {"AA": "ah?", "AE": "ah?", "AH": "a", "AY": "ah?", "AW": "ah?", "EH": "e", "EY": "e", "IH": "e",
           "IY": "ee", "Y": "ee", "AO": "o", "OW": "o", "OY": "o", "UH": "o", "UW": "oo", "W": "oo", "ER": "o", "R": None,

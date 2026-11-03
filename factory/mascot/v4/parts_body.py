@@ -37,6 +37,11 @@ def main():
         cell = S.crop((round(c * cw) + 2, round(r * cw) + 2, round((c + 1) * cw) - 2, round((r + 1) * cw) - 2))
         bb = bow_box(cell, (30, 20, cell.width - 30, int(cell.height * 0.5))) or bow_box(cell, (30, 20, cell.width - 30, int(cell.height * 0.75)))
         cell = P.key(cell)
+        al = np.asarray(cell.split()[3]) > 40                         # quita restos de las celdas vecinas: componentes pequeños sueltos
+        lab, n = ndimage.label(al)
+        if n > 1:
+            sizes = ndimage.sum(al, lab, range(1, n + 1)); keep = [i + 1 for i, z in enumerate(sizes) if z >= 0.04 * sizes.max()]
+            arr = np.asarray(cell).copy(); arr[..., 3] = np.where(np.isin(lab, keep), arr[..., 3], 0); cell = Image.fromarray(arr, "RGBA")
         sc = hw / (bb[2] - bb[0])
         # la pajarita del cuerpo cae donde estaba la de la cabeza
         p = P.place(cell, sc, ((bb[0] + bb[2]) / 2, (bb[1] + bb[3]) / 2), (hcx + HEAD_AT[0], hcy + HEAD_AT[1]), CANVAS)
