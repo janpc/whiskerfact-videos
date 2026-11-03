@@ -74,6 +74,20 @@ def lipsync_all():
         print("lipsync", n, len(ph), flush=True)
 lipsync_all()
 
+def _load_all(o, seen=None):
+    """carga en memoria todas las imágenes del gato ANTES de repartir el render en procesos (si no, comparten el archivo abierto y salen «truncadas»)"""
+    seen = seen if seen is not None else set()
+    if id(o) in seen: return
+    seen.add(id(o))
+    if isinstance(o, Image.Image): o.load()
+    elif isinstance(o, dict):
+        for v in o.values(): _load_all(v, seen)
+    elif isinstance(o, (list, tuple)):
+        for v in o: _load_all(v, seen)
+    elif hasattr(o, "__dict__"):
+        for v in vars(o).values(): _load_all(v, seen)
+_load_all(cat)
+
 _cache = {}
 def cat_img(pose, mouth, eyes, sc):
     k = (pose, mouth, eyes, sc)
