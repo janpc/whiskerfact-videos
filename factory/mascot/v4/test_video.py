@@ -17,7 +17,7 @@ WORDS = json.load(open(os.path.join(F, "voice", "wifi_bands_brad_words.json")))[
 BG, FLOOR, INK, ACCENT, CREAM = TF.BG, TF.FLOOR, TF.INK, TF.ACCENT, TF.CREAM
 FONT = os.path.join(D, "fonts", "LondrinaSolid-Regular.ttf")
 
-POSES = [(0, "stand_front", "amused"), (71.5, "stand_front", "curious"), (72.5, "stand_front", "excited"), (75.4, "stand_front", "sly")]   # una sola pose: solo cambian la expresión y la boca
+POSES = [(0, "stand_front", "amused"), (71.5, "arms_crossed", "curious"), (72.5, "arms_crossed", "excited"), (75.4, "stand_front", "sly")]   # coherente: brazos cruzados en "mi opinión", vuelve a la pose neutra; sin objetos
 FADE = 6
 TITLES = [(0, [("Final: 5 GHz wins", CREAM)]), (71.5, [("My take:", CREAM), ("use BOTH", ACCENT)])]
 
@@ -31,25 +31,14 @@ def sprite(name, h, ol=4):
     return TF.outline(im, ol)
 
 def build_set():
-    """clase del gato: pizarra con tiza (el tema del vídeo), estantes con objetos con significado (casco con orejas, robot, telescopio, caja de Schrödinger) y mesa.
-    Color dominante de la escena = la pared (cambia por escena); lo importante queda fuera de la zona de botones (x > 900, y > 900)."""
-    im = Image.new("RGB", (W, H), WALL); d = ImageDraw.Draw(im)
-    d.rectangle((0, 1130, W, 1250), fill=WALL2)                                    # friso inferior de la pared
-    d.rectangle((0, 1250, W, H), fill=FLOOR)                                       # suelo
-    d.rectangle((0, 1250, W, 1262), fill=(24, 62, 82))                             # zócalo
-    d.rounded_rectangle((650, 650, 1000, 900), radius=12, fill=WOOD, outline=INK, width=7)   # pizarra pequeña a la derecha del gato (con el gato delante no se pierde)
-    d.rounded_rectangle((672, 672, 978, 878), radius=7, fill=BOARD, outline=INK, width=5)
-    ch = ImageFont.truetype(os.path.join(D, "fonts", "CaveatBrush-Regular.ttf"), 44)
-    xs = np.linspace(690, 962, 300)
-    for y0, wl, amp, lab in ((742, 26, 12, "5 GHz"), (838, 90, 12, "2.4 GHz")):            # ondas a tiza: corta (5) y larga (2.4)
-        d.line([(x, y0 + amp * math.sin((x - 690) / wl * 2 * math.pi)) for x in xs], fill=CHALK, width=5, joint="curve")
-        d.text((690, y0 - 66), lab, font=ch, fill=ACCENT)
-    d.rectangle((650, 900, 1000, 910), fill=(120, 78, 46)); d.rectangle((760, 900, 860, 916), fill=CHALK)   # repisa y tiza
-    d.rounded_rectangle((10, 840, 330, 866), radius=6, fill=WOOD, outline=INK, width=5)       # estante con casco y robot
-    for name, h, x, y in (("helmet", 170, 24, 840), ("robot", 150, 170, 840)):
-        sp = sprite(name, h); im.paste(sp, (x, y - sp.height + 4), sp)
-    sp = sprite("telescope", 270, 5); im.paste(sp, (14, 1390 - sp.height + 6), sp)         # telescopio, junto a la mesa
-    sp = sprite("box_closed", 210, 5); im.paste(sp, (690, 1390 - sp.height + 8), sp)       # caja de Schrödinger sobre la mesa, cola asomando
+    """fondo estático como los de la fábrica: degradado vertical de la categoría (brand.bg_for), sin decorado."""
+    import brand
+    top, bot = brand.bg_for("tech")
+    ys = np.linspace(0, 1, H)[:, None, None]
+    arr = np.array(top, np.float32)[None, None, :] * (1 - ys) + np.array(bot, np.float32)[None, None, :] * ys
+    im = Image.fromarray(np.repeat(arr, W, axis=1).astype(np.uint8), "RGB"); d = ImageDraw.Draw(im)
+    d.rectangle((0, DESK_Y, W, H), fill=tuple(int(c * 0.55) for c in bot))              # banda inferior plana: tapa el corte de la cintura y sostiene el subtítulo
+    d.rectangle((0, DESK_Y, W, DESK_Y + 8), fill=ACCENT)
     return im
 
 def at(table, t):
@@ -84,8 +73,6 @@ def main(out):
         cc = c.resize((round(c.width * br), round(c.height * br)), Image.LANCZOS)
         x0 = (W - 1400 * SC) / 2 - 70 - 6 * SC - (cc.width - c.width) / 2; y0 = DESK_Y - 1625 * SC - 6 - (cc.height - c.height)
         im.paste(cc, (round(x0), round(y0)), cc)
-        dd.rounded_rectangle((60, 1390, W - 60, 1580), radius=18, fill=(176, 120, 72), outline=INK, width=8)
-        dd.rectangle((60, 1390, W - 60, 1410), fill=(196, 140, 90))
         # subtítulo: grupo de 3 palabras con la actual en acento
         cur = max((j for j, w in enumerate(WORDS) if w[1] - T0 <= (i + 1) / FPS), default=0)
         g0 = (cur // 3) * 3; grp = [w[0] for w in WORDS[g0:g0 + 3]]
