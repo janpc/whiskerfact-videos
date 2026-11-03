@@ -302,12 +302,37 @@ class VoiceReel:
                         "-movflags", "+faststart", final], check=True)
         return final
 
-    def preview(self, ts):
-        ims = [self.frame_at(float(t)).convert("RGB").resize((360, 640)) for t in ts]
+    def preview(self, ts, label=None):
+        """hoja de contactos: fotogramas sueltos en una imagen, con la zona de botones de la app (x 900-1080, y 900-1700) marcada en rojo"""
+        from PIL import ImageDraw
+        ims = []
+        for t in ts:
+            im = self.frame_at(float(t)).convert("RGB").resize((360, 640))
+            d = ImageDraw.Draw(im); d.rectangle((300, 300, 359, 566), outline=(255, 0, 0), width=2)
+            d.text((6, 4), f"{float(t):.1f}s", fill=(255, 255, 0))
+            ims.append(im)
         cols = min(6, len(ims)); rows = (len(ims) + cols - 1) // cols
         sh = Image.new("RGB", (360 * cols, 640 * rows))
         for i, im in enumerate(ims): sh.paste(im, ((i % cols) * 360, (i // cols) * 640))
-        p = os.path.join(HERE, "out", f"{self.slug}_preview.jpg"); sh.save(p, quality=88); print(p)
+        p = os.path.join(HERE, "out", f"{self.slug}_{label or 'preview'}.jpg"); sh.save(p, quality=88); print(p)
+        return p
+
+    def contact_times(self):
+        """dos fotogramas por escena (justo tras el corte y a mitad) + uno del cierre: así se ven composición, textos y transiciones"""
+        ts = []
+        for s, e in self.sc.values():
+            ts += [round(s + min(0.4, (e - s) / 3), 2), round((s + e) / 2, 2)]
+        return ts + [self.outro_at + 3.5]
+
+    def clip(self, t0, secs=1.0, fps=30):
+        """prueba de 1 segundo (sin audio) desde t0, para juzgar textura y movimiento de un efecto antes de renderizar todo"""
+        out_dir = os.path.join(HERE, "out", self.name); os.makedirs(out_dir, exist_ok=True)
+        p = os.path.join(HERE, "out", f"{self.slug}_clip.mp4")
+        ff = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", "1080x1920", "-r", str(fps), "-i", "-",
+                               "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p", p], stdin=subprocess.PIPE)
+        for i in range(int(secs * fps)):
+            ff.stdin.write(self.frame_at(t0 + i / fps).convert("RGB").resize((1080, 1920)).tobytes())
+        ff.stdin.close(); ff.wait(); print(p); return p
 
     def main(self):
         mode = sys.argv[1] if len(sys.argv) > 1 else "render"
@@ -315,9 +340,12 @@ class VoiceReel:
             for n, (s, e) in self.sc.items(): print(f"{n:10s} {s:6.2f} {e:6.2f}")
             print("outro", self.outro_at, "total", round(self.outro_at + OUTRO_LEN, 2)); return
         if mode == "preview":
-            ts = sys.argv[2:] or [round((s + e) / 2, 2) for s, e in self.sc.values()] + [self.outro_at + 3.5]
+            ts = sys.argv[2:] or self.contact_times()
             return self.preview(ts)
+        if mode == "clip":      # python3 <slug>.py clip <t0> [segundos]
+            return self.clip(float(sys.argv[2]), float(sys.argv[3]) if len(sys.argv) > 3 else 1.0)
         if mode == "render":
+            self.preview(self.contact_times(), "contact")     # hoja de contactos automática antes del render (segundos): se revisa a ojo
             # dibuja con el renderizador común (rechaza vídeos de menos de B.MIN_DURATION)
             self.R.mux = lambda *a, **k: None    # la mezcla sin voz de Reel no hace falta: la hace self.mux()
             self.R.render(list(self.sc.items()), self.frame_at, self.name, self.outro_at)
