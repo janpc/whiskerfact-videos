@@ -230,5 +230,65 @@
    "instagram": "https://www.instagram.com/reel/DfNKpGHk3uq/",
    "youtube": "https://www.youtube.com/shorts/fw1MAE300-c"
   }
+ },
+ {
+  "date": "2026-11-03",
+  "category": "tech",
+  "slug": "wifi_bands",
+  "title": "2.4 or 5 GHz? Which Wi-Fi band wins?",
+  "hook": "2.4 or 5 GHz? Which Wi-Fi band wins?",
+  "scheduled": "2026-11-03T20:30:00+01:00",
+  "networks": [
+   "instagram",
+   "tiktok",
+   "youtube"
+  ],
+  "sources": [
+   "https://asus.com/support/FAQ/1044838",
+   "https://support.linksys.com/kb/article/129",
+   "https://www.tp-link.com/it/support/faq/499/",
+   "https://datascience.uchicago.edu/insights/practical-steps-for-improving-your-wi-fi/",
+   "https://users.ece.utexas.edu/~bevans/papers/2011/microwave/index.html",
+   "https://www.britannica.com/topic/microwave-oven",
+   "https://www.wtamu.edu/~cbaird/sq/2014/10/15/why-are-the-microwaves-in-a-microwave-oven-tuned-to-water/",
+   "https://www.britannica.com/science/hertz",
+   "https://www.analog.com/en/resources/glossary/ghz"
+  ],
+  "metricool_uuid": "-5367661019060681188",
+  "metricool_uuid_tiktok": "8193487985078911110",
+  "duration_s": 85.6,
+  "variants": {
+   "time_slot": "20:30",
+   "hook_style": "question",
+   "caption_style": "teaser",
+   "format": "versus",
+   "personality": "full",
+   "cta": "👇 Tag someone who needs to know this.",
+   "closing": "real_life",
+   "tiktok_mode": "manual",
+   "look": {
+    "skies": [
+     "day",
+     "dusk"
+    ],
+    "terrains": [
+     "city"
+    ],
+    "wow": [
+     "glitch"
+    ],
+    "card": true
+   }
+  },
+  "music": "synthesized bed (descarga de ElevenLabs bloqueada: elevenlabsusercontent.com 403)",
+  "credits": {
+   "voice": 1321,
+   "music": 0
+  },
+  "qa": {
+   "fails": 0,
+   "warns": 9,
+   "note": "avisos: contraste 3.7-3.9 en etiquetas naranja/azul sobre crema; duración 85,6 s. Voz recuperada a mano del flow tras fallo de descarga la noche del 2/11; render duplicado obligó a rehacer escenas"
+  }
  }
 ]
