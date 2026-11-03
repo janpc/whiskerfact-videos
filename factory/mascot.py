@@ -129,7 +129,7 @@ class Cat4(Cat):
         self.mouth.update({k: ld(v) for k, v in ex["mouths"].items()})
         self.bodies = {k: ld(f"body_{k}.png") for k in ex["bodies"]}
 
-    def frame_body(self, pose="stand_front", mouth="smile", eyes=None, gaze=(0, 0), size=None, outline=6, fixed=None, scale=None):
+    def frame_body(self, pose="stand_front", mouth="smile", eyes=None, gaze=(0, 0), size=None, outline=6, fixed=None, scale=None, sharpen=0):
         """gato con cuerpo, recortado al contenido; size = alto en px; outline = grosor del contorno plano de la silueta (0 = sin).
         fixed=(x0,y0,x1,y1) recorta SIEMPRE esa caja del lienzo (1400x1900; cabeza en (188,0)) en vez del contenido: la cabeza queda en el mismo sitio en
         todas las poses (necesario para fundir entre poses); scale = factor de escala sobre el lienzo."""
@@ -145,6 +145,9 @@ class Cat4(Cat):
         if scale: out = out.resize((round(out.width * scale), round(out.height * scale)), Image.LANCZOS)
         elif size:
             sc = size / out.height; out = out.resize((round(out.width * sc), size), Image.LANCZOS)
+        if sharpen:                      # la hoja de cuerpos es de baja resolución: realce suave solo del color (no del alfa)
+            from PIL import ImageFilter
+            rgb = out.convert('RGB').filter(ImageFilter.UnsharpMask(radius=2.2, percent=sharpen, threshold=2)); rgb.putalpha(out.split()[3]); out = rgb
         if outline:
             from PIL import ImageFilter
             px = outline
