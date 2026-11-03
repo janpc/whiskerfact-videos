@@ -1,8 +1,8 @@
 """wifi_bands con el ESTILO NUEVO (prueba, 0 créditos: reutiliza voz y música ya pagadas). Salida: out/whiskerfact_wifi_bands_v4.mp4
   python3 wifi_bands_v4.py preview | clip <t0> [s] | render
 Cambios respecto a wifi_bands.py (que no se toca):
-- gato v4 con cuerpo (rebeca), con sincronía labial por fonemas, SOLO en gancho, giro, marcador, «My take» y cierre (no siempre);
-  junto a la tarjeta o en la ciudad, detrás de un mostrador plano y siempre por encima de y=1525 (las apps ponen la descripción abajo a la izquierda); brazos cruzados solo en «My take»
+- gato v4 con cuerpo (rebeca), con sincronía labial por fonemas, SOLO en gancho, giro y cierre (escenas de ciudad, sin tarjeta: no se mueve ningún gráfico);
+  junto a la tarjeta o en la ciudad, a la izquierda; el corte de la cintura queda bajo la zona de botones de la app
 - color dominante por escena (cambia con el momento del vídeo); letra Londrina Solid; tarjeta plana sin sombra; grano plano sutil
 - gancho, giro y cierre: paisaje de ciudad (fondo complejo) con el gato más grande
 """
@@ -55,10 +55,10 @@ ORIG_BG = (R.bg_arr, R.bg)
 # ---------- gato: expresión y pose por escena (coherente: solo cambia la pose en «take») ----------
 EYES = dict(hook="curious", translate="happy", speed="excited", fly="amused", range="skeptical", meanwhile="sly", crowd="worried",
             picture="thinking", twenty="surprised", twist="surprised", inside="worried", others="skeptical", final="proud", take="sly", close="amused")
-POSE = {n: "stand_front" for n in EYES}; POSE["take"] = "arms_crossed"
+POSE = {n: "stand_front" for n in EYES}; 
 # el gato NO sale siempre: solo en el gancho, el giro, el marcador, su opinión y el cierre.
 #   "side": junto a la tarjeta (tarjeta estrecha a la derecha); "low": en la ciudad, a la izquierda, por encima de la zona de descripción de las apps
-CAT_MODE = dict(hook="low", twist="low", final="side", take="side", close="low")
+CAT_MODE = dict(hook="low", twist="low", close="low")
 cat = M.Cat4()
 MOUTH = {}                                            # escena -> lista de bocas por fotograma
 
@@ -107,7 +107,7 @@ CARD_DEF, FIT_DEF = (56, 742, 1024, 1384), (70, 760, B.SAFE_RIGHT_LOW, 1370)
 def draw_cat(im, n, s, T):
     mode = CAT_MODE[n]
     # el gato va DETRÁS de un mostrador plano (como en el fotograma aprobado): se ve entero hasta el pecho, sin cortes ni desvanecidos
-    sc, cx, top, dk = (0.36, 225, 1120, (24, 1478, 430, 1522)) if mode == "low" else (0.27, 180, 940, (20, 1330, 330, 1384))
+    sc, cx, top = 0.36, 235, {"hook": 1190, "twist": 1190, "close": 1300}[n]      # sin mostrador ni desvanecido: el corte de la cintura cae bajo los botones de la app
     i = min(int((T - s) * FPS), len(MOUTH[n]) - 1) if MOUTH.get(n) else 0
     mouth = MOUTH[n][i] if MOUTH.get(n) else "smile"
     eyes = "closed" if blinking(T) else EYES[n]
@@ -118,14 +118,7 @@ def draw_cat(im, n, s, T):
     br = 1 + 0.006 * np.sin(2 * np.pi * T / 3.2)
     cc = c.resize((round(c.width * br), round(c.height * br)), Image.LANCZOS)
     x0 = round(cx - 700 * sc - (cc.width - c.width) / 2); y0 = round(top - (cc.height - c.height))
-    ys = (np.arange(cc.height) + y0)[:, None]                         # el corte de la cintura se desvanece (nada llega a la zona de descripción)
-    fade = (ys < dk[1] + 12).astype(np.float32)                      # lo que queda bajo el mostrador no se ve
-    al = np.asarray(cc.split()[3]).astype(np.float32) * fade
-    cc = cc.copy(); cc.putalpha(Image.fromarray(al.astype(np.uint8)))
     im.alpha_composite(cc, (x0, y0)) if x0 >= 0 else im.paste(cc, (x0, y0), cc)
-    d = ImageDraw.Draw(im)
-    d.rounded_rectangle(dk, radius=14, fill=(176, 120, 72, 255), outline=(58, 36, 30, 255), width=6)
-    d.rectangle((dk[0] + 8, dk[1] + 6, dk[2] - 8, dk[1] + 14), fill=(196, 140, 90, 255))
 
 _orig = V.frame_at
 def frame_at(T):
