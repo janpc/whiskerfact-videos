@@ -54,6 +54,7 @@ def wt(word, s): return V.word_time(word, after=s)
 def rel(name, word): return V.word_time(word, after=V.sc[name][0]) - V.sc[name][0]
 def label_in(T, at, e): return clamp((T - min(at, e - 1.9)) / 0.3)
 def label(img, text, y, color, a, x): R.txt(img, text, y, "label", color, a, x=x, rise=False)
+def lin(T, at, e, lead=2.4): return clamp((T - min(at, e - lead)) / 0.3)
 def score(img, T, s, e, a5, a24, at):
     """marcador bajo el título: aparece cuando el narrador señala al ganador de la ronda"""
     R.txt(img, f"5 GHz  {a5}  –  {a24}  2.4 GHz", TITLE_Y + 110, "subtitle", ACC_T, win(T, min(at, e - 2.0), e))
@@ -194,11 +195,11 @@ V.sounds("hook", [(0.0, "whoosh", 0.7), (0.25, "whoosh", 0.5), (0.6, "pop", 0.8)
 
 @V.scene("translate")
 def _(img, T, t, s, e):
-    t3 = wt("Three", s)
+    t3 = wt("Three", s); tB = t3 - 0.4
     a = win(T, s, e)
-    if T < t3 + 0.05:
+    if T < tB:
         wk = wt("wiggles", s); bt = wt("billions", s)
-        aa_ = a * clamp(1 - (T - (t3 - 0.15)) / 0.2)
+        aa_ = a * clamp(1 - (T - (tB - 0.2)) / 0.2)
         LIB.place(img, "wifi_objects", "router", 160, 1290, height=170, a=aa_)
         def wave(d, P, s_):
             pts = []
@@ -211,11 +212,11 @@ def _(img, T, t, s, e):
                 x0 = 560; x1 = x0 + 38 * 2 * math.pi
                 d.line([P(x0, 1210), P(x0, 1230), P(x1 - 60, 1230), P(x1 - 60, 1210)], fill=INK_T, width=int(5 * s_))
         aa(img, (270, 880, 900, 1260), wave, aa_)
-        label(img, "1 wiggle", 1240, INK_T, aa_ * label_in(T, wk, t3), 690)
-        label(img, "billions per second", 800, C24_D, aa_ * label_in(T, bt, t3), 560)
-        title(img, T, s, t3 - 0.1, "What's a gigahertz?")
+        label(img, "1 wiggle", 1240, INK_T, aa_ * label_in(T, wk, tB), 690)
+        label(img, "billions per second", 800, C24_D, aa_ * label_in(T, bt, tB), 560)
+        title(img, T, s, tB - 0.05, "What's a gigahertz?")
     else:
-        k = [clamp((T - (t3 + dt)) / 0.35) for dt in (0.0, 0.5, 1.0)]
+        k = [clamp((T - (tB + dt)) / 0.35) for dt in (0.0, 0.2, 0.4)]
         items = [("1", "Speed", C5), ("2", "Range", C24), ("3", "Crowding", C5)]
         for i, (n, w_, col) in enumerate(items):
             cx = 215 + i * 255; p = back_out(k[i])
@@ -226,11 +227,11 @@ def _(img, T, t, s, e):
             aa(img, (cx - 130, 900, cx + 130, 1230), fn, clamp(p))
             R.put_text(img, R.sprite(n, "number", (255, 255, 255)), cx, 1010 + (1 - clamp(p)) * 40, clamp(k[i] * 3), "mm", text=n)
             label(img, w_, 1100, INK_T, clamp(k[i] * 2) * a, cx)
-        R.txt(img, "5 GHz  0  –  0  2.4 GHz", TITLE_Y + 110, "subtitle", ACC_T, win(T, t3 + 1.3, e))
-        title(img, T, t3, e, "Three rounds")
+        R.txt(img, "5 GHz  0  –  0  2.4 GHz", TITLE_Y + 110, "subtitle", ACC_T, win(T, tB + 0.6, e))
+        title(img, T, tB, e, "Three rounds")
     R.chrome(img, T)
 V.sounds("translate", [(0.05, "whoosh", 0.6), (rel("translate", "wiggles"), "pop", 0.6), (rel("translate", "billions"), "click", 0.7),
-                       (rel("translate", "Three"), "pop", 0.8), (rel("translate", "Three") + 0.5, "pop", 0.8), (rel("translate", "Three") + 1.0, "pop", 0.8)])
+                       (rel("translate", "Three") - 0.4, "pop", 0.8), (rel("translate", "Three") - 0.2, "pop", 0.8), (rel("translate", "Three"), "pop", 0.8)])
 
 @V.scene("speed")
 def _(img, T, t, s, e):
@@ -322,7 +323,7 @@ def _(img, T, t, s, e):
         road(img, T, 110, 860, 880, 1220, 3, C24, 22, 120, a * (1 - sw), seed=2)
     if sw > 0:
         road(img, T, 110, 860, 860, 1240, 12, C5, 120, 150, a * sw, seed=5)
-    label(img, "rush hour", 800, C24_D, a * (1 - sw) * label_in(T, rh, e), 485)
+    label(img, "rush hour", 800, C24_D, a * (1 - sw) * clamp((T - s - 0.3) / 0.3), 485)
     label(img, "many more lanes", 1280, C5_D, a * sw * clamp((T - fv - 0.3) / 0.3), 485)
     R.chrome(img, T)
     title(img, T, s, e, "A three-lane highway" if T < fv else "5 GHz: way more lanes")
@@ -438,8 +439,8 @@ def _(img, T, t, s, e):
         arcs(d, P, s_, RX, RY, 50, 230, 30, T * 80, C5, (-35, 35), w=8, fade=0.9)
         arcs(d, P, s_, RX + 60, RY - 40, 230, 600, 70, T * 80, C24, (-18, 18), w=9, fade=0.4)
     aa(img, (140, 800, 900, 1290), fn, a)
-    label(img, "near: 5 GHz", 800, C5_D, a * label_in(T, fv, e), 330)
-    label(img, "far: 2.4 GHz", 800, C24_D, a * label_in(T, fr, e), 680)
+    label(img, "near: 5 GHz", 800, C5_D, a * lin(T, fv, e), 330)
+    label(img, "far: 2.4 GHz", 800, C24_D, a * lin(T, fr, e), 680)
     R.chrome(img, T)
     title(img, T, s, e, "My take: use both")
 V.sounds("take", [(0.05, "whoosh", 0.6), (rel("take", "five"), "pop", 0.7), (rel("take", "far"), "pop", 0.7)])
