@@ -1,37 +1,44 @@
 {
- "_about": "Libro de créditos de ElevenLabs (no hay herramienta para leer el saldo: se apunta cada gasto y la dueña corrige el saldo real cuando lo ve). Cada run: añade sus gastos aquí, recalcula 'estimated_balance' y avisa si queda menos de 'warn_below'.",
- "plan": "Starter",
- "monthly_allowance": 30000,
- "balance_checked": {
-  "value": 26522,
-  "date": "2026-11-02",
-  "note": "saldo real que marca ElevenLabs (dicho por la dueña)"
- },
- "estimated_balance": 25201,
- "warn_below": 8000,
- "image_budget_month": 4000,
- "costs_estimate": {
-  "voice_reel": 1100,
-  "music": 960,
-  "image_text_only": 410,
-  "image_with_reference": 610,
-  "transcribe_fallback": 400
- },
- "spent": [
-  {
-   "date": "2026-10-31",
-   "slug": "library",
-   "what": "vampire_bat sheet 1 (gemini-3.1-flash-image + style ref)",
-   "credits": 609
+  "_about": "Libro de créditos de ElevenLabs (no hay herramienta para leer el saldo: se apunta cada gasto y la dueña corrige el saldo real cuando lo ve). Cada run: añade sus gastos aquí, recalcula 'estimated_balance' y avisa si queda menos de 'warn_below'.",
+  "plan": "Starter",
+  "monthly_allowance": 30000,
+  "balance_checked": {
+    "value": 26522,
+    "date": "2026-11-02",
+    "note": "saldo real que marca ElevenLabs (dicho por la dueña)"
   },
-  {
-   "date": "2026-11-03",
-   "slug": "wifi_bands",
-   "what": "voice (eleven_v4, Brad, 1 take)",
-   "credits": 1321,
-   "note": "NO PUBLICADO: la descarga del mp3 falló (el proxy del sandbox bloquea elevenlabsusercontent.com, 403). La toma sigue en el flow Q4RWsQia6pHRGabsab5B, generation KEE4vEWzcHGssnpEKcJ1 (91,5 s, guion voice/wifi_bands_script.txt): reutilizarla en vez de pagar otra."
-  }
- ],
- "renewal_day": 30,
- "renewal_note": "el plan se renueva el día 30 de cada mes (dicho por la dueña el 2/11/2026). El primer run en o después del día 30 pone estimated_balance a monthly_allowance (30000, sin contar posibles créditos acumulados) y pide el saldo real en el aviso."
+  "estimated_balance": 23917,
+  "warn_below": 8000,
+  "image_budget_month": 4000,
+  "costs_estimate": {
+    "voice_reel": 1100,
+    "music": 1284,
+    "image_text_only": 410,
+    "image_with_reference": 610,
+    "transcribe_fallback": 400
+  },
+  "spent": [
+    {
+      "date": "2026-10-31",
+      "slug": "library",
+      "what": "vampire_bat sheet 1 (gemini-3.1-flash-image + style ref)",
+      "credits": 609
+    },
+    {
+      "date": "2026-11-03",
+      "slug": "wifi_bands",
+      "what": "voice (eleven_v4, Brad, 1 take)",
+      "credits": 1321,
+      "note": "NO PUBLICADO: la descarga del mp3 falló (el proxy del sandbox bloquea elevenlabsusercontent.com, 403). La toma sigue en el flow Q4RWsQia6pHRGabsab5B, generation KEE4vEWzcHGssnpEKcJ1 (91,5 s, guion voice/wifi_bands_script.txt): reutilizarla en vez de pagar otra."
+    },
+    {
+      "date": "2026-11-03",
+      "slug": "wifi_bands",
+      "what": "music (video-to-music, 1 generation)",
+      "credits": 1284,
+      "note": "generation 6cwFwa7U54uhLNPmCec2, flow Q4RWsQia6pHRGabsab5B. Cuesta ~1284, no 960: actualizar costs_estimate.music"
+    }
+  ],
+  "renewal_day": 30,
+  "renewal_note": "el plan se renueva el día 30 de cada mes (dicho por la dueña el 2/11/2026). El primer run en o después del día 30 pone estimated_balance a monthly_allowance (30000, sin contar posibles créditos acumulados) y pide el saldo real en el aviso."
 }
