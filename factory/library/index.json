@@ -379,5 +379,23 @@
    "tech"
   ],
   "source": "gemini"
+ },
+ "class_objects": {
+  "poses": {
+   "box_closed": "class_objects/box_closed.png",
+   "box_open": "class_objects/box_open.png",
+   "mouse": "class_objects/mouse.png",
+   "robot": "class_objects/robot.png",
+   "telescope": "class_objects/telescope.png",
+   "helmet": "class_objects/helmet.png",
+   "catnip": "class_objects/catnip.png",
+   "terrarium": "class_objects/terrarium.png",
+   "microscope": "class_objects/microscope.png"
+  },
+  "tags": [
+   "class",
+   "objects"
+  ],
+  "source": "gemini"
  }
 }
