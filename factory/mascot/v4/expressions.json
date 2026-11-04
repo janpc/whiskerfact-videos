@@ -75,5 +75,8 @@
    1.6,
    1.6
   ]
+ },
+ "mouth_scale_y": {
+  "singles/mouth_wide.png": 0.88
  }
 }

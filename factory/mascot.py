@@ -126,11 +126,31 @@ class Cat4(Cat):
         ex = json.load(open(os.path.join(self.D4, "expressions.json")))
         ld = lambda f: Image.open(os.path.join(self.D4, f)).convert("RGBA")
         self.eyes4 = {k: ld(v) for k, v in ex["eyes"].items()}
-        self.mouth.update({k: ld(v) for k, v in ex["mouths"].items()})
+        # el borde SUPERIOR de todas las bocas sueltas se fija a la misma altura (la del labio de la boca cerrada): al abrir solo baja la mandíbula
+        # (si cada boca sube o baja su borde de arriba, la boca «sube y baja» al hablar)
+        import numpy as np
+        TOP = 687; sy_fix = ex.get("mouth_scale_y", {})
+        def ldm(f):
+            im = ld(f)
+            if not f.startswith("singles/mouth_"): return im
+            a = np.asarray(im)[..., 3] > 128; a[:, 500:560] = False; a[:645] = False
+            ys = np.where(a.any(1))[0]
+            if not len(ys): return im
+            top = int(ys.min()); sy = sy_fix.get(f, 1.0); Y0 = 645
+            dy = TOP - top
+            out = im.copy(); out.paste((0, 0, 0, 0), (0, Y0, im.width, im.height))                  # arriba (línea de la nariz): no se mueve
+            row = im.crop((0, Y0 - 1, im.width, Y0))
+            for yy in range(Y0, Y0 + max(0, dy) + 2): out.paste(row, (0, yy), row)               # y se alarga hasta la nueva altura de la boca
+            low = im.copy(); low.paste((0, 0, 0, 0), (0, 0, im.width, Y0))
+            low = low.transform(im.size, Image.AFFINE, (1, 0, 0, 0, 1 / sy, top - TOP / sy), Image.BICUBIC)
+            out.alpha_composite(low); return out
+        self.mouth.update({k: ldm(v) for k, v in ex["mouths"].items()})
         # bocas derivadas: la misma boca suelta escalada (abertura intermedia) respecto al punto bajo la nariz; da más grados de abertura al labial
         for k, (src, sx, sy) in ex.get("mouths_derived", {}).items():
-            im = ld(src); ax, ay = 528, 640
-            self.mouth[k] = im.transform(im.size, Image.AFFINE, (1 / sx, 0, ax - ax / sx, 0, 1 / sy, ay - ay / sy), Image.BICUBIC)
+            im = ldm(src); ax, ay = 528, TOP
+            low = im.copy(); low.paste((0, 0, 0, 0), (0, 0, im.width, ay))                      # solo se escala lo que hay bajo el labio superior; la línea de la nariz no se toca
+            low = low.transform(im.size, Image.AFFINE, (1 / sx, 0, ax - ax / sx, 0, 1 / sy, ay - ay / sy), Image.BICUBIC)
+            up = im.copy(); up.paste((0, 0, 0, 0), (0, ay, im.width, im.height)); up.alpha_composite(low); self.mouth[k] = up
         self.bodies = {k: ld(f"body_{k}.png") for k in ex["bodies"]}
 
     def frame_body(self, pose="stand_front", mouth="smile", eyes=None, gaze=(0, 0), size=None, outline=6, fixed=None, scale=None, sharpen=0):

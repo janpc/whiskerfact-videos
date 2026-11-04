@@ -56,6 +56,7 @@ ORIG_BG = (R.bg_arr, R.bg)
 EYES = dict(hook="curious", translate="happy", speed="excited", fly="amused", range="skeptical", meanwhile="sly", crowd="worried",
             picture="thinking", twenty="surprised", twist="surprised", inside="worried", others="skeptical", final="proud", take="sly", close="amused")
 # poses por escena (segundos desde el inicio de la escena): pocas y coherentes con lo que dice; cambian con un fundido corto
+EYES_LATE = dict(close="sly")      # remate en «check the microwave»: el único cambio de ojos dentro de una escena
 POSE_PLAN = dict(hook=[(0, "stand_front"), (2.7, "explain")],
                  twist=[(0, "stand_front"), (1.6, "explain")],
                  close=[(0, "stand_front"), (1.1, "shrug"), (3.7, "point_right")])
@@ -79,7 +80,7 @@ def lipsync_all():
         wav = os.path.join(tmp, n + ".mp3")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{max(0, s - off):.3f}", "-to", f"{e - off:.3f}", "-i", V.voice_mp3, "-c:a", "libmp3lame", "-q:a", "2", wav], check=True)
         ph = M.phone_align(wav, " ".join(w[0] for w in ws))
-        MOUTH[n] = cat.lipsync(ph, FPS, int((e - s) * FPS) + 2, 0.0)
+        MOUTH[n] = cat.lipsync(ph, FPS, int((e - s) * FPS) + 2, 0.0, lead=3)      # la boca va 3 fotogramas por delante del sonido (ella lo prefirió a 1 y a -1)
         print("lipsync", n, len(ph), flush=True)
 lipsync_all()
 
@@ -119,7 +120,7 @@ def draw_cat(im, n, s, T):
     sc, cx, top = 0.36, 235, {"hook": 1190, "twist": 1190, "close": 1300}[n]      # sin mostrador ni desvanecido: el corte de la cintura cae bajo los botones de la app
     i = min(int((T - s) * FPS), len(MOUTH[n]) - 1) if MOUTH.get(n) else 0
     mouth = MOUTH[n][i] if MOUTH.get(n) else "smile"
-    eyes = "closed" if blinking(T) else EYES[n]
+    eyes = "closed" if blinking(T) else (EYES_LATE[n] if n in EYES_LATE and T - s >= 3.8 else EYES[n])
     t = T - s; pose = pose_at(n, t)
     c = cat_img(pose, mouth, eyes, sc)
     for t0, p in POSE_PLAN.get(n, []):                  # fundido corto al cambiar de pose
