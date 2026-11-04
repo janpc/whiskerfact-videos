@@ -124,9 +124,9 @@ def draw_cat(im, n, s, T):
     t = T - s; pose = pose_at(n, t)
     c = cat_img(pose, mouth, eyes, sc)
     for t0, p in POSE_PLAN.get(n, []):                  # fundido corto al cambiar de pose
-        if 0 < t - t0 < POSE_FADE:
+        if -1e-6 <= t - t0 < POSE_FADE:                     # (con «0 <» el primer fotograma salía ya con la pose nueva y luego aparecía un fantasma de la vieja: el doble cambio)
             prev = pose_at(n, t0 - 1e-3)
-            if prev != pose: c = Image.blend(cat_img(prev, mouth, eyes, sc), c, (t - t0) / POSE_FADE)
+            if prev != pose: c = Image.blend(cat_img(prev, mouth, eyes, sc), c, max(0.0, t - t0) / POSE_FADE)
     br = 1 + 0.006 * np.sin(2 * np.pi * T / 3.2)
     cc = c.resize((round(c.width * br), round(c.height * br)), Image.LANCZOS)
     cc = cc.rotate(1.3 * np.sin(2 * np.pi * T / 5.0), resample=Image.BICUBIC, center=(cc.width / 2, cc.height))      # balanceo muy suave desde la cintura: menos tieso
