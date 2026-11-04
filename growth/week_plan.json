@@ -32,7 +32,13 @@
   ],
   "illustrations": [
    "earth_tunnel_items"
-  ]
+  ],
+  "experiment": {
+   "batch": "B1-hook-style",
+   "test": "hook_style",
+   "option": "statement",
+   "role": "variant"
+  }
  },
  {
   "date": "2026-11-08",
@@ -53,6 +59,12 @@
   ],
   "illustrations": [
    "cat_eye_night_items"
-  ]
+  ],
+  "experiment": {
+   "batch": "B1-hook-style",
+   "test": "hook_style",
+   "option": "statement",
+   "role": "variant"
+  }
  }
 ]

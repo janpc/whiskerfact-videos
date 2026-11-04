@@ -1,20 +1,80 @@
 {
- "_about": "What the nightly run tests. The weekly review (REVIEW.md) reads the metrics, updates 'weights' and 'learned', and opens or closes tests. Times are Europe/Madrid; the audience is mostly US (NY = Madrid - 6 h, LA = Madrid - 9 h).",
+ "_about": "What the nightly run tests. ONE primary variable per batch of 3 videos; every other test stays fixed at its `control` option. The Monday plan (PLAN.md) assigns the options per video, the weekly review (REVIEW.md) measures the batch and closes it. Times are Europe/Madrid; the audience is mostly US (NY = Madrid - 6 h, LA = Madrid - 9 h).",
+ "protocol": {
+  "primary_metric": "watch_pct = average watch time / video length, per network, averaged over the networks the video went to. Views depend too much on algorithm luck; they are reported, not decisive.",
+  "secondary_metrics": [
+   "(likes + comments + shares + saves) per 100 views",
+   "shares per 100 views",
+   "3-second view rate / retention (Instagram)",
+   "followers gained"
+  ],
+  "windows": {
+   "early_read_hours": 48,
+   "final_days": 7,
+   "note": "Verdicts use the 7-day figures. The 48 h figures are only an early read for the notification."
+  },
+  "baseline": "median watch_pct of the last 5 videos with role `base` or `control`. The 7 reels published before 2026-11-04 count as base.",
+  "roles": {
+   "variant": "uses the option under test",
+   "control": "uses the control option, to refresh the baseline",
+   "base": "tests nothing (special-date or themed reels, or a day with no test); counts for the baseline"
+  },
+  "success": "the variant beats the baseline by more than 20% on watch_pct in at least 2 of the 3 videos of the batch",
+  "failure": "the variant is worse than the baseline by more than 20% in at least 2 of the 3 videos",
+  "inconclusive": "anything else. Not 'it does not work': repeat the batch once with 3 new videos; if still inconclusive, close it as 'no detectable difference' and keep the control.",
+  "outcomes": {
+   "adopt": "status decided, the variant becomes the new `control` for every video",
+   "discard": "status decided, the control stays",
+   "repeat": "same test, a new batch id"
+  },
+  "side_experiment": "`variants.tiktok_mode` (manual vs api) keeps running on its own rule (about 1 reel in 4) and is analysed on TikTok only, by REVIEW.md. It is not a variable of the batch."
+ },
+ "batch": {
+  "id": "B1-hook-style",
+  "status": "running",
+  "test": "hook_style",
+  "variant": "statement",
+  "control": "question",
+  "hypothesis": "A hook that opens with a surprising statement and then asks the question holds more viewers than a direct question, because it gives a reason to stay in the first 3 seconds.",
+  "slots": 3,
+  "videos": [
+   "2026-11-06",
+   "2026-11-08"
+  ],
+  "opened": "2026-11-04",
+  "note": "The third video (2026-11-11) is added by the Monday plan of 2026-11-09."
+ },
+ "queue": [
+  {
+   "test": "time_slots",
+   "variant": "14:00",
+   "control": "20:30",
+   "why": "does the 8 am NY slot beat 2:30 pm NY"
+  },
+  {
+   "test": "caption_style",
+   "variant": "question_cta",
+   "control": "teaser",
+   "why": "comments vs curiosity"
+  },
+  {
+   "test": "personality",
+   "variant": "full",
+   "control": "light",
+   "why": "does a second signature touch help"
+  }
+ ],
+ "history": [],
  "time_slots": {
-  "status": "testing",
+  "status": "fixed",
   "options": {
    "14:00": "8 am NY, morning commute",
    "17:30": "11:30 am NY, before lunch",
    "20:30": "2:30 pm NY, afternoon",
    "23:30": "5:30 pm NY, after work"
   },
-  "weights": {
-   "14:00": 1,
-   "17:30": 1,
-   "20:30": 1,
-   "23:30": 1
-  },
-  "rule": "Pick the slot with the fewest videos so far in the log (ties: higher weight, then earliest). Once a winner is declared, use it about 70% of the time and keep exploring the others."
+  "control": "20:30",
+  "rule": "fixed: always use `control`. testing: use the option the week plan assigns in `experiment`; if the plan has no entry for today, alternate (the option with fewer videos in the log). decided: `control` is the winner and stays fixed."
  },
  "hook_style": {
   "status": "testing",
@@ -22,27 +82,29 @@
    "question": "the hook is a direct question ('Why do cats purr?')",
    "statement": "a surprising statement, then the question ('Slaves didn't build the pyramids. So who did?')"
   },
-  "weights": {
-   "question": 1,
-   "statement": 1
-  },
-  "rule": "Alternate: use the option with fewer videos in the log."
+  "control": "question",
+  "rule": "fixed: always use `control`. testing: use the option the week plan assigns in `experiment`; if the plan has no entry for today, alternate (the option with fewer videos in the log). decided: `control` is the winner and stays fixed."
  },
  "caption_style": {
-  "status": "testing",
+  "status": "fixed",
   "options": {
    "teaser": "hook + one line that teases the twist, without giving the answer",
    "question_cta": "hook + a question inviting comments ('Did you know this? 👇')"
   },
-  "weights": {
-   "teaser": 1,
-   "question_cta": 1
-  },
-  "rule": "Alternate: use the option with fewer videos in the log."
+  "control": "teaser",
+  "rule": "fixed: always use `control`. testing: use the option the week plan assigns in `experiment`; if the plan has no entry for today, alternate (the option with fewer videos in the log). decided: `control` is the winner and stays fixed."
  },
- "learned": [],
+ "personality": {
+  "status": "fixed",
+  "options": {
+   "light": "1 signature touch",
+   "full": "2 signature touches"
+  },
+  "control": "light",
+  "rule": "fixed: always use `control`. testing: use the option the week plan assigns in `experiment`; if the plan has no entry for today, alternate (the option with fewer videos in the log). decided: `control` is the winner and stays fixed."
+ },
  "format": {
-  "status": "testing",
+  "status": "varied",
   "options": {
    "explainer": "why/how explainer (FORMATS.md)",
    "myth": "myth or fact",
@@ -50,25 +112,7 @@
    "what_if": "grounded hypothetical",
    "quiz": "pop quiz with 3 options"
   },
-  "weights": {
-   "explainer": 1,
-   "myth": 1,
-   "versus": 1,
-   "what_if": 1,
-   "quiz": 1
-  },
-  "rule": "Use the format with the fewest reels in the log (ties: the one used longest ago). Never the same format twice in a row. Themed (special-date) reels may use any format."
+  "rule": "Not an experiment: the formats vary on purpose so the channel does not look like a mass-produced series. Use the format with the fewest reels in the log (ties: the one used longest ago). Never the same format twice in a row. Themed (special-date) reels may use any format. The review records the format of every video and mentions it if it clearly explains a result."
  },
- "personality": {
-  "status": "testing",
-  "options": {
-   "light": "1 signature touch",
-   "full": "2 signature touches"
-  },
-  "weights": {
-   "light": 1,
-   "full": 1
-  },
-  "rule": "Alternate. See PERSONALITY.md."
- }
+ "learned": []
 }

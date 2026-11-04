@@ -25,7 +25,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Record `variants.format` and `variants.personality` in the log.
 
 ## 2. Topic
-- **Weekly plan first:** if `growth/week_plan.json` has an entry for today's date, use its topic, category and format. Still verify everything (step 3); if the topic fails verification, choose another one with the rules below and say so in the notification. Use the characters, objects and illustrations it lists from the library (`factory/library`).
+- **Weekly plan first:** if `growth/week_plan.json` has an entry for today's date, use its topic, category and format. Still verify everything (step 3); if the topic fails verification, choose another one with the rules below and say so in the notification. Use the characters, objects and illustrations it lists from the library (`factory/library`). If the entry has an `experiment` field, apply its `test` and `option` for today (see "Experiments" in step 8) and do not substitute another option.
 - **Special dates first:** read `growth/calendar.json`. Make a themed reel today if both of these are true:
   - an event falls within the next 7 days;
   - fewer than that event's `reels` themed videos are already in the log (field `event`).
@@ -178,7 +178,11 @@ All public-facing content is in **English**. All design rules live in `factory/b
      - `api` (test): `autoPublish: true`. Use it when the last 3 log entries with a `tiktok_mode` are all `manual` (so about 1 in every 4 reels), to check from time to time whether API posts get views now.
   - Store both uuids in the log: `metricool_uuid` (Instagram + YouTube) and `metricool_uuid_tiktok`.
 - **Immediately after both posts are created**, append the log entry with everything known so far (step 9 fields), commit and push. Then go on to 8b. Step 9 only completes it.
-- **Experiments:** read `growth/experiments.json`. For every test with status `testing`, pick today's option by its `rule`, counting options already used in `log/published.json`. Choose them all before writing the script, because the hook style changes the script.
+- **Experiments (one variable per batch):** read `growth/experiments.json` and choose every option before writing the script, because the hook style changes the script.
+  - A test with status `fixed` always uses its `control` option. Do not rotate it.
+  - The test with status `testing` uses the option in today's `week_plan.json` `experiment` field. If the plan has no entry for today, alternate: use the option with fewer videos in `log/published.json` (the `batch.control` and `batch.variant` options only), and use role `base` when today is a themed special-date reel.
+  - `format` is `varied` on purpose (not an experiment): follow its rule.
+  - Record `variants.experiment` as `{"batch": ..., "test": ..., "option": ..., "role": "variant"|"control"|"base"}`.
 - **Time:** use the `time_slots` option chosen today, on today's date (Madrid). If the test is `decided`, follow its rule.
 - **Special dates:** a themed reel goes in the earliest slot that still falls before the event.
 - **Text:** this is the same text for all three networks, and it is also the YouTube description. Write it in this order:
@@ -224,7 +228,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - the date, category, slug, title, hook, sources (URLs), both Metricool uuids and the scheduled time
   - `duration_s`
   - `event` (themed reels only)
-  - `variants`, as in `{"time_slot": "20:30", "hook_style": "statement", "caption_style": "teaser"}`. Include `format`, `personality`, `cta`, `closing`, `tiktok_mode` and `look` too. The weekly review needs these to compare results.
+  - `variants`, as in `{"time_slot": "20:30", "hook_style": "statement", "caption_style": "teaser"}`. Include `format`, `personality`, `cta`, `closing`, `tiktok_mode`, `look` and `experiment` too. The weekly review needs these to compare results.
 - Delete `videos/*.mp4` older than 7 days, then commit and push.
 
 ## 10. Notify
