@@ -9,6 +9,21 @@ sys.path.insert(0, V3)
 import parts as P
 from parts_eyes import BROW
 
+def _iris(a):
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    return (r > g + 15) & (g > b + 40) & (r > 110) & (r - b > 80)
+
+def match_iris(p, base):
+    """Gemini a veces pinta el iris más naranja/amarillo: se lleva al ámbar medio de la base (conserva el sombreado)."""
+    reg = (slice(380, 600), slice(260, 780))
+    B = np.asarray(base.convert("RGB")).astype(np.float32); A = np.asarray(p.convert("RGB")).astype(np.float32)
+    mb = _iris(B[reg]); ma = _iris(A[reg])
+    if mb.sum() < 500 or ma.sum() < 500: return p
+    k = B[reg][mb].mean(0) / A[reg][ma].mean(0)
+    m = _iris(A)
+    A[m] = np.clip(A[m] * k, 0, 255)
+    out = Image.fromarray(A.astype(np.uint8)).convert("RGBA"); out.putalpha(p.split()[3]); return out
+
 def main():
     base = Image.open(os.path.join(V3, "base.png")).convert("RGBA"); size = base.size
     nb = P.nose_box(base, (300, 450, 724, 700)); gb = P.glasses_box(base, nb[1])
@@ -21,11 +36,15 @@ def main():
         n2 = P.nose_box(cell, (int(cell.width * 0.2), int(cell.height * 0.3), int(cell.width * 0.8), int(cell.height * 0.75)))
         g2 = P.glasses_box(cell, n2[1]); sc = gw / (g2[2] - g2[0])
         p = P.place(cell, sc, ((g2[0] + g2[2]) / 2, (g2[1] + g2[3]) / 2), (gcx, gcy), size)
+        p = match_iris(p, base)
         a = np.minimum(np.asarray(p.split()[3]), np.asarray(mask)).astype(np.float32)
         # solo lo que de verdad cambia respecto a la base (ojos, cejas, trazo): el pelo y los bloques JPEG de Gemini quedan fuera
         diff = np.abs(np.asarray(p.convert("RGB")).astype(np.float32) - np.asarray(base.convert("RGB")).astype(np.float32)).max(axis=2)
         d = Image.fromarray((np.clip((diff - 28) / 32, 0, 1) * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(7)).filter(ImageFilter.GaussianBlur(2))
-        p.putalpha(Image.fromarray((a * np.asarray(d) / 255).astype(np.uint8)))
+        a = a * np.asarray(d) / 255
+        yy, xx = np.mgrid[0:size[1], 0:size[0]]
+        a[(yy < gb[1] - 5) & ((xx < gb[0] + 110) | (xx > gb[2] - 110))] = 0      # las orejas de Gemini no se cuelan por las esquinas de la frente
+        p.putalpha(Image.fromarray(a.astype(np.uint8)))
         p.save(os.path.join(S, f"eyes_{name}.png")); print(name, "escala", round(sc, 3))
         t = Image.new("RGBA", size, (255, 255, 255, 255)); t.alpha_composite(base); t.alpha_composite(p)
         thumbs.append(t.convert("RGB").crop((120, 250, 920, 700)).resize((400, 225)))
