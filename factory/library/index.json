@@ -452,5 +452,48 @@
    "object"
   ],
   "source": "gemini"
+ },
+ "cat": {
+  "poses": {
+   "run1": "cat/run1.png",
+   "run2": "cat/run2.png",
+   "run3": "cat/run3.png",
+   "run4": "cat/run4.png",
+   "walk1": "cat/walk1.png",
+   "walk2": "cat/walk2.png",
+   "walk3": "cat/walk3.png",
+   "walk4": "cat/walk4.png",
+   "side": "cat/side.png",
+   "front": "cat/front.png",
+   "sit": "cat/sit.png",
+   "lie": "cat/lie.png",
+   "three_quarter": "cat/three_quarter.png",
+   "crouch": "cat/crouch.png",
+   "stretch": "cat/stretch.png",
+   "back": "cat/back.png",
+   "happy": "cat/happy.png",
+   "scared": "cat/scared.png",
+   "curious": "cat/curious.png",
+   "eat": "cat/eat.png",
+   "sleep": "cat/sleep.png",
+   "call": "cat/call.png",
+   "look_back": "cat/look_back.png",
+   "jump": "cat/jump.png",
+   "alert": "cat/alert.png",
+   "yawn": "cat/yawn.png",
+   "lick": "cat/lick.png",
+   "sniff": "cat/sniff.png",
+   "bat": "cat/bat.png",
+   "hiss": "cat/hiss.png",
+   "surprised": "cat/surprised.png",
+   "stare": "cat/stare.png"
+  },
+  "tags": [
+   "animal",
+   "cat",
+   "night",
+   "pet"
+  ],
+  "source": "gemini"
  }
 }
