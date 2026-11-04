@@ -53,7 +53,7 @@ def main(out):
     text = " ".join(w[0] for w in WORDS)
     ph = M.phone_align(wav, text)
     n = int((T1 - T0) * FPS)
-    mouths = M.Cat4().lipsync(ph, FPS, n, 0.0)
+    mouths = M.Cat4().lipsync(ph, FPS, n, 0.0, lead=int(os.environ.get("LEAD", 1)))
     cat = M.Cat4(); cache = {}
     f1 = ImageFont.truetype(FONT, 118); f2 = ImageFont.truetype(FONT, 70)
     base = build_set(); 
