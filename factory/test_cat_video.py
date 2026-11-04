@@ -14,9 +14,40 @@ GROUND_Y = 1420
 K = 2.2                                   # escala sobre la hoja (los sprites miden ~240 px): ampliar más los vuelve blandos
 FONT = os.path.join(F, "mascot", "v4", "fonts", "LondrinaSolid-Regular.ttf")
 INK = (58, 36, 30)
+import numpy as np
+from scipy import ndimage
+def load_walk(sheet="library/cat/sheet3.png", n=8):
+    """los 8 dibujos de andar alineados entre sí: mismo suelo (pata más baja) y mismo centro del cuerpo (sin la cola ni las patas);
+    Gemini coloca el gato en sitios distintos de cada celda y recortar cada dibujo por separado hacía saltar el cuerpo"""
+    im = Image.open(os.path.join(F, sheet)).convert("RGB")
+    xs, ys = LIB._cuts(im, 4, 4); out = []
+    for i in range(n):
+        r, c = divmod(i, 4)
+        cell = LIB.key(im.crop((xs[c] + 6, ys[r] + 6, xs[c + 1] - 6, ys[r + 1] - 6)))
+        a = np.asarray(cell.split()[3]) > 40
+        lab, k = ndimage.label(a); sz = ndimage.sum(a, lab, range(1, k + 1)); keep = lab == (1 + int(np.argmax(sz)))
+        al = np.asarray(cell.split()[3]).copy(); al[~ndimage.binary_dilation(keep, iterations=3)] = 0; cell.putalpha(Image.fromarray(al))
+        yy, xx = np.nonzero(keep); top, bot = yy.min(), yy.max(); h = bot - top
+        band = (yy > top + 0.15 * h) & (yy < top + 0.6 * h)
+        out.append((cell, xx[band].mean(), bot))
+    pad = 40; Wc = max(o[0].width for o in out) + 2 * pad; Hc = max(o[0].height for o in out) + 2 * pad
+    cxs = [o[1] for o in out]; ref_x = Wc / 2; ref_b = Hc - pad
+    frames = []
+    for cell, cx, bot in out:
+        canvas = Image.new("RGBA", (Wc, Hc), (0, 0, 0, 0)); canvas.alpha_composite(cell, (int(round(ref_x - cx)), int(round(ref_b - bot))))
+        frames.append(canvas)
+    return frames, ref_x, ref_b
+WALK, WALK_PX, WALK_PB = load_walk()
+def place_walk(im, idx, cx, base, scale, flip=False, bob=0.0):
+    f = WALK[idx % len(WALK)]
+    s = f.resize((round(f.width * scale), round(f.height * scale)), Image.LANCZOS)
+    px, pb = WALK_PX * scale, WALK_PB * scale
+    if flip: s = s.transpose(Image.FLIP_LEFT_RIGHT); px = s.width - px
+    im.alpha_composite(s, (int(cx - px), int(base - pb + bob)))
+
 WALK_FPS = 6                              # ciclo de 8 dibujos (walk1..walk8): un ciclo = dos pasos
 # un ciclo desplaza el cuerpo ~1,56 veces el ancho del dibujo de contacto (pie que se apoya: de delante a atrás en ~60 % del ciclo)
-SPEED = 1.56 * LIB.get("cat", "walk1").width * K * WALK_FPS / 8      # px/s: los pies no patinan
+SPEED = 0.75 * 1.56 * LIB.get("cat", "walk1").width * K * WALK_FPS / 8      # px/s: los pies no patinan
 X0, XC = -900, 540
 T_STOP = (XC - X0) / SPEED                # llega al centro
 T_CURIOUS, T_ALERT, T_NIGHT, T_RUN = T_STOP + 0.9, T_STOP + 2.7, T_STOP + 4.5, T_STOP + 8.1
@@ -66,9 +97,9 @@ def frame(t):
     base = GROUND_Y + 6
     if t < T_CURIOUS:
         if t < T_STOP:
-            LIB.place(im, "cat", LIB.cycle("cat", "walk", t, fps=WALK_FPS), X0 + SPEED * t, base, scale=K, xanchor="head")
+            place_walk(im, int(t * WALK_FPS), X0 + SPEED * t, base, K)
         else:
-            LIB.place(im, "cat", "side", XC, base, scale=K, squash=breath, xanchor="head")
+            place_walk(im, 7, XC, base, K)   # parada con las patas recogidas (dibujo 8)
         label(im, "walks", 0.2, T_CURIOUS + 0.4, t)
     elif t < T_NIGHT:
         pose = "curious" if t < T_ALERT else "alert"
