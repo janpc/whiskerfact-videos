@@ -20,6 +20,7 @@ def main():
         cell = Image.open(f).convert("RGB")
         b = P.nose_box(cell, (300, 450, 724, 700)); sc = nw / (b[2] - b[0])
         p = P.place(cell.convert("RGBA"), sc, ((b[0] + b[2]) / 2, b[1]), (ncx, nb[1]), size)
+        arr = np.asarray(p).copy(); arr[..., 1] = np.minimum(arr[..., 1], np.maximum(arr[..., 0], arr[..., 2])); p = Image.fromarray(arr)      # quita el halo verde del croma
         mk = mask if name not in CUSTOM else P.soft(size, CUSTOM[name], 6)
         a = np.minimum(np.asarray(p.split()[3]), np.asarray(mk))
         if name in CUSTOM:      # solo los píxeles oscuros (el trazo): así no arrastra el tono del fondo crema de la imagen de Gemini

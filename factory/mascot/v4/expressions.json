@@ -1,29 +1,41 @@
 {
  "eyes": {
-  "surprised": "eyes_01.png",
-  "skeptical": "eyes_03.png",
-  "amused": "eyes_04.png",
-  "deadpan": "eyes_05.png",
-  "sly": "eyes_06.png",
-  "proud": "eyes_07.png",
+  "surprised": "singles/eyes_surprised.png",
+  "skeptical": "singles/eyes_skeptical.png",
+  "amused": "singles/eyes_amused.png",
+  "deadpan": "singles/eyes_deadpan.png",
+  "sly": "singles/eyes_sly.png",
+  "proud": "singles/eyes_proud.png",
   "happy_closed": "eyes_08.png",
-  "excited": "eyes_11.png",
-  "happy": "eyes_14.png",
+  "excited": "singles/eyes_excited.png",
+  "happy": "singles/eyes_happy.png",
   "curious": "eyes2_01.png",
-  "thinking": "eyes2_02.png",
-  "worried": "eyes2_05.png",
+  "thinking": "singles/eyes_thinking.png",
+  "worried": "singles/eyes_worried.png",
   "worried_big": "eyes2_07.png"
  },
  "mouths": {
-  "smirk": "mouth_01.png",
-  "flat": "mouth_02.png",
-  "worry": "mouth_03.png",
-  "laugh": "mouth_04.png",
+  "smirk": "singles/mouth_smirk.png",
+  "flat": "singles/mouth_closed.png",
+  "worry": "singles/mouth_worry.png",
+  "laugh": "singles/mouth_laugh.png",
   "grin": "mouth_05.png",
-  "frown": "mouth_06.png",
+  "frown": "singles/mouth_frown.png",
   "smile2": "mouth_07.png",
   "clench": "mouth_09.png",
-  "tongue": "mouth_10.png"
+  "tongue": "singles/mouth_tongue.png",
+  "smile": "singles/mouth_bigsmile.png",
+  "m": "singles/mouth_closed.png",
+  "slight": "singles/mouth_closed.png",
+  "a": "singles/mouth_mid.png",
+  "e": "singles/mouth_mid.png",
+  "ee": "singles/mouth_teeth.png",
+  "ah": "singles/mouth_wide.png",
+  "o": "singles/mouth_round.png",
+  "oo": "singles/mouth_round.png",
+  "f": "singles/mouth_teeth.png",
+  "l": "singles/mouth_mid.png",
+  "happy": "singles/mouth_laugh.png"
  },
  "bodies": [
   "stand_front",
@@ -41,5 +53,5 @@
   "hands_on_hips",
   "stand"
  ],
- "note": "bodies: hojas 2x2 de alta resolución (A y B, parts_body_hd.py). bodies_clipped: cuerpos antiguos de la hoja 4x4 (256 px) con miembros cortados o ya sustituidos; no usar. point_right: la mano toca el borde derecho de la hoja (revisar)."
+ "note": "bodies: hojas 2x2 de alta resolución (A y B, parts_body_hd.py). bodies_clipped: cuerpos antiguos de la hoja 4x4 (256 px) con miembros cortados o ya sustituidos; no usar. point_right: la mano toca el borde derecho de la hoja (revisar). | ojos y bocas: versiones SUELTAS en v4/singles (una imagen por expresión, Gemini + parts_eyes_single.py / parts_mouths_single.py); las visemas smile,m,slight,a,e,ee,ah,o,oo,f,l,happy usan bocas sueltas."
 }

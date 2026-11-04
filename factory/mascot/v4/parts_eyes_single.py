@@ -44,6 +44,8 @@ def main():
         a = a * np.asarray(d) / 255
         yy, xx = np.mgrid[0:size[1], 0:size[0]]
         a[(yy < gb[1] - 5) & ((xx < gb[0] + 80) | (xx > gb[2] - 80))] = 0      # las orejas de Gemini no se cuelan por las esquinas de la frente
+        pk = np.asarray(p.convert('RGB')).astype(np.int16)
+        a[((pk[..., 0] - pk[..., 1]) > 35) & (pk[..., 2] > pk[..., 1] - 5)] = 0      # rosa de las orejas
         a[yy < 268] = 0                                                     # nada por encima de las cejas
         p.putalpha(Image.fromarray(a.astype(np.uint8)))
         p.save(os.path.join(S, f"eyes_{name}.png")); print(name, "escala", round(sc, 3))
