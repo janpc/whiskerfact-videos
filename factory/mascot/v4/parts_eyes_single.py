@@ -3,7 +3,7 @@
 """
 import os, sys, glob
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageFilter
 D = os.path.dirname(os.path.abspath(__file__)); V3 = os.path.join(D, "..", "v3"); S = os.path.join(D, "singles")
 sys.path.insert(0, V3)
 import parts as P
@@ -21,7 +21,11 @@ def main():
         n2 = P.nose_box(cell, (int(cell.width * 0.2), int(cell.height * 0.3), int(cell.width * 0.8), int(cell.height * 0.75)))
         g2 = P.glasses_box(cell, n2[1]); sc = gw / (g2[2] - g2[0])
         p = P.place(cell, sc, ((g2[0] + g2[2]) / 2, (g2[1] + g2[3]) / 2), (gcx, gcy), size)
-        p.putalpha(Image.fromarray(np.minimum(np.asarray(p.split()[3]), np.asarray(mask))))
+        a = np.minimum(np.asarray(p.split()[3]), np.asarray(mask)).astype(np.float32)
+        # solo lo que de verdad cambia respecto a la base (ojos, cejas, trazo): el pelo y los bloques JPEG de Gemini quedan fuera
+        diff = np.abs(np.asarray(p.convert("RGB")).astype(np.float32) - np.asarray(base.convert("RGB")).astype(np.float32)).max(axis=2)
+        d = Image.fromarray((np.clip((diff - 28) / 32, 0, 1) * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(7)).filter(ImageFilter.GaussianBlur(2))
+        p.putalpha(Image.fromarray((a * np.asarray(d) / 255).astype(np.uint8)))
         p.save(os.path.join(S, f"eyes_{name}.png")); print(name, "escala", round(sc, 3))
         t = Image.new("RGBA", size, (255, 255, 255, 255)); t.alpha_composite(base); t.alpha_composite(p)
         thumbs.append(t.convert("RGB").crop((120, 250, 920, 700)).resize((400, 225)))
