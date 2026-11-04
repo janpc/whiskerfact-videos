@@ -13,15 +13,18 @@ from parts_eyes import BROW
 BOXES = [(512, 0, 1024, 512)] + [(c * 256, r * 256, c * 256 + 256, r * 256 + 256) for r, c in
          [(0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1), (2, 2), (2, 3), (3, 0), (3, 1), (3, 2), (3, 3)]]
 
+K = float(os.environ.get('SR', 1))
+
 def main():
     base = Image.open(os.path.join(V3, "base.png")).convert("RGBA"); size = base.size
     nb = P.nose_box(base, (300, 450, 724, 700))
     gb = P.glasses_box(base, nb[1]); gw, gcx, gcy = gb[2] - gb[0], (gb[0] + gb[2]) / 2, (gb[1] + gb[3]) / 2
     mask = P.soft(size, (gb[0] - 10, gb[1] - gw * BROW, gb[2] + 10, gb[3] + 12), 12)
-    E = Image.open(os.path.join(D, "sheet_ojos2.png")).convert("RGB")
+    E = Image.open(os.path.join(D, "sheet_ojos2" + ("_sr" if K > 1 else "") + ".png")).convert("RGB")
     thumbs = []
     for i, (x0, y0, x1, y1) in enumerate(BOXES):
-        cell = P.key(E.crop((x0 + 3, y0 + 3, x1 - 3, y1 - 3)))
+        x0, y0, x1, y1 = [round(v * K) for v in (x0, y0, x1, y1)]; m3 = round(3 * K)
+        cell = P.key(E.crop((x0 + m3, y0 + m3, x1 - m3, y1 - m3)))
         try:
             n2 = P.nose_box(cell, (int(cell.width * 0.2), int(cell.height * 0.3), int(cell.width * 0.8), int(cell.height * 0.75)))
             g2 = P.glasses_box(cell, n2[1])
