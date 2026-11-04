@@ -37,7 +37,9 @@ def load_walk(sheet="library/cat/sheet3.png", n=8):
         canvas = Image.new("RGBA", (Wc, Hc), (0, 0, 0, 0)); canvas.alpha_composite(cell, (int(round(ref_x - cx)), int(round(ref_b - bot))))
         frames.append(canvas)
     return frames, ref_x, ref_b
-WALK, WALK_PX, WALK_PB = load_walk()
+WALK, WALK_PX, WALK_PB = load_walk(os.environ.get("WALK_SHEET", "library/cat/sheet3.png"))
+if os.environ.get("WALK_SKIP"):          # dibujos que no valen (índices desde 0, separados por comas), p. ej. el salto de la hoja nueva
+    _skip = {int(v) for v in os.environ["WALK_SKIP"].split(",")}; WALK = [f for i, f in enumerate(WALK) if i not in _skip]
 def place_walk(im, idx, cx, base, scale, flip=False, bob=0.0):
     f = WALK[idx % len(WALK)]
     s = f.resize((round(f.width * scale), round(f.height * scale)), Image.LANCZOS)
@@ -107,7 +109,7 @@ def frame(t):
             place_walk(im, int(t * WALK_FPS), X0 + SPEED * t, base, K)
         else:
             shadow(im, XC, base)
-            place_walk(im, 7, XC, base, K)   # parada con las patas recogidas (dibujo 8)
+            place_walk(im, len(WALK) - 1, XC, base, K)   # parada con las patas recogidas (dibujo 8)
         label(im, "walks", 0.2, T_CURIOUS + 0.4, t)
     elif t < T_NIGHT:
         pose = "curious" if t < T_ALERT else "alert"
