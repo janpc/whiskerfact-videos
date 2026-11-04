@@ -43,7 +43,8 @@ def main():
         d = Image.fromarray((np.clip((diff - 28) / 32, 0, 1) * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(7)).filter(ImageFilter.GaussianBlur(2))
         a = a * np.asarray(d) / 255
         yy, xx = np.mgrid[0:size[1], 0:size[0]]
-        a[(yy < gb[1] - 5) & ((xx < gb[0] + 110) | (xx > gb[2] - 110))] = 0      # las orejas de Gemini no se cuelan por las esquinas de la frente
+        a[(yy < gb[1] - 5) & ((xx < gb[0] + 80) | (xx > gb[2] - 80))] = 0      # las orejas de Gemini no se cuelan por las esquinas de la frente
+        a[yy < 268] = 0                                                     # nada por encima de las cejas
         p.putalpha(Image.fromarray(a.astype(np.uint8)))
         p.save(os.path.join(S, f"eyes_{name}.png")); print(name, "escala", round(sc, 3))
         t = Image.new("RGBA", size, (255, 255, 255, 255)); t.alpha_composite(base); t.alpha_composite(p)
