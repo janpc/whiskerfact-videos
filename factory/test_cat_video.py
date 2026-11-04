@@ -91,27 +91,38 @@ def feathered(im, name, pose, cx, cy, scale, a=1.0, feather=40):
     s.putalpha(Image.fromarray(al.astype(np.uint8)))
     im.alpha_composite(s, (int(cx - s.width / 2), int(cy - s.height / 2)))
 
+def shadow(im, cx, base, w=440, h=44, a=80):
+    """sombra plana en el suelo (sin degradado): agrupa las cuatro patas en el mismo plano; la pata lejana del dibujo queda ~10 px alta"""
+    tmp = Image.new("RGBA", im.size, (0, 0, 0, 0))
+    ImageDraw.Draw(tmp).ellipse((cx - w / 2, base - h * 0.62, cx + w / 2, base + h * 0.38), fill=(0, 0, 0, a))
+    im.alpha_composite(tmp)
+
 def frame(t):
     im = background(t)
     breath = (1, 1 + 0.012 * math.sin(t * 2.4))
     base = GROUND_Y + 6
     if t < T_CURIOUS:
         if t < T_STOP:
+            shadow(im, X0 + SPEED * t, base)
             place_walk(im, int(t * WALK_FPS), X0 + SPEED * t, base, K)
         else:
+            shadow(im, XC, base)
             place_walk(im, 7, XC, base, K)   # parada con las patas recogidas (dibujo 8)
         label(im, "walks", 0.2, T_CURIOUS + 0.4, t)
     elif t < T_NIGHT:
         pose = "curious" if t < T_ALERT else "alert"
+        shadow(im, XC - 120, base)
         LIB.place(im, "cat", pose, XC, base, scale=K, squash=breath, xanchor="head")
         label(im, "curious... alert", T_CURIOUS + 0.2, T_NIGHT - 0.3, t)
     elif t < T_RUN:
         k = ease((t - (T_NIGHT + 0.3)) / 0.5)
+        shadow(im, 540, base, w=330)
         LIB.place(im, "cat", "stare", 540, base, scale=K * 1.1, squash=breath)
         feathered(im, "cat_eye_night_items", "eyes_glow", 540, 580, 2.0 * (0.85 + 0.15 * k), a=k)
         label(im, "night vision", T_NIGHT + 0.1, T_RUN - 0.3, t)
     else:
         x = 1300 - RUN_SPEED * (t - T_RUN)
+        shadow(im, x + 120, base)
         LIB.place(im, "cat", LIB.cycle("cat", "run", t, fps=10), x, base, scale=K, flip=True, xanchor="head")
         label(im, "runs", T_RUN + 0.2, DUR - 0.3, t)
     arr = np.asarray(im.convert("RGB")).astype(np.float32)
