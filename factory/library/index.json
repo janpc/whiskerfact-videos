@@ -506,6 +506,7 @@
    "night",
    "pet"
   ],
-  "source": "gemini"
+  "source": "gemini",
+  "notes": "Gato dom\u00e9stico normal (no es Mr. Whiskerfact). DECISI\u00d3N 4/11/2026: NO animar el andar (walk1-8, sneak1-4, tail1-4) ni usar library/cat_rig: se prob\u00f3 y queda mal. Usar poses fijas con cambios de pose al ritmo de la voz, y el ciclo de correr (run1-4) solo para cruzar la pantalla."
  }
 }
