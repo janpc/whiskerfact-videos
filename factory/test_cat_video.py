@@ -9,18 +9,19 @@ F = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, F)
 import library as LIB
 import brand
 
-W, H, FPS, DUR = 1080, 1920, 30, 12.6
+W, H, FPS = 1080, 1920, 30
 GROUND_Y = 1420
 K = 2.2                                   # escala sobre la hoja (los sprites miden ~240 px): ampliar más los vuelve blandos
 FONT = os.path.join(F, "mascot", "v4", "fonts", "LondrinaSolid-Regular.ttf")
 INK = (58, 36, 30)
-WALK_FPS = 6
-STRIDE = LIB.stride("cat", "walk", K)
-SPEED = STRIDE * WALK_FPS / 4             # px/s: los pies no patinan
-X0, XC = -250, 540
+WALK_FPS = 6                              # ciclo de 8 dibujos (walk1..walk8): un ciclo = dos pasos
+# un ciclo desplaza el cuerpo ~1,56 veces el ancho del dibujo de contacto (pie que se apoya: de delante a atrás en ~60 % del ciclo)
+SPEED = 1.56 * LIB.get("cat", "walk1").width * K * WALK_FPS / 8      # px/s: los pies no patinan
+X0, XC = -900, 540
 T_STOP = (XC - X0) / SPEED                # llega al centro
-T_CURIOUS, T_ALERT, T_NIGHT, T_RUN = 2.6, 4.4, 6.2, 9.8
+T_CURIOUS, T_ALERT, T_NIGHT, T_RUN = T_STOP + 0.9, T_STOP + 2.7, T_STOP + 4.5, T_STOP + 8.1
 RUN_SPEED = 950
+DUR = T_RUN + 2.8
 
 def lerp(a, b, k): return a + (b - a) * k
 def clamp(x): return max(0.0, min(1.0, x))

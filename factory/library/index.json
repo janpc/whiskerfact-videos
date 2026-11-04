@@ -486,7 +486,19 @@
    "bat": "cat/bat.png",
    "hiss": "cat/hiss.png",
    "surprised": "cat/surprised.png",
-   "stare": "cat/stare.png"
+   "stare": "cat/stare.png",
+   "walk5": "cat/walk5.png",
+   "walk6": "cat/walk6.png",
+   "walk7": "cat/walk7.png",
+   "walk8": "cat/walk8.png",
+   "sneak1": "cat/sneak1.png",
+   "sneak2": "cat/sneak2.png",
+   "sneak3": "cat/sneak3.png",
+   "sneak4": "cat/sneak4.png",
+   "tail1": "cat/tail1.png",
+   "tail2": "cat/tail2.png",
+   "tail3": "cat/tail3.png",
+   "tail4": "cat/tail4.png"
   },
   "tags": [
    "animal",
