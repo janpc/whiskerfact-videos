@@ -8,6 +8,8 @@ D = os.path.dirname(os.path.abspath(__file__)); V3 = os.path.join(D, "..", "v3")
 sys.path.insert(0, V3)
 import parts as P
 
+CUSTOM = {"round": (470, 655, 590, 732)}      # Gemini añadió una sonrisa extra bajo el círculo: solo se recorta el círculo
+
 def main():
     base = Image.open(os.path.join(V3, "base.png")).convert("RGBA"); size = base.size
     nb = P.nose_box(base, (300, 450, 724, 700)); ncx, nw = (nb[0] + nb[2]) / 2, nb[2] - nb[0]
@@ -18,7 +20,11 @@ def main():
         cell = Image.open(f).convert("RGB")
         b = P.nose_box(cell, (300, 450, 724, 700)); sc = nw / (b[2] - b[0])
         p = P.place(cell.convert("RGBA"), sc, ((b[0] + b[2]) / 2, b[1]), (ncx, nb[1]), size)
-        p.putalpha(Image.fromarray(np.minimum(np.asarray(p.split()[3]), np.asarray(mask))))
+        mk = mask if name not in CUSTOM else P.soft(size, CUSTOM[name], 6)
+        a = np.minimum(np.asarray(p.split()[3]), np.asarray(mk))
+        if name in CUSTOM:      # solo los píxeles oscuros (el trazo): así no arrastra el tono del fondo crema de la imagen de Gemini
+            lum = np.asarray(p.convert('L')).astype(np.float32); a = (a * np.clip((150 - lum) / 40, 0, 1)).astype(np.uint8)
+        p.putalpha(Image.fromarray(a))
         p.save(os.path.join(S, f"mouth_{name}.png")); print(name, "escala", round(sc, 3))
         t = Image.new("RGBA", size, (255, 255, 255, 255)); t.alpha_composite(base); t.alpha_composite(p)
         thumbs.append(t.convert("RGB").crop((200, 480, 830, 900)))
