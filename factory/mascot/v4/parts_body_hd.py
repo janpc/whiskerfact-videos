@@ -11,19 +11,22 @@ sys.path.insert(0, V3); sys.path.insert(0, D)
 import parts as P
 from parts_body import bow_box, CANVAS, HEAD_AT
 
-SHEETS = [("sheet_cuerpo_A_2x2.png", 2, {0: "stand_front", 1: "arms_crossed", 2: "book", 3: "wave"})]
-INSET = 0.02      # fracción de la celda que se recorta por cada lado (rayas divisorias)
+SHEETS = [("sheet_cuerpo_A_2x2.png", 2, {0: "stand_front", 1: "arms_crossed", 2: "book", 3: "wave"}, 0.02),
+          ("sheet_cuerpo_B_2x2.png", 2, {0: "point_right", 1: "explain", 2: "shrug", 3: "hand_on_chin"}, 0.0)]
+OVERRIDE_BB = {"hand_on_chin": (200, 175, 320, 233)}      # caja de la pajarita en la celda (la pata la tapa: centro bajo el cuello, ancho como en las otras poses)
+# último campo: fracción de la celda que se recorta por cada lado (la hoja A traía rayas divisorias; la B no)
 
 def main():
     base = Image.open(os.path.join(V3, "base.png")).convert("RGBA")
     hb = bow_box(base, (300, 800, 724, 1024)); hcx, hcy, hw = (hb[0] + hb[2]) / 2, (hb[1] + hb[3]) / 2, hb[2] - hb[0]
     thumbs = []
-    for fn, n, poses in SHEETS:
+    for fn, n, poses, INSET in SHEETS:
         S = Image.open(os.path.join(D, fn)).convert("RGB"); cw = S.width / n; ch = S.height / n; m = round(cw * INSET)
         for i, name in poses.items():
             r, c = divmod(i, n)
             cell = S.crop((round(c * cw) + m, round(r * ch) + m, round((c + 1) * cw) - m, round((r + 1) * ch) - m))
             bb = bow_box(cell, (cell.width // 8, 0, cell.width * 7 // 8, int(cell.height * 0.55)))
+            if name in OVERRIDE_BB: bb = OVERRIDE_BB[name]          # pajarita tapada por la pata: se estima desde el cuello
             cell = P.key(cell)
             al = np.asarray(cell.split()[3]) > 40
             lab, k = ndimage.label(al)
@@ -32,6 +35,8 @@ def main():
                 ok = ndimage.binary_dilation(np.isin(lab, keep), iterations=4)
                 arr = np.asarray(cell).copy(); arr[..., 3] = np.where(ok, arr[..., 3], 0); cell = Image.fromarray(arr, "RGBA")
             sc = hw / (bb[2] - bb[0])
+            edge = [int(np.asarray(cell.split()[3])[:, 0].max() > 40), int(np.asarray(cell.split()[3])[:, -1].max() > 40), int(np.asarray(cell.split()[3])[0].max() > 40)]
+            if any(edge): print('  AVISO: toca el borde (izq, der, arriba):', edge)
             p = P.place(cell, sc, ((bb[0] + bb[2]) / 2, (bb[1] + bb[3]) / 2), (hcx + HEAD_AT[0], hcy + HEAD_AT[1]), CANVAS)
             p.save(os.path.join(D, f"body_{name}.png")); print(name, "escala", round(sc, 2), "pajarita", bb, "base del cuerpo", p.split()[3].getbbox())
             t = Image.new("RGBA", CANVAS, (255, 255, 255, 255)); t.alpha_composite(p)

@@ -26,19 +26,20 @@
   "tongue": "mouth_10.png"
  },
  "bodies": [
-  "stand",
-  "arms_crossed",
   "stand_front",
+  "arms_crossed",
   "book",
-  "wave"
+  "wave",
+  "point_right",
+  "explain",
+  "shrug",
+  "hand_on_chin"
  ],
  "bodies_clipped": [
-  "point_right",
   "paw_up",
-  "shrug",
-  "explain",
   "stand_back",
-  "hands_on_hips"
+  "hands_on_hips",
+  "stand"
  ],
- "note": "bodies_clipped: la hoja de Gemini corta brazos/patas/cola en el borde de la celda; no usar hasta regenerarlos con margen (ver PROMPTS_V4.md). body_<pose>.png existen igualmente."
+ "note": "bodies: hojas 2x2 de alta resolución (A y B, parts_body_hd.py). bodies_clipped: cuerpos antiguos de la hoja 4x4 (256 px) con miembros cortados o ya sustituidos; no usar. point_right: la mano toca el borde derecho de la hoja (revisar)."
 }
