@@ -127,6 +127,10 @@ class Cat4(Cat):
         ld = lambda f: Image.open(os.path.join(self.D4, f)).convert("RGBA")
         self.eyes4 = {k: ld(v) for k, v in ex["eyes"].items()}
         self.mouth.update({k: ld(v) for k, v in ex["mouths"].items()})
+        # bocas derivadas: la misma boca suelta escalada (abertura intermedia) respecto al punto bajo la nariz; da más grados de abertura al labial
+        for k, (src, sx, sy) in ex.get("mouths_derived", {}).items():
+            im = ld(src); ax, ay = 528, 640
+            self.mouth[k] = im.transform(im.size, Image.AFFINE, (1 / sx, 0, ax - ax / sx, 0, 1 / sy, ay - ay / sy), Image.BICUBIC)
         self.bodies = {k: ld(f"body_{k}.png") for k in ex["bodies"]}
 
     def frame_body(self, pose="stand_front", mouth="smile", eyes=None, gaze=(0, 0), size=None, outline=6, fixed=None, scale=None, sharpen=0):

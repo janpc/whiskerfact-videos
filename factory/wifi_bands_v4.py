@@ -55,7 +55,16 @@ ORIG_BG = (R.bg_arr, R.bg)
 # ---------- gato: expresión y pose por escena (coherente: solo cambia la pose en «take») ----------
 EYES = dict(hook="curious", translate="happy", speed="excited", fly="amused", range="skeptical", meanwhile="sly", crowd="worried",
             picture="thinking", twenty="surprised", twist="surprised", inside="worried", others="skeptical", final="proud", take="sly", close="amused")
-POSE = {n: "stand_front" for n in EYES}; 
+# poses por escena (segundos desde el inicio de la escena): pocas y coherentes con lo que dice; cambian con un fundido corto
+POSE_PLAN = dict(hook=[(0, "stand_front"), (2.7, "explain")],
+                 twist=[(0, "stand_front"), (1.6, "explain")],
+                 close=[(0, "stand_front"), (1.1, "shrug"), (3.7, "point_right")])
+def pose_at(n, t):
+    cur = "stand_front"
+    for t0, p in POSE_PLAN.get(n, [(0, "stand_front")]):
+        if t >= t0: cur = p
+    return cur
+
 # el gato NO sale siempre: solo en el gancho, el giro, el marcador, su opinión y el cierre.
 #   "side": junto a la tarjeta (tarjeta estrecha a la derecha); "low": en la ciudad, a la izquierda, por encima de la zona de descripción de las apps
 CAT_MODE = dict(hook="low", twist="low", close="low")
@@ -111,12 +120,15 @@ def draw_cat(im, n, s, T):
     i = min(int((T - s) * FPS), len(MOUTH[n]) - 1) if MOUTH.get(n) else 0
     mouth = MOUTH[n][i] if MOUTH.get(n) else "smile"
     eyes = "closed" if blinking(T) else EYES[n]
-    c = cat_img(POSE[n], mouth, eyes, sc)
-    names = list(V.sc); prev = names[names.index(n) - 1] if n != names[0] else None
-    if prev and prev in CAT_MODE and POSE[prev] != POSE[n] and T - s < POSE_FADE:
-        c = Image.blend(cat_img(POSE[prev], mouth, eyes, sc), c, (T - s) / POSE_FADE)
+    t = T - s; pose = pose_at(n, t)
+    c = cat_img(pose, mouth, eyes, sc)
+    for t0, p in POSE_PLAN.get(n, []):                  # fundido corto al cambiar de pose
+        if 0 < t - t0 < POSE_FADE:
+            prev = pose_at(n, t0 - 1e-3)
+            if prev != pose: c = Image.blend(cat_img(prev, mouth, eyes, sc), c, (t - t0) / POSE_FADE)
     br = 1 + 0.006 * np.sin(2 * np.pi * T / 3.2)
     cc = c.resize((round(c.width * br), round(c.height * br)), Image.LANCZOS)
+    cc = cc.rotate(1.3 * np.sin(2 * np.pi * T / 5.0), resample=Image.BICUBIC, center=(cc.width / 2, cc.height))      # balanceo muy suave desde la cintura: menos tieso
     x0 = round(cx - 700 * sc - (cc.width - c.width) / 2); y0 = round(top - (cc.height - c.height))
     im.alpha_composite(cc, (x0, y0)) if x0 >= 0 else im.paste(cc, (x0, y0), cc)
 

@@ -26,15 +26,10 @@
   "tongue": "singles/mouth_tongue.png",
   "smile": "singles/mouth_closed.png",
   "m": "singles/mouth_closed.png",
-  "slight": "singles/mouth_closed.png",
   "a": "singles/mouth_mid.png",
-  "e": "singles/mouth_teeth.png",
-  "ee": "singles/mouth_teeth.png",
   "ah": "singles/mouth_wide.png",
-  "o": "singles/mouth_round.png",
   "oo": "singles/mouth_round.png",
   "f": "singles/mouth_teeth.png",
-  "l": "singles/mouth_mid.png",
   "happy": "singles/mouth_laugh.png"
  },
  "bodies": [
@@ -53,5 +48,32 @@
   "hands_on_hips",
   "stand"
  ],
- "note": "bodies: hojas 2x2 de alta resolución (A y B, parts_body_hd.py). bodies_clipped: cuerpos antiguos de la hoja 4x4 (256 px) con miembros cortados o ya sustituidos; no usar. point_right: la mano toca el borde derecho de la hoja (revisar). | ojos y bocas: versiones SUELTAS en v4/singles (una imagen por expresión, Gemini + parts_eyes_single.py / parts_mouths_single.py); las visemas smile,m,slight,a,e,ee,ah,o,oo,f,l,happy usan bocas sueltas."
+ "note": "bodies: hojas 2x2 de alta resolución (A y B, parts_body_hd.py). bodies_clipped: cuerpos antiguos de la hoja 4x4 (256 px) con miembros cortados o ya sustituidos; no usar. point_right: la mano toca el borde derecho de la hoja (revisar). | ojos y bocas: versiones SUELTAS en v4/singles (una imagen por expresión, Gemini + parts_eyes_single.py / parts_mouths_single.py); las visemas smile,m,slight,a,e,ee,ah,o,oo,f,l,happy usan bocas sueltas.",
+ "mouths_derived": {
+  "slight": [
+   "singles/mouth_mid.png",
+   1.0,
+   0.45
+  ],
+  "l": [
+   "singles/mouth_mid.png",
+   1.0,
+   0.6
+  ],
+  "e": [
+   "singles/mouth_mid.png",
+   1.15,
+   0.85
+  ],
+  "ee": [
+   "singles/mouth_teeth.png",
+   1.2,
+   0.75
+  ],
+  "o": [
+   "singles/mouth_round.png",
+   1.6,
+   1.6
+  ]
+ }
 }
