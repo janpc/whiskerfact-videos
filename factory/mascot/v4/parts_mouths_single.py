@@ -11,7 +11,7 @@ import parts as P
 def main():
     base = Image.open(os.path.join(V3, "base.png")).convert("RGBA"); size = base.size
     nb = P.nose_box(base, (300, 450, 724, 700)); ncx, nw = (nb[0] + nb[2]) / 2, nb[2] - nb[0]
-    mask = P.soft(size, (ncx - nw * 2.0, nb[1] + 0.35 * (nb[3] - nb[1]), ncx + nw * 2.0, nb[3] + nw * 1.75), 10)
+    mask = P.soft(size, (ncx - nw * 2.0, nb[1] + 0.35 * (nb[3] - nb[1]), ncx + nw * 2.0, nb[3] + nw * 2.2), 10)
     thumbs = []
     for f in sorted(glob.glob(os.path.join(S, "mouth_src_*.png"))):
         name = os.path.basename(f)[10:-4]
