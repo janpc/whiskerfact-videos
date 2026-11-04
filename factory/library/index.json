@@ -397,5 +397,60 @@
    "objects"
   ],
   "source": "gemini"
+ },
+ "earth_tunnel_items": {
+  "poses": {
+   "earth": "earth_tunnel_items/earth.png",
+   "earth_cutaway": "earth_tunnel_items/earth_cutaway.png",
+   "hole_entry": "earth_tunnel_items/hole_entry.png",
+   "tunnel_cut": "earth_tunnel_items/tunnel_cut.png",
+   "ground_slice": "earth_tunnel_items/ground_slice.png",
+   "hole_exit_upside": "earth_tunnel_items/hole_exit_upside.png",
+   "stopwatch": "earth_tunnel_items/stopwatch.png",
+   "pit_top": "earth_tunnel_items/pit_top.png",
+   "compass": "earth_tunnel_items/compass.png",
+   "arrow_down": "earth_tunnel_items/arrow_down.png",
+   "shovel": "earth_tunnel_items/shovel.png",
+   "pickaxe": "earth_tunnel_items/pickaxe.png",
+   "dirt_pile": "earth_tunnel_items/dirt_pile.png",
+   "magma": "earth_tunnel_items/magma.png",
+   "rope": "earth_tunnel_items/rope.png",
+   "hardhat": "earth_tunnel_items/hardhat.png"
+  },
+  "tags": [
+   "earth",
+   "illustration",
+   "object",
+   "science"
+  ],
+  "source": "gemini"
+ },
+ "cat_eye_night_items": {
+  "poses": {
+   "eye_normal": "cat_eye_night_items/eye_normal.png",
+   "eye_dark": "cat_eye_night_items/eye_dark.png",
+   "eye_cutaway": "cat_eye_night_items/eye_cutaway.png",
+   "eye_human": "cat_eye_night_items/eye_human.png",
+   "window_night": "cat_eye_night_items/window_night.png",
+   "candle": "cat_eye_night_items/candle.png",
+   "flashlight": "cat_eye_night_items/flashlight.png",
+   "moon": "cat_eye_night_items/moon.png",
+   "eyes_glow": "cat_eye_night_items/eyes_glow.png",
+   "night_sky": "cat_eye_night_items/night_sky.png",
+   "bulb": "cat_eye_night_items/bulb.png",
+   "cat_bed": "cat_eye_night_items/cat_bed.png",
+   "yarn": "cat_eye_night_items/yarn.png",
+   "street_lamp": "cat_eye_night_items/street_lamp.png",
+   "owl": "cat_eye_night_items/owl.png",
+   "night_forest": "cat_eye_night_items/night_forest.png"
+  },
+  "tags": [
+   "cat",
+   "illustration",
+   "nature",
+   "night",
+   "object"
+  ],
+  "source": "gemini"
  }
 }
