@@ -7,7 +7,7 @@
     "date": "2026-11-02",
     "note": "saldo real que marca ElevenLabs (dicho por la dueña)"
   },
-  "estimated_balance": 23917,
+  "estimated_balance": 22572,
   "warn_below": 8000,
   "image_budget_month": 4000,
   "costs_estimate": {
@@ -37,6 +37,13 @@
       "what": "music (video-to-music, 1 generation)",
       "credits": 1284,
       "note": "generation 6cwFwa7U54uhLNPmCec2, flow Q4RWsQia6pHRGabsab5B. Cuesta ~1284, no 960: actualizar costs_estimate.music"
+    },
+    {
+      "date": "2026-11-06",
+      "slug": "earth_tunnel",
+      "what": "voice (eleven_v4, Brad, 1 take)",
+      "credits": 1345,
+      "note": "node FukV4lUQXXjwrjKqlHxH, session BwSJPB00IOS7IZT43cnI, flow Q4RWsQia6pHRGabsab5B"
     }
   ],
   "renewal_day": 30,
