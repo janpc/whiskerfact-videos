@@ -62,7 +62,8 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Commit the claims file with the reel.
 
 ## 4. Script
-- **Length:** set by the content and the format, but **retention comes first**: the shortest script that tells the whole story wins. Usually 160–190 words (63–75 s); up to about 230 words (85 s) only when every scene earns its place. Always **over 1 minute**: the renderer refuses to render under 61 s, and QA warns above 85 s.
+- **Length:** set by the content and the format, but **retention comes first**: the shortest script that tells the whole story wins. Usually 160–190 words (63–75 s). **Hard cap: 210 words.** Always **over 1 minute**: the renderer refuses to render under 61 s, and QA warns above 85 s.
+  - **Word-count gate (added 6/11/2026, before paying for the voice):** run `wc -w factory/voice/<slug>_script.txt`. The final reel lasts about `words / 2.77 + 4.2` seconds after `tighten.py` (226 words gave 86.2 s, over the QA warning; wifi_bands with 223 words gave 85.6 s). If the script has more than 210 words, cut it until it passes. Cutting words is free; regenerating the voice costs about 1,300 credits. The raw ElevenLabs take is about 12% longer than the final audio, so a raw take of 90 s is normal and not a reason to regenerate.
 - **Retention rules (every format):** a new visual or idea at least every 3–4 s; no scene longer than ~8 s without a change; tease the payoff early ("the answer is weirder than you think") and pay it off late; cut any sentence that only repeats or warms up.
 - **Language:** plain English that is not childish. Name each complex term, then explain it in one sentence.
 - **Structure:** use **the structure of today's format in `FORMATS.md`**, not one fixed template. `brand.STRUCTURE` is only the timing guide for `explainer`.
@@ -77,7 +78,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - flow `Q4RWsQia6pHRGabsab5B`
 - Generate the whole script, closing line included, in **one** call, with `generations_count: 1`. The default of 2 doubles the cost.
 - Poll `creative_get_flow_run_status` until it is done. Never repeat a generation call, because each call is charged.
-- Download the mp3 from its `storage.googleapis.com` URL to `factory/voice/<slug>_brad.mp3`.
+- Download the mp3 from the URL the generation status returns (today that is `elevenlabsusercontent.com`; older runs got `storage.googleapis.com`) to `factory/voice/<slug>_brad.mp3`. Both domains are allowed in the account's network settings (Settings > Capabilities > allowed domains; fixed on 6/11/2026 after the voice downloads failed with a 403 on 1/11, 3/11 and 6/11). **Make one single download attempt.** If it fails, never generate the voice again: commit the credits note with the flow, node and generation ids and send the failure notification starting with "⚠️ NO PUBLICADO HOY" (step 10) so the owner can download the take by hand.
 - Save the exact script as `factory/voice/<slug>_script.txt`.
 - Tighten the voice first: run `python3 tighten.py voice/<slug>_brad.mp3`. It shortens pauses to about 0.24 s, speeds the voice up by `brand.VOICE_TEMPO` and keeps the original as `_raw.mp3`. Always run it before alignment.
 - Get free word timings with local forced alignment: `python3 align.py voice/<slug>_brad.mp3 voice/<slug>_script.txt voice/<slug>_brad_words.json`. Install it first with `NO_PROXY= pip install --break-system-packages pocketsphinx`.
