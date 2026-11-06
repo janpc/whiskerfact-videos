@@ -167,6 +167,13 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - **Then look at `out/<slug>_qa.jpg` yourself**, and at a few full frames of each scene. Check what the script cannot see: does the drawing show the right thing, is anything ugly or confusing, does the animation read clearly?
 - Put the result in the log (`"qa": {"fails": 0, "warns": N}`), and add "QA ✅" (or the warnings, in short) to the notification.
 
+## 6d. Lecciones de calidad visual (6/11/2026, earth_tunnel) — aplicar al construir cada reel
+- **Sprites de la biblioteca (~150-200 px):** no ampliarlos más de ~1,5x. Lo geométrico (Tierra en corte, discos, flechas, túneles, gráficos) se dibuja por código, vectorial y con antialias; los discos grandes no pueden salir dentados.
+- **Nada encima de otra cosa:** no dibujar estelas/líneas sobre un elemento ya dibujado (dejan restos); ninguna etiqueta puede tocar la cabeza de un personaje (comprobar solapes a ojo).
+- **Letras sobre la tarjeta crema:** estilo `label`, color oscuro, trazo fino, tamaño algo menor; nunca el estilo de subtítulo.
+- **Revisión visual obligatoria:** además de la hoja de contactos, extraer 3-4 fotogramas a tamaño completo de las escenas con más dibujos y mirarlos antes de dar el reel por bueno. Si algo se ve blando o dentado, corregirlo antes de publicar.
+- **Gato hablando (v4, aún no integrado en la fábrica; ver `earth_tunnel_v4.py` como plantilla):** el labial lleva el desfase de la voz: `cat.lipsync(ph, fps, n, max(0.0, off - s), lead=3)` (sin eso, en el gancho la boca se adelanta 0,3 s). Sin vaivén de cintura; sí respiración suave y cambios de pose.
+
 ## 7. Upload
 - Copy the mp4 to `videos/<YYYY-MM-DD>_<slug>.mp4`, then commit and push to `main`.
 - Check that `https://raw.githubusercontent.com/janpc/whiskerfact-videos/main/videos/<file>` returns 200.
