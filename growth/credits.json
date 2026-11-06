@@ -7,7 +7,7 @@
     "date": "2026-11-02",
     "note": "saldo real que marca ElevenLabs (dicho por la dueña)"
   },
-  "estimated_balance": 22572,
+  "estimated_balance": 21279,
   "warn_below": 8000,
   "image_budget_month": 4000,
   "costs_estimate": {
@@ -44,6 +44,13 @@
       "what": "voice (eleven_v4, Brad, 1 take)",
       "credits": 1345,
       "note": "NO PUBLICADO: la descarga del mp3 falló otra vez (el proxy del sandbox responde 403 a elevenlabsusercontent.com; el estado de la generación solo da URLs de ese dominio, ninguna de storage.googleapis.com). La toma (92,9 s, guion voice/earth_tunnel_script.txt, datos ya verificados en voice/earth_tunnel_claims.md) sigue en el flow Q4RWsQia6pHRGabsab5B, node FukV4lUQXXjwrjKqlHxH, generation tcPGB7n8qvXXJEubtIio: reutilizarla en vez de pagar otra."
+    },
+    {
+      "date": "2026-11-06",
+      "slug": "earth_tunnel",
+      "what": "music (video-to-music, 1 generation)",
+      "credits": 1293,
+      "note": "generation FVG1gwnIQsmhvchy6vR1, flow Q4RWsQia6pHRGabsab5B, node MLvy6xBONsQcDPUGjgK7"
     }
   ],
   "renewal_day": 30,

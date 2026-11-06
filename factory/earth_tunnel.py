@@ -37,6 +37,9 @@ UNI = (222, 160, 96)          # Tierra uniforme (un solo color)
 IT = "earth_tunnel_items"
 
 def wt(word, s): return V.word_time(word, after=s)
+def early(word, s, e, need=1.9):
+    """momento en que sale una etiqueta: con la palabra, pero nunca más tarde de e - need (QA: mínimo 1,5 s en pantalla)"""
+    return min(wt(word, s), e - need)
 def rel(scene, word): return V.word_time(word, after=V.sc[scene][0]) - V.sc[scene][0]
 
 # ---------- utilidades ----------
@@ -104,7 +107,7 @@ def _(img, T, t, s, e):
     cutaway(img, cx, cy, size, a)
     items = (("heat", "no heat", 900), ("spin", "no spin", 1010), ("gravity", "just gravity", 1120))
     for w, text, y in items:
-        k = back_out((T - wt(w, s) + 0.1) / 0.35)
+        k = back_out((T - early(w, s, e, 1.9 + 0.2 * (2 - [x[0] for x in items].index(w))) + 0.1) / 0.35)
         if k > 0: lab(img, text, y, INK_T, a * clamp(k), x=730)
     R.chrome(img, T)
     title(img, T, s, e, "A perfect tunnel")
@@ -196,7 +199,7 @@ def _(img, T, t, s, e):
     e8 = wt("eight", s)
     lab(img, "~8 km/s", 765, RED_T, a * clamp((T - e8 + 0.1) / 0.3), x=CX)
     sat = wt("Satellite", s)
-    lab(img, "satellite speed", 1300, INK_T, a * clamp((T - sat + 0.1) / 0.3), x=CX - 20)
+    lab(img, "satellite speed", 1300, INK_T, a * clamp((T - early("Satellite", s, e) + 0.1) / 0.3), x=CX - 20)
     R.chrome(img, T)
     title(img, T, s, e, "Top speed at the center")
     return R.punch(img, T, s + 1.5)
@@ -249,7 +252,7 @@ def _(img, T, t, s, e):
     cutaway(img, cx, cy, size, a)
     u = math.cos(t * 2 * math.pi / 2.6) * 0.98         # va y viene por el túnel
     dot(img, cx, trav_y(cy, size, u), a, glow=0.3)
-    lab(img, "again and again", 1300, INK_T, a * clamp((T - wt("again", s) + 0.1) / 0.3), x=CX - 40)
+    lab(img, "again and again", 1300, INK_T, a * clamp((T - early("again", s, e) + 0.1) / 0.3), x=CX - 40)
     R.chrome(img, T)
     title(img, T, s, e, "Back and forth")
 V.sounds("swing", [(0.1, "whoosh", 0.6), (1.3, "tap", 0.5), (2.6, "tap", 0.5)])
@@ -287,7 +290,7 @@ def _(img, T, t, s, e):
     amp = 0.55 * math.exp(-t / 1.6)                     # oscilación amortiguada hasta quedarse en el centro
     u = amp * math.cos(t * 2 * math.pi / 1.7)
     dot(img, cx, trav_y(cy, size, u), a, glow=clamp((t - 3.4) / 1.0))
-    lab(img, "stops at the center", 1300, INK_T, a * clamp((T - wt("stop", s) + 0.1) / 0.3), x=CX - 40)
+    lab(img, "stops at the center", 1300, INK_T, a * clamp((T - early("stop", s, e) + 0.1) / 0.3), x=CX - 40)
     R.chrome(img, T)
     title(img, T, s, e, "Drag kills the swing")
 V.sounds("drag", [(0.1, "tap", 0.6), (0.9, "tap", 0.4), (1.8, "tap", 0.3), (2.6, "tap", 0.25)])
