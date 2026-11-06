@@ -83,18 +83,19 @@ def trav_y(cy, size, u):
 def arrow_up(img, x, y, size, a=1.0):
     sprite(img, IT, "arrow_down", x, y, size, a, rot=180)
 
+CAT = False        # earth_tunnel_v4.py lo pone a True: el gato v4 ocupa la izquierda en gancho, «So where…» y cierre
 CARD = (56, 742, 1024, 1384)
 def card_bg(img, T, t): ST.card(img, CARD)
 
 # =====================================================================  ESCENAS
 @V.scene("hook")
 def _(img, T, t, s, e):
-    cx, cy, size = CX - 20, 1090, 560
+    cx, cy, size = (700, 1060, 440) if CAT else (CX - 20, 1090, 560)
     cutaway(img, cx, cy, size)
     u = -1 + 2 * eio(((T * 0.55) % 1.0))            # el viajero cae sin parar por el túnel
     dot(img, cx, trav_y(cy, size, u), 1.0, glow=0.5)
     k = eo((t - 0.3) / 0.35)
-    lab(img, "38 min", 1370 - 10, B.TEXT, clamp(k), x=CX - 20)
+    lab(img, "38 min", 1320 if CAT else 1360, B.TEXT, clamp(k), x=cx)
     R.chrome(img, T)
     V.hook_text(img, T, e, "Airless tunnel through Earth:", "38 minutes. Where do you stop?", "stop")
     R.hook_mascot(img, T, 0.6, e)
@@ -315,7 +316,7 @@ V.sounds("teaches", [(0.1, "whoosh", 0.6), (rel("teaches", "forty-two"), "click"
 
 def finale(img, T, t, s, e):
     a = win(T, s, e + 1)
-    sprite(img, IT, "hole_entry", 600, 1180, 360, a)
+    sprite(img, IT, "hole_entry", 740 if CAT else 600, 1180, 320 if CAT else 360, a)
     R.chrome(img, T)
     R.txt(img, "Now you know:", TITLE_Y, "title", B.TEXT_2, win(T, V.sc["wrap"][0], V.outro_at + 1))
     R.txt(img, "you'd end up at the center", TITLE_Y + 97, "title", ACC_T, win(T, V.sc["wrap"][0] + 0.8, V.outro_at + 1))
@@ -323,14 +324,14 @@ def finale(img, T, t, s, e):
 @V.scene("wrap")
 def _(img, T, t, s, e):
     finale(img, T, t, s, e)
-    LIB.place(img, "child_girl", "think", 250, 1330, height=420, squash=(1.0, 1.0 + 0.01 * math.sin(T * 2.5)))
+    if not CAT: LIB.place(img, "child_girl", "think", 250, 1330, height=420, squash=(1.0, 1.0 + 0.01 * math.sin(T * 2.5)))
     return R.flash(img, T, s + 0.2, strength=0.2)
 V.sounds("wrap", [(0.05, "whoosh", 0.7)])
 
 @V.scene("final")
 def _(img, T, t, s, e):
     finale(img, T, t, s, e)
-    LIB.place(img, "child_girl", "happy" if t > 0.5 else "shrug", 250, 1330, height=420, squash=(1.0, 1.0 + 0.01 * math.sin(T * 2.5)))
+    if not CAT: LIB.place(img, "child_girl", "happy" if t > 0.5 else "shrug", 250, 1330, height=420, squash=(1.0, 1.0 + 0.01 * math.sin(T * 2.5)))
     return R.punch(img, T, s)
 V.sounds("final", [(0.05, "pop", 0.7), (0.9, "sparkle", 0.7)])
 
