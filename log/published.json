@@ -1,368 +1,378 @@
 [
- {
-  "date": "2026-10-29",
-  "category": "nature",
-  "slug": "dolphins",
-  "title": "How do dolphins sleep?",
-  "hook": "This dolphin is asleep. Why is its eye open?",
-  "note": "pipeline test: TikTok private + YouTube private, Instagram draft",
-  "metricool_uuid": "-5127609779937652943",
-  "youtube": "https://www.youtube.com/shorts/yH276oRRXME"
- },
- {
-  "date": "2026-10-29",
-  "category": "nature",
-  "slug": "dolphins",
-  "title": "How do dolphins sleep?",
-  "hook": "This dolphin is asleep. Why is its eye open?",
-  "metricool_uuid": "-9123563957108063420",
-  "scheduled": "2026-10-29T21:15:00+01:00",
-  "networks": [
-   "instagram",
-   "tiktok",
-   "youtube"
-  ],
-  "note": "first public reel, published by hand from the chat",
-  "variants": {
-   "time_slot": "21:15",
-   "hook_style": "statement",
-   "caption_style": "teaser"
+  {
+    "date": "2026-10-29",
+    "category": "nature",
+    "slug": "dolphins",
+    "title": "How do dolphins sleep?",
+    "hook": "This dolphin is asleep. Why is its eye open?",
+    "note": "pipeline test: TikTok private + YouTube private, Instagram draft",
+    "metricool_uuid": "-5127609779937652943",
+    "youtube": "https://www.youtube.com/shorts/yH276oRRXME"
   },
-  "check": {
-   "at": "2026-10-31T03:10:00+01:00",
-   "instagram": "PUBLISHED",
-   "tiktok": "PUBLISHED",
-   "youtube": "PUBLISHED"
-  },
-  "instagram": "https://www.instagram.com/reel/DfF19vRCTf6/",
-  "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7702186245866278166",
-  "youtube": "https://www.youtube.com/shorts/w7HBk7jpYxI"
- },
- {
-  "date": "2026-10-29",
-  "category": "history",
-  "slug": "pyramids",
-  "title": "Who really built the pyramids?",
-  "hook": "Slaves didn't build the pyramids. So who did?",
-  "scheduled": "2026-10-29T22:30:00+01:00",
-  "networks": [
-   "instagram",
-   "tiktok",
-   "youtube"
-  ],
-  "sources": [
-   "https://www.harvardmagazine.com/2003/07/who-built-the-pyramids-html",
-   "https://cbsnews.com/news/more-evidence-slaves-didnt-build-pyramids",
-   "https://www.livescience.com/28961-ancient-giza-pyramid-builders-camp-unearthed.html",
-   "https://egymonuments.gov.eg/en/monuments/workers-town-and-cemetery/",
-   "https://www.mentalfloss.com/article/541713/examples-ancient-graffiti"
-  ],
-  "metricool_uuid": "-2250303335964718877",
-  "variants": {
-   "time_slot": "22:30",
-   "hook_style": "statement",
-   "caption_style": "teaser"
-  },
-  "check": {
-   "at": "2026-10-31T03:10:00+01:00",
-   "instagram": "PUBLISHED",
-   "tiktok": "PUBLISHED",
-   "youtube": "PUBLISHED"
-  },
-  "instagram": "https://www.instagram.com/reel/DfF-mIngA3l/",
-  "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7702205676885576982",
-  "youtube": "https://www.youtube.com/shorts/wjjQecABB-o"
- },
- {
-  "date": "2026-10-30",
-  "category": "body",
-  "slug": "goosebumps",
-  "title": "Why do we get goosebumps?",
-  "hook": "Goosebumps evolved for fur. So why do we get them?",
-  "scheduled": "2026-10-30T18:00:00+01:00",
-  "networks": [
-   "instagram",
-   "tiktok",
-   "youtube"
-  ],
-  "sources": [
-   "https://www.livescience.com/32349-what-causes-goose-bumps.html",
-   "https://askdruniverse.wsu.edu/2021/03/09/why-do-we-get-goosebumps/",
-   "https://hscrb.harvard.edu/news/the-real-reason-behind-goosebumps",
-   "https://news.harvard.edu/gazette/?p=309236",
-   "https://nyscf.org/resources/why-do-we-get-goosebumps-the-answer-lies-with-the-stem-cells-that-grow-hair/",
-   "https://doi.org/10.1016/j.cell.2020.06.031"
-  ],
-  "metricool_uuid": "5999553319720537431",
-  "instagram": "https://www.instagram.com/reel/DfIEl-niq9d/",
-  "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7702507305442495766",
-  "youtube": "https://www.youtube.com/shorts/ZNNCwcTv_KM",
-  "check": {
-   "at": "2026-10-30T18:31:20+01:00",
-   "instagram": "PUBLISHED",
-   "tiktok": "PUBLISHED",
-   "youtube": "PUBLISHED"
-  },
-  "duration_s": 62.9,
-  "variants": {
-   "time_slot": "18:00",
-   "hook_style": "statement",
-   "caption_style": "teaser",
-   "look": {
-    "skies": [
-     "night",
-     "sunset"
+  {
+    "date": "2026-10-29",
+    "category": "nature",
+    "slug": "dolphins",
+    "title": "How do dolphins sleep?",
+    "hook": "This dolphin is asleep. Why is its eye open?",
+    "metricool_uuid": "-9123563957108063420",
+    "scheduled": "2026-10-29T21:15:00+01:00",
+    "networks": [
+      "instagram",
+      "tiktok",
+      "youtube"
     ],
-    "terrains": [
-     "forest"
+    "note": "first public reel, published by hand from the chat",
+    "variants": {
+      "time_slot": "21:15",
+      "hook_style": "statement",
+      "caption_style": "teaser"
+    },
+    "check": {
+      "at": "2026-10-31T03:10:00+01:00",
+      "instagram": "PUBLISHED",
+      "tiktok": "PUBLISHED",
+      "youtube": "PUBLISHED"
+    },
+    "instagram": "https://www.instagram.com/reel/DfF19vRCTf6/",
+    "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7702186245866278166",
+    "youtube": "https://www.youtube.com/shorts/w7HBk7jpYxI"
+  },
+  {
+    "date": "2026-10-29",
+    "category": "history",
+    "slug": "pyramids",
+    "title": "Who really built the pyramids?",
+    "hook": "Slaves didn't build the pyramids. So who did?",
+    "scheduled": "2026-10-29T22:30:00+01:00",
+    "networks": [
+      "instagram",
+      "tiktok",
+      "youtube"
     ],
-    "wow": [
-     "blobs",
-     "swirl"
+    "sources": [
+      "https://www.harvardmagazine.com/2003/07/who-built-the-pyramids-html",
+      "https://cbsnews.com/news/more-evidence-slaves-didnt-build-pyramids",
+      "https://www.livescience.com/28961-ancient-giza-pyramid-builders-camp-unearthed.html",
+      "https://egymonuments.gov.eg/en/monuments/workers-town-and-cemetery/",
+      "https://www.mentalfloss.com/article/541713/examples-ancient-graffiti"
     ],
-    "card": true
-   }
+    "metricool_uuid": "-2250303335964718877",
+    "variants": {
+      "time_slot": "22:30",
+      "hook_style": "statement",
+      "caption_style": "teaser"
+    },
+    "check": {
+      "at": "2026-10-31T03:10:00+01:00",
+      "instagram": "PUBLISHED",
+      "tiktok": "PUBLISHED",
+      "youtube": "PUBLISHED"
+    },
+    "instagram": "https://www.instagram.com/reel/DfF-mIngA3l/",
+    "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7702205676885576982",
+    "youtube": "https://www.youtube.com/shorts/wjjQecABB-o"
+  },
+  {
+    "date": "2026-10-30",
+    "category": "body",
+    "slug": "goosebumps",
+    "title": "Why do we get goosebumps?",
+    "hook": "Goosebumps evolved for fur. So why do we get them?",
+    "scheduled": "2026-10-30T18:00:00+01:00",
+    "networks": [
+      "instagram",
+      "tiktok",
+      "youtube"
+    ],
+    "sources": [
+      "https://www.livescience.com/32349-what-causes-goose-bumps.html",
+      "https://askdruniverse.wsu.edu/2021/03/09/why-do-we-get-goosebumps/",
+      "https://hscrb.harvard.edu/news/the-real-reason-behind-goosebumps",
+      "https://news.harvard.edu/gazette/?p=309236",
+      "https://nyscf.org/resources/why-do-we-get-goosebumps-the-answer-lies-with-the-stem-cells-that-grow-hair/",
+      "https://doi.org/10.1016/j.cell.2020.06.031"
+    ],
+    "metricool_uuid": "5999553319720537431",
+    "instagram": "https://www.instagram.com/reel/DfIEl-niq9d/",
+    "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7702507305442495766",
+    "youtube": "https://www.youtube.com/shorts/ZNNCwcTv_KM",
+    "check": {
+      "at": "2026-10-30T18:31:20+01:00",
+      "instagram": "PUBLISHED",
+      "tiktok": "PUBLISHED",
+      "youtube": "PUBLISHED"
+    },
+    "duration_s": 62.9,
+    "variants": {
+      "time_slot": "18:00",
+      "hook_style": "statement",
+      "caption_style": "teaser",
+      "look": {
+        "skies": [
+          "night",
+          "sunset"
+        ],
+        "terrains": [
+          "forest"
+        ],
+        "wow": [
+          "blobs",
+          "swirl"
+        ],
+        "card": true
+      }
+    }
+  },
+  {
+    "date": "2026-10-31",
+    "category": "nature",
+    "slug": "vampire_bats",
+    "title": "Myth or fact: do bats drink blood?",
+    "hook": "Myth or fact: Do bats drink blood?",
+    "event": "Halloween",
+    "scheduled": "2026-10-31T14:00:00+01:00",
+    "networks": [
+      "instagram",
+      "tiktok",
+      "youtube"
+    ],
+    "sources": [
+      "https://www.usgs.gov/faqs/do-vampire-bats-really-exist",
+      "https://www.pbs.org/newshour/science/7-things-you-didnt-know-about-vampire-bats",
+      "https://news.cals.wisc.edu/2018/10/24/five-things-everyone-should-know-about-vampire-bats/",
+      "https://news.utk.edu/2024/10/28/the-conversation-vampire-bats-look-beyond-the-fangs-and-blood-to-see-animal-friendships-and-unique-adaptations/",
+      "https://www.batcon.org/bats-eat-what/",
+      "https://www.nationalgeographic.com/animals/article/151117-vampire-bats-blood-food-science-animals",
+      "https://cris.maastrichtuniversity.nl/en/publications/purification-and-partial-characterization-of-draculin-the-anticoa/",
+      "https://rom.on.ca/fr/node/22680",
+      "https://historytoday.com/node/55761",
+      "https://www.beardsleyzoo.org/blog/vampire-bats-vs-vampires"
+    ],
+    "metricool_uuid": "-6214231550598953360",
+    "duration_s": 70.4,
+    "variants": {
+      "time_slot": "14:00",
+      "hook_style": "question",
+      "caption_style": "question_cta",
+      "format": "myth",
+      "personality": "light",
+      "cta": "🐱 Follow for more curious facts.",
+      "look": {
+        "skies": [
+          "night",
+          "dusk"
+        ],
+        "terrains": [
+          "autumn"
+        ],
+        "wow": [
+          "glitch"
+        ],
+        "card": true
+      }
+    },
+    "music": "elevenlabs video-to-music",
+    "credits": {
+      "voice": 1027,
+      "music": 1056
+    },
+    "qa": {
+      "fails": 0,
+      "warns": 6,
+      "note": "re-rendered 12:00 with library characters (v3); stamp text a bit blurry"
+    },
+    "check": {
+      "at": "2026-10-31T14:31:00+01:00",
+      "instagram": "PUBLISHED",
+      "tiktok": "PUBLISHED",
+      "youtube": "PUBLISHED"
+    },
+    "instagram": "https://www.instagram.com/reel/DfKORRfk3-v/",
+    "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7702817307227163927",
+    "youtube": "https://www.youtube.com/shorts/aiCyNNhNjm4"
+  },
+  {
+    "date": "2026-11-01",
+    "category": "space",
+    "slug": "hottest_planet",
+    "title": "Pop quiz: what's the hottest planet in our solar system?",
+    "hook": "Pop quiz: Hottest planet in our solar system?",
+    "scheduled": "2026-11-01T17:30:00+01:00",
+    "networks": [
+      "instagram",
+      "tiktok",
+      "youtube"
+    ],
+    "sources": [
+      "NASA (Mercury facts, Venus facts)",
+      "NASA Space Place",
+      "Royal Museums Greenwich",
+      "The Conversation (USC)",
+      "Live Science"
+    ],
+    "metricool_uuid": "-8569076783072063526",
+    "duration_s": 75.2,
+    "variants": {
+      "time_slot": "17:30",
+      "format": "quiz",
+      "caption_style": "question_cta",
+      "cta": "💾 Save this for your next trivia night."
+    },
+    "note": "log entry added by hand: the nightly run scheduled the post at 04:04 but did not finish (no log, no notification, no post-check)",
+    "check": {
+      "at": "2026-11-01T17:41:00+01:00",
+      "instagram": "PUBLISHED",
+      "tiktok": "ERROR: Auto publish failed (503)",
+      "youtube": "PUBLISHED"
+    },
+    "urls": {
+      "instagram": "https://www.instagram.com/reel/DfNKpGHk3uq/",
+      "youtube": "https://www.youtube.com/shorts/fw1MAE300-c"
+    }
+  },
+  {
+    "date": "2026-11-03",
+    "category": "tech",
+    "slug": "wifi_bands",
+    "title": "2.4 or 5 GHz? Which Wi-Fi band wins?",
+    "hook": "2.4 or 5 GHz? Which Wi-Fi band wins?",
+    "scheduled": "2026-11-03T20:30:00+01:00",
+    "networks": [
+      "instagram",
+      "tiktok",
+      "youtube"
+    ],
+    "sources": [
+      "https://asus.com/support/FAQ/1044838",
+      "https://support.linksys.com/kb/article/129",
+      "https://www.tp-link.com/it/support/faq/499/",
+      "https://datascience.uchicago.edu/insights/practical-steps-for-improving-your-wi-fi/",
+      "https://users.ece.utexas.edu/~bevans/papers/2011/microwave/index.html",
+      "https://www.britannica.com/topic/microwave-oven",
+      "https://www.wtamu.edu/~cbaird/sq/2014/10/15/why-are-the-microwaves-in-a-microwave-oven-tuned-to-water/",
+      "https://www.britannica.com/science/hertz",
+      "https://www.analog.com/en/resources/glossary/ghz"
+    ],
+    "metricool_uuid": "-5367661019060681188",
+    "metricool_uuid_tiktok": "8193487985078911110",
+    "duration_s": 85.6,
+    "variants": {
+      "time_slot": "20:30",
+      "hook_style": "question",
+      "caption_style": "teaser",
+      "format": "versus",
+      "personality": "full",
+      "cta": "👇 Tag someone who needs to know this.",
+      "closing": "real_life",
+      "tiktok_mode": "manual",
+      "look": {
+        "skies": [
+          "day",
+          "dusk"
+        ],
+        "terrains": [
+          "city"
+        ],
+        "wow": [
+          "glitch"
+        ],
+        "card": true
+      }
+    },
+    "music": "ElevenLabs video-to-music (generation 6cwFwa7U54uhLNPmCec2), descargada a mano por la dueña",
+    "credits": {
+      "voice": 1321,
+      "music": 1284
+    },
+    "qa": {
+      "fails": 0,
+      "warns": 9,
+      "note": "QA repetido sobre la mezcla final con música y microondas corregido (sprite sin la raya de la tapa); 3/11 12:23"
+    },
+    "note_v2": "Vídeo reemplazado en los dos posts de Metricool a las 12:24 (versión final con música); las uuid no cambian.",
+    "check": {
+      "at": "2026-11-03T21:05:00+01:00",
+      "instagram": "PUBLISHED",
+      "tiktok": "PUBLISHED (sin id/URL pública en Metricool)",
+      "youtube": "PUBLISHED"
+    },
+    "urls": {
+      "instagram": "https://www.instagram.com/reel/DfSoxCUAMKY/",
+      "youtube": "https://www.youtube.com/shorts/6y_YJ15LTqE"
+    }
+  },
+  {
+    "date": "2026-11-06",
+    "category": "science",
+    "slug": "earth_tunnel",
+    "title": "What if you dug a hole straight through the Earth and jumped in?",
+    "hook": "Airless tunnel through Earth: 38 minutes. Where do you stop?",
+    "scheduled": "2026-11-06T20:30:00+01:00",
+    "networks": [
+      "instagram",
+      "tiktok",
+      "youtube"
+    ],
+    "sources": [
+      "https://arxiv.org/abs/1308.1342",
+      "https://www.livescience.com/50312-how-long-to-fall-through-earth.html",
+      "https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html",
+      "https://www.sciencealert.com/welcome-to-the-deepest-hole-on-the-entire-planet",
+      "https://phys.org/news/2015-03-fall-hole-earth.html"
+    ],
+    "metricool_uuid": "-1066274460195010824",
+    "metricool_uuid_tiktok": "95128898498348528",
+    "duration_s": 86.2,
+    "variants": {
+      "time_slot": "20:30",
+      "hook_style": "statement",
+      "caption_style": "teaser",
+      "format": "what_if",
+      "personality": "light",
+      "cta": "🐱 Follow for more curious facts.",
+      "closing": "callback",
+      "tiktok_mode": "manual",
+      "look": {
+        "skies": [
+          "night",
+          "day",
+          "dusk"
+        ],
+        "terrains": [
+          "hills"
+        ],
+        "wow": [],
+        "card": true
+      },
+      "experiment": {
+        "batch": "B1-hook-style",
+        "test": "hook_style",
+        "option": "statement",
+        "role": "variant"
+      },
+      "music_style": "glockenspiel and pizzicato, ~100 BPM (science)"
+    },
+    "music": "ElevenLabs video-to-music (generation FVG1gwnIQsmhvchy6vR1)",
+    "credits": {
+      "voice": 1345,
+      "music": 1293
+    },
+    "qa": {
+      "fails": 0,
+      "warns": 1,
+      "note": "4 etiquetas cortas corregidas y QA repetido; aviso: duración 86,2 s"
+    },
+    "note": "Publicado con retraso de generación: la tarea nocturna del 6/11 pagó la voz pero no pudo descargarla (403). Voz reutilizada, descargada en un chat tras permitir los dominios; guion de escenas escrito a mano ese día. Versión final con el gato v4 hablando (labial con desfase corregido, sin vaivén de cintura; respiración y cambios de pose conservados), aprobada por la usuaria el 6/11 14:30 y sustituida en Metricool (IG+YT y TikTok). Limitaciones conocidas y aceptadas en este vídeo: sprites de la biblioteca ampliados ~2,5x (blandos), restos blancos en la escena de velocidad máxima, etiqueta «+9 %» pegada al científico, borde dentado del disco en «teaches».",
+    "check": {
+      "at": "2026-11-06T21:01:00+01:00",
+      "instagram": "PUBLISHED",
+      "tiktok": "PUBLISHED (sin id/publicUrl en Metricool)",
+      "youtube": "PUBLISHED",
+      "urls": {
+        "instagram": "https://www.instagram.com/reel/DfaXOh2ivZc/",
+        "youtube": "https://www.youtube.com/shorts/VSCPwYt5ly4"
+      }
+    }
   }
- },
- {
-  "date": "2026-10-31",
-  "category": "nature",
-  "slug": "vampire_bats",
-  "title": "Myth or fact: do bats drink blood?",
-  "hook": "Myth or fact: Do bats drink blood?",
-  "event": "Halloween",
-  "scheduled": "2026-10-31T14:00:00+01:00",
-  "networks": [
-   "instagram",
-   "tiktok",
-   "youtube"
-  ],
-  "sources": [
-   "https://www.usgs.gov/faqs/do-vampire-bats-really-exist",
-   "https://www.pbs.org/newshour/science/7-things-you-didnt-know-about-vampire-bats",
-   "https://news.cals.wisc.edu/2018/10/24/five-things-everyone-should-know-about-vampire-bats/",
-   "https://news.utk.edu/2024/10/28/the-conversation-vampire-bats-look-beyond-the-fangs-and-blood-to-see-animal-friendships-and-unique-adaptations/",
-   "https://www.batcon.org/bats-eat-what/",
-   "https://www.nationalgeographic.com/animals/article/151117-vampire-bats-blood-food-science-animals",
-   "https://cris.maastrichtuniversity.nl/en/publications/purification-and-partial-characterization-of-draculin-the-anticoa/",
-   "https://rom.on.ca/fr/node/22680",
-   "https://historytoday.com/node/55761",
-   "https://www.beardsleyzoo.org/blog/vampire-bats-vs-vampires"
-  ],
-  "metricool_uuid": "-6214231550598953360",
-  "duration_s": 70.4,
-  "variants": {
-   "time_slot": "14:00",
-   "hook_style": "question",
-   "caption_style": "question_cta",
-   "format": "myth",
-   "personality": "light",
-   "cta": "🐱 Follow for more curious facts.",
-   "look": {
-    "skies": [
-     "night",
-     "dusk"
-    ],
-    "terrains": [
-     "autumn"
-    ],
-    "wow": [
-     "glitch"
-    ],
-    "card": true
-   }
-  },
-  "music": "elevenlabs video-to-music",
-  "credits": {
-   "voice": 1027,
-   "music": 1056
-  },
-  "qa": {
-   "fails": 0,
-   "warns": 6,
-   "note": "re-rendered 12:00 with library characters (v3); stamp text a bit blurry"
-  },
-  "check": {
-   "at": "2026-10-31T14:31:00+01:00",
-   "instagram": "PUBLISHED",
-   "tiktok": "PUBLISHED",
-   "youtube": "PUBLISHED"
-  },
-  "instagram": "https://www.instagram.com/reel/DfKORRfk3-v/",
-  "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7702817307227163927",
-  "youtube": "https://www.youtube.com/shorts/aiCyNNhNjm4"
- },
- {
-  "date": "2026-11-01",
-  "category": "space",
-  "slug": "hottest_planet",
-  "title": "Pop quiz: what's the hottest planet in our solar system?",
-  "hook": "Pop quiz: Hottest planet in our solar system?",
-  "scheduled": "2026-11-01T17:30:00+01:00",
-  "networks": [
-   "instagram",
-   "tiktok",
-   "youtube"
-  ],
-  "sources": [
-   "NASA (Mercury facts, Venus facts)",
-   "NASA Space Place",
-   "Royal Museums Greenwich",
-   "The Conversation (USC)",
-   "Live Science"
-  ],
-  "metricool_uuid": "-8569076783072063526",
-  "duration_s": 75.2,
-  "variants": {
-   "time_slot": "17:30",
-   "format": "quiz",
-   "caption_style": "question_cta",
-   "cta": "💾 Save this for your next trivia night."
-  },
-  "note": "log entry added by hand: the nightly run scheduled the post at 04:04 but did not finish (no log, no notification, no post-check)",
-  "check": {
-   "at": "2026-11-01T17:41:00+01:00",
-   "instagram": "PUBLISHED",
-   "tiktok": "ERROR: Auto publish failed (503)",
-   "youtube": "PUBLISHED"
-  },
-  "urls": {
-   "instagram": "https://www.instagram.com/reel/DfNKpGHk3uq/",
-   "youtube": "https://www.youtube.com/shorts/fw1MAE300-c"
-  }
- },
- {
-  "date": "2026-11-03",
-  "category": "tech",
-  "slug": "wifi_bands",
-  "title": "2.4 or 5 GHz? Which Wi-Fi band wins?",
-  "hook": "2.4 or 5 GHz? Which Wi-Fi band wins?",
-  "scheduled": "2026-11-03T20:30:00+01:00",
-  "networks": [
-   "instagram",
-   "tiktok",
-   "youtube"
-  ],
-  "sources": [
-   "https://asus.com/support/FAQ/1044838",
-   "https://support.linksys.com/kb/article/129",
-   "https://www.tp-link.com/it/support/faq/499/",
-   "https://datascience.uchicago.edu/insights/practical-steps-for-improving-your-wi-fi/",
-   "https://users.ece.utexas.edu/~bevans/papers/2011/microwave/index.html",
-   "https://www.britannica.com/topic/microwave-oven",
-   "https://www.wtamu.edu/~cbaird/sq/2014/10/15/why-are-the-microwaves-in-a-microwave-oven-tuned-to-water/",
-   "https://www.britannica.com/science/hertz",
-   "https://www.analog.com/en/resources/glossary/ghz"
-  ],
-  "metricool_uuid": "-5367661019060681188",
-  "metricool_uuid_tiktok": "8193487985078911110",
-  "duration_s": 85.6,
-  "variants": {
-   "time_slot": "20:30",
-   "hook_style": "question",
-   "caption_style": "teaser",
-   "format": "versus",
-   "personality": "full",
-   "cta": "👇 Tag someone who needs to know this.",
-   "closing": "real_life",
-   "tiktok_mode": "manual",
-   "look": {
-    "skies": [
-     "day",
-     "dusk"
-    ],
-    "terrains": [
-     "city"
-    ],
-    "wow": [
-     "glitch"
-    ],
-    "card": true
-   }
-  },
-  "music": "ElevenLabs video-to-music (generation 6cwFwa7U54uhLNPmCec2), descargada a mano por la dueña",
-  "credits": {
-   "voice": 1321,
-   "music": 1284
-  },
-  "qa": {
-   "fails": 0,
-   "warns": 9,
-   "note": "QA repetido sobre la mezcla final con música y microondas corregido (sprite sin la raya de la tapa); 3/11 12:23"
-  },
-  "note_v2": "Vídeo reemplazado en los dos posts de Metricool a las 12:24 (versión final con música); las uuid no cambian.",
-  "check": {
-   "at": "2026-11-03T21:05:00+01:00",
-   "instagram": "PUBLISHED",
-   "tiktok": "PUBLISHED (sin id/URL pública en Metricool)",
-   "youtube": "PUBLISHED"
-  },
-  "urls": {
-   "instagram": "https://www.instagram.com/reel/DfSoxCUAMKY/",
-   "youtube": "https://www.youtube.com/shorts/6y_YJ15LTqE"
-  }
- },
- {
-  "date": "2026-11-06",
-  "category": "science",
-  "slug": "earth_tunnel",
-  "title": "What if you dug a hole straight through the Earth and jumped in?",
-  "hook": "Airless tunnel through Earth: 38 minutes. Where do you stop?",
-  "scheduled": "2026-11-06T20:30:00+01:00",
-  "networks": [
-   "instagram",
-   "tiktok",
-   "youtube"
-  ],
-  "sources": [
-   "https://arxiv.org/abs/1308.1342",
-   "https://www.livescience.com/50312-how-long-to-fall-through-earth.html",
-   "https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html",
-   "https://www.sciencealert.com/welcome-to-the-deepest-hole-on-the-entire-planet",
-   "https://phys.org/news/2015-03-fall-hole-earth.html"
-  ],
-  "metricool_uuid": "-1066274460195010824",
-  "metricool_uuid_tiktok": "95128898498348528",
-  "duration_s": 86.2,
-  "variants": {
-   "time_slot": "20:30",
-   "hook_style": "statement",
-   "caption_style": "teaser",
-   "format": "what_if",
-   "personality": "light",
-   "cta": "🐱 Follow for more curious facts.",
-   "closing": "callback",
-   "tiktok_mode": "manual",
-   "look": {
-    "skies": [
-     "night",
-     "day",
-     "dusk"
-    ],
-    "terrains": [
-     "hills"
-    ],
-    "wow": [],
-    "card": true
-   },
-   "experiment": {
-    "batch": "B1-hook-style",
-    "test": "hook_style",
-    "option": "statement",
-    "role": "variant"
-   },
-   "music_style": "glockenspiel and pizzicato, ~100 BPM (science)"
-  },
-  "music": "ElevenLabs video-to-music (generation FVG1gwnIQsmhvchy6vR1)",
-  "credits": {
-   "voice": 1345,
-   "music": 1293
-  },
-  "qa": {
-   "fails": 0,
-   "warns": 1,
-   "note": "4 etiquetas cortas corregidas y QA repetido; aviso: duración 86,2 s"
-  },
-  "note": "Publicado con retraso de generación: la tarea nocturna del 6/11 pagó la voz pero no pudo descargarla (403). Voz reutilizada, descargada en un chat tras permitir los dominios; guion de escenas escrito a mano ese día. Versión final con el gato v4 hablando (labial con desfase corregido, sin vaivén de cintura; respiración y cambios de pose conservados), aprobada por la usuaria el 6/11 14:30 y sustituida en Metricool (IG+YT y TikTok). Limitaciones conocidas y aceptadas en este vídeo: sprites de la biblioteca ampliados ~2,5x (blandos), restos blancos en la escena de velocidad máxima, etiqueta «+9 %» pegada al científico, borde dentado del disco en «teaches»."
- }
 ]
