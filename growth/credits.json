@@ -7,7 +7,7 @@
     "date": "2026-11-02",
     "note": "saldo real que marca ElevenLabs (dicho por la dueña)"
   },
-  "estimated_balance": 20154,
+  "estimated_balance": 19055,
   "warn_below": 8000,
   "image_budget_month": 4000,
   "costs_estimate": {
@@ -58,6 +58,13 @@
       "what": "voice (eleven_v4, Brad, 1 take)",
       "credits": 1125,
       "note": "flow Q4RWsQia6pHRGabsab5B, node oc3R16fRoXd2kQG51tm4, session 8akmSFo768Lrh7fyKJ9t, generation ItzFGOAfNvaQtzBRh7T6"
+    },
+    {
+      "date": "2026-11-08",
+      "slug": "cat_night_vision",
+      "what": "music (video-to-music, 1 generation)",
+      "credits": 1099,
+      "note": "generation JmLog5HCPFLCxPUr7pNb, flow Q4RWsQia6pHRGabsab5B, node RKD7BIfS4HBQBu3GTPSo"
     }
   ],
   "renewal_day": 30,
