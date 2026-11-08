@@ -13,8 +13,10 @@ Gráficos geométricos (ojo en corte, bastones, pupila, barras) por código; per
 """
 import math
 import numpy as np
-from PIL import Image, ImageDraw
+import os
+from PIL import Image, ImageDraw, ImageFilter, ImageChops
 import brand as B
+import reel_lib as RLX
 import style as ST
 import library as LIB
 from reel_lib import Reel, clamp, eo, eio, back_out, lerp, lerpc, win, W, H
@@ -54,6 +56,13 @@ def rel(scene, word): return V.word_time(word, after=V.sc[scene][0]) - V.sc[scen
 def lab(img, text, y, col, a, x=W / 2): R.txt(img, text, y, "label", col, a, x=x, rise=False)
 def title(img, T, s, e, text, color=B.TEXT, delay=0.0): R.txt(img, text, TITLE_Y, "title", color, win(T, s + delay, e))
 
+def mark_noink(layer, pos):
+    """marca lo dibujado por código para que el contorno automático (style.ink) no lo rodee"""
+    m = RLX.NOINK["mask"]
+    if m is None or m.size != (W, H): return
+    tmp = Image.new("L", (W, H), 0); tmp.paste(layer.split()[3], (int(pos[0]), int(pos[1])))
+    RLX.NOINK["mask"] = ImageChops.lighter(m, tmp)
+
 def aa(img, box, fn, a=1.0):
     if a <= 0.003: return
     x0, y0, x1, y1 = [int(v) for v in box]
@@ -77,26 +86,94 @@ def halo(img, x, y, r, k, col=(220, 255, 120)):
     aa(img, (x - 2.2 * r, y - 2.2 * r, x + 2.2 * r, y + 2.2 * r), fn)
 
 def glowing_eyes(img, x, y, h, a=1.0, glow=1.0, blink=0.0):
-    """los ojos que brillan en la oscuridad (biblioteca, cuadro oscuro); glow = halo; blink 0..1 cierra los ojos"""
-    if glow > 0:
-        for fx in (0.255, 0.735):
-            halo(img, x + (fx - 0.5) * h, y + 0.02 * h, 0.13 * h, glow * a)
-    sprite(img, "eyes_glow", x, y, h, a, squash=(1.0, 1.0 - 0.0 * blink))
-    if blink > 0:          # párpados oscuros que bajan
-        def fn(d, P, s):
-            for fx in (0.255, 0.735):
-                ex, ey = x + (fx - 0.5) * h, y + 0.02 * h
-                d.rectangle([P(ex - 0.13 * h, ey - 0.09 * h), P(ex + 0.13 * h, ey - 0.09 * h + 0.18 * h * blink)], fill=(22, 26, 40))
-        aa(img, (x - h / 2, y - h / 2, x + h / 2, y + h / 2), fn, a)
+    """ojos que brillan en la oscuridad, dibujados por código sobre fondo transparente (sin cuadro oscuro).
+    glow = intensidad del halo; blink 0..1 cierra los ojos (el propio ojo se aplasta, sin párpados rectangulares)"""
+    if a <= 0.003: return
+    S = 2
+    bw, bh = int(h * 1.5), int(h * 0.9)
+    x0, y0 = int(x - bw / 2), int(y + 0.02 * h - bh / 2)
+    eyes = [(bw / 2 + dx * h, bh / 2) for dx in (-0.24, 0.24)]
+    ew = 0.30 * h; eh = max(0.012 * h, 0.21 * h * (1 - 0.96 * clamp(blink)))
+    ptsf = lambda cx, cy, w, hh, sg: [(cx - w / 2 + w * i / 40, cy + sg * hh / 2 * math.sin(math.pi * i / 40)) for i in range(41)]
+    out = Image.new("RGBA", (bw, bh), (0, 0, 0, 0))
+    if glow > 0.01:                                           # halo suave (desenfoque gaussiano, sin bandas)
+        hl = Image.new("RGBA", (bw, bh), (0, 0, 0, 0)); d = ImageDraw.Draw(hl)
+        for cx, cy in eyes:
+            d.ellipse([cx - ew * 0.9, cy - eh * 1.4 - 0.03 * h, cx + ew * 0.9, cy + eh * 1.4 + 0.03 * h], fill=(214, 255, 90, int(120 * min(1.0, glow))))
+        out.alpha_composite(hl.filter(ImageFilter.GaussianBlur(0.075 * h)))
+    lay = Image.new("RGBA", (bw * S, bh * S), (0, 0, 0, 0)); d = ImageDraw.Draw(lay)
+    for cx, cy in eyes:
+        cx *= S; cy *= S; w = ew * S; hh = eh * S
+        almond = ptsf(cx, cy, w, hh, -1) + ptsf(cx, cy, w, hh, 1)[::-1]
+        d.polygon(almond, fill=(64, 44, 14, 255))
+        m = Image.new("L", lay.size, 0); ImageDraw.Draw(m).polygon(ptsf(cx, cy, w * 0.93, hh * 0.86, -1) + ptsf(cx, cy, w * 0.93, hh * 0.86, 1)[::-1], fill=255)
+        inner = Image.new("RGBA", lay.size, (0, 0, 0, 0)); di = ImageDraw.Draw(inner)
+        di.polygon(almond, fill=(206, 240, 60, 255))
+        r = 0.115 * h * S
+        di.ellipse([cx - r * 1.05, cy - r * 1.05, cx + r * 1.05, cy + r * 1.05], fill=(176, 222, 40, 255))
+        pw = 0.026 * h * S
+        di.ellipse([cx - pw, cy - 0.5 * eh * S * 1.1, cx + pw, cy + 0.5 * eh * S * 1.1], fill=(22, 24, 12, 255))
+        di.ellipse([cx - 0.05 * h * S, cy - 0.055 * h * S, cx - 0.02 * h * S, cy - 0.028 * h * S], fill=(255, 255, 235, int(255 * clamp(1 - blink * 2))))
+        inner.putalpha(ImageChops.multiply(inner.split()[3], m))
+        lay.alpha_composite(inner)
+    out.alpha_composite(lay.resize((bw, bh), Image.LANCZOS))
+    if a < 1: out.putalpha(out.split()[3].point(lambda v: int(v * a)))
+    img.alpha_composite(out, (x0, y0)); mark_noink(out, (x0, y0))
 
-def beam(img, x0, y0, x1, y1, w0, w1, k, a=1.0, col=(255, 236, 170)):
-    """haz de linterna de (x0, y0) a (x1, y1): ancho w0 -> w1; k 0..1 lo enciende"""
-    if k <= 0: return
-    xe = lerp(x0, x1, k); ye = lerp(y0, y1, k); we = lerp(w0, w1, k)
-    def fn(d, P, s):
-        d.polygon([P(x0, y0 - w0 / 2), P(xe, ye - we / 2), P(xe, ye + we / 2), P(x0, y0 + w0 / 2)], fill=col + (110,))
-        d.polygon([P(x0, y0 - w0 / 4), P(xe, ye - we / 4), P(xe, ye + we / 4), P(x0, y0 + w0 / 4)], fill=col + (90,))
-    aa(img, (min(x0, x1) - 4, min(y0, y1) - w1, max(x0, x1) + 4, max(y0, y1) + w1), fn, a)
+FL_CUT, FL_LENS = 157, (156, 75)          # el sprite de la linterna trae un cono pintado: se recorta y el haz se dibuja por código
+_FL = {}
+def flashlight(img, cx, cy, h, a=1.0):
+    """linterna sin cono (el haz va aparte); devuelve la posición de la lente"""
+    if "im" not in _FL:
+        im = Image.open(os.path.join(LIB.DIR if hasattr(LIB, "DIR") else os.path.join(os.path.dirname(os.path.abspath(__file__)), "library"), IT, "flashlight.png")).convert("RGBA")
+        al = im.split()[3]; px = al.load()
+        for yy in range(im.height):
+            for xx in range(140, im.width):
+                if xx >= FL_CUT or ((xx - 138) / 19.0) ** 2 + ((yy - 75) / 39.0) ** 2 > 1.0: px[xx, yy] = 0   # fuera de la lente: es cono pintado
+        im.putalpha(al); _FL["im"] = im
+    im = _FL["im"]; sc = h / im.height
+    spr = im.resize((int(im.width * sc), int(im.height * sc)), Image.LANCZOS)
+    if a < 1: spr.putalpha(spr.split()[3].point(lambda v: int(v * a)))
+    ox, oy = int(cx - spr.width / 2), int(cy - spr.height / 2)
+    img.alpha_composite(spr, (ox, oy)); mark_noink(spr, (ox, oy))
+    return ox + FL_LENS[0] * sc, oy + FL_LENS[1] * sc
+
+BEAM_COL = (253, 216, 160)
+def beam(img, x0, y0, x1, y1, w0, w1, k, a=1.0, col=BEAM_COL):
+    """haz de linterna de (x0, y0) a (x1, y1), ancho w0 -> w1, un solo degradado suave (sin dos capas); k 0..1 lo enciende"""
+    if k <= 0.01 or a <= 0.003: return
+    L = math.hypot(x1 - x0, y1 - y0); ux, uy = (x1 - x0) / L, (y1 - y0) / L
+    pad = max(w0, w1) // 2 + 6
+    bx0, by0 = int(min(x0, x1) - pad), int(min(y0, y1) - pad); bx1, by1 = int(max(x0, x1) + pad), int(max(y0, y1) + pad)
+    bx0, by0 = max(bx0, 0), max(by0, 0); bx1, by1 = min(bx1, W), min(by1, H)
+    yy, xx = np.mgrid[by0:by1, bx0:bx1].astype(np.float32)
+    dx, dy = xx - x0, yy - y0
+    u = (dx * ux + dy * uy) / L; v = dx * -uy + dy * ux
+    half = (w0 + (w1 - w0) * np.clip(u, 0, 1)) / 2
+    q = np.abs(v) / np.maximum(half, 1)
+    edge = np.clip((1.0 - q) / 0.35, 0, 1); edge = edge * edge * (3 - 2 * edge)
+    head = np.clip(u / 0.04, 0, 1)
+    tip = np.clip((k - u) / 0.12, 0, 1)
+    al = 0.62 * (1 - 0.5 * np.clip(u, 0, 1)) * edge * head * tip * (u >= 0)
+    arr = np.zeros(al.shape + (4,), np.uint8); arr[..., 0], arr[..., 1], arr[..., 2] = col
+    arr[..., 3] = (al * a * 255).astype(np.uint8)
+    bl = Image.fromarray(arr, "RGBA"); img.alpha_composite(bl, (bx0, by0)); mark_noink(bl, (bx0, by0))
+
+def moon(img, x, y, d, a=1.0):
+    """luna dibujada por código: halo suave, disco y cráteres"""
+    if a <= 0.003: return
+    S = 3; n = int(d * 2.4)
+    glow = Image.new("RGBA", (n, n), (0, 0, 0, 0)); ImageDraw.Draw(glow).ellipse([n / 2 - d * 0.62, n / 2 - d * 0.62, n / 2 + d * 0.62, n / 2 + d * 0.62], fill=(200, 214, 255, 110))
+    glow = glow.filter(ImageFilter.GaussianBlur(d * 0.14))
+    lay = Image.new("RGBA", (n * S, n * S), (0, 0, 0, 0)); dd = ImageDraw.Draw(lay)
+    c = n * S / 2; r = d / 2 * S
+    dd.ellipse([c - r, c - r, c + r, c + r], fill=(238, 240, 230, 255), outline=INK_T + (255,), width=int(3 * S))
+    for fx, fy, fr in ((-0.22, -0.18, 0.17), (0.18, -0.05, 0.12), (-0.05, 0.25, 0.14), (0.25, 0.28, 0.07), (-0.32, 0.12, 0.07)):
+        cr = fr * r * 2 / 2
+        dd.ellipse([c + fx * r * 2 - cr, c + fy * r * 2 - cr, c + fx * r * 2 + cr, c + fy * r * 2 + cr], fill=(198, 206, 214, 255))
+    glow.alpha_composite(lay.resize((n, n), Image.LANCZOS))
+    if a < 1: glow.putalpha(glow.split()[3].point(lambda v: int(v * a)))
+    img.alpha_composite(glow, (int(x - n / 2), int(y - n / 2))); mark_noink(glow, (int(x - n / 2), int(y - n / 2)))
 
 def stamp(img, text, x, y, k, col=RED_T):
     """sello que cae: se dibuja a su tamaño final (sin reescalar) e inclinación pequeña; solo cae y aparece"""
@@ -165,22 +242,28 @@ def photon(img, u, a=1.0, trail=0.12):
     aa(img, (EX - ER - 200, EY - ER, EX + ER + 20, EY + 80), fn, a)
 
 # ---------- ojos dibujados por código (escena pupils) ----------
-def cat_eye(img, x, y, w, h, pw, a=1.0):
+def cat_eye(img, x, y, w, h, pw, a=1.0, iris=None, iris_d=None, round_pupil=False, skin=False):
     """ojo almendrado con iris verde y pupila en rendija de ancho pw (px)"""
     def fn(d, P, s):
         pts = [(x - w / 2 + w * i / 40, y - h / 2 * math.sin(math.pi * i / 40)) for i in range(41)] + \
               [(x + w / 2 - w * i / 40, y + h / 2 * math.sin(math.pi * i / 40)) for i in range(41)]
+        if skin:                                   # párpados de piel alrededor (ojo humano)
+            sk = [(x - w * 0.62 + w * 1.24 * i / 40, y - h * 0.78 * math.sin(math.pi * i / 40)) for i in range(41)] + \
+                 [(x + w * 0.62 - w * 1.24 * i / 40, y + h * 0.78 * math.sin(math.pi * i / 40)) for i in range(41)]
+            d.polygon([P(*p) for p in sk], fill=(236, 188, 156), outline=INK_T, width=int(5 * s))
         d.polygon([P(*p) for p in pts], fill=INK_T)
         pts2 = [(x - w / 2 + 12 + (w - 24) * i / 40, y - (h / 2 - 10) * math.sin(math.pi * i / 40)) for i in range(41)] + \
                [(x + w / 2 - 12 - (w - 24) * i / 40, y + (h / 2 - 10) * math.sin(math.pi * i / 40)) for i in range(41)]
         d.polygon([P(*p) for p in pts2], fill=EYE_W)
         ri = h * 0.44
-        d.ellipse([P(x - ri, y - ri), P(x + ri, y + ri)], fill=IRIS, outline=IRIS_D, width=int(6 * s))
+        ic, icd = iris or IRIS, iris_d or IRIS_D
+        d.ellipse([P(x - ri, y - ri), P(x + ri, y + ri)], fill=ic, outline=icd, width=int(6 * s))
         for k in range(12):
             an = k / 12 * 2 * math.pi
-            d.line([P(x + math.cos(an) * ri * 0.45, y + math.sin(an) * ri * 0.45), P(x + math.cos(an) * ri * 0.92, y + math.sin(an) * ri * 0.92)], fill=IRIS_D, width=int(3 * s))
+            d.line([P(x + math.cos(an) * ri * 0.45, y + math.sin(an) * ri * 0.45), P(x + math.cos(an) * ri * 0.92, y + math.sin(an) * ri * 0.92)], fill=icd, width=int(3 * s))
         ph = ri * 0.96; pw2 = max(6, pw) / 2
-        d.ellipse([P(x - pw2, y - ph), P(x + pw2, y + ph)], fill=PUPIL)
+        if round_pupil: d.ellipse([P(x - pw2, y - pw2), P(x + pw2, y + pw2)], fill=PUPIL)
+        else: d.ellipse([P(x - pw2, y - ph), P(x + pw2, y + ph)], fill=PUPIL)
         d.ellipse([P(x - ri * 0.42, y - ri * 0.55), P(x - ri * 0.2, y - ri * 0.33)], fill=(255, 255, 255, 230))
     aa(img, (x - w / 2 - 6, y - h / 2 - 6, x + w / 2 + 6, y + h / 2 + 6), fn, a)
 
@@ -213,8 +296,8 @@ def _(img, T, t, s, e):
     a = win(T, s, e)
     sh = wt("Shine", s); ey = wt("eyes", s)
     on = eo((T - sh) / 0.5)
-    sprite(img, "flashlight", 190, 1150, 170, a)
-    beam(img, 330, 1140, 600, 1080, 60, 300, on, a)
+    lx, ly = flashlight(img, 190, 1150, 170, a)
+    beam(img, lx, ly, 600, 1080, 84, 300, on, a)
     g = eo((T - ey) / 0.4)
     glowing_eyes(img, 660, 1080, 330, a * (0.35 + 0.65 * on), glow=g * (0.8 + 0.2 * math.sin(T * 5)))
     lab(img, "tiny lanterns", 1265, B.TEXT, a * clamp((T - early("lanterns", s, e) + 0.1) / 0.3), x=560)
@@ -261,8 +344,8 @@ V.sounds("light", [(0.1, "whoosh", 0.6), (rel("light", "bounces"), "clink", 0.8)
 @V.scene("bounce")
 def _(img, T, t, s, e):
     a = win(T, s, e)
-    sprite(img, "flashlight", 185, 1200, 150, a)
-    beam(img, 310, 1195, 560, 1110, 50, 210, eo(t / 0.5), a)
+    lx, ly = flashlight(img, 185, 1200, 150, a)
+    beam(img, lx, ly, 560, 1100, 74, 210, eo(t / 0.5), a)
     glowing_eyes(img, 660, 1060, 330, a, glow=0.8 + 0.2 * math.sin(T * 5))
     k = eo((T - wt("reflecting", s)) / 0.5)
     if k > 0:                                           # la luz vuelve hacia la linterna
@@ -335,12 +418,12 @@ def _(img, T, t, s, e):
     ou = wt("Ours", s)
     k2 = eo((T - ou) / 0.45)
     a1 = a * (1 - k2)
-    sprite(img, "eye_dark", 270, 980, 300, a1 * clamp((T - s) / 0.3))
-    sprite(img, "eye_normal", 650, 980, 300, a1 * clamp((T - wt("thin", s) + 0.2) / 0.3))
+    cat_eye(img, 270, 990, 330, 250, 150, a1 * clamp((T - s) / 0.3))
+    cat_eye(img, 650, 990, 330, 250, 18, a1 * clamp((T - wt("thin", s) + 0.2) / 0.3))
     lab(img, "in the dark", 1150, B.TEXT, a1 * clamp((T - s - 0.1) / 0.3), x=270)
     lab(img, "in sunlight", 1150, B.TEXT, a1 * clamp((T - early("thin", s, e, 3.0) + 0.1) / 0.3), x=650)
     if k2 > 0:
-        sprite(img, "eye_human", 460, 1040 + 30 * (1 - k2), 300, a * k2)
+        cat_eye(img, 460, 1040 + 30 * (1 - k2), 400, 250, 86, a * k2, iris=(140, 96, 52), iris_d=(86, 56, 28), round_pupil=True, skin=True)
         lab(img, "ours: ~15-fold", 1250, B.TEXT, a * clamp((T - early("fifteen", s, e) + 0.1) / 0.3), x=460)
     R.chrome(img, T)
     title(img, T, s, e, "Wide open, then a slit")
@@ -388,7 +471,7 @@ V.sounds("zero", [(0.1, "whoosh", 0.6), (1.6, "tap", 0.4), (rel("zero", "can't")
 def _(img, T, t, s, e):
     a = win(T, s, e)
     x = 720 if CAT else CX - 40
-    sprite(img, "moon", x - 40, 880, 140, a * clamp((T - s) / 0.4))
+    moon(img, x - 40, 880, 130, a * clamp((T - s) / 0.4))
     pose = "happy" if t > 1.4 else "curious"
     sprite(img, pose, x, 1335, 300, a, anchor="bottom", name="cat")
     R.chrome(img, T)
