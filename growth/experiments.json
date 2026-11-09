@@ -35,14 +35,15 @@
   "test": "hook_style",
   "variant": "statement",
   "control": "question",
-  "hypothesis": "A hook that opens with a surprising statement and then asks the question holds more viewers than a direct question, because it gives a reason to stay in the first 3 seconds.",
+  "hypothesis": "A hook that opens with a surprising statement and then asks the question holds more viewers than a direct question, because it gives a reason to stay in the first 3 seconds. Measured on watch_pct (7-day figures, averaged over the networks with data; today Instagram only) of the 3 variant videos (2026-11-06, 2026-11-08, 2026-11-11) against the baseline (median watch_pct of the last 5 base/control videos). Success: the variant beats the baseline by >20% in at least 2 of the 3; failure: worse by >20% in at least 2 of the 3; anything else inconclusive (repeat once).",
   "slots": 3,
   "videos": [
    "2026-11-06",
-   "2026-11-08"
+   "2026-11-08",
+   "2026-11-11"
   ],
   "opened": "2026-11-04",
-  "note": "The third video (2026-11-11) is added by the Monday plan of 2026-11-09.",
+  "note": "Batch full since the Monday plan of 2026-11-09 (third video 2026-11-11). The review closes it once 2026-11-11 has 7-day figures (2026-11-18). 2026-11-13 is `base` with the control hook (question), which also adds a real question-hook video to the baseline (see insights 2026-11-09: the baseline is mostly statement hooks).",
   "reads": [
    {
     "review": "2026-11-09",

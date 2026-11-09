@@ -1,38 +1,26 @@
 [
  {
-  "date": "2026-11-03",
-  "topic": "2.4 GHz vs 5 GHz Wi-Fi: which one is better?",
-  "category": "tech",
-  "format": "versus",
+  "date": "2026-11-11",
+  "topic": "Pop quiz: when did the last woolly mammoths die out?",
+  "category": "history",
+  "format": "quiz",
   "characters": [
-   "young_man"
+   "woolly_mammoth",
+   "ancient_person",
+   "early_human"
   ],
-  "missing": [],
-  "notes": "Rounds in the same units: speed (max data rate), range through walls, crowding (non-overlapping channels). Twist: microwave ovens also run near 2.4 GHz, which is why they can disturb Wi-Fi (FCC / router makers). Do NOT use the 'water resonance' myth. Router, phone, laptop, microwave and wall come from the library sheet wifi_objects. Library sheet wifi_objects is in: router, router_side, phone, phone_back, laptop, microwave, microwave_open, microwave_open2, wall_brick, wall_concrete, clock, armchair, printer, folder, clock2.",
   "objects": [
-   "wifi_objects"
-  ],
-  "illustrations": []
- },
- {
-  "date": "2026-11-06",
-  "topic": "What if you dug a hole straight through the Earth and jumped in?",
-  "category": "science",
-  "format": "what_if",
-  "characters": [
-   "child_girl",
-   "scientist"
-  ],
-  "missing": [
-   "earth_tunnel_items"
-  ],
-  "notes": "Grounded physics thought experiment (gravity tunnel): about 42 min in a uniform Earth, about 38 min with Earth's real density (Klotz, American Journal of Physics 2015; Live Science). Say 'physicists calculate'. Not scary: idealised tunnel, no air, no heat. child_girl uses jump/scared/happy, scientist explains.",
-  "objects": [
-   "earth_tunnel_items"
+   "mammoth_quiz_items",
+   "wifi_objects:clock"
   ],
   "illustrations": [
-   "earth_tunnel_items"
+   "mammoth_quiz_items"
   ],
+  "missing": [
+   "woolly_mammoth",
+   "mammoth_quiz_items"
+  ],
+  "notes": "Options: A) before the first farms (~10,000 years ago), B) after the Great Pyramid of Giza was built, C) during the Roman Empire. Answer B: a small population survived on Wrangel Island (Arctic Ocean) until about 4,000 years ago (~2000 BC); the Great Pyramid dates to ~2560 BC. Most mainland mammoths were gone ~10,000 years ago, which is why A is the common guess. Sources to check: Dalén et al., Cell 2024 (Wrangel genomes), Vartanyan et al. 1993 Nature, Smithsonian / Live Science / Natural History Museum. Say 'about 4,000 years ago', not an exact year. Plausibility check 9/11: WorldAtlas and Business Insider (Cell 2024 study) both support it. Hook (statement style, B1 variant) must NOT give the answer away, e.g. 'The last mammoths died shockingly recently. Pop quiz: when?' Ticking clock = wifi_objects:clock or code. ancient_person = Egyptian builders (pyramids reel). Category history: rotation after nature (8/11). Format quiz: fewest reels with versus/what_if, used longest ago (1/11).",
   "experiment": {
    "batch": "B1-hook-style",
    "test": "hook_style",
@@ -41,30 +29,29 @@
   }
  },
  {
-  "date": "2026-11-08",
-  "topic": "Myth or fact: cats can see in total darkness",
-  "category": "nature",
-  "format": "myth",
+  "date": "2026-11-13",
+  "topic": "Bone vs steel: which is really stronger?",
+  "category": "body",
+  "format": "versus",
   "characters": [
-   "cat",
-   "mouse"
+   "scientist",
+   "young_man"
   ],
-  "missing": [
-   "cat",
-   "cat_eye_night_items"
-  ],
-  "notes": "From backlog 'Why do cats' eyes glow in the dark?' (score 8): verdict MYTH. They need a little light; the tapetum lucidum reflects it back (the glow) and rod-rich retinas help. Sources to check: Cornell Feline Health Center, Merck Vet Manual / university vet schools. The cat must be an ordinary house cat, clearly not Mr. Whiskerfact. If the cat sheet is not in the library by the night, stage with eyes/silhouette only.",
   "objects": [
-   "cat_eye_night_items"
+   "bone_steel_items"
   ],
   "illustrations": [
-   "cat_eye_night_items"
+   "bone_steel_items"
   ],
+  "missing": [
+   "bone_steel_items"
+  ],
+  "notes": "3 rounds, same units on both sides: 1) raw strength (MPa; steel wins: structural steel ~250+ MPa yield vs cortical bone ~130-200 MPa in compression), 2) weight (density g/cm3; bone ~1.9 vs steel ~7.8, bone wins), 3) self-repair (bone heals itself, steel can't; bone wins). Twist: pound for pound bone is about as strong as (or stronger than) mild steel, and it rebuilds itself. Final 2-1 bone. Check exact figures and avoid the loose 'bone is 5x stronger than steel' claim unless a solid source states it. Sources to check: Ansys blog 'Is bone material stronger than steel?', Discover Magazine, Britannica (bone, steel), a biomechanics textbook/review. scientist explains; young_man for the x-ray / everyday body. Category body: next in rotation. Format versus: tie with what_if, used longest ago (3/11). Goosebumps (only body reel) had the weakest hook hold: keep the first 3 s very visual (bone vs steel bar side by side, something moving at frame 0).",
   "experiment": {
    "batch": "B1-hook-style",
    "test": "hook_style",
-   "option": "statement",
-   "role": "variant"
+   "option": "question",
+   "role": "base"
   }
  }
 ]
