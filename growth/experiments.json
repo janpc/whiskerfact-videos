@@ -42,7 +42,30 @@
    "2026-11-08"
   ],
   "opened": "2026-11-04",
-  "note": "The third video (2026-11-11) is added by the Monday plan of 2026-11-09."
+  "note": "The third video (2026-11-11) is added by the Monday plan of 2026-11-09.",
+  "reads": [
+   {
+    "review": "2026-11-09",
+    "baseline_watch_pct": 35.6,
+    "videos": {
+     "2026-11-06": {
+      "window": "early",
+      "age_h": 62.5,
+      "watch_pct": 28.9,
+      "length_s": 86.2,
+      "vs_baseline_pct": -18.8,
+      "ig_views": 189,
+      "tiktok_views": 278,
+      "note": "provisional"
+     },
+     "2026-11-08": {
+      "window": "too_early",
+      "note": "under 48 h, not yet in Metricool"
+     }
+    },
+    "final_figures": "0 of 3"
+   }
+  ]
  },
  "queue": [
   {

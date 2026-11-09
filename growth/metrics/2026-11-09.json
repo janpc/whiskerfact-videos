@@ -1,0 +1,343 @@
+{
+ "date": "2026-11-09",
+ "collected_at": "2026-11-09T11:00:00+01:00",
+ "source": "Metricool getAnalyticsDataByMetrics, brandId 7740980, 2026-10-29 to 2026-11-09",
+ "notes": [
+  "Metricool timestamps are UTC; age_h measured to 2026-11-09 10:00 UTC.",
+  "watch_pct = Instagram IGRE24 / video length (ffprobe of videos/*.mp4). Only Instagram has watch-time data: TikTok TKPO13/14/15/16 come back null, and YouTube all-videos (YTVV) returns no rows; YTVP lists only the 4 October Shorts with all metrics null.",
+  "Instagram retention (IGRE27) is null for every reel.",
+  "2026-11-08 cat_night_vision is under 48 h and not yet in Metricool: ignored.",
+  "TikTok: the 4 reels of 29-31 Oct have 0-1 views; hottest_planet appears on TikTok (published 2026-11-01 16:36 UTC) although the log post-check said auto-publish failed."
+ ],
+ "followers": {
+  "instagram": {
+   "2026-11-07": 12
+  },
+  "tiktok": {
+   "2026-11-07": 2
+  },
+  "youtube": {
+   "2026-11-09": 7
+  }
+ },
+ "baseline": {
+  "videos": [
+   "dolphins",
+   "pyramids",
+   "goosebumps",
+   "vampire_bats",
+   "hottest_planet"
+  ],
+  "watch_pct": [
+   40.7,
+   44.8,
+   13.9,
+   35.6,
+   34.0
+  ],
+  "median": 35.6
+ },
+ "videos": [
+  {
+   "date": "2026-10-29",
+   "slug": "dolphins",
+   "length_s": 62.6,
+   "role": "base",
+   "category": "nature",
+   "format": "explainer",
+   "hook_style": "statement",
+   "window": "final",
+   "watch_pct": 40.7,
+   "watch_pct_networks": [
+    "instagram"
+   ],
+   "instagram": {
+    "age_h": 253.7,
+    "views": 1591,
+    "reach": 1357,
+    "avg_watch_s": 25.497,
+    "watch_pct": 40.7,
+    "view_rate_3s": 63.3,
+    "retention": null,
+    "likes": 61,
+    "comments": 0,
+    "saves": 2,
+    "shares": 5,
+    "eng_per_100": 4.27,
+    "shares_per_100": 0.31,
+    "url": "https://www.instagram.com/reel/DfF19vRCTf6/"
+   },
+   "tiktok": {
+    "age_h": 253.7,
+    "views": 0,
+    "likes": 0,
+    "comments": 0,
+    "shares": 0,
+    "full_watch_rate": null,
+    "avg_watch_s": null,
+    "for_you_pct": null,
+    "eng_per_100": null,
+    "shares_per_100": null
+   },
+   "youtube": null
+  },
+  {
+   "date": "2026-10-29",
+   "slug": "pyramids",
+   "length_s": 80.7,
+   "role": "base",
+   "category": "history",
+   "format": "explainer",
+   "hook_style": "statement",
+   "window": "final",
+   "watch_pct": 44.8,
+   "watch_pct_networks": [
+    "instagram"
+   ],
+   "instagram": {
+    "age_h": 252.5,
+    "views": 337,
+    "reach": 291,
+    "avg_watch_s": 36.122,
+    "watch_pct": 44.8,
+    "view_rate_3s": 55.3,
+    "retention": null,
+    "likes": 4,
+    "comments": 0,
+    "saves": 2,
+    "shares": 0,
+    "eng_per_100": 1.78,
+    "shares_per_100": 0.0,
+    "url": "https://www.instagram.com/reel/DfF-mIngA3l/"
+   },
+   "tiktok": {
+    "age_h": 252.5,
+    "views": 0,
+    "likes": 0,
+    "comments": 0,
+    "shares": 0,
+    "full_watch_rate": null,
+    "avg_watch_s": null,
+    "for_you_pct": null,
+    "eng_per_100": null,
+    "shares_per_100": null
+   },
+   "youtube": null
+  },
+  {
+   "date": "2026-10-30",
+   "slug": "goosebumps",
+   "length_s": 62.9,
+   "role": "base",
+   "category": "body",
+   "format": "explainer",
+   "hook_style": "statement",
+   "window": "final",
+   "watch_pct": 13.9,
+   "watch_pct_networks": [
+    "instagram"
+   ],
+   "instagram": {
+    "age_h": 232.9,
+    "views": 190,
+    "reach": 168,
+    "avg_watch_s": 8.752,
+    "watch_pct": 13.9,
+    "view_rate_3s": 43.5,
+    "retention": null,
+    "likes": 4,
+    "comments": 0,
+    "saves": 1,
+    "shares": 0,
+    "eng_per_100": 2.63,
+    "shares_per_100": 0.0,
+    "url": "https://www.instagram.com/reel/DfIEl-niq9d/"
+   },
+   "tiktok": {
+    "age_h": 233.0,
+    "views": 1,
+    "likes": 0,
+    "comments": 0,
+    "shares": 0,
+    "full_watch_rate": null,
+    "avg_watch_s": null,
+    "for_you_pct": null,
+    "eng_per_100": 0.0,
+    "shares_per_100": 0.0
+   },
+   "youtube": null
+  },
+  {
+   "date": "2026-10-31",
+   "slug": "vampire_bats",
+   "length_s": 70.4,
+   "role": "base",
+   "category": "nature",
+   "format": "myth",
+   "hook_style": "question",
+   "window": "final",
+   "watch_pct": 35.6,
+   "watch_pct_networks": [
+    "instagram"
+   ],
+   "instagram": {
+    "age_h": 212.9,
+    "views": 1543,
+    "reach": 1341,
+    "avg_watch_s": 25.076,
+    "watch_pct": 35.6,
+    "view_rate_3s": 60.8,
+    "retention": null,
+    "likes": 46,
+    "comments": 0,
+    "saves": 4,
+    "shares": 0,
+    "eng_per_100": 3.24,
+    "shares_per_100": 0.0,
+    "url": "https://www.instagram.com/reel/DfKORRfk3-v/"
+   },
+   "tiktok": {
+    "age_h": 212.9,
+    "views": 1,
+    "likes": 0,
+    "comments": 0,
+    "shares": 0,
+    "full_watch_rate": null,
+    "avg_watch_s": null,
+    "for_you_pct": null,
+    "eng_per_100": 0.0,
+    "shares_per_100": 0.0
+   },
+   "youtube": null
+  },
+  {
+   "date": "2026-11-01",
+   "slug": "hottest_planet",
+   "length_s": 75.2,
+   "role": "base",
+   "category": "space",
+   "format": "quiz",
+   "hook_style": null,
+   "window": "final",
+   "watch_pct": 34.0,
+   "watch_pct_networks": [
+    "instagram"
+   ],
+   "instagram": {
+    "age_h": 185.5,
+    "views": 1406,
+    "reach": 1266,
+    "avg_watch_s": 25.569,
+    "watch_pct": 34.0,
+    "view_rate_3s": 59.3,
+    "retention": null,
+    "likes": 27,
+    "comments": 5,
+    "saves": 0,
+    "shares": 0,
+    "eng_per_100": 2.28,
+    "shares_per_100": 0.0,
+    "url": "https://www.instagram.com/reel/DfNKpGHk3uq/"
+   },
+   "tiktok": {
+    "age_h": 185.4,
+    "views": 905,
+    "likes": 31,
+    "comments": 1,
+    "shares": 1,
+    "full_watch_rate": null,
+    "avg_watch_s": null,
+    "for_you_pct": null,
+    "eng_per_100": 3.65,
+    "shares_per_100": 0.11
+   },
+   "youtube": null
+  },
+  {
+   "date": "2026-11-03",
+   "slug": "wifi_bands",
+   "length_s": 85.6,
+   "role": "base",
+   "category": "tech",
+   "format": "versus",
+   "hook_style": "question",
+   "window": "early",
+   "watch_pct": 29.5,
+   "watch_pct_networks": [
+    "instagram"
+   ],
+   "instagram": {
+    "age_h": 134.5,
+    "views": 2506,
+    "reach": 2196,
+    "avg_watch_s": 25.266,
+    "watch_pct": 29.5,
+    "view_rate_3s": 57.7,
+    "retention": null,
+    "likes": 52,
+    "comments": 0,
+    "saves": 14,
+    "shares": 9,
+    "eng_per_100": 2.99,
+    "shares_per_100": 0.36,
+    "url": "https://www.instagram.com/reel/DfSoxCUAMKY/"
+   },
+   "tiktok": {
+    "age_h": 134.4,
+    "views": 310,
+    "likes": 14,
+    "comments": 0,
+    "shares": 0,
+    "full_watch_rate": null,
+    "avg_watch_s": null,
+    "for_you_pct": null,
+    "eng_per_100": 4.52,
+    "shares_per_100": 0.0
+   },
+   "youtube": null
+  },
+  {
+   "date": "2026-11-06",
+   "slug": "earth_tunnel",
+   "length_s": 86.2,
+   "role": "variant",
+   "category": "science",
+   "format": "what_if",
+   "hook_style": "statement",
+   "window": "early",
+   "watch_pct": 28.9,
+   "watch_pct_networks": [
+    "instagram"
+   ],
+   "instagram": {
+    "age_h": 62.5,
+    "views": 189,
+    "reach": 163,
+    "avg_watch_s": 24.932,
+    "watch_pct": 28.9,
+    "view_rate_3s": 52.7,
+    "retention": null,
+    "likes": 4,
+    "comments": 0,
+    "saves": 0,
+    "shares": 0,
+    "eng_per_100": 2.12,
+    "shares_per_100": 0.0,
+    "url": "https://www.instagram.com/reel/DfaXOh2ivZc/"
+   },
+   "tiktok": {
+    "age_h": 62.3,
+    "views": 278,
+    "likes": 12,
+    "comments": 0,
+    "shares": 0,
+    "full_watch_rate": null,
+    "avg_watch_s": null,
+    "for_you_pct": null,
+    "eng_per_100": 4.32,
+    "shares_per_100": 0.0
+   },
+   "youtube": null
+  }
+ ]
+}
