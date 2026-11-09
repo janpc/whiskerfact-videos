@@ -3,7 +3,7 @@
 Goal: decide the reels of the coming week in advance, so the owner can generate the missing characters, objects and illustrations in Gemini (free) before the nightly factory needs them.
 
 1. Read `FACTORY.md` (sections 1, 1b, 2), `schedule.json`, `growth/calendar.json`, `growth/topics.md`, `growth/insights.md`, `growth/experiments.json`, `log/published.json` and `factory/library/index.json`.
-2. **Publishing days:** from the rules in `schedule.json` and the log, list the dates in the next 7 days (today included) on which the factory will publish.
+2. **Publishing days:** from the rules in `schedule.json` and the log, list the dates from today up to and including next Monday (8 days) on which the factory will publish. Next Monday is included because its reel is rendered in the night of Sunday to Monday, before the next weekly plan runs. If today already has an entry in the previous `growth/week_plan.json` (planned last Monday), keep that entry unchanged: it has already been rendered or is being rendered.
 3. **One topic per day.** Follow FACTORY step 2 exactly: special dates first, category rotation, demand check, a format from FORMATS.md, and no repeats of past topics. Do a quick plausibility check that each topic has at least two solid sources (full verification happens on the day).
 3b. **Experiment for each video.** Read `batch` and `protocol` in `growth/experiments.json`. The rule is ONE primary variable per batch of 3 videos; everything else stays at its `control`.
    - While the batch is `running` and has free slots (`slots` minus `videos`), give the next publishing days the variant: add `"experiment": {"batch", "test", "option", "role": "variant"}` to their entry and append the date to `batch.videos`.

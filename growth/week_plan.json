@@ -53,5 +53,32 @@
    "option": "question",
    "role": "base"
   }
+ },
+ {
+  "date": "2026-11-16",
+  "topic": "What if you stood on the Moon and looked back at Earth?",
+  "category": "space",
+  "format": "what_if",
+  "characters": [
+   "astronaut"
+  ],
+  "objects": [
+   "moon_items",
+   "earth_tunnel_items:earth"
+  ],
+  "illustrations": [
+   "moon_items"
+  ],
+  "missing": [
+   "astronaut",
+   "moon_items"
+  ],
+  "notes": "Planned on 2026-11-09 because the nightly run renders it in the night of 15→16, before the next Monday plan. Uses the top space backlog idea 'Why does the Moon always show us the same face?' (score 8) as a grounded what_if: premise (you land on the near side) → first hour (Earth hangs almost still in the sky, it never rises or sets; it only wobbles a little, libration) → first day (one lunar day lasts ~29.5 Earth days; the Sun takes about two weeks to cross the sky; Earth shows phases, opposite to the Moon's phases seen from Earth) → long term (the Moon drifts ~3.8 cm a year away) → what it teaches: the Moon is tidally locked, it turns once per orbit, so we always see the same face. Not scary: no dangers, no emergencies. Say 'astronomers' / 'NASA'. Sources to check: NASA (tidal locking, Moon facts), Live Science 'Earth phases from the Moon', Astronomy.com (Dec 2025) 'Why does the same side of the Moon always face Earth?', timeanddate (far side). Earth sprite: earth_tunnel_items:earth (phases masked in code). Category space: rotation after body. Format what_if: fewest reels in the log once 11/11 (quiz) and 11/13 (versus) are out. Remove the backlog line in topics.md when used.",
+  "experiment": {
+   "batch": "B1-hook-style",
+   "test": "hook_style",
+   "option": "question",
+   "role": "base"
+  }
  }
 ]

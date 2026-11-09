@@ -43,7 +43,7 @@
    "2026-11-11"
   ],
   "opened": "2026-11-04",
-  "note": "Batch full since the Monday plan of 2026-11-09 (third video 2026-11-11). The review closes it once 2026-11-11 has 7-day figures (2026-11-18). 2026-11-13 is `base` with the control hook (question), which also adds a real question-hook video to the baseline (see insights 2026-11-09: the baseline is mostly statement hooks).",
+  "note": "Batch full since the Monday plan of 2026-11-09 (third video 2026-11-11). The review closes it once 2026-11-11 has 7-day figures (2026-11-18). 2026-11-13 and 2026-11-16 are `base` with the control hook (question), which also adds real question-hook videos to the baseline (see insights 2026-11-09: the baseline is mostly statement hooks).",
   "reads": [
    {
     "review": "2026-11-09",
