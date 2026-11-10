@@ -507,6 +507,79 @@
    "pet"
   ],
   "source": "gemini",
-  "notes": "Gato dom\u00e9stico normal (no es Mr. Whiskerfact). DECISI\u00d3N 4/11/2026: NO animar el andar (walk1-8, sneak1-4, tail1-4) ni usar library/cat_rig: se prob\u00f3 y queda mal. Usar poses fijas con cambios de pose al ritmo de la voz, y el ciclo de correr (run1-4) solo para cruzar la pantalla."
+  "notes": "Gato doméstico normal (no es Mr. Whiskerfact). DECISIÓN 4/11/2026: NO animar el andar (walk1-8, sneak1-4, tail1-4) ni usar library/cat_rig: se probó y queda mal. Usar poses fijas con cambios de pose al ritmo de la voz, y el ciclo de correr (run1-4) solo para cruzar la pantalla."
+ },
+ "woolly_mammoth": {
+  "poses": {
+   "run1": "woolly_mammoth/run1.png",
+   "run2": "woolly_mammoth/run2.png",
+   "run3": "woolly_mammoth/run3.png",
+   "run4": "woolly_mammoth/run4.png",
+   "side": "woolly_mammoth/side.png",
+   "front": "woolly_mammoth/front.png",
+   "three_quarter": "woolly_mammoth/three_quarter.png",
+   "back": "woolly_mammoth/back.png",
+   "lie": "woolly_mammoth/lie.png",
+   "graze": "woolly_mammoth/graze.png",
+   "trunk_up": "woolly_mammoth/trunk_up.png",
+   "look_up": "woolly_mammoth/look_up.png",
+   "step": "woolly_mammoth/step.png",
+   "rest": "woolly_mammoth/rest.png",
+   "tail": "woolly_mammoth/tail.png",
+   "three_quarter_left": "woolly_mammoth/three_quarter_left.png",
+   "happy": "woolly_mammoth/happy.png",
+   "scared": "woolly_mammoth/scared.png",
+   "curious": "woolly_mammoth/curious.png",
+   "eat": "woolly_mammoth/eat.png",
+   "sleep": "woolly_mammoth/sleep.png",
+   "call": "woolly_mammoth/call.png",
+   "look_back": "woolly_mammoth/look_back.png",
+   "jump": "woolly_mammoth/jump.png",
+   "alert": "woolly_mammoth/alert.png",
+   "surprised": "woolly_mammoth/surprised.png",
+   "think": "woolly_mammoth/think.png",
+   "sad": "woolly_mammoth/sad.png",
+   "proud": "woolly_mammoth/proud.png",
+   "shrug": "woolly_mammoth/shrug.png",
+   "point": "woolly_mammoth/point.png",
+   "wave": "woolly_mammoth/wave.png"
+  },
+  "tags": [
+   "animal",
+   "ice_age",
+   "mammoth",
+   "prehistory"
+  ],
+  "source": "gemini",
+  "notes": "Hoja 1 (4x4). three_quarter_left mira hacia la IZQUIERDA (3/4 frontal), el resto de perfiles miran a la derecha. Sin ciclo de andar: usar run1-4 solo para cruzar, el resto poses fijas. Hoja 2: look_back no mira realmente atrás (es de pie, mirando a la derecha); sleep es de pie con los ojos cerrados (lie, de la hoja 1, es el tumbado)."
+ },
+ "mammoth_quiz_items": {
+  "poses": {
+   "pyramid": "mammoth_quiz_items/pyramid.png",
+   "pyramid_building": "mammoth_quiz_items/pyramid_building.png",
+   "wrangel_island": "mammoth_quiz_items/wrangel_island.png",
+   "tundra": "mammoth_quiz_items/tundra.png",
+   "tusk": "mammoth_quiz_items/tusk.png",
+   "mammoth_skeleton": "mammoth_quiz_items/mammoth_skeleton.png",
+   "first_farm": "mammoth_quiz_items/first_farm.png",
+   "colosseum": "mammoth_quiz_items/colosseum.png",
+   "stone_sledge": "mammoth_quiz_items/stone_sledge.png",
+   "cave_painting": "mammoth_quiz_items/cave_painting.png",
+   "three_pyramids": "mammoth_quiz_items/three_pyramids.png",
+   "glacier": "mammoth_quiz_items/glacier.png",
+   "legionary_gear": "mammoth_quiz_items/legionary_gear.png",
+   "sea_rising": "mammoth_quiz_items/sea_rising.png",
+   "hourglass": "mammoth_quiz_items/hourglass.png",
+   "sundial": "mammoth_quiz_items/sundial.png"
+  },
+  "tags": [
+   "egypt",
+   "history",
+   "illustration",
+   "mammoth",
+   "object"
+  ],
+  "source": "gemini",
+  "notes": "Hoja 4x4 de 16. wrangel_island, tundra, first_farm, three_pyramids, glacier y sea_rising salen como TARJETAS rectangulares con fondo propio (usar como tarjeta, no sueltas). mammoth_skeleton deja algo de verde entre las costillas."
  }
 }
