@@ -437,6 +437,17 @@
    "fails": 0,
    "warns": 0
   },
-  "note": "Estilo v4 (gato Mr. Whiskerfact hablando en gancho, «Still» y cierre; plantilla earth_tunnel_v4.py). Sprites de la biblioteca a ≤1,5x (FIT_MAX 1.1); ojo en corte, bastones, pupila y barras por código. Voz descargada sin problemas de elevenlabsusercontent.com. 8/11 07:50: versión corregida (ojos y haz de linterna por código, luna y ojos de la escena de pupilas vectoriales; sin cuadros ni doble tono); mp4 sustituido antes de publicar."
+  "note": "Estilo v4 (gato Mr. Whiskerfact hablando en gancho, «Still» y cierre; plantilla earth_tunnel_v4.py). Sprites de la biblioteca a ≤1,5x (FIT_MAX 1.1); ojo en corte, bastones, pupila y barras por código. Voz descargada sin problemas de elevenlabsusercontent.com. 8/11 07:50: versión corregida (ojos y haz de linterna por código, luna y ojos de la escena de pupilas vectoriales; sin cuadros ni doble tono); mp4 sustituido antes de publicar.",
+  "check": {
+   "at": "2026-11-11T00:38:00+01:00",
+   "instagram": "PUBLISHED",
+   "tiktok": "PUBLISHED (sin id/publicUrl en Metricool)",
+   "youtube": "PUBLISHED",
+   "urls": {
+    "instagram": "https://www.instagram.com/reel/Dffg1izk0zL/",
+    "youtube": "https://www.youtube.com/shorts/Cergx2_UjBY"
+   },
+   "note": "comprobado por la red de seguridad del run nocturno del 11/11"
+  }
  }
 ]
