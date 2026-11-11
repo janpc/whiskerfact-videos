@@ -95,11 +95,11 @@ def snow(img, T, a=1.0, n=46, seed=4, y0=740, y1=1370, x1=900):
 
 # ---------- opciones (tarjeta) ----------
 ROWS = [("A", "Ice Age ends", "glacier", 860), ("B", "After the pyramid", "pyramid", 1060), ("C", "Roman Empire", "colosseum", 1260)]
-def option_row(img, i, a, dim=1.0):
+def option_row(img, i, a, dim=1.0, T=0.0):
     L, text, pose, y = ROWS[i]
     if a <= 0.003: return
     dx = 40 * (1 - eo(a))
-    badge(img, L, 150 + dx, y, a * dim)
+    badge(img, L, 150 + dx, y + 4 * math.sin(T * 2.6 + i * 1.3), a * dim)            # las letras laten suave: nunca quieto
     sprite(img, pose, 300 + dx, y, 170, a * dim, anchor="center", name=IT)
     lab(img, text, y - 28, INK_T, a * dim, x=620 + dx)
 
@@ -132,16 +132,16 @@ V.sounds("hook", [(0.0, "whoosh", 0.7), (0.3, "pop", 0.6), (rel("hook", "Pop"), 
 @V.scene("opts")
 def _(img, T, t, s, e):
     a = win(T, s, e + 1)
-    option_row(img, 0, a * clamp((T - s - 0.1) / 0.35))
-    option_row(img, 1, a * clamp((T - wt("B", s) + 0.1) / 0.35))
+    option_row(img, 0, a * clamp((T - s - 0.1) / 0.35), T=T)
+    option_row(img, 1, a * clamp((T - wt("B", s) + 0.1) / 0.35), T=T)
     R.chrome(img, T)
     title(img, T, s, e + 1, "Pop quiz!")
 V.sounds("opts", [(0.1, "pop", 0.7), (rel("opts", "B"), "pop", 0.7)])
 
 @V.scene("optc")
 def _(img, T, t, s, e):
-    option_row(img, 0, 1.0); option_row(img, 1, 1.0)
-    option_row(img, 2, clamp((T - s - 0.05) / 0.35))
+    option_row(img, 0, 1.0, T=T); option_row(img, 1, 1.0, T=T)
+    option_row(img, 2, clamp((T - s - 0.05) / 0.35), T=T)
     tc = wt("Comment", s)
     t_tick = wt("you", s) + 0.25                              # el reloj corre en el silencio insertado
     frac = clamp(math.floor(max(0.0, T - t_tick) * 5) / 5 / 1.6)
@@ -171,7 +171,7 @@ def _(img, T, t, s, e):
         fade = 1 - (0.75 if i == 2 else 1.0) * eio((T - tv - 1.3 * i) / 0.7)   # uno a uno, se van (el último queda como un fantasma)
         sprite(img, "graze" if i == 1 else "side", x + 12 * t, y, h, a * fade, flip=fl)
     lab(img, "Over 10,000 years", 800, B.TEXT, a * on(T, "ten", s, e), x=480)
-    lab(img, "A feels right", 1240, B.TEXT, a * on(T, "feels", s, e, need=1.6), x=480)
+    lab(img, "A feels right", 1240, B.TEXT, a * on(T, "feels", s, e, need=2.1), x=480)
     R.chrome(img, T)
     title(img, T, s, e, "Most vanished early")
 V.sounds("most", [(0.1, "whoosh", 0.6), (rel("most", "vanish"), "tap", 0.5), (rel("most", "vanish") + 1.3, "tap", 0.5),
@@ -278,7 +278,7 @@ def _(img, T, t, s, e):
     q = R.sprite("?", "number", RED_T)
     R.put_text(img, q, 760, 900 + 8 * math.sin(T * 3), a * clamp((T - s - 0.2) / 0.3), "mm", text="?")
     lab(img, "inbreeding", 790, INK_T, a * on(T, "inbreeding", s, e), x=360)
-    lab(img, "sudden end", 1290, RED_T, a * on(T, "sudden", s, e, need=1.6), x=640)
+    lab(img, "sudden end", 1290, RED_T, a * on(T, "sudden", s, e, need=2.0), x=640)
     R.chrome(img, T)
     title(img, T, s, e, "Cause: unknown")
 V.sounds("why", [(0.1, "whoosh", 0.6), (0.2, "pop", 0.6), (rel("why", "inbreeding"), "tap", 0.6), (rel("why", "sudden"), "click", 0.7)])
@@ -315,12 +315,12 @@ def _(img, T, t, s, e):
     sprite(img, "colosseum", 560, 1320, 220, a, name=IT)
     sprite(img, "legionary_gear", 230, 1330, 150, a * clamp((T - wt("Roman", s)) / 0.3), name=IT)
     lab(img, "27 BCE", 800, B.TEXT, a * on(T, "Roman", s, e), x=500)
-    tl = wt("late", s)
-    stamp(img, "TOO LATE", 560, 1040, clamp((T - tl + 0.25) / 0.3))
+    tl = min(wt("thousand", s), e - 1.95)
+    stamp(img, "TOO LATE", 560, 1040, clamp((T - tl) / 0.3))
     R.chrome(img, T)
     title(img, T, s, e, "C? Way too late")
     return R.punch(img, T, tl, amt=0.05)
-V.sounds("rome", [(0.1, "whoosh", 0.6), (rel("rome", "Roman"), "tap", 0.6), (rel("rome", "late") - 0.25, "pop", 1.0)])
+V.sounds("rome", [(0.1, "whoosh", 0.6), (rel("rome", "Roman"), "tap", 0.6), (min(rel("rome", "thousand"), V.sc["rome"][1] - V.sc["rome"][0] - 1.95), "pop", 1.0)])
 
 @V.scene("wrap")
 def _(img, T, t, s, e):
