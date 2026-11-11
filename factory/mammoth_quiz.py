@@ -35,6 +35,7 @@ V = VoiceReel(R, "mammoth_quiz", [
 _rd = next(st for w, st, en in V.words if w == "Ready?")            # el corte optc/revelación va justo antes de «Ready?»:
 V.sc["optc"] = (V.sc["optc"][0], _rd - 0.12); V.sc["reveal"] = (_rd - 0.12, V.sc["reveal"][1])   # el reloj corre en todo el silencio
 V._fits = {"opts": None, "optc": None}     # las filas de opciones no se reencuadran: no saltan entre escenas
+for _n in ("reveal", "most", "egypt", "still", "rome", "wrap"): V._fits[_n] = None   # escenas con los pies en el suelo (y=1330): el reencuadre las centraba y flotaban
 V.FIT_MAX = 1.1            # los sprites de la biblioteca no se amplían más de ~1,5x en total
 
 INK_T = ST.OUTLINE
@@ -166,12 +167,12 @@ V.sounds("reveal", [(0.05, "whoosh", 0.7), (rel("reveal", "B"), "pop", 1.0), (re
 def _(img, T, t, s, e):
     a = win(T, s, e)
     tv = wt("vanish", s)
-    herd = [(250, 1330, 230, False), (520, 1310, 200, False), (760, 1330, 240, True)]
+    herd = [(190, 1334, 215, False), (470, 1334, 190, False), (790, 1334, 225, True)]
     for i, (x, y, h, fl) in enumerate(herd):
         fade = 1 - (0.75 if i == 2 else 1.0) * eio((T - tv - 1.3 * i) / 0.7)   # uno a uno, se van (el último queda como un fantasma)
         sprite(img, "graze" if i == 1 else "side", x + 12 * t, y, h, a * fade, flip=fl)
     lab(img, "Over 10,000 years", 800, B.TEXT, a * on(T, "ten", s, e), x=480)
-    lab(img, "A feels right", 1240, B.TEXT, a * on(T, "feels", s, e, need=2.1), x=480)
+    lab(img, "A feels right", 960, B.TEXT, a * on(T, "feels", s, e, need=2.1), x=480)
     R.chrome(img, T)
     title(img, T, s, e, "Most vanished early")
 V.sounds("most", [(0.1, "whoosh", 0.6), (rel("most", "vanish"), "tap", 0.5), (rel("most", "vanish") + 1.3, "tap", 0.5),
@@ -234,8 +235,8 @@ def _(img, T, t, s, e):
     th = wt("hundred", s)
     n = int(8 + 32 * eio((T - s - 0.1) / max(0.5, th - s)))
     for i in range(n):
-        cx = 380 + (i % 8) * 64; by = 900 + (i // 8) * 78
-        sprite(img, "side", cx, by, 54, a)
+        cx = 390 + (i % 8) * 70; by = 935 + (i // 8) * 72
+        sprite(img, "side", cx, by, 46, a)
     lab(img, "a few hundred", 1290, INK_T, a * on(T, "hundred", s, e, need=2.6), x=600)
     lab(img, "~6,000 years", 790, RED_T, a * on(T, "six", s, e), x=600)
     R.chrome(img, T)
@@ -316,7 +317,7 @@ def _(img, T, t, s, e):
     sprite(img, "legionary_gear", 230, 1330, 150, a * clamp((T - wt("Roman", s)) / 0.3), name=IT)
     lab(img, "27 BCE", 800, B.TEXT, a * on(T, "Roman", s, e), x=500)
     tl = min(wt("thousand", s), e - 1.95)
-    stamp(img, "TOO LATE", 560, 1040, clamp((T - tl) / 0.3))
+    stamp(img, "TOO LATE", 560, 1020, clamp((T - tl) / 0.3))
     R.chrome(img, T)
     title(img, T, s, e, "C? Way too late")
     return R.punch(img, T, tl, amt=0.05)
@@ -325,9 +326,9 @@ V.sounds("rome", [(0.1, "whoosh", 0.6), (rel("rome", "Roman"), "tap", 0.6), (min
 @V.scene("wrap")
 def _(img, T, t, s, e):
     a = win(T, s, e + 1)
-    xp, xm = (790, 590) if CAT else (680, 380)
-    sprite(img, "pyramid", xp, 1330, 160, a * clamp((T - wt("pyramid", s) + 0.3) / 0.35), name=IT)
-    sprite(img, "happy", xm, 1330, 190, a * clamp((T - wt("mammoth", s) + 0.3) / 0.35))
+    xp, xm = (835, 650) if CAT else (680, 380)
+    sprite(img, "pyramid", xp, 1334, 150, a * clamp((T - wt("pyramid", s) + 0.3) / 0.35), name=IT)
+    sprite(img, "happy", xm, 1334, 180, a * clamp((T - wt("mammoth", s) + 0.3) / 0.35))
     R.chrome(img, T)
     R.txt(img, "Same planet,", TITLE_Y, "title", B.TEXT, win(T, s, V.outro_at + 1))
     R.txt(img, "same time!", TITLE_Y + 97, "title", ACC_T, win(T, s + 0.4, V.outro_at + 1))
