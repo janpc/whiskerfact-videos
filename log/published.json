@@ -449,5 +449,79 @@
    },
    "note": "comprobado por la red de seguridad del run nocturno del 11/11"
   }
+ },
+ {
+  "date": "2026-11-11",
+  "category": "history",
+  "slug": "mammoth_quiz",
+  "title": "Pop quiz: when did the last woolly mammoths die out?",
+  "hook": "The last mammoths died shockingly recently. Pop quiz: when?",
+  "scheduled": "2026-11-11T20:30:00+01:00",
+  "networks": [
+   "instagram",
+   "tiktok",
+   "youtube"
+  ],
+  "sources": [
+   "https://su.se/english/news/new-genetic-study-reveals-the-woolly-mammoths-journey-towards-extinction-1.746552",
+   "https://www.nationalgeographic.com/science/article/woolly-mammoth-last-extinction-genetics",
+   "https://www.sci.news/paleontology/wrangel-islands-woolly-mammoths-13058.html",
+   "https://earthsky.org/earth/woolly-mammoths-extinction-not-inbreeding",
+   "https://www.livescience.com/56678-woolly-mammoth-facts.html",
+   "https://www.livescience.com/woolly-mammoth-genetic-problems.html",
+   "https://www.advancedsciencenews.com/woolly-mammoths-were-inbred-but-this-didnt-lead-to-population-collapse/",
+   "https://www.nationalgeographic.com/history/archaeology/giza-pyramids/",
+   "https://www.worldhistory.org/timeline/Great_Pyramid_of_Giza",
+   "https://www.britannica.com/place/Roman-Empire",
+   "https://www.worldhistory.org/Roman_Empire/"
+  ],
+  "metricool_uuid": "-2448237436585295431",
+  "metricool_uuid_tiktok": "-7056758835389510869",
+  "duration_s": 78.4,
+  "variants": {
+   "time_slot": "20:30",
+   "hook_style": "statement",
+   "caption_style": "teaser",
+   "format": "quiz",
+   "personality": "light",
+   "cta": "👇 Tag someone who needs to know this.",
+   "closing": "mind_blown",
+   "tiktok_mode": "api",
+   "look": {
+    "skies": [
+     "night",
+     "sunset",
+     "dawn",
+     "day",
+     "dusk"
+    ],
+    "terrains": [
+     "hills",
+     "dunes"
+    ],
+    "wow": [
+     "blobs"
+    ],
+    "card": true
+   },
+   "experiment": {
+    "batch": "B1-hook-style",
+    "test": "hook_style",
+    "option": "statement",
+    "role": "variant"
+   },
+   "music_style": "marimba, pizzicato, frame drums, low horn, ~104 BPM (history quiz)"
+  },
+  "music": "ElevenLabs video-to-music (generation 2vmcVqlyimkgStYFtXF2), ajustada con atempo 0,923 a la duración del vídeo",
+  "credits": {
+   "voice": 1125,
+   "music": 1176
+  },
+  "qa": {
+   "fails": 0,
+   "warns": 1,
+   "note": "2 etiquetas cortas y un tramo quieto corregidos; aviso: contraste de la «B» durante su entrada (8,2 s)"
+  },
+  "note": "Opción A del plan cambiada a «Ice Age ends» (menos afirmaciones que «before the first farms»). Voz con 1,7 s de silencio insertado para el reloj del quiz. TikTok por API (las 3 anteriores fueron manual)."
  }
 ]
