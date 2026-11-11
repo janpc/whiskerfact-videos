@@ -7,7 +7,7 @@
     "date": "2026-11-02",
     "note": "saldo real que marca ElevenLabs (dicho por la dueña)"
   },
-  "estimated_balance": 17930,
+  "estimated_balance": 16754,
   "warn_below": 8000,
   "image_budget_month": 4000,
   "costs_estimate": {
@@ -72,6 +72,13 @@
       "what": "voice (eleven_v4, Brad, 1 take)",
       "credits": 1125,
       "note": "flow Q4RWsQia6pHRGabsab5B, node XCnDlevxuTb4TRlAOOyT, session Q8QraO3o9jx0AtrGxLDU, generation ey423BiENhca1vwBOb33"
+    },
+    {
+      "date": "2026-11-11",
+      "slug": "mammoth_quiz",
+      "what": "music (video-to-music, 1 generation)",
+      "credits": 1176,
+      "note": "generation 2vmcVqlyimkgStYFtXF2, flow Q4RWsQia6pHRGabsab5B, node EA9TepYZ64Gw037cyTaQ"
     }
   ],
   "renewal_day": 30,
