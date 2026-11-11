@@ -47,6 +47,7 @@ SEA, SEA_D = (70, 140, 200), (40, 96, 160)
 LAND, LAND_D, SNOW = (150, 160, 110), (110, 120, 80), (244, 248, 250)
 CAT = False        # mammoth_quiz_v4.py lo pone a True: el gato v4 habla en gancho, revelación y cierre
 CARD = (56, 742, 1024, 1384)
+GY = 1388          # pies de lo que está de pie: DENTRO del suelo oscuro (el horizonte está en 1330); en 1330 parecían flotar
 
 def wt(word, s): return V.word_time(word, after=s)
 def early(word, s, e, need=1.9): return min(wt(word, s), e - need)
@@ -100,9 +101,9 @@ def option_row(img, i, a, dim=1.0, T=0.0):
     L, text, pose, y = ROWS[i]
     if a <= 0.003: return
     dx = 40 * (1 - eo(a))
-    badge(img, L, 150 + dx, y + 4 * math.sin(T * 2.6 + i * 1.3), a * dim)            # las letras laten suave: nunca quieto
-    sprite(img, pose, 300 + dx, y, 170, a * dim, anchor="center", name=IT)
-    lab(img, text, y - 28, INK_T, a * dim, x=620 + dx)
+    badge(img, L, 128 + dx, y + 4 * math.sin(T * 2.6 + i * 1.3), a * dim)            # las letras laten suave: nunca quieto
+    sprite(img, pose, 335 + dx, y, 160, a * dim, anchor="center", name=IT)
+    lab(img, text, y - 28, INK_T, a * dim, x=655 + dx)
 
 def clock(img, x, y, r, frac, a=1.0):
     """reloj del quiz por código: aguja que salta cada cuarto de segundo, sector que se va llenando"""
@@ -124,7 +125,7 @@ def _(img, T, t, s, e):
     x = 700 if CAT else CX - 40
     snow(img, T, x1=880)
     pose = "surprised" if t >= 0.3 else "side"            # a los 0,3 s el mamut cambia de cara: algo se mueve enseguida
-    sprite(img, pose, x, 1330, 300, flip=True)
+    sprite(img, pose, x, GY, 300, flip=True)
     R.chrome(img, T)
     V.hook_text(img, T, e, "The last mammoths died shockingly recently.", "Pop quiz: when?", "Pop")
     if not CAT: R.hook_mascot(img, T, 0.6, e)
@@ -156,7 +157,7 @@ def _(img, T, t, s, e):
     a = win(T, s, e)
     x = 720 if CAT else CX
     tb = wt("B", s)
-    sprite(img, "pyramid", x, 1330, 230, a, name=IT)
+    sprite(img, "pyramid", x, GY, 230, a, name=IT)
     stamp(img, "B", x + 10, 960, clamp((T - tb) / 0.3))
     R.chrome(img, T)
     title(img, T, s, e, "It's B!")
@@ -167,7 +168,7 @@ V.sounds("reveal", [(0.05, "whoosh", 0.7), (rel("reveal", "B"), "pop", 1.0), (re
 def _(img, T, t, s, e):
     a = win(T, s, e)
     tv = wt("vanish", s)
-    herd = [(190, 1334, 215, False), (470, 1334, 190, False), (790, 1334, 225, True)]
+    herd = [(190, GY, 215, False), (470, GY, 190, False), (790, GY, 225, True)]
     for i, (x, y, h, fl) in enumerate(herd):
         fade = 1 - (0.75 if i == 2 else 1.0) * eio((T - tv - 1.3 * i) / 0.7)   # uno a uno, se van (el último queda como un fantasma)
         sprite(img, "graze" if i == 1 else "side", x + 12 * t, y, h, a * fade, flip=fl)
@@ -249,10 +250,10 @@ def _(img, T, t, s, e):
     a = win(T, s, e)
     tb = wt("built", s)
     kb = eio((T - tb) / 0.5)
-    sprite(img, "pyramid_building", 620, 1320, 230, a * (1 - kb), name=IT)
-    sprite(img, "pyramid", 620, 1320, 240, a * kb, name=IT)
+    sprite(img, "pyramid_building", 620, GY - 8, 230, a * (1 - kb), name=IT)
+    sprite(img, "pyramid", 620, GY - 8, 240, a * kb, name=IT)
     pose = "point" if T >= wt("King", s) else "talk"
-    sprite(img, pose, 250, 1335, 300, a, name="ancient_person")
+    sprite(img, pose, 250, GY, 300, a, name="ancient_person")
     lab(img, "~4,500 years ago", 800, B.TEXT, a * on(T, "four", s, e), x=560)
     R.chrome(img, T)
     title(img, T, s, e, "Meanwhile, in Egypt")
@@ -265,7 +266,7 @@ def _(img, T, t, s, e):
     k = eo((T - tm + 0.2) / 0.4)
     fade = 1 - 0.7 * eio((T - td) / 1.2)
     snow(img, T, a, n=30, seed=9)
-    sprite(img, "happy", 470, 1330 - 30 * (1 - k), 300, a * k * fade, flip=True)
+    sprite(img, "happy", 470, GY - 30 * (1 - k), 300, a * k * fade, flip=True)
     lab(img, "~4,000 years ago", 800, B.TEXT, a * on(T, "four", s, e), x=480)
     R.chrome(img, T)
     title(img, T, s, e, "Still here!")
@@ -313,8 +314,8 @@ V.sounds("maybe", [(0.05, "pop", 0.6), (rel("maybe", "bad") - 0.3, "pop", 0.6)])
 @V.scene("rome")
 def _(img, T, t, s, e):
     a = win(T, s, e)
-    sprite(img, "colosseum", 560, 1320, 220, a, name=IT)
-    sprite(img, "legionary_gear", 230, 1330, 150, a * clamp((T - wt("Roman", s)) / 0.3), name=IT)
+    sprite(img, "colosseum", 560, GY - 8, 220, a, name=IT)
+    sprite(img, "legionary_gear", 230, GY, 150, a * clamp((T - wt("Roman", s)) / 0.3), name=IT)
     lab(img, "27 BCE", 800, B.TEXT, a * on(T, "Roman", s, e), x=500)
     tl = min(wt("thousand", s), e - 1.95)
     stamp(img, "TOO LATE", 560, 1020, clamp((T - tl) / 0.3))
@@ -327,8 +328,8 @@ V.sounds("rome", [(0.1, "whoosh", 0.6), (rel("rome", "Roman"), "tap", 0.6), (min
 def _(img, T, t, s, e):
     a = win(T, s, e + 1)
     xp, xm = (835, 650) if CAT else (680, 380)
-    sprite(img, "pyramid", xp, 1334, 150, a * clamp((T - wt("pyramid", s) + 0.3) / 0.35), name=IT)
-    sprite(img, "happy", xm, 1334, 180, a * clamp((T - wt("mammoth", s) + 0.3) / 0.35))
+    sprite(img, "pyramid", xp, GY - 4, 150, a * clamp((T - wt("pyramid", s) + 0.3) / 0.35), name=IT)
+    sprite(img, "happy", xm, GY, 180, a * clamp((T - wt("mammoth", s) + 0.3) / 0.35))
     R.chrome(img, T)
     R.txt(img, "Same planet,", TITLE_Y, "title", B.TEXT, win(T, s, V.outro_at + 1))
     R.txt(img, "same time!", TITLE_Y + 97, "title", ACC_T, win(T, s + 0.4, V.outro_at + 1))
