@@ -31,5 +31,8 @@ Cells: 1 "happy"; 2 "scared, fur/feathers puffed"; 3 "curious, head tilted"; 4 "
 For props, tools, food, vehicles, places or key illustrations that a reel needs. Same base prompt, but replace "NEW character: CHARACTER" with "NEW objects/illustrations: SUBJECT", keep the green background and the 3 × 3 grid, and describe each of the 9 cells as one separate item (or the same object from different angles or states, e.g. closed/open, full/empty). Several small items of the same reel can share a sheet. Scenes and landscapes: one per cell, filling the cell, still on flat green only where there is empty space.
 Pose names: one short name per cell (e.g. `lamp_on`, `lamp_off`). Tags: `object` or `illustration`, plus the topic.
 
+## Large items sheet (2x2, up to 4 items; added 12/11/2026)
+For items that will be shown BIG in the reel (a protagonist, a full skeleton, an X-ray, a machine, a scene): same style rules as the object sheet, but a grid of 2 columns x 2 rows and the extra line "Draw each item large, filling most of its cell, with a clear empty margin of green around it: nothing may touch or cross the edge of its cell. No divider lines, no numbers, no text." Each sprite then comes out at ~400-500 px, enough to enlarge up to ~2x. Add with `library.py add ... --grid 2x2`. Why: in `bone_steel_items` (4x4) the skeleton came out 113x213 px, the X-ray 157x188 and the press 152x188, too small to be a protagonist.
+
 ## After generating
 `python3 library.py add sheet.png <name> <9 pose names, '-' for a bad cell> --tags person|animal|object|illustration,<more> --source gemini|elevenlabs`
