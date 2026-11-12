@@ -599,13 +599,12 @@
    "weight_block": "bone_steel_items/weight_block.png",
    "magnifier": "bone_steel_items/magnifier.png",
    "vertebrae": "bone_steel_items/vertebrae.png",
-   "dumbbell": "bone_steel_items/dumbbell.png",
-   "skeleton_large": "bone_steel_items/skeleton_large.png"
+   "dumbbell": "bone_steel_items/dumbbell.png"
   },
   "tags": [
    "objects"
   ],
   "source": "gemini",
-  "notes": "Hoja 4x4 de 16 (13/11, hueso vs acero). xray_leg sale como TARJETA con película azul propia. bone_healed y bone_cracked son casi iguales (grieta fina): el brillo de 'curado' se dibuja por código. skeleton, xray_leg, test_press y femur_section se sustituyeron el 12/11 por versiones grandes de una hoja 2x2 (≈400-500 px, ampliables ~1,5-2x); el resto mide ~185 px: no ampliar más de ~1,3x. skeleton_large: esqueleto de cuerpo entero a gran tamaño (hoja de 1 elemento), para cuando sea protagonista."
+  "notes": "Hoja 4x4 de 16 (13/11, hueso vs acero). xray_leg sale como TARJETA con película azul propia. bone_healed y bone_cracked son casi iguales (grieta fina): el brillo de 'curado' se dibuja por código. xray_leg, test_press y femur_section se sustituyeron el 12/11 por versiones grandes de una hoja 2x2 y skeleton por un esqueleto de un solo elemento (481x957 px, protagonista). Los tres de la hoja 2x2 miden ≈400-500 px, ampliables ~1,5-2x; el resto mide ~185 px: no ampliar más de ~1,3x."
  }
 }
