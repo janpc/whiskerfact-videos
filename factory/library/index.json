@@ -581,5 +581,30 @@
   ],
   "source": "gemini",
   "notes": "Hoja 4x4 de 16. wrangel_island, tundra, first_farm, three_pyramids, glacier y sea_rising salen como TARJETAS rectangulares con fondo propio (usar como tarjeta, no sueltas). mammoth_skeleton deja algo de verde entre las costillas."
+ },
+ "bone_steel_items": {
+  "poses": {
+   "femur": "bone_steel_items/femur.png",
+   "femur_section": "bone_steel_items/femur_section.png",
+   "steel_bar": "bone_steel_items/steel_bar.png",
+   "steel_beam": "bone_steel_items/steel_beam.png",
+   "balance": "bone_steel_items/balance.png",
+   "test_press": "bone_steel_items/test_press.png",
+   "xray_leg": "bone_steel_items/xray_leg.png",
+   "bone_healed": "bone_steel_items/bone_healed.png",
+   "skeleton": "bone_steel_items/skeleton.png",
+   "bone_cracked": "bone_steel_items/bone_cracked.png",
+   "steel_bent": "bone_steel_items/steel_bent.png",
+   "hammer": "bone_steel_items/hammer.png",
+   "weight_block": "bone_steel_items/weight_block.png",
+   "magnifier": "bone_steel_items/magnifier.png",
+   "vertebrae": "bone_steel_items/vertebrae.png",
+   "dumbbell": "bone_steel_items/dumbbell.png"
+  },
+  "tags": [
+   "objects"
+  ],
+  "source": "gemini",
+  "notes": "Hoja 4x4 de 16 (13/11, hueso vs acero). xray_leg sale como TARJETA con película azul propia. bone_healed y bone_cracked son casi iguales (grieta fina): el brillo de 'curado' se dibuja por código. skeleton (113x213), xray_leg y test_press son pequeños: no ampliar más de ~1,3x."
  }
 }
