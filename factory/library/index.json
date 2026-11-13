@@ -649,5 +649,19 @@
    "space"
   ],
   "source": "gemini"
+ },
+ "moon_items": {
+  "poses": {
+   "moon_surface": "moon_items/moon_surface.png",
+   "moon_near": "moon_items/moon_near.png",
+   "moon_far": "moon_items/moon_far.png",
+   "lander": "moon_items/lander.png"
+  },
+  "tags": [
+   "moon",
+   "objects",
+   "space"
+  ],
+  "source": "gemini"
  }
 }
