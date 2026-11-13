@@ -7,7 +7,7 @@
     "date": "2026-11-02",
     "note": "saldo real que marca ElevenLabs (dicho por la dueña)"
   },
-  "estimated_balance": 15576,
+  "estimated_balance": 14378,
   "warn_below": 8000,
   "image_budget_month": 4000,
   "costs_estimate": {
@@ -86,6 +86,13 @@
       "what": "voice (eleven_v4, Brad, 1 take)",
       "credits": 1178,
       "note": "flow Q4RWsQia6pHRGabsab5B, node gWqYUMBsVTibirlu7r4A, session jSCnAPLT5hf0soxqa6Wb, generation ITtpo8GmcHshDNkObPIj"
+    },
+    {
+      "date": "2026-11-13",
+      "slug": "bone_vs_steel",
+      "what": "music (video-to-music, 1 generation)",
+      "credits": 1198,
+      "note": "generation eNszQScJg9f2HPrn0Yzc, flow Q4RWsQia6pHRGabsab5B, node Qxl4fJKfg5Q9bfWRu3GC"
     }
   ],
   "renewal_day": 30,
