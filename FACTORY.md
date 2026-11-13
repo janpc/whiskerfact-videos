@@ -39,7 +39,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - **(c) It's easy to show:** a clear mechanism to draw.
 - Use WebSearch for (a). Choose the highest total. Add the other 4 to `growth/topics.md` with their scores for later nights.
 - Avoid questions where the top results are debunks we can't verify, and topics that are a single trivia number with no "why".
-- **Hook:** at most 10 words. **Both lines are fully on screen from frame 0** (use `V.hook_text`), because viewers decide in the first second. The question never appears late, and something in the drawing moves within the first 0.3 s. The engine adds an entry punch at frame 0. The first frame is also the cover, so it must read well on its own. Use the hook style that `growth/experiments.json` assigns today (see step 8).
+- **Hook:** at most 10 words. **Both lines are fully on screen from frame 0** (use `V.hook_text`), because viewers decide in the first second. The question never appears late, and something in the drawing moves within the first 0.3 s. The engine adds an entry punch at frame 0. **The hook scene IS the channel cover (decided 13/11/2026, template A «rays»):** build it with `factory/cover.py` (`draw_bg`, `draw_header`, `draw_title`), see step 6. The first frame is also the cover, so it must read well on its own. Use the hook style that `growth/experiments.json` assigns today (see step 8).
 
 ## 3. Verify
 - Every fact in the script must be confirmed by **two independent, reliable sources**, for example a university, a museum, NASA or NOAA, a peer-reviewed review, or Britannica.
@@ -89,6 +89,8 @@ All public-facing content is in **English**. All design rules live in `factory/b
 
 ## 6. Build the reel
 - Use `factory/pyramids.py` as the template: a single file that builds on `voice_reel.VoiceReel`. That module handles scene cuts, subtitles, the outro and the audio mix. Write `factory/<slug>.py` the same way.
+- **Hook = cover (mandatory, same template for every reel):** use `factory/cover.py` in the `hook` scene (see `bone_vs_steel.py`). Backdrop: `V.backdrop("hook")(lambda img, T, t: cover.draw_bg(img, CATEGORY, 0.05 * T))` (colour of the category from `brand.CATEGORIES`, slowly rotating rays). Scene body: draw the 1-2 illustration items large in the centre (`item(...)`, bobbing a little so something moves within 0.3 s), then `cover.draw_header(img, CATEGORY)` and `cover.draw_title(img, LINE1, LINE2, SUB, a=clamp((e - T) / B.EXIT))`. Do not call `R.chrome` or `V.hook_text` in this scene. `LINE1`/`LINE2` = a short title in two lines (e.g. «Bone vs / steel», max about 9 characters per line at 150 px; it appears in capitals, line 2 in yellow), `SUB` = the hook question (text in step 2). Keep the illustration between y 860 and 1300, away from the cat (top at y 1190, x 95-375, v4 cat) and with nothing below y 900 past x 900. Never prepend a separate 1-frame or 0.2 s cover to the video: it flashes when the reel loops.
+- **Thumbnail:** render the same layout as a still with `cover.make_cover(CATEGORY, LINE1, LINE2, [(lib, name, x, y, h, rot), ...], "videos/<date>_<slug>_cover.png", sub=SUB)` (same item positions as the hook scene).
 - Every scene starts with a distinctive word from the script.
 - Split long sentences into extra scenes (the hard limit is 8 s).
 - Sync animations to words with `V.word_time()`.
@@ -176,11 +178,12 @@ All public-facing content is in **English**. All design rules live in `factory/b
 
 ## 7. Upload
 - Copy the mp4 to `videos/<YYYY-MM-DD>_<slug>.mp4`, then commit and push to `main`.
-- Check that `https://raw.githubusercontent.com/janpc/whiskerfact-videos/main/videos/<file>` returns 200.
+- Also copy the thumbnail to `videos/<YYYY-MM-DD>_<slug>_cover.png` (made in step 6).
+- Check that `https://raw.githubusercontent.com/janpc/whiskerfact-videos/main/videos/<file>` returns 200 for both the mp4 and the cover png.
 
 ## 8. Publish (Metricool connector)
 - Call `createScheduledPost` with `blogId 7740980` and timezone `Europe/Madrid`. Create **two posts** with the same video, text and time (decision of 2/11/2026: TikTok videos posted by the API got 0 views, the first one posted by hand did get views):
-  1. **Instagram + YouTube:** one post with providers instagram and youtube, `autoPublish: true`.
+  1. **Instagram + YouTube:** one post with providers instagram and youtube, `autoPublish: true`, and `videoThumbnailUrl` = the raw.githubusercontent URL of the `_cover.png` (TikTok personal accounts ignore thumbnails; the first frame is already the cover there).
   2. **TikTok:** its own post with provider tiktok only. Choose the mode and record it as `variants.tiktok_mode`:
      - `manual` (default): `autoPublish: false`. Metricool sends the owner a push notification at the scheduled time and she publishes it by hand from the Metricool app.
      - `api` (test): `autoPublish: true`. Use it when the last 3 log entries with a `tiktok_mode` are all `manual` (so about 1 in every 4 reels), to check from time to time whether API posts get views now.
