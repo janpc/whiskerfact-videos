@@ -577,6 +577,14 @@
       "music": 1198
     },
     "qa": "OK (0 fallos, 17 avisos)",
-    "note": "Reel construido en el chat tras fallar la ejecución nocturna"
+    "note": "Reel construido en el chat tras fallar la ejecución nocturna",
+    "check": {
+      "at": "2026-11-13T21:00:00+01:00",
+      "instagram": "PUBLISHED",
+      "tiktok": "PUBLISHED (manual)",
+      "youtube": "PUBLISHED (warning: could not upload thumbnail)",
+      "instagram_url": "https://www.instagram.com/reel/DfsYubMtGlY/",
+      "youtube_url": "https://www.youtube.com/shorts/ldA2z1Jp2Hc"
+    }
   }
 ]
