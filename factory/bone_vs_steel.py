@@ -167,9 +167,9 @@ def _(img, T, t, s, e):
     x0 = 660 if CAT else CX
     bob = 5 * math.sin(T * 2.2)
     k = 1.0 if T < 0.3 else 1.0
-    item(img, "femur", x0 - 130, 950 + bob, 270, rot=-8)
-    item(img, "steel_bar", x0 + 130, 950 - bob, 270, rot=8)
-    R.put_text(img, R.sprite("VS", "number", RED_T), x0, 1130 + 4 * math.sin(T * 3), 1.0, "mm", text="VS")
+    item(img, "femur", x0 - 200, 960 + bob, 320, rot=-8)
+    item(img, "steel_bar", x0 + 100, 960 - bob, 320, rot=8)
+    R.put_text(img, R.sprite("VS", "number", RED_T), x0 - 50, 1225 + 4 * math.sin(T * 3), 1.0, "mm", text="VS")
     R.chrome(img, T)
     V.hook_text(img, T, e, "Bone vs steel:", "which is stronger?", "Which")
     if not CAT: R.hook_mascot(img, T, 0.6, e)
@@ -181,7 +181,7 @@ def _(img, T, t, s, e):
     a = win(T, s, e)
     t3 = wt("three", s)
     for i, (n, text, ic, y) in enumerate(ROWS):
-        k = clamp((T - (s + 0.15 + 0.85 * i)) / 0.3)
+        k = clamp((T - (s + 0.15 + 0.85 * i)) / 0.12)
         if k <= 0.003: continue
         dx = 40 * (1 - eo(k))
         def fn(d, P, s_, y=y, dx=dx):
@@ -222,15 +222,15 @@ V.sounds("r1t", [(rel("r1t", "four"), "whoosh", 0.6), (rel("r1t", "four") + 1.2,
 def _(img, T, t, s, e):
     a = win(T, s, e)
     R.put_text(img, R.sprite("MPa", "number", RED_T), 540, 850, a, "mm", text="MPa")
-    tf = wt("force", s)
-    k = clamp((T - tf + 0.1) / 0.5)
+    tf = s + 0.1
+    k = clamp((T - tf) / 0.12)
     def fn(d, P, s_):
         d.rectangle([P(400, 1120), P(680, 1260)], fill=(236, 226, 196), outline=INK_T, width=int(6 * s_))
         for i in range(1, 7): d.line([P(400 + 40 * i, 1120), P(400 + 40 * i, 1260)], fill=(200, 188, 150), width=int(3 * s_))
     aa(img, (390, 1110, 690, 1270), fn, a)
     arrow(img, 540, 960 + 10 * math.sin(T * 4), 1112, a * k, w=26)
     lab(img, "force", 985, RED_T, a * k, x=730)
-    lab(img, "area", 1285, INK_T, a * on(T, "area", s, e), x=540)
+    lab(img, "area", 1285, INK_T, a * clamp((T - s - 0.5) / 0.12), x=540)
     R.chrome(img, T)
     title(img, T, s, e, "Force per area")
 V.sounds("r1u", [(0.1, "pop", 0.6), (rel("r1u", "force"), "tap", 0.6), (rel("r1u", "area"), "click", 0.6)])
@@ -238,7 +238,7 @@ V.sounds("r1u", [(0.1, "pop", 0.6), (rel("r1u", "force"), "tap", 0.6), (rel("r1u
 @V.scene("r1b")
 def _(img, T, t, s, e):
     a = win(T, s, e)
-    tb = wt("breaks", s); tp = wt("Point", s)
+    tb = wt("breaks", s); tp = min(wt("Point", s), e - 1.9)
     chart1(img, 1.0, eio((T - tb + 0.3) / 1.0), a)
     chip(img, "Steel +1", 700, 800, clamp((T - tp - 0.1) / 0.3), (176, 100, 40))
     R.chrome(img, T)
@@ -292,10 +292,10 @@ V.sounds("r2b", [(0.1, "tap", 0.6), (rel("r2b", "divide"), "whoosh", 0.6), (rel(
 @V.scene("r2c")
 def _(img, T, t, s, e):
     a = win(T, s, e)
-    tp = wt("Point", s)
+    tp = min(wt("Point", s), e - 1.9)
     chart2(img, 1.0, a)
     lab(img, "Bone: matches or beats", 765, INK_T, a * on(T, "matches", s, e), x=540)
-    chip(img, "Bone +1", 540, 840, clamp((T - tp - 0.1) / 0.3), (60, 130, 90))
+    chip(img, "Bone +1", 330, 930, clamp((T - tp - 0.1) / 0.3), (60, 130, 90))
     R.chrome(img, T)
     title(img, T, s, e, "Gram for gram")
     return R.punch(img, T, tp + 0.1, amt=0.05)
@@ -349,7 +349,7 @@ V.sounds("r3b", [(0.1, "whoosh", 0.6), (rel("r3b", "starts"), "sparkle", 0.7)])
 @V.scene("r3c")
 def _(img, T, t, s, e):
     a = win(T, s, e)
-    tsoft, thard, tre = wt("soft", s), wt("hard", s), wt("months", s)
+    tsoft, thard, tre = max(s + 0.3, min(wt("soft", s), e - 5.0)), max(s + 1.2, min(wt("hard", s), e - 3.4)), max(s + 2.1, min(wt("months", s), e - 1.9))
     xs = (200, 480, 760)
     ks = [clamp((T - (tsoft - 0.1)) / 0.3), clamp((T - (thard - 0.1)) / 0.3), clamp((T - (tre - 0.1)) / 0.3)]
     for i, x in enumerate(xs):
@@ -386,10 +386,10 @@ def _(img, T, t, s, e):
         R.put_text(img, R.sprite(n, "label", INK_T), 100, y + 2, a * k, "mm", text=n)
         lab(img, text, y - 28, INK_T, a * k, x=330)
         chip(img, who, 680, y, a * k, col)
-    tf = wt("Final", s)
+    tf = min(wt("Final", s), e - 2.2)
     kf = clamp((T - tf) / 0.35)
     chip(img, "Bone 2", 330, 1290, a * kf, (60, 130, 90))
-    chip(img, "Steel 1", 700, 1290, a * clamp((T - wt("steel", tf) + 0.1) / 0.35), (176, 100, 40))
+    chip(img, "Steel 1", 700, 1290, a * clamp((T - min(wt("steel", tf), e - 1.8) + 0.1) / 0.35), (176, 100, 40))
     R.chrome(img, T)
     title(img, T, s, e, "Final score")
     return R.punch(img, T, tf + 0.05, amt=0.05)
@@ -414,7 +414,7 @@ def _(img, T, t, s, e):
     kh = clamp((T - tf + 0.1) / 0.3)
     item(img, "bone_healed", 700, 1050, 280, a)
     lab(img, "Light", 1250, INK_T, a * on(T, "light", s, e, need=1.5), x=290)
-    lab(img, "Fixes itself", 1250, GREEN_T, a * on(T, "fixing", s, e, need=1.2), x=690)
+    lab(img, "Fixes itself", 1250, GREEN_T, a * on(T, "fixing", s, e, need=1.9), x=690)
     R.chrome(img, T)
     title(img, T, s, e, "Bone's tricks")
 V.sounds("bw", [(0.1, "whoosh", 0.6), (rel("bw", "light"), "pop", 0.6), (rel("bw", "fixing"), "sparkle", 0.7)])
