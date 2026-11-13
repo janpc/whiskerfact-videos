@@ -17,6 +17,7 @@ import brand as B
 import reel_lib as RLX
 import style as ST
 import library as LIB
+import cover as cover_mod
 from reel_lib import Reel, clamp, eo, eio, lerp, win, W, H
 from voice_reel import VoiceReel
 
@@ -164,15 +165,11 @@ def micro(img, cx, cy, r, T, a=1.0, kfib=1.0, kcry=1.0):
 # =====================================================================  ESCENAS
 @V.scene("hook")
 def _(img, T, t, s, e):
-    x0 = 660 if CAT else CX
     bob = 5 * math.sin(T * 2.2)
-    k = 1.0 if T < 0.3 else 1.0
-    item(img, "femur", x0 - 200, 960 + bob, 320, rot=-8)
-    item(img, "steel_bar", x0 + 100, 960 - bob, 320, rot=8)
-    R.put_text(img, R.sprite("VS", "number", RED_T), x0 - 50, 1225 + 4 * math.sin(T * 3), 1.0, "mm", text="VS")
-    R.chrome(img, T)
-    V.hook_text(img, T, e, "Bone vs steel:", "which is stronger?", "Which")
-    if not CAT: R.hook_mascot(img, T, 0.6, e)
+    item(img, "femur", 570, 1030 + bob, 340, rot=-8)
+    item(img, "steel_bar", 810, 1060 - bob, 340, rot=8)
+    cover_mod.draw_header(img, "body")
+    cover_mod.draw_title(img, "Bone vs", "steel", "Which is stronger?", a=clamp((e - T) / B.EXIT))
 V.sounds("hook", [(0.0, "whoosh", 0.7), (0.3, "pop", 0.6), (rel("hook", "Which"), "tap", 0.7)])
 
 ROWS = [("1", "Strength", "dumbbell", 880), ("2", "Weight", "weight_block", 1075), ("3", "Repair", "bone_healed", 1270)]
@@ -448,7 +445,7 @@ V.sounds("wrap", [(0.05, "whoosh", 0.7), (rel("wrap", "alive"), "sparkle", 0.8)]
 
 # ---------- fondos ----------
 def card_bg(img, T, t): ST.card(img, CARD)
-V.backdrop("hook")(lambda img, T, t: ST.landscape(img, T, sky_kind="dawn", terrain="city", seed=11))
+V.backdrop("hook")(lambda img, T, t: cover_mod.draw_bg(img, "body", 0.25 * T * 0.2))
 for n in ("rules", "r1", "r1t", "r1u", "r1b", "r2", "r2b", "r2c", "r3", "r3b", "r3c", "score", "bw", "comp"):
     V.backdrop(n)(card_bg)
 V.backdrop("twist")(lambda img, T, t: ST.landscape(img, T, sky_kind="dusk", terrain="hills", seed=12))
