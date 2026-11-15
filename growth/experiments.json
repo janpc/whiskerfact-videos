@@ -71,9 +71,9 @@
  "queue": [
   {
    "test": "time_slots",
-   "variant": "14:00",
+   "variant": "00:30",
    "control": "20:30",
-   "why": "does the 8 am NY slot beat 2:30 pm NY"
+   "why": "does the 6:30 pm NY slot beat 2:30 pm NY (20:30). Moved to the front of the queue on 2026-11-15; opens only after B2-length is closed, to keep one variable per batch. TikTok is automatic now, so a night time costs nothing"
   },
   {
    "test": "caption_style",
@@ -95,7 +95,8 @@
    "14:00": "8 am NY, morning commute",
    "17:30": "11:30 am NY, before lunch",
    "20:30": "2:30 pm NY, afternoon",
-   "23:30": "5:30 pm NY, after work"
+   "23:30": "5:30 pm NY, after work",
+   "00:30": "6:30 pm NY (3:30 pm LA), the US evening window; added 15/11/2026 because Instagram/TikTok engagement for US audiences peaks in the evening and 20:30 Madrid is 2:30 pm NY"
   },
   "control": "20:30",
   "rule": "fixed: always use `control`. testing: use the option the week plan assigns in `experiment`; if the plan has no entry for today, alternate (the option with fewer videos in the log). decided: `control` is the winner and stays fixed."

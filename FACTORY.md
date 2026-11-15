@@ -40,6 +40,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Use WebSearch for (a). Choose the highest total. Add the other 4 to `growth/topics.md` with their scores for later nights.
 - Avoid questions where the top results are debunks we can't verify, and topics that are a single trivia number with no "why".
 - **Hook:** at most 10 words. **Both lines are fully on screen from frame 0** (the cover template draws them, see step 6), because viewers decide in the first second. The question never appears late, and something in the drawing moves within the first 0.3 s. The engine adds an entry punch at frame 0. **The hook scene IS the channel cover (decided 13/11/2026, template A «rays»):** build it with `factory/cover.py` (`draw_bg`, `draw_header`, `draw_title`), see step 6. The first frame is also the cover, so it must read well on its own. Use the hook style that `growth/experiments.json` assigns today (see step 8).
+  - **First-second rule (15/11/2026, after the analysis: Instagram reach depends on the 3-second skip rate; reels with 44%+ skips stayed under ~340 views, those under 42% reached 1,300+):** the most surprising image or number of the video is visible and moving in the first second, not just the title. No title-only card. **Silent test:** look at the first 3 s of the contact sheet with no sound; if the viewer cannot tell what is strange or what the question is, redo the opening scene.
 
 ## 3. Verify
 - Every fact in the script must be confirmed by **two independent, reliable sources**, for example a university, a museum, NASA or NOAA, a peer-reviewed review, or Britannica.
@@ -67,6 +68,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - `short` (test B2-length): **115–150 words (45–58 s), hard cap 150 words**. The renderer refuses under 42 s and QA warns above 62 s. One idea, no side stories: keep the hook, the surprise, the payoff and the closing line, and drop the second example. **Run every render, QA and `reel.py` command with `REEL_LENGTH=short`** (for example `REEL_LENGTH=short python3 <slug>.py render`), otherwise the `standard` limits apply and the render fails. Record `variants.length` (`standard` or `short`) and `variants.experiment`.
   - Over 1 minute only matters for TikTok Creator Rewards (10,000 followers and 100,000 views in 30 days), which is far away for now; growth comes first.
   - **Word-count gate (added 6/11/2026, before paying for the voice):** run `wc -w factory/voice/<slug>_script.txt`. The final reel lasts about `words / 2.77 + 4.2` seconds after `tighten.py` (226 words gave 86.2 s, over the QA warning; wifi_bands with 223 words gave 85.6 s). If the script has more words than the cap of today's profile (210 standard, 150 short), cut it until it passes. Cutting words is free; regenerating the voice costs about 1,300 credits. The raw ElevenLabs take is about 12% longer than the final audio, so a raw take of 90 s is normal and not a reason to regenerate.
+- **Share moment (decided 15/11/2026; Instagram weights DM sends heavily for reaching new people):** **at most ONE share ask per video, counting the script, the on-screen text and the caption together**, and only when the video has a fact that is truly curious or controversial (both sources agree, and a normal person would want to show it to someone). Never on an ordinary sentence and never twice. Mark that fact `shareable: yes` in the claims file; with no such fact the video has no share ask at all. Form: right after that fact, one short line of at most 8 words in the cat's voice, for example "Send this to someone who still believes it." Never invent drama to qualify: the fact must hold up on its own. Record `variants.share_ask` as `script`, `caption` or `none`.
 - **Retention rules (every format):** a new visual or idea at least every 3–4 s; no scene longer than ~8 s without a change; tease the payoff early ("the answer is weirder than you think") and pay it off late; cut any sentence that only repeats or warms up.
 - **Language:** plain English that is not childish. Name each complex term, then explain it in one sentence.
 - **Structure:** use **the structure of today's format in `FORMATS.md`**, not one fixed template. `brand.STRUCTURE` is only the timing guide for `explainer`.
@@ -203,9 +205,10 @@ All public-facing content is in **English**. All design rules live in `factory/b
   3. a call to action, rotating these (pick the one used least in the log, and record it as `variants.cta`):
      - "🐱 Follow for more curious facts."
      - "💾 Save this for your next trivia night."
-     - "👇 Tag someone who needs to know this.";
+     - "👇 Tag someone who needs to know this."
+     **One share ask per video in total (see the share moment in step 4):** if the script already has one, the caption uses Follow or Save; "Tag someone" only goes in the caption when the video has a `shareable` fact and the script has no share line;
   4. one short sources line naming the institutions, for example "Sources: Harvard, Cell (2020)". No URLs;
-  5. 3–5 hashtags: `#mrwhiskerfact`, the category, the topic and `#didyouknow`. Add the event hashtag on special dates.
+  5. 3–5 hashtags in English (15/11/2026: more specific than before): `#mrwhiskerfact`, the topic, **one niche tag for the category** (animals `#animalfacts`, science/space `#sciencefacts`, history `#historyfacts`, tech `#techfacts`, body `#humanbody`) and `#didyouknow` or `#funfacts`. Add the event hashtag on special dates.
   Keep it under 400 characters.
 - **TikTok:** `tiktokData`:
   - `privacyOption PUBLIC_TO_EVERYONE`
@@ -240,7 +243,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - the date, category, slug, title, hook, sources (URLs), both Metricool uuids and the scheduled time
   - `duration_s`
   - `event` (themed reels only)
-  - `variants`, as in `{"time_slot": "20:30", "hook_style": "statement", "caption_style": "teaser"}`. Include `format`, `personality`, `cta`, `closing`, `tiktok_mode`, `look` and `experiment` too. The weekly review needs these to compare results.
+  - `variants`, as in `{"time_slot": "20:30", "hook_style": "statement", "caption_style": "teaser"}`. Include `format`, `personality`, `cta`, `closing`, `tiktok_mode`, `look`, `share_ask` and `experiment` too. Reels made from 2026-11-16 also carry `"quality_changes": ["first_second_rule", "share_rule", "niche_hashtags"]` (15/11/2026, applied in the middle of batch B2-length as quality improvements that are not measured as a test; the review must mention them when it explains a result). The weekly review needs these to compare results.
 - Delete `videos/*.mp4` older than 7 days, then commit and push.
 
 ## 10. Notify

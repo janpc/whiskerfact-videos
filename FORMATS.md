@@ -23,8 +23,8 @@ Pick one type per reel (FACTORY.md step 4) and write the line fresh for the topi
 | Type | Example |
 |---|---|
 | **bonus** | one extra, verified mini-fact: "Bonus: dolphins can do this for up to 15 days." |
-| **callback** | turn the hook around: "So, open eye, sleeping brain. Half asleep, fully awesome." |
-| **ask** | a question for the comments, tied to the topic: "Would you rather sleep like a dolphin? Tell me below." |
+| **callback** | turn the hook around: "So, open eye, sleeping brain. Half asleep, fully awesome." Use it to make the end flow into the first frame (loop, 15/11/2026): reuse the hook's own key words so a viewer who lets it replay hears the question again. Rewatches count for TikTok and Shorts |
+| **ask** | a question for the comments, tied to the topic: "Would you rather sleep like a dolphin? Tell me below." (a comment ask, not a share ask: it does not count toward the one share ask per video) |
 | **cat_take** | Mr. Whiskerfact's own light opinion (PERSONALITY.md): "Honestly? Best sleeping trick in the ocean." |
 | **real_life** | where the viewer will meet it: "You'll never look at a bat the same way on Halloween." |
 | **mind_blown** | a scale or comparison that lands the point: "That's hotter than a pizza oven. Every single day." |
