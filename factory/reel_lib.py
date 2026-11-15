@@ -206,7 +206,7 @@ class Reel:
     # ---------- render ----------
     def render(self, scenes, frame_at, name, outro_at):
         total = outro_at + B.MASCOT["outro"]["dur"]
-        if total < B.MIN_DURATION:   # TikTok solo paga vídeos de más de un minuto: no se renderiza nada más corto
+        if total < B.MIN_DURATION:   # mínimo según el perfil REEL_LENGTH (standard 61 s, short 42 s)
             raise SystemExit(f"{name}: dura {total:.1f} s, mínimo {B.MIN_DURATION} s. Alarga el guion.")
         out_dir = os.path.join(HERE, "out", name); os.makedirs(out_dir, exist_ok=True)
         jobs =list(scenes) + [("outro", (outro_at, outro_at + B.MASCOT["outro"]["dur"]))]

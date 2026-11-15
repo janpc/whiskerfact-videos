@@ -7,10 +7,10 @@ It never changes the brand rules (`factory/brand.py`) or the run book's quality 
 - Clone `janpc/whiskerfact-videos` and read `log/published.json`, `growth/experiments.json` and `growth/insights.md`.
 - Use the Metricool connector `getAnalyticsDataByMetrics` with brandId `7740980`, from the channel start (2026-10-29) to today. Request these metrics:
   - **TikTok:** `TKPO02` (date and time), `TKPO05` (description), `TKPO07` views, `TKPO08` likes, `TKPO09` comments, `TKPO10` shares, `TKPO13` full-watch rate, `TKPO15` average watch time, `TKPO16` For You share.
-  - **Instagram Reels:** `IGRE02`, `IGRE03`, `IGRE23` views, `IGRE11` reach, `IGRE24` average watch time, `IGRE27` retention, `IGRE28` 3-second view rate, `IGRE12` saves, `IGRE21` shares.
+  - **Instagram Reels:** `IGRE02`, `IGRE03`, `IGRE23` views, `IGRE11` reach, `IGRE24` average watch time, `IGRE27` retention, `IGRE28` 3-second view rate, **`IGRE30` 3-second skip rate (key: below ~42% the reel reaches 1,300+ views, above ~44% it stays under ~340)**, `IGRE12` saves, `IGRE21` shares. Note: `IGRE27` and `IGRE26` come back empty; compute watch % as `IGRE24` ÷ video length from the log.
   - **YouTube:** `YTVV02`, `YTVV17` title, `YTVV06` views, `YTVV08` average view duration, `YTVV09` likes, `YTVV11` comments.
   - **Follower growth:** if available, list the evolution metrics with `getAnalyticsAvailableMetrics` and pick follower counts.
-- **TikTok mode (manual vs api):** compare views of reels with `variants.tiktok_mode` `manual` against `api`. If API posts get views comparable to manual ones in 2+ tests, suggest to the owner going back to automatic TikTok.
+- **TikTok mode:** since 2026-11-15 every TikTok post is published by API (`api`). The old side test is closed (the API is as good as manual: 265 vs 250-310 views). Just warn the owner if an `api` reel gets under 50 TikTok views at 7 days while the others get hundreds.
 - **Audience country:** Metricool doesn't give TikTok viewer countries. Ask the owner in the notification, once a month, for the top viewer countries from TikTok Studio, and note them in `growth/insights.md`. Use Instagram/YouTube country data if Metricool lists it. Goal: check that an English channel from a Spanish account reaches English-speaking viewers.
 - Match each row to its log entry by publish time, title or description.
 - **Measurement windows** (`protocol.windows` in `experiments.json`): under 48 h old, ignore. From 48 h to 7 days old, record an **early read** (never decisive; only for the notification). At 7 days or more, record the **final figures**, which are the only ones used for verdicts. Store `age_h` next to every figure, because Metricool totals are cumulative.
@@ -23,10 +23,10 @@ It never changes the brand rules (`factory/brand.py`) or the run book's quality 
   - full-watch rate, or retention on Instagram
   - (likes + comments + shares + saves) ÷ views, and shares per 100 views
 - **Main score = watch %**, averaged over the networks the video went to. Views tell us how far it went, but they depend on algorithm luck, so they are reported and never decide a test. Because longer videos tend to have a lower watch %, always write the video length next to the figure.
-- **TikTok mode** (`variants.tiktok_mode`) is a separate side test: compare it on TikTok views only. TikTok views of `api` posts must not drag the batch result down; the main score is watch %, not views.
+- **TikTok mode** (`variants.tiktok_mode`) is no longer a test (all `api` from 2026-11-15). The main score is watch %, not views.
 
 ## 3. Learn
-`growth/experiments.json` holds one running `batch` (one variable, 3 videos) and the `protocol` with the thresholds. Never change the thresholds from here.
+`growth/experiments.json` holds one running `batch` (one variable, 3 videos) and the `protocol` with the thresholds. Never change the thresholds from here. **Since 2026-11-15 there can also be a `next_batch`** (today B2-length): measure and close each batch on its own, with the success rule written inside it (B2-length does NOT use watch % as its deciding metric: it uses Instagram views and 3-second skip rate, see its `measurement` and `success`). When `batch` is closed, move it to `history` and put `next_batch` in its place as `batch`.
 - **Baseline:** median watch % of the last 5 videos with role `base` or `control` (using final figures).
 - **Per video of the batch** (role `variant`, final figures only): compute its watch % versus the baseline, as a percentage difference.
 - **Close the batch** only when all 3 videos have final figures:

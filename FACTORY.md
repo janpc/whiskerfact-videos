@@ -62,8 +62,11 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Commit the claims file with the reel.
 
 ## 4. Script
-- **Length:** set by the content and the format, but **retention comes first**: the shortest script that tells the whole story wins. Usually 160–190 words (63–75 s). **Hard cap: 210 words.** Always **over 1 minute**: the renderer refuses to render under 61 s, and QA warns above 85 s.
-  - **Word-count gate (added 6/11/2026, before paying for the voice):** run `wc -w factory/voice/<slug>_script.txt`. The final reel lasts about `words / 2.77 + 4.2` seconds after `tighten.py` (226 words gave 86.2 s, over the QA warning; wifi_bands with 223 words gave 85.6 s). If the script has more than 210 words, cut it until it passes. Cutting words is free; regenerating the voice costs about 1,300 credits. The raw ElevenLabs take is about 12% longer than the final audio, so a raw take of 90 s is normal and not a reason to regenerate.
+- **Length (profile chosen by the `length` test, 15/11/2026):** read today's option in `growth/experiments.json` (`length`, assigned by the week plan; no entry means the control `standard`). **Retention comes first** in both profiles: the shortest script that tells the whole story wins.
+  - `standard`: usually 160–190 words (63–75 s), **hard cap 210 words**. The renderer refuses under 61 s and QA warns above 85 s.
+  - `short` (test B2-length): **115–150 words (45–58 s), hard cap 150 words**. The renderer refuses under 42 s and QA warns above 62 s. One idea, no side stories: keep the hook, the surprise, the payoff and the closing line, and drop the second example. **Run every render, QA and `reel.py` command with `REEL_LENGTH=short`** (for example `REEL_LENGTH=short python3 <slug>.py render`), otherwise the `standard` limits apply and the render fails. Record `variants.length` (`standard` or `short`) and `variants.experiment`.
+  - Over 1 minute only matters for TikTok Creator Rewards (10,000 followers and 100,000 views in 30 days), which is far away for now; growth comes first.
+  - **Word-count gate (added 6/11/2026, before paying for the voice):** run `wc -w factory/voice/<slug>_script.txt`. The final reel lasts about `words / 2.77 + 4.2` seconds after `tighten.py` (226 words gave 86.2 s, over the QA warning; wifi_bands with 223 words gave 85.6 s). If the script has more words than the cap of today's profile (210 standard, 150 short), cut it until it passes. Cutting words is free; regenerating the voice costs about 1,300 credits. The raw ElevenLabs take is about 12% longer than the final audio, so a raw take of 90 s is normal and not a reason to regenerate.
 - **Retention rules (every format):** a new visual or idea at least every 3–4 s; no scene longer than ~8 s without a change; tease the payoff early ("the answer is weirder than you think") and pay it off late; cut any sentence that only repeats or warms up.
 - **Language:** plain English that is not childish. Name each complex term, then explain it in one sentence.
 - **Structure:** use **the structure of today's format in `FORMATS.md`**, not one fixed template. `brand.STRUCTURE` is only the timing guide for `explainer`.
@@ -182,15 +185,13 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Check that `https://raw.githubusercontent.com/janpc/whiskerfact-videos/main/videos/<file>` returns 200 for both the mp4 and the cover png.
 
 ## 8. Publish (Metricool connector)
-- Call `createScheduledPost` with `blogId 7740980` and timezone `Europe/Madrid`. Create **two posts** with the same video, text and time (decision of 2/11/2026: TikTok videos posted by the API got 0 views, the first one posted by hand did get views):
+- Call `createScheduledPost` with `blogId 7740980` and timezone `Europe/Madrid`. Create **two posts** with the same video, text and time (the TikTok post stays separate so a failure on one side does not block the other):
   1. **Instagram + YouTube:** one post with providers instagram and youtube, `autoPublish: true`, and `videoThumbnailUrl` = the raw.githubusercontent URL of the `_cover.png` (TikTok personal accounts ignore thumbnails; the first frame is already the cover there).
-  2. **TikTok:** its own post with provider tiktok only. Choose the mode and record it as `variants.tiktok_mode`:
-     - `manual` (default): `autoPublish: false`. Metricool sends the owner a push notification at the scheduled time and she publishes it by hand from the Metricool app.
-     - `api` (test): `autoPublish: true`. Use it when the last 3 log entries with a `tiktok_mode` are all `manual` (so about 1 in every 4 reels), to check from time to time whether API posts get views now.
+  2. **TikTok:** its own post with provider tiktok only, **always `autoPublish: true`** (decision of 15/11/2026; before that it was manual, since 2/11, because the first API posts got 0 views; mammoth_quiz by API on 11/11 got 265 views, the same as the manual ones). Record `variants.tiktok_mode: "api"`. If the owner asks to go back to manual, use `autoPublish: false` and `tiktok_mode: "manual"` (Metricool then sends her a push notification and she publishes it by hand).
   - Store both uuids in the log: `metricool_uuid` (Instagram + YouTube) and `metricool_uuid_tiktok`.
 - **Immediately after both posts are created**, append the log entry with everything known so far (step 9 fields), commit and push. Then go on to 8b. Step 9 only completes it.
 - **Experiments (one variable per batch):** read `growth/experiments.json` and choose every option before writing the script, because the hook style changes the script.
-  - A test with status `fixed` always uses its `control` option. Do not rotate it.
+  - A test with status `fixed` always uses its `control` option. Do not rotate it. (From 15/11/2026 the `length` test is `testing` and `hook_style` is `fixed`; the active batch is `next_batch` B2-length, see below.)
   - The test with status `testing` uses the option in today's `week_plan.json` `experiment` field. If the plan has no entry for today, alternate: use the option with fewer videos in `log/published.json` (the `batch.control` and `batch.variant` options only), and use role `base` when today is a themed special-date reel.
   - `format` is `varied` on purpose (not an experiment): follow its rule.
   - Record `variants.experiment` as `{"batch": ..., "test": ..., "option": ..., "role": "variant"|"control"|"base"}`.

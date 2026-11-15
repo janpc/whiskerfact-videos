@@ -8,9 +8,18 @@ nunca escritos a mano en la escena. Cambiar algo aquí lo cambia en todos.
 W, H, FPS = 1080, 1920, 30
 ENCODE = dict(codec="libx264", preset="veryfast", crf=20, pix_fmt="yuv420p")
 DURATION = (62, 85)          # segundos (2/11/2026): la duración la pide el contenido, pero lo más corto que lo cuente entero gana. Normal 63-75; >80 solo si cada escena se gana su sitio
-MAX_DURATION_WARN = 85       # QA avisa por encima: retención
-MIN_DURATION = 61            # límite duro con cierre incluido; el render se niega por debajo
-SCRIPT_WORDS = (160, 230)    # palabras del guion (con frase de cierre): con tighten.py Brad va a ~170 ppm -> 65-75 s con el cierre
+# Perfil de duración (15/11/2026, tanda B2-length). Se elige con la variable de entorno REEL_LENGTH=short|standard
+# (por defecto standard). Los tres procesos que miran la duración (render, QA, puerta de palabras) leen el perfil de aquí.
+import os as _os
+LENGTH_PROFILES = {
+    "standard": dict(min=61, warn=85, words=(160, 210)),   # 63-75 s: lo de siempre
+    "short":    dict(min=42, warn=62, words=(115, 150)),   # 45-58 s: prueba para retener más; duración ≈ palabras/2,77 + 4,2 s
+}
+LENGTH = _os.environ.get("REEL_LENGTH", "standard")
+_P = LENGTH_PROFILES[LENGTH]
+MAX_DURATION_WARN = _P["warn"]   # QA avisa por encima: retención
+MIN_DURATION = _P["min"]         # límite duro con cierre incluido; el render se niega por debajo
+SCRIPT_WORDS = _P["words"]       # palabras del guion (con frase de cierre)
 
 # ---------- zonas (px, eje y) ----------
 # Instagram/TikTok tapan arriba y abajo: nada importante fuera de SAFE.
@@ -164,8 +173,8 @@ PUBLISH = dict(
     when="best_time",
     frequency=dict(daily_first_days=True, then_every_days=2),   # uno al día al arrancar, luego cada dos días                                 # getBestTimeToPostByNetwork, el mismo día del render
     tiktok=dict(privacyOption="PUBLIC_TO_EVERYONE", autoAddMusic=False,
-                mode="manual",            # post aparte con autoPublish=False: aviso al móvil y ella publica a mano (2/11/2026)
-                api_test_every=4),        # 1 de cada 4 reels se publica por API para comprobar si ya tiene visitas
+                mode="api",               # 15/11/2026: TikTok vuelve a publicarse solo (autoPublish=True). Motivo: mammoth_quiz por API tuvo 265 visitas, igual que los manuales (250-310)
+                ),
     youtube=dict(type="short", madeForKids=False, category="EDUCATION", privacy="public"),
     instagram=dict(type="REEL"),
     caption="hook + 1 línea + 3-5 hashtags (#mrwhiskerfact + categoría + tema)",

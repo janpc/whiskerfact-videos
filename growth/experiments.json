@@ -27,7 +27,7 @@
    "discard": "status decided, the control stays",
    "repeat": "same test, a new batch id"
   },
-  "side_experiment": "`variants.tiktok_mode` (manual vs api) keeps running on its own rule (about 1 reel in 4) and is analysed on TikTok only, by REVIEW.md. It is not a variable of the batch."
+  "side_experiment": "none. `variants.tiktok_mode` is `api` for every reel since 2026-11-15 (closed: API posts get the same views as manual ones)."
  },
  "batch": {
   "id": "B1-hook-style",
@@ -101,13 +101,14 @@
   "rule": "fixed: always use `control`. testing: use the option the week plan assigns in `experiment`; if the plan has no entry for today, alternate (the option with fewer videos in the log). decided: `control` is the winner and stays fixed."
  },
  "hook_style": {
-  "status": "testing",
+  "status": "fixed",
   "options": {
    "question": "the hook is a direct question ('Why do cats purr?')",
    "statement": "a surprising statement, then the question ('Slaves didn't build the pyramids. So who did?')"
   },
   "control": "question",
-  "rule": "fixed: always use `control`. testing: use the option the week plan assigns in `experiment`; if the plan has no entry for today, alternate (the option with fewer videos in the log). decided: `control` is the winner and stays fixed."
+  "rule": "fixed: always use `control`. testing: use the option the week plan assigns in `experiment`; if the plan has no entry for today, alternate (the option with fewer videos in the log). decided: `control` is the winner and stays fixed.",
+  "note": "15/11/2026: B1 has all 3 variant videos published (it only waits for 7-day figures), so new videos use the control (question) while B2-length runs. The review sets `decided` when it closes B1."
  },
  "caption_style": {
   "status": "fixed",
@@ -138,5 +139,46 @@
   },
   "rule": "Not an experiment: the formats vary on purpose so the channel does not look like a mass-produced series. Use the format with the fewest reels in the log (ties: the one used longest ago). Never the same format twice in a row. Themed (special-date) reels may use any format. The review records the format of every video and mentions it if it clearly explains a result."
  },
- "learned": []
+ "learned": [],
+ "length": {
+  "status": "testing",
+  "options": {
+   "standard": "script 160-210 words, final video 63-75 s (QA warns above 85 s, refuses under 61 s). Profile `standard` in factory/brand.py",
+   "short": "script 115-150 words, final video 45-58 s (QA warns above 62 s, refuses under 42 s). Profile `short`; run render, QA and the word gate with the environment variable REEL_LENGTH=short"
+  },
+  "control": "standard",
+  "rule": "testing: use the option the week plan assigns in `experiment`; if the plan has no entry for today use the control. Shorter videos are NOT a way to skip the retention rules: the hook, the new-visual-every-3-4-seconds rule and the verification stay the same."
+ },
+ "next_batch": {
+  "id": "B2-length",
+  "status": "running",
+  "test": "length",
+  "variant": "short",
+  "control": "standard",
+  "opened": "2026-11-15",
+  "hypothesis": "Instagram's 3-second skip rate decides reach (10 videos, 29/10-13/11: skip 33-42% -> 1,270-2,500 views; skip 44-57% -> 140-340 views) and viewers watch about 25 s whatever the length (62 s: 41% watched; 79-86 s: 22-30%). A 45-58 s reel should hold a larger share of viewers and keep Instagram showing it. Hook style stays at the control (question) so length is the only variable.",
+  "measurement": {
+   "note": "watch_pct is reported next to the length but NOT decisive here: a shorter video has a higher watch % by construction. Decisive metrics are Instagram only (YouTube and TikTok retention are not available in Metricool), 7-day figures.",
+   "decisive": [
+    "ig_views (IGRE23)",
+    "ig_skip_rate_3s (IGRE30)"
+   ],
+   "also_report": [
+    "watch_pct and absolute average watch time in seconds",
+    "(likes+comments+shares+saves) per 100 views",
+    "shares and saves",
+    "tiktok_views"
+   ],
+   "baseline": "median ig_views and median ig_skip_rate_3s of the last 5 videos with role `base` or `control` (final figures). Reference before the test, 2026-11-15: skip 33-57%, views 139-2,518 (very noisy)."
+  },
+  "success": "in at least 2 of the 3 variant videos, ig_views is more than 20% above the baseline median AND ig_skip_rate_3s is lower than the baseline median",
+  "failure": "in at least 2 of the 3 variant videos, ig_views is more than 20% below the baseline median",
+  "inconclusive": "anything else: repeat once with a new batch id (B2b-length); if still inconclusive, keep `standard`.",
+  "adopt": "if it succeeds, `short` becomes the new control. Check then whether to go back above 1 minute: TikTok Creator Rewards only pays videos over 1 min and needs 10,000 followers and 100,000 views in 30 days.",
+  "slots": 3,
+  "videos": [
+   "2026-11-16"
+  ],
+  "note": "The night run of 2026-11-16 (00:35) is the first variant. The Monday plan of 2026-11-16 assigns the other two. B1-hook-style (key `batch`) stays only as a measurement: the review closes it when 2026-11-11 has 7-day figures, then moves `next_batch` into `batch`."
+ }
 }
