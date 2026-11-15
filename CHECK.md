@@ -5,13 +5,13 @@ This is a one-shot task that runs about 30 minutes after a reel's scheduled time
 1. Use the Metricool connector `getScheduledPosts` with these values:
    - brandId `7740980`, timezone `Europe/Madrid`, `extendedRange: true`
    - from 3 hours before to 1 hour after the scheduled time
-   - Find the post with the given Metricool **uuid** (Instagram + YouTube) and, if given, the TikTok post with its own uuid.
+   - Find the post with the given Metricool **uuid**. Since 15/11/2026 it is ONE post with the three providers (instagram, tiktok, youtube) and each provider has its own status; old entries (3/11 to 13/11) also have a separate TikTok post with its own uuid, to look up if given.
    - **TikTok is published automatically** (`autoPublish: true`, `tiktok_mode: api` since 2026-11-15), so a non-published status is a failure like on the other networks. Only for old log entries with `tiktok_mode: manual` (`autoPublish: false`) is it normal that the owner publishes by hand: report those as "TikTok: pendiente de publicar a mano (aviso de Metricool)" and, if a TikTok id already appears, as published.
 2. For each provider (instagram, tiktok, youtube), read `status` and `publicUrl`.
    - **TikTok link:** Metricool builds TikTok links with the display name, which gives a broken URL. Rebuild it as `https://www.tiktok.com/@mrwhiskerfact/video/<id>`, using the id from the provider's `id` field or the end of `publicUrl`.
    - **OK:** `PUBLISHED`, or TikTok `AWAITING_CONFIRMATION` with a published id.
    - **Still `PENDING`:** wait about 10 minutes and look once more. A second `PENDING` counts as a failure.
-   - **Failure:** anything else (`ERROR`, `FAILED`, missing).
+   - **Failure:** anything else (`ERROR`, `FAILED`, missing). **Exception:** a YouTube provider with status `ERROR` whose `detailedStatus` says it was published with warnings (for example "Could not upload video thumbnail") and that has a `publicUrl` is published: report it as OK with a note, not as a failure.
 3. Write the result into the reel's entry in `log/published.json`:
    - `"check": {"at": "<ISO time>", "instagram": "...", "tiktok": "...", "youtube": "..."}`
    - the public URLs

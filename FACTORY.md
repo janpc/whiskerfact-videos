@@ -187,11 +187,12 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - Check that `https://raw.githubusercontent.com/janpc/whiskerfact-videos/main/videos/<file>` returns 200 for both the mp4 and the cover png.
 
 ## 8. Publish (Metricool connector)
-- Call `createScheduledPost` with `blogId 7740980` and timezone `Europe/Madrid`. Create **two posts** with the same video, text and time (the TikTok post stays separate so a failure on one side does not block the other):
-  1. **Instagram + YouTube:** one post with providers instagram and youtube, `autoPublish: true`, and `videoThumbnailUrl` = the raw.githubusercontent URL of the `_cover.png` (TikTok personal accounts ignore thumbnails; the first frame is already the cover there).
-  2. **TikTok:** its own post with provider tiktok only, **always `autoPublish: true`** (decision of 15/11/2026; before that it was manual, since 2/11, because the first API posts got 0 views; mammoth_quiz by API on 11/11 got 265 views, the same as the manual ones). Record `variants.tiktok_mode: "api"`. If the owner asks to go back to manual, use `autoPublish: false` and `tiktok_mode: "manual"` (Metricool then sends her a push notification and she publishes it by hand).
-  - Store both uuids in the log: `metricool_uuid` (Instagram + YouTube) and `metricool_uuid_tiktok`.
-- **Immediately after both posts are created**, append the log entry with everything known so far (step 9 fields), commit and push. Then go on to 8b. Step 9 only completes it.
+- Call `createScheduledPost` with `blogId 7740980` and timezone `Europe/Madrid`. Create **ONE post** with the three providers (instagram, tiktok and youtube), `autoPublish: true`, and `videoThumbnailUrl` = the raw.githubusercontent URL of the `_cover.png` (TikTok personal accounts ignore thumbnails; the first frame is already the cover there).
+  - **Why one post (decided 15/11/2026):** the owner is on Metricool's free plan, which allows 20 publications a month, and Metricool counts **each post (publication group), not each network**: on 1/11 one post with three networks used 1, and from 3/11 on, with TikTok as a separate post, every reel used 2 (11 used by 15/11, 9 left). One post per reel uses 1. Each network still has its own status inside the post, so a TikTok error (like the 503 of 1/11) does not stop Instagram or YouTube.
+  - TikTok is published automatically too (decision of 15/11/2026; before that it was manual, since 2/11, because the first API posts got 0 views; mammoth_quiz by API on 11/11 got 265 views, the same as the manual ones). Record `variants.tiktok_mode: "api"`. **Never create a second post just for one network:** it would use another of the 20 publications. Going back to manual TikTok would need a separate post (`autoPublish: false`), so ask the owner first and tell her it costs one more publication per reel.
+  - Store the single uuid in the log as `metricool_uuid` (reels from 3/11 to 13/11 also have `metricool_uuid_tiktok`; new ones do not).
+  - **Monthly count:** before creating the post, call `getScheduledPosts` for the whole current month and count the posts (each post = 1). If 20 or more are already counted, do not schedule it: tell the owner in tonight's notification ("⚠️ Sin publicaciones disponibles en Metricool este mes") and stop.
+- **Immediately after the post is created**, append the log entry with everything known so far (step 9 fields), commit and push. Then go on to 8b. Step 9 only completes it.
 - **Experiments (one variable per batch):** read `growth/experiments.json` and choose every option before writing the script, because the hook style changes the script.
   - A test with status `fixed` always uses its `control` option. Do not rotate it. (From 15/11/2026 the `length` test is `testing` and `hook_style` is `fixed`; the active batch is `next_batch` B2-length, see below.)
   - The test with status `testing` uses the option in today's `week_plan.json` `experiment` field. If the plan has no entry for today, alternate: use the option with fewer videos in `log/published.json` (the `batch.control` and `batch.variant` options only), and use role `base` when today is a themed special-date reel.
@@ -235,12 +236,12 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - `name`: "Mr. Whiskerfact check <slug>"
   - `notifications`: `{"push": true}`
   - `initiation`: `"human_schedule"`
-  - prompt: "Clone janpc/whiskerfact-videos (attach it with push access if needed), read CHECK.md and follow it for the reel '<title>' (slug <slug>), Metricool uuid <uuid>, TikTok uuid <uuid_tiktok> (mode <tiktok_mode>), scheduled at <ISO time Europe/Madrid>. Never publish or edit posts."
+  - prompt: "Clone janpc/whiskerfact-videos (attach it with push access if needed), read CHECK.md and follow it for the reel '<title>' (slug <slug>), Metricool uuid <uuid> (one post for Instagram, TikTok and YouTube; mode <tiktok_mode>), scheduled at <ISO time Europe/Madrid>. Never publish or edit posts."
 - **Safety net:** at the start of every nightly run, look in the log for any published entry from the last 3 days without a `check` field and with its time already passed. Run CHECK.md for it inline and include the result in tonight's notification.
 
 ## 9. Log and clean-up
 - Complete the entry written in step 8 in `log/published.json` (append it now if it is somehow missing):
-  - the date, category, slug, title, hook, sources (URLs), both Metricool uuids and the scheduled time
+  - the date, category, slug, title, hook, sources (URLs), the Metricool uuid and the scheduled time
   - `duration_s`
   - `event` (themed reels only)
   - `variants`, as in `{"time_slot": "20:30", "hook_style": "statement", "caption_style": "teaser"}`. Include `format`, `personality`, `cta`, `closing`, `tiktok_mode`, `look`, `share_ask` and `experiment` too. Reels made from 2026-11-16 also carry `"quality_changes": ["first_second_rule", "share_rule", "niche_hashtags"]` (15/11/2026, applied in the middle of batch B2-length as quality improvements that are not measured as a test; the review must mention them when it explains a result). The weekly review needs these to compare results.
