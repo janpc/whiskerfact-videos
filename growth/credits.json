@@ -1,100 +1,107 @@
 {
-  "_about": "Libro de créditos de ElevenLabs (no hay herramienta para leer el saldo: se apunta cada gasto y la dueña corrige el saldo real cuando lo ve). Cada run: añade sus gastos aquí, recalcula 'estimated_balance' y avisa si queda menos de 'warn_below'.",
-  "plan": "Starter",
-  "monthly_allowance": 30000,
-  "balance_checked": {
-    "value": 26522,
-    "date": "2026-11-02",
-    "note": "saldo real que marca ElevenLabs (dicho por la dueña)"
+ "_about": "Libro de créditos de ElevenLabs (no hay herramienta para leer el saldo: se apunta cada gasto y la dueña corrige el saldo real cuando lo ve). Cada run: añade sus gastos aquí, recalcula 'estimated_balance' y avisa si queda menos de 'warn_below'.",
+ "plan": "Starter",
+ "monthly_allowance": 30000,
+ "balance_checked": {
+  "value": 26522,
+  "date": "2026-11-02",
+  "note": "saldo real que marca ElevenLabs (dicho por la dueña)"
+ },
+ "estimated_balance": 13571,
+ "warn_below": 8000,
+ "image_budget_month": 4000,
+ "costs_estimate": {
+  "voice_reel": 1100,
+  "music": 1284,
+  "image_text_only": 410,
+  "image_with_reference": 610,
+  "transcribe_fallback": 400
+ },
+ "spent": [
+  {
+   "date": "2026-10-31",
+   "slug": "library",
+   "what": "vampire_bat sheet 1 (gemini-3.1-flash-image + style ref)",
+   "credits": 609
   },
-  "estimated_balance": 14378,
-  "warn_below": 8000,
-  "image_budget_month": 4000,
-  "costs_estimate": {
-    "voice_reel": 1100,
-    "music": 1284,
-    "image_text_only": 410,
-    "image_with_reference": 610,
-    "transcribe_fallback": 400
+  {
+   "date": "2026-11-03",
+   "slug": "wifi_bands",
+   "what": "voice (eleven_v4, Brad, 1 take)",
+   "credits": 1321,
+   "note": "NO PUBLICADO: la descarga del mp3 falló (el proxy del sandbox bloquea elevenlabsusercontent.com, 403). La toma sigue en el flow Q4RWsQia6pHRGabsab5B, generation KEE4vEWzcHGssnpEKcJ1 (91,5 s, guion voice/wifi_bands_script.txt): reutilizarla en vez de pagar otra."
   },
-  "spent": [
-    {
-      "date": "2026-10-31",
-      "slug": "library",
-      "what": "vampire_bat sheet 1 (gemini-3.1-flash-image + style ref)",
-      "credits": 609
-    },
-    {
-      "date": "2026-11-03",
-      "slug": "wifi_bands",
-      "what": "voice (eleven_v4, Brad, 1 take)",
-      "credits": 1321,
-      "note": "NO PUBLICADO: la descarga del mp3 falló (el proxy del sandbox bloquea elevenlabsusercontent.com, 403). La toma sigue en el flow Q4RWsQia6pHRGabsab5B, generation KEE4vEWzcHGssnpEKcJ1 (91,5 s, guion voice/wifi_bands_script.txt): reutilizarla en vez de pagar otra."
-    },
-    {
-      "date": "2026-11-03",
-      "slug": "wifi_bands",
-      "what": "music (video-to-music, 1 generation)",
-      "credits": 1284,
-      "note": "generation 6cwFwa7U54uhLNPmCec2, flow Q4RWsQia6pHRGabsab5B. Cuesta ~1284, no 960: actualizar costs_estimate.music"
-    },
-    {
-      "date": "2026-11-06",
-      "slug": "earth_tunnel",
-      "what": "voice (eleven_v4, Brad, 1 take)",
-      "credits": 1345,
-      "note": "NO PUBLICADO: la descarga del mp3 falló otra vez (el proxy del sandbox responde 403 a elevenlabsusercontent.com; el estado de la generación solo da URLs de ese dominio, ninguna de storage.googleapis.com). La toma (92,9 s, guion voice/earth_tunnel_script.txt, datos ya verificados en voice/earth_tunnel_claims.md) sigue en el flow Q4RWsQia6pHRGabsab5B, node FukV4lUQXXjwrjKqlHxH, generation tcPGB7n8qvXXJEubtIio: reutilizarla en vez de pagar otra."
-    },
-    {
-      "date": "2026-11-06",
-      "slug": "earth_tunnel",
-      "what": "music (video-to-music, 1 generation)",
-      "credits": 1293,
-      "note": "generation FVG1gwnIQsmhvchy6vR1, flow Q4RWsQia6pHRGabsab5B, node MLvy6xBONsQcDPUGjgK7"
-    },
-    {
-      "date": "2026-11-08",
-      "slug": "cat_night_vision",
-      "what": "voice (eleven_v4, Brad, 1 take)",
-      "credits": 1125,
-      "note": "flow Q4RWsQia6pHRGabsab5B, node oc3R16fRoXd2kQG51tm4, session 8akmSFo768Lrh7fyKJ9t, generation ItzFGOAfNvaQtzBRh7T6"
-    },
-    {
-      "date": "2026-11-08",
-      "slug": "cat_night_vision",
-      "what": "music (video-to-music, 1 generation)",
-      "credits": 1099,
-      "note": "generation JmLog5HCPFLCxPUr7pNb, flow Q4RWsQia6pHRGabsab5B, node RKD7BIfS4HBQBu3GTPSo"
-    },
-    {
-      "date": "2026-11-11",
-      "slug": "mammoth_quiz",
-      "what": "voice (eleven_v4, Brad, 1 take)",
-      "credits": 1125,
-      "note": "flow Q4RWsQia6pHRGabsab5B, node XCnDlevxuTb4TRlAOOyT, session Q8QraO3o9jx0AtrGxLDU, generation ey423BiENhca1vwBOb33"
-    },
-    {
-      "date": "2026-11-11",
-      "slug": "mammoth_quiz",
-      "what": "music (video-to-music, 1 generation)",
-      "credits": 1176,
-      "note": "generation 2vmcVqlyimkgStYFtXF2, flow Q4RWsQia6pHRGabsab5B, node EA9TepYZ64Gw037cyTaQ"
-    },
-    {
-      "date": "2026-11-13",
-      "slug": "bone_vs_steel",
-      "what": "voice (eleven_v4, Brad, 1 take)",
-      "credits": 1178,
-      "note": "flow Q4RWsQia6pHRGabsab5B, node gWqYUMBsVTibirlu7r4A, session jSCnAPLT5hf0soxqa6Wb, generation ITtpo8GmcHshDNkObPIj"
-    },
-    {
-      "date": "2026-11-13",
-      "slug": "bone_vs_steel",
-      "what": "music (video-to-music, 1 generation)",
-      "credits": 1198,
-      "note": "generation eNszQScJg9f2HPrn0Yzc, flow Q4RWsQia6pHRGabsab5B, node Qxl4fJKfg5Q9bfWRu3GC"
-    }
-  ],
-  "renewal_day": 30,
-  "renewal_note": "el plan se renueva el día 30 de cada mes (dicho por la dueña el 2/11/2026). El primer run en o después del día 30 pone estimated_balance a monthly_allowance (30000, sin contar posibles créditos acumulados) y pide el saldo real en el aviso."
+  {
+   "date": "2026-11-03",
+   "slug": "wifi_bands",
+   "what": "music (video-to-music, 1 generation)",
+   "credits": 1284,
+   "note": "generation 6cwFwa7U54uhLNPmCec2, flow Q4RWsQia6pHRGabsab5B. Cuesta ~1284, no 960: actualizar costs_estimate.music"
+  },
+  {
+   "date": "2026-11-06",
+   "slug": "earth_tunnel",
+   "what": "voice (eleven_v4, Brad, 1 take)",
+   "credits": 1345,
+   "note": "NO PUBLICADO: la descarga del mp3 falló otra vez (el proxy del sandbox responde 403 a elevenlabsusercontent.com; el estado de la generación solo da URLs de ese dominio, ninguna de storage.googleapis.com). La toma (92,9 s, guion voice/earth_tunnel_script.txt, datos ya verificados en voice/earth_tunnel_claims.md) sigue en el flow Q4RWsQia6pHRGabsab5B, node FukV4lUQXXjwrjKqlHxH, generation tcPGB7n8qvXXJEubtIio: reutilizarla en vez de pagar otra."
+  },
+  {
+   "date": "2026-11-06",
+   "slug": "earth_tunnel",
+   "what": "music (video-to-music, 1 generation)",
+   "credits": 1293,
+   "note": "generation FVG1gwnIQsmhvchy6vR1, flow Q4RWsQia6pHRGabsab5B, node MLvy6xBONsQcDPUGjgK7"
+  },
+  {
+   "date": "2026-11-08",
+   "slug": "cat_night_vision",
+   "what": "voice (eleven_v4, Brad, 1 take)",
+   "credits": 1125,
+   "note": "flow Q4RWsQia6pHRGabsab5B, node oc3R16fRoXd2kQG51tm4, session 8akmSFo768Lrh7fyKJ9t, generation ItzFGOAfNvaQtzBRh7T6"
+  },
+  {
+   "date": "2026-11-08",
+   "slug": "cat_night_vision",
+   "what": "music (video-to-music, 1 generation)",
+   "credits": 1099,
+   "note": "generation JmLog5HCPFLCxPUr7pNb, flow Q4RWsQia6pHRGabsab5B, node RKD7BIfS4HBQBu3GTPSo"
+  },
+  {
+   "date": "2026-11-11",
+   "slug": "mammoth_quiz",
+   "what": "voice (eleven_v4, Brad, 1 take)",
+   "credits": 1125,
+   "note": "flow Q4RWsQia6pHRGabsab5B, node XCnDlevxuTb4TRlAOOyT, session Q8QraO3o9jx0AtrGxLDU, generation ey423BiENhca1vwBOb33"
+  },
+  {
+   "date": "2026-11-11",
+   "slug": "mammoth_quiz",
+   "what": "music (video-to-music, 1 generation)",
+   "credits": 1176,
+   "note": "generation 2vmcVqlyimkgStYFtXF2, flow Q4RWsQia6pHRGabsab5B, node EA9TepYZ64Gw037cyTaQ"
+  },
+  {
+   "date": "2026-11-13",
+   "slug": "bone_vs_steel",
+   "what": "voice (eleven_v4, Brad, 1 take)",
+   "credits": 1178,
+   "note": "flow Q4RWsQia6pHRGabsab5B, node gWqYUMBsVTibirlu7r4A, session jSCnAPLT5hf0soxqa6Wb, generation ITtpo8GmcHshDNkObPIj"
+  },
+  {
+   "date": "2026-11-13",
+   "slug": "bone_vs_steel",
+   "what": "music (video-to-music, 1 generation)",
+   "credits": 1198,
+   "note": "generation eNszQScJg9f2HPrn0Yzc, flow Q4RWsQia6pHRGabsab5B, node Qxl4fJKfg5Q9bfWRu3GC"
+  },
+  {
+   "date": "2026-11-16",
+   "slug": "moon_earth_view",
+   "what": "voice (eleven_v4, Brad, 1 take)",
+   "credits": 807,
+   "note": "flow Q4RWsQia6pHRGabsab5B, node HXjfsevceDjXJbBEWtXk, session OzbHamuLW0rTDKGJnAVx, generation 5gszYLsLVg9WJ6nnKcrR"
+  }
+ ],
+ "renewal_day": 30,
+ "renewal_note": "el plan se renueva el día 30 de cada mes (dicho por la dueña el 2/11/2026). El primer run en o después del día 30 pone estimated_balance a monthly_allowance (30000, sin contar posibles créditos acumulados) y pide el saldo real en el aviso."
 }
