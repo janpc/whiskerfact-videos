@@ -72,7 +72,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - **Retention rules (every format):** a new visual or idea at least every 3–4 s; no scene longer than ~8 s without a change; tease the payoff early ("the answer is weirder than you think") and pay it off late; cut any sentence that only repeats or warms up.
 - **Language:** plain English that is not childish. Name each complex term, then explain it in one sentence.
 - **Structure:** use **the structure of today's format in `FORMATS.md`**, not one fixed template. `brand.STRUCTURE` is only the timing guide for `explainer`.
-- **Closing line:** one line before the slogan, from the closing bank in `FORMATS.md`. Never the same closing type as the previous reel, and avoid the type used most in the last 5 reels. Record it as `variants.closing`. Never announce the next video.
+- **Closing line:** one line before the slogan, from the closing bank in `FORMATS.md`. Never the same closing type as the previous reel, and avoid the type used most in the last 5 reels. **The `ask` closing (a question the viewer answers in the comments) goes in at most 1 reel out of 3 and only when the topic really invites an answer the viewer can give from their own experience (e.g. "close your eyes and imagine an apple: what do you see?"); never forced, never on every video (decision of 16/11/2026).** Record it as `variants.closing`. Never announce the next video.
 - Never announce the next video.
 - Each scene opens with a distinctive first word, so scene cuts can be found in the transcript.
 
