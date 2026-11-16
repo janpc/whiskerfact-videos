@@ -145,7 +145,8 @@
    "00:30": "6:30 pm NY (3:30 pm LA), the US evening window; added 15/11/2026 because Instagram/TikTok engagement for US audiences peaks in the evening and 20:30 Madrid is 2:30 pm NY"
   },
   "control": "20:30",
-  "rule": "fixed: always use `control`. testing: use the option the week plan assigns in `experiment`; if the plan has no entry for today, alternate (the option with fewer videos in the log). decided: `control` is the winner and stays fixed."
+  "rule": "fixed: always use `control`. testing: use the option the week plan assigns in `experiment`; if the plan has no entry for today, alternate (the option with fewer videos in the log). decided: `control` is the winner and stays fixed.",
+  "note_2026_11_16": "La usuaria decidió el 16/11 publicar el reel de ese día a las 00:30 (18:30 NY) sin esperar a cerrar B2-length. Es un dato adelantado del test de horario, NO una tanda: 2026-11-16 mezcla length=short y time_slot=00:30, así que no cuenta limpio para ninguno de los dos; mencionarlo al medir."
  },
  "hook_style": {
   "status": "fixed",

@@ -86,6 +86,17 @@ def body(img, lib, name, cx, cy, h, lit=1.0, a=1.0, light_right=True):
     if a < 1:
         lay = lay.copy(); lay.putalpha(lay.split()[3].point(lambda vv: int(vv * a)))
     img.alpha_composite(lay, (int(cx - size / 2), int(cy - size / 2)))
+    mark_noink(lay, (int(cx - size / 2), int(cy - size / 2)))
+
+def mark_noink(layer, pos):
+    """marca un sprite de biblioteca pegado desde una capa intermedia para que el contorno automático (style.ink)
+    no le repase los bordes interiores (LIB.place solo lo marca si dibuja directamente en el fotograma)"""
+    import reel_lib as _RL
+    from PIL import ImageChops
+    m = _RL.NOINK["mask"]
+    if m is None or m.size != (W, H): return
+    tmp = Image.new("L", (W, H), 0); tmp.paste(layer.split()[3], (int(pos[0]), int(pos[1])))
+    _RL.NOINK["mask"] = ImageChops.lighter(m, tmp)
 
 # ---------- paisaje lunar: cielo negro (sin atmósfera), estrellas y suelo gris en capas ----------
 MOON_GREYS = [(120, 120, 132), (96, 96, 108), (74, 74, 86), (52, 52, 62)]
