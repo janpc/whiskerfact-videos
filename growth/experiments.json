@@ -65,6 +65,52 @@
      }
     },
     "final_figures": "0 of 3"
+   },
+   {
+    "review": "2026-11-16",
+    "baseline_watch_pct": 34.0,
+    "baseline_videos": [
+     "pyramids",
+     "goosebumps",
+     "vampire_bats",
+     "hottest_planet",
+     "wifi_bands"
+    ],
+    "videos": {
+     "2026-11-06": {
+      "window": "final",
+      "age_h": 230.5,
+      "watch_pct": 28.8,
+      "length_s": 86.2,
+      "vs_baseline_pct": -15.3,
+      "ig_views": 191,
+      "ig_skip_rate_3s": 47.3,
+      "tiktok_views": 281
+     },
+     "2026-11-08": {
+      "window": "final",
+      "age_h": 182.4,
+      "watch_pct": 36.5,
+      "length_s": 73.3,
+      "vs_baseline_pct": 7.4,
+      "ig_views": 1268,
+      "ig_skip_rate_3s": 32.8,
+      "tiktok_views": 251
+     },
+     "2026-11-11": {
+      "window": "early",
+      "age_h": 110.5,
+      "watch_pct": 27.9,
+      "length_s": 78.4,
+      "vs_baseline_pct": -17.9,
+      "ig_views": 1502,
+      "ig_skip_rate_3s": 38.3,
+      "tiktok_views": 265,
+      "note": "provisional"
+     }
+    },
+    "final_figures": "2 of 3",
+    "note": "Not closed: 2026-11-11 reaches 7 days on 2026-11-18. Two of the three videos are already inside the +/-20% band with final figures, so neither success (2 of 3 > +20%) nor failure (2 of 3 < -20%) can be reached: the batch will close as inconclusive at the next review, whatever 2026-11-11 does."
    }
   ]
  },
@@ -180,6 +226,27 @@
   "videos": [
    "2026-11-16"
   ],
-  "note": "The night run of 2026-11-16 (00:35) is the first variant. The Monday plan of 2026-11-16 assigns the other two. B1-hook-style (key `batch`) stays only as a measurement: the review closes it when 2026-11-11 has 7-day figures, then moves `next_batch` into `batch`."
+  "note": "The night run of 2026-11-16 (00:35) is the first variant. The Monday plan of 2026-11-16 assigns the other two. B1-hook-style (key `batch`) stays only as a measurement: the review closes it when 2026-11-11 has 7-day figures, then moves `next_batch` into `batch`.",
+  "reads": [
+   {
+    "review": "2026-11-16",
+    "final_figures": "0 of 3",
+    "baseline_ig_views_median": 1407,
+    "baseline_ig_skip_rate_3s_median": 42.3,
+    "baseline_videos": [
+     "pyramids",
+     "goosebumps",
+     "vampire_bats",
+     "hottest_planet",
+     "wifi_bands"
+    ],
+    "videos": {
+     "2026-11-16": {
+      "window": "too_early",
+      "note": "scheduled for 2026-11-16 20:30, not published at review time"
+     }
+    }
+   }
+  ]
  }
 }
