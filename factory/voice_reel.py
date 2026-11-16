@@ -26,10 +26,14 @@ SLOGAN_AT = 0.4                                  # el narrador empieza en cuanto
 SLOGAN_WORDS = {"brad": [0.07, 0.38, 1.39, 1.62]}   # inicio de cada palabra en voice/slogan_<voz>.mp3
 SLOGAN_END = {"brad": 2.31}
 OUTRO_LEN = B.MASCOT["outro"]["dur"]
+LOOP_TAIL = 0.15        # bucle: margen tras la última palabra (el gancho empieza a hablar a los 0,3 s)
 
 class VoiceReel:
-    def __init__(self, R, slug, openers, voice="brad"):
-        self.R, self.slug, self.voice = R, slug, voice
+    def __init__(self, R, slug, openers, voice="brad", loop=False):
+        # loop=True (reels desde el 17/11/2026): sin eslogan ni círculo del gato; el vídeo acaba justo tras la última
+        # palabra, que enlaza con el gancho, y al repetirse empalma con el primer fotograma (FACTORY.md, «Loop ending»)
+        self.R, self.slug, self.voice, self.loop = R, slug, voice, loop
+        self.outro_len = 0.0 if loop else OUTRO_LEN
         vdir = os.path.join(HERE, "voice")
         self.voice_mp3 = os.path.join(vdir, f"{slug}_{voice}.mp3")
         self.slogan_mp3 = os.path.join(vdir, f"slogan_{voice}.mp3")
@@ -41,10 +45,10 @@ class VoiceReel:
             first[name] = i; i += 1
         names = [n for n, _ in openers]
         cut = [0.0] + [(self.words[first[n] - 1][2] + self.words[first[n]][1]) / 2 for n in names[1:]]
-        self.outro_at = round(self.words[-1][2] + 0.6, 2)
+        self.outro_at = round(self.words[-1][2] + (LOOP_TAIL if loop else 0.6), 2)
         self.sc = {n: (cut[k], cut[k + 1] if k + 1 < len(names) else self.outro_at) for k, n in enumerate(names)}
         self.first = first
-        R.total = self.outro_at + OUTRO_LEN
+        R.total = self.outro_at + self.outro_len
         self.draw = {}
         self.backdrops = {}          # fondo propio por escena (paisaje, tarjeta crema, momento psicodélico) — style.py
         outro4.WORDS_A = [SLOGAN_AT + t for t in SLOGAN_WORDS[voice]]
@@ -74,7 +78,9 @@ class VoiceReel:
         return next(s for w, s, e in self.words if w.strip('"“”,.?!:').lower() == word.lower() and s >= after)
 
     def frame_at(self, T):
-        if T >= self.outro_at: return outro_frame(self.R, T - self.outro_at)
+        if T >= self.outro_at:
+            if not self.loop: return outro_frame(self.R, T - self.outro_at)
+            T = self.outro_at - 1e-3                     # bucle: nunca hay cierre, se queda en la última escena
         for n, (s, e) in self.sc.items():
             if s <= T < e:
                 import reel_lib as _RL; _RL.QA_STATE.update(T=T, scene=n)
@@ -263,8 +269,9 @@ class VoiceReel:
         return out
 
     def build_audio(self, path):
-        O = self.outro_at; total = O + OUTRO_LEN; n = int(total * SFX.SR)
-        voice = self._load(self.voice_mp3, n, B.VOICE["offset"]) + self._load(self.slogan_mp3, n, O + SLOGAN_AT)
+        O = self.outro_at; total = O + self.outro_len; n = int(total * SFX.SR)
+        voice = self._load(self.voice_mp3, n, B.VOICE["offset"])
+        if not self.loop: voice = voice + self._load(self.slogan_mp3, n, O + SLOGAN_AT)
         voice /= (np.max(np.abs(voice)) or 1)
         L = int(0.25 * SFX.SR)
         env = np.clip(np.convolve((np.abs(voice) > 0.02).astype(np.float32), np.ones(L) / L, "same") * 4, 0, 1)
@@ -274,14 +281,14 @@ class VoiceReel:
         for e in sorted(self.R.events):
             if sum(1 for k in kept if e[0] - k[0] < 1.0) < B.SFX_MAX_PER_SECOND: kept.append(e)
         outro_fx = [(O, SFX.whoosh(0.5), 0.6), (O + 0.42, SFX.pop(), 0.9),          # entra el círculo
-                    (O + outro4.WINK, SFX.sparkle(), 0.9)]                          # guiño (ya no hay gafas ni clink)
+                    (O + outro4.WINK, SFX.sparkle(), 0.9)] if not self.loop else []   # guiño (ya no hay gafas ni clink)
         fx = SFX.mix([(t, gens[nm](), g) for t, nm, g in kept] + outro_fx, total)[:n]
         fx = fx / (np.max(np.abs(fx)) or 1) * 0.9 * 10 ** (B.SFX_UNDER_VOICE_DB / 20) * (1 - 0.5 * env)
         music_file = os.path.join(HERE, "voice", f"{self.slug}_music.mp3")   # música compuesta para este vídeo (ElevenLabs)
         if os.path.exists(music_file):
             bed = self._load(music_file, n, 0.0)
             t = np.arange(n) / SFX.SR
-            bed = bed * np.clip((total - t) / 1.5, 0, 1)                  # fundido final con el cierre
+            bed = bed * np.clip((total - t) / (0.25 if self.loop else 1.5), 0, 1)   # fundido final (corto en bucle, para que empalme)
             bed = bed * 10 ** ((-16.0 - 20 * np.log10(np.sqrt(np.mean(bed ** 2)) + 1e-9)) / 20)   # mismo volumen medio que la música sintetizada
         else:
             bed = M.upbeat_doc_bed(total, self.R.cat, swell_at=O - 8)[:n]
@@ -322,7 +329,7 @@ class VoiceReel:
         ts = []
         for s, e in self.sc.values():
             ts += [round(s + min(0.4, (e - s) / 3), 2), round((s + e) / 2, 2)]
-        return ts + [self.outro_at + 3.5]
+        return ts + ([] if self.loop else [self.outro_at + 3.5])
 
     def clip(self, t0, secs=1.0, fps=30):
         """prueba de 1 segundo (sin audio) desde t0, para juzgar textura y movimiento de un efecto antes de renderizar todo"""
@@ -338,7 +345,7 @@ class VoiceReel:
         mode = sys.argv[1] if len(sys.argv) > 1 else "render"
         if mode == "times":
             for n, (s, e) in self.sc.items(): print(f"{n:10s} {s:6.2f} {e:6.2f}")
-            print("outro", self.outro_at, "total", round(self.outro_at + OUTRO_LEN, 2)); return
+            print("outro" if not self.loop else "end (loop)", self.outro_at, "total", round(self.outro_at + self.outro_len, 2)); return
         if mode == "preview":
             ts = sys.argv[2:] or self.contact_times()
             return self.preview(ts)
@@ -348,5 +355,5 @@ class VoiceReel:
             self.preview(self.contact_times(), "contact")     # hoja de contactos automática antes del render (segundos): se revisa a ojo
             # dibuja con el renderizador común (rechaza vídeos de menos de B.MIN_DURATION)
             self.R.mux = lambda *a, **k: None    # la mezcla sin voz de Reel no hace falta: la hace self.mux()
-            self.R.render(list(self.sc.items()), self.frame_at, self.name, self.outro_at)
+            self.R.render(list(self.sc.items()), self.frame_at, self.name, self.outro_at, self.outro_len)
         print(self.mux())

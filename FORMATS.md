@@ -18,12 +18,12 @@ Each reel uses one format. They share the brand rules (colours, hook from frame 
 - Every format keeps the length and retention rules in FACTORY.md step 4, the precision check and the hard limits in PERSONALITY.md.
 - Structures are a guide, not a cage: reorder or merge steps when it keeps people watching better, as long as the hook is on screen from frame 0 and the payoff comes near the end.
 
-## Closing bank (one line before "Class dismissed. Stay curious.")
+## Closing bank (optional line just before the loop bridge; from 17/11/2026 there is no slogan or outro at the end, see FACTORY.md step 4 «Loop ending»)
 Pick one type per reel (FACTORY.md step 4) and write the line fresh for the topic; never reuse an earlier reel's wording. "So next time…, now you know" is retired as the default (it was used in every reel up to 1/11/2026); it may come back only rarely.
 | Type | Example |
 |---|---|
 | **bonus** | one extra, verified mini-fact: "Bonus: dolphins can do this for up to 15 days." |
-| **callback** | turn the hook around: "So, open eye, sleeping brain. Half asleep, fully awesome." Use it to make the end flow into the first frame (loop, 15/11/2026): reuse the hook's own key words so a viewer who lets it replay hears the question again. Rewatches count for TikTok and Shorts |
+| **callback** | retired as a closing type on 16/11/2026: repeating the hook before the slogan did not create a loop. The loop is now the mandatory bridge sentence at the very end (FACTORY.md step 4), which hands over to the hook's first words instead of repeating them |
 | **ask** | a question for the comments, tied to the topic: "Would you rather sleep like a dolphin? Tell me below." (a comment ask, not a share ask: it does not count toward the one share ask per video; use it in at most 1 reel out of 3 and only when the topic invites an answer the viewer can give from their own experience, never in every video, 16/11/2026) |
 | **cat_take** | Mr. Whiskerfact's own light opinion (PERSONALITY.md): "Honestly? Best sleeping trick in the ocean." |
 | **real_life** | where the viewer will meet it: "You'll never look at a bat the same way on Halloween." |

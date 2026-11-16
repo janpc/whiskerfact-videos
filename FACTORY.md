@@ -72,7 +72,8 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - **Retention rules (every format):** a new visual or idea at least every 3–4 s; no scene longer than ~8 s without a change; tease the payoff early ("the answer is weirder than you think") and pay it off late; cut any sentence that only repeats or warms up.
 - **Language:** plain English that is not childish. Name each complex term, then explain it in one sentence.
 - **Structure:** use **the structure of today's format in `FORMATS.md`**, not one fixed template. `brand.STRUCTURE` is only the timing guide for `explainer`.
-- **Closing line:** one line before the slogan, from the closing bank in `FORMATS.md`. Never the same closing type as the previous reel, and avoid the type used most in the last 5 reels. **The `ask` closing (a question the viewer answers in the comments) goes in at most 1 reel out of 3 and only when the topic really invites an answer the viewer can give from their own experience (e.g. "close your eyes and imagine an apple: what do you see?"); never forced, never on every video (decision of 16/11/2026).** Record it as `variants.closing`. Never announce the next video.
+- **Loop ending (mandatory from the reel of 17/11/2026 on; decided by the owner on 16/11):** the reel has **no outro**: no slogan, no cat circle. The **last sentence of the script is a bridge**: it stays open and is completed by the hook's first words when the video replays, so the end and the start read as one sentence. Example: hook "Does Earth ever rise or set?" → last line "And that's exactly why, if you stood on the Moon and asked…". Rules: the bridge is the very last thing said (nothing after it); it must make grammatical sense joined to the hook's opening words (read them aloud together before paying the voice); it must not sound like a goodbye ("thanks", "see you", "class dismissed", "stay curious" are banned at the end). Record `variants.closing` as `loop` plus the bank type of the line before it, if any. The slogan "Class dismissed. Stay curious." goes as the last line of the caption instead.
+- **Closing line (optional, just before the bridge):** one line from the closing bank in `FORMATS.md`. Never the same closing type as the previous reel, and avoid the type used most in the last 5 reels. **The `ask` closing (a question the viewer answers in the comments) goes in at most 1 reel out of 3 and only when the topic really invites an answer the viewer can give from their own experience (e.g. "close your eyes and imagine an apple: what do you see?"); never forced, never on every video (decision of 16/11/2026).** Record it as `variants.closing`. Never announce the next video.
 - Never announce the next video.
 - Each scene opens with a distinctive first word, so scene cuts can be found in the transcript.
 
@@ -90,7 +91,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - If a proper name is missing from the dictionary, add its phones to `EXTRA_PHONES`.
 - Only if alignment fails, fall back to `creative_transcribe_audio` (about 400 credits).
 - If the free tier is "busy", wait about 10 minutes and poll or retry once. If it still fails, go to step 10.
-- The slogan audio is fixed: `factory/voice/slogan_brad.mp3`.
+- The slogan audio (`factory/voice/slogan_brad.mp3`) is no longer used in new reels (loop ending, step 4); it stays only for re-rendering old ones.
 
 ## 6. Build the reel
 - Use `factory/pyramids.py` as the template: a single file that builds on `voice_reel.VoiceReel`. That module handles scene cuts, subtitles, the outro and the audio mix. Write `factory/<slug>.py` the same way.
@@ -126,7 +127,8 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - Vary the compositions: close-up versus wide shot, the side the subject sits on, and silhouettes against the sky versus objects on the card.
   - Before building, read the last 3 log entries' `variants.look` and do NOT repeat the same combination of sky, terrain and psychedelic moment as the previous reel.
   - Record it in the log as `variants.look`, for example `{"skies": ["night","sunset"], "terrains": ["forest"], "wow": ["blobs","swirl"], "card": true}`.
-- Close with the outro (outro5, automatic via reel_lib.outro_frame): the new cat (mascot.py) says the slogan inside its circle with phoneme lip-sync, then winks and smiles. Never edit the outro per video.
+- **Loop ending, no outro (from 17/11/2026):** build the reel with `VoiceReel(R, SLUG, OPENERS, loop=True)`. The engine then ends the video 0.15 s after the last word, with no slogan and no cat circle, and fades the music in 0.25 s so the replay joins cleanly. **The last scene must flow visually into frame 0:** use the hook's backdrop (`cover.draw_bg(img, CATEGORY, ...)`, same category colour and rays) and bring back the hook's main illustration near the hook position, so the jump to the cover is small. Check it in the contact sheet: the last frame and the first frame side by side should look like the same place. Old reels (`loop` left at False) keep the old outro (outro5) when re-rendered.
+- Without the outro the reel is ≈4-5 s shorter than before: count that when checking the minimum length of the current length profile.
 - **Big, rich drawings:**
   - The main subject must fill the illustration box: at least 60% of its height (about 360 px tall) and 70% of its width. Use a close-up or a cutaway, not a thin strip across the screen.
   - Add a second layer of detail where it helps: texture, small moving parts, labels with leader lines.
@@ -210,6 +212,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
      - "👇 Tag someone who needs to know this."
      **One share ask per video in total (see the share moment in step 4):** if the script already has one, the caption uses Follow or Save; "Tag someone" only goes in the caption when the video has a `shareable` fact and the script has no share line;
   4. one short sources line naming the institutions, for example "Sources: Harvard, Cell (2020)". No URLs;
+  4b. (from 17/11/2026, loop ending) the slogan on its own line: "🎓 Class dismissed. Stay curious.";
   5. 3–5 hashtags in English (15/11/2026: more specific than before): `#mrwhiskerfact`, the topic, **one niche tag for the category** (animals `#animalfacts`, science/space `#sciencefacts`, history `#historyfacts`, tech `#techfacts`, body `#humanbody`) and `#didyouknow` or `#funfacts`. Add the event hashtag on special dates.
   Keep it under 400 characters.
 - **TikTok:** `tiktokData`:

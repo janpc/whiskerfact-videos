@@ -204,12 +204,13 @@ class Reel:
         return len(kept), len(ev)
 
     # ---------- render ----------
-    def render(self, scenes, frame_at, name, outro_at):
-        total = outro_at + B.MASCOT["outro"]["dur"]
+    def render(self, scenes, frame_at, name, outro_at, outro_len=None):
+        outro_len = B.MASCOT["outro"]["dur"] if outro_len is None else outro_len     # 0 = reel en bucle, sin cierre del gato
+        total = outro_at + outro_len
         if total < B.MIN_DURATION:   # mínimo según el perfil REEL_LENGTH (standard 61 s, short 42 s)
             raise SystemExit(f"{name}: dura {total:.1f} s, mínimo {B.MIN_DURATION} s. Alarga el guion.")
         out_dir = os.path.join(HERE, "out", name); os.makedirs(out_dir, exist_ok=True)
-        jobs =list(scenes) + [("outro", (outro_at, outro_at + B.MASCOT["outro"]["dur"]))]
+        jobs = list(scenes) + ([("outro", (outro_at, outro_at + outro_len))] if outro_len > 0 else [])
         from multiprocessing import Pool
         global _JOB
         _JOB = (frame_at, out_dir)
