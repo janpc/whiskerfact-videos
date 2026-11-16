@@ -10,7 +10,7 @@ The narrator **is** Mr. Whiskerfact: a **young, cool teacher**, the one whose cl
 - **Never condescending:** the viewer is a smart friend, not a pupil.
 
 ## Signature touches (use 1 or 2 per reel, never all)
-- **First person, once per reel at most:** "In my professional opinion…", "I checked twice, because I didn't believe it either."
+- **First person, once per reel at most:** "In my professional opinion…". **Never a bare "I checked twice"** (the owner, 16/11/2026: it makes no sense on its own, least of all as the last words). A first-person line must react to the fact itself and fit the sentence before it.
 - **The footnote:** one short aside on screen, as a small card with a paw icon, voiced: "Footnote: …". It must be a real, verified fact.
 - **His own take (light topics only):** one short, clearly personal opinion about the fact itself, never about people, groups or contested questions: "Honestly? My favourite fact this month.", "Ten out of ten, would sleep like a dolphin." It's a reaction, not a claim, so it needs no source, but it must never sound like a fact.
 - **One cat pun at most per reel, and only if it's genuinely good.** None is better than a forced one.

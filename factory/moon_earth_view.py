@@ -146,7 +146,7 @@ def _(img, T, t, s, e):
     a = win(T, s, e)
     th = wt("hangs", s); tb = wt("bigger", s)
     k = eo((T - th + 0.6) / 0.8)
-    body(img, EI, "earth", 520, lerp(1080, 960, k), 360 * (0.8 + 0.2 * k), a=a)
+    body(img, EI, "earth", 520, lerp(990, 870, k), 360 * (0.8 + 0.2 * k), a=a)
     LIB.place(img, AS, "look_up_back", 300, GY + 8, height=300, a=a)
     kb = on(T, "bigger", s, e, need=2.0)
     if kb > 0:
@@ -164,18 +164,18 @@ def _(img, T, t, s, e):
     tw = wt("wobbling", s)
     kw = clamp((T - tw + 0.2) / 2.5)
     ang = 2 * math.pi * kw
-    ex, ey = 560 + 26 * math.sin(ang), 960 + 9 * math.sin(2 * ang)
+    ex, ey = 560 + 26 * math.sin(ang), 880 + 9 * math.sin(2 * ang)
     def path(d, P, s_):
         for i in range(24):
             q = 2 * math.pi * i / 24
-            px, py = 560 + 26 * math.sin(q), 960 + 9 * math.sin(2 * q)
+            px, py = 560 + 26 * math.sin(q), 880 + 9 * math.sin(2 * q)
             d.ellipse([P(px - 4, py - 4), P(px + 4, py + 4)], fill=(246, 196, 84))
-    aa(img, (500, 910, 620, 1010), path, a * clamp((T - tw + 0.2) / 0.3) * 0.9)
+    aa(img, (500, 830, 620, 930), path, a * clamp((T - tw + 0.2) / 0.3) * 0.9)
     body(img, EI, "earth", ex, ey, 300, a=a)
     LIB.place(img, AS, "sit", 300, GY + 8, height=250, a=a)
     hrs = "+1 h" if T < s + 1.9 else ("+6 h" if T < s + 3.7 else "+12 h")      # saltos que se sostienen ≥1,5 s
     lab(img, hrs, 1150, B.TEXT, a, x=760)
-    lab(img, "Almost still", 770, B.TEXT, a * on(T, "barely", s, e, need=2.0), x=560)
+    lab(img, "Almost still", 690, B.TEXT, a * on(T, "barely", s, e, need=2.0), x=560)
     R.chrome(img, T)
     title(img, T, s, e, "Hours pass")
 V.sounds("hours", [(0.1, "tap", 0.5), (rel("hours", "barely"), "pop", 0.6), (rel("hours", "wobbling"), "whoosh", 0.5)])
@@ -184,10 +184,10 @@ V.backdrop("hours")(lambda img, T, t: moonscape(img, T, star_shift=-60 * (T - V.
 @V.scene("lday")
 def _(img, T, t, s, e):
     a = win(T, s, e)
-    body(img, EI, "earth", 580, 1010, 260, a=a)
+    body(img, EI, "earth", 580, 930, 260, a=a)
     LIB.place(img, AS, "three_quarter", 250, GY + 8, height=270, a=a)
     lab(img, "~29.5 Earth days", 1190, B.TEXT, a * on(T, "about", s, e, need=2.4), x=560)
-    lab(img, "Still up", 790, B.TEXT, a * on(T, "still", s, e, need=2.0), x=560)
+    lab(img, "Still up", 720, B.TEXT, a * on(T, "still", s, e, need=2.0), x=560)
     R.chrome(img, T)
     title(img, T, s, e, "One lunar day")
     return R.punch(img, T, wt("still", s), amt=0.04)
@@ -271,7 +271,7 @@ WOW_DUR = 1.3
 def _(img, T, t, s, e):
     a = win(T, s, e)
     tn = wt("never", s)
-    body(img, EI, "earth", 580, 970 + 5 * math.sin(T * 2), 330, a=a)
+    body(img, EI, "earth", 580, 890 + 5 * math.sin(T * 2), 330, a=a)
     LIB.place(img, AS, "amazed", 300, GY + 8, height=270, a=a)
     R.chrome(img, T)
     kt = clamp((T - (tn + WOW_DUR)) / 0.2)       # el título entra cuando se cierra el momento psicodélico
@@ -281,7 +281,7 @@ def _(img, T, t, s, e):
 def never_bg(img, T, t):
     s = V.sc["never"][0]; tn = wt("never", s)
     moonscape(img, T, seed=2)
-    ST.wow_moment(img, T, tn - 0.1, "space", "swirl", dur=WOW_DUR, center=(580, 970))
+    ST.wow_moment(img, T, tn - 0.1, "space", "swirl", dur=WOW_DUR, center=(580, 890))
 V.backdrop("never")(never_bg)
 V.sounds("never", [(0.1, "tap", 0.5), (rel("never", "never") - 0.1, "sparkle", 0.9), (rel("never", "Send"), "pop", 0.6)])
 
@@ -305,7 +305,7 @@ V.backdrop("drift")(lambda img, T, t: space_bg(img, T, seed=4))
 def _(img, T, t, s, e):
     a = win(T, s, e + 1)
     xe = 700 if CAT else 560
-    body(img, EI, "earth", xe, 960 + 5 * math.sin(T * 2), 300, a=a)
+    body(img, EI, "earth", xe, 890 + 5 * math.sin(T * 2), 300, a=a)
     LIB.place(img, AS, "wave" if T > wt("never", s) else "look_up_back", 790 if CAT else 320, GY + 8, height=260, a=a)
     R.chrome(img, T)
     R.txt(img, "Rise or set?", TITLE_Y, "title", B.TEXT, win(T, s, V.outro_at + 1))
