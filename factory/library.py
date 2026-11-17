@@ -26,15 +26,25 @@ def _index():
     return json.load(open(INDEX)) if os.path.exists(INDEX) else {}
 
 def key(im):
-    """quita el verde: alfa suave y sin halo"""
+    """quita el verde croma CONSERVANDO el contorno. Gemini entrega los bordes borrosos (4-5 px de rampa verde->tinta):
+    en los pixeles de esa rampa el color real es la TINTA del contorno (marron oscuro) y el alfa se estima por
+    proyeccion entre el verde de fondo y la tinta; despues se afina la rampa para un borde nitido sin halo"""
     a = np.asarray(im.convert("RGB")).astype(np.float32)
     R, G, Bc = a[..., 0], a[..., 1], a[..., 2]
     g = G - np.maximum(R, Bc)
-    alpha = np.clip(1 - (g - 25) / 70, 0, 1)
-    a[..., 1] = np.minimum(G, np.maximum(R, Bc) + 12)
-    out = Image.fromarray(np.dstack([a, alpha * 255]).astype(np.uint8), "RGBA")
-    out.putalpha(out.split()[3].filter(ImageFilter.MinFilter(3)))
-    return out
+    fg = g < 15                                   # solido (sin verde)
+    bg = g > 110                                  # fondo (verde puro, con algo de ruido JPEG)
+    from scipy import ndimage as _nd
+    edge = ~fg & ~bg & (_nd.binary_dilation(bg, iterations=6) | (g > 45))   # solo la rampa pegada al fondo; un verde propio del dibujo se respeta
+    fg = ~bg & ~edge
+    bgc = np.array([16.0, 243.0, 6.0], dtype=np.float32)
+    ink = np.array([58.0, 36.0, 30.0], dtype=np.float32)
+    d = ink - bgc
+    proj = np.clip(((a - bgc) * d).sum(-1) / float((d * d).sum()), 0, 1)
+    ae = np.clip((proj - 0.30) / 0.40, 0, 1)
+    alpha = np.where(fg, 1.0, np.where(edge, ae, 0.0)).astype(np.float32)
+    out = np.where(edge[..., None], ink, a)
+    return Image.fromarray(np.dstack([np.clip(out, 0, 255), alpha * 255]).astype(np.uint8), "RGBA")
 
 def _cuts(im, cols, rows):
     """bordes de las celdas: si la hoja trae líneas separadoras (Gemini a veces las dibuja y no son regulares) se usan;
