@@ -507,7 +507,7 @@
    "pet"
   ],
   "source": "gemini",
-  "notes": "Gato doméstico normal (no es Mr. Whiskerfact). DECISIÓN 4/11/2026: NO animar el andar (walk1-8, sneak1-4, tail1-4) ni usar library/cat_rig: se probó y queda mal. Usar poses fijas con cambios de pose al ritmo de la voz, y el ciclo de correr (run1-4) solo para cruzar la pantalla."
+  "notes": "Gato dom\u00e9stico normal (no es Mr. Whiskerfact). DECISI\u00d3N 4/11/2026: NO animar el andar (walk1-8, sneak1-4, tail1-4) ni usar library/cat_rig: se prob\u00f3 y queda mal. Usar poses fijas con cambios de pose al ritmo de la voz, y el ciclo de correr (run1-4) solo para cruzar la pantalla."
  },
  "woolly_mammoth": {
   "poses": {
@@ -551,7 +551,7 @@
    "prehistory"
   ],
   "source": "gemini",
-  "notes": "Hoja 1 (4x4). three_quarter_left mira hacia la IZQUIERDA (3/4 frontal), el resto de perfiles miran a la derecha. Sin ciclo de andar: usar run1-4 solo para cruzar, el resto poses fijas. Hoja 2: look_back no mira realmente atrás (es de pie, mirando a la derecha); sleep es de pie con los ojos cerrados (lie, de la hoja 1, es el tumbado)."
+  "notes": "Hoja 1 (4x4). three_quarter_left mira hacia la IZQUIERDA (3/4 frontal), el resto de perfiles miran a la derecha. Sin ciclo de andar: usar run1-4 solo para cruzar, el resto poses fijas. Hoja 2: look_back no mira realmente atr\u00e1s (es de pie, mirando a la derecha); sleep es de pie con los ojos cerrados (lie, de la hoja 1, es el tumbado)."
  },
  "mammoth_quiz_items": {
   "poses": {
@@ -605,7 +605,7 @@
    "objects"
   ],
   "source": "gemini",
-  "notes": "Hoja 4x4 de 16 (13/11, hueso vs acero). xray_leg sale como TARJETA con película azul propia. bone_healed y bone_cracked son casi iguales (grieta fina): el brillo de 'curado' se dibuja por código. xray_leg, test_press y femur_section se sustituyeron el 12/11 por versiones grandes de una hoja 2x2 y skeleton por un esqueleto de un solo elemento (481x957 px, protagonista). Los tres de la hoja 2x2 miden ≈400-500 px, ampliables ~1,5-2x; el resto mide ~185 px: no ampliar más de ~1,3x."
+  "notes": "Hoja 4x4 de 16 (13/11, hueso vs acero). xray_leg sale como TARJETA con pel\u00edcula azul propia. bone_healed y bone_cracked son casi iguales (grieta fina): el brillo de 'curado' se dibuja por c\u00f3digo. xray_leg, test_press y femur_section se sustituyeron el 12/11 por versiones grandes de una hoja 2x2 y skeleton por un esqueleto de un solo elemento (481x957 px, protagonista). Los tres de la hoja 2x2 miden \u2248400-500 px, ampliables ~1,5-2x; el resto mide ~185 px: no ampliar m\u00e1s de ~1,3x."
  },
  "astronaut": {
   "poses": {
@@ -704,7 +704,7 @@
    "object"
   ],
   "source": "gemini",
-  "notes": "Hoja 4x4 de 16 (17/11/2026). battery_full/half/low REDIBUJADOS POR CODIGO (iconos limpios; los de Gemini perdian las barras verdes). li_battery salio como pila de 9 V. phone_charging con cable fino. Tamaño 80-230 px: no ampliar mas de ~1,3x."
+  "notes": "Hoja 4x4 de 16 (17/11/2026). battery_full/half/low REDIBUJADOS POR CODIGO (iconos limpios; los de Gemini perdian las barras verdes). li_battery salio como pila de 9 V. phone_charging con cable fino. Tama\u00f1o 80-230 px: no ampliar mas de ~1,3x."
  },
  "large_w47": {
   "poses": {
@@ -719,5 +719,89 @@
   ],
   "source": "gemini",
   "notes": "Hoja 2x2 grande (17/11/2026), recortada con blobs. bedroom_night y charging_phone_big son TARJETAS con fondo propio (usar como tarjeta). battery_cutaway y phone_under_pillow son sueltos. ~430 px, ampliables ~2x."
+ },
+ "pilgrim_man": {
+  "poses": {
+   "walk1": "pilgrim_man/walk1.png",
+   "walk2": "pilgrim_man/walk2.png",
+   "walk3": "pilgrim_man/walk3.png",
+   "walk4": "pilgrim_man/walk4.png",
+   "side": "pilgrim_man/side.png",
+   "front": "pilgrim_man/front.png",
+   "three_quarter": "pilgrim_man/three_quarter.png",
+   "three_quarter_left": "pilgrim_man/three_quarter_left.png",
+   "back": "pilgrim_man/back.png",
+   "sit": "pilgrim_man/sit.png",
+   "kneel": "pilgrim_man/kneel.png",
+   "step": "pilgrim_man/step.png",
+   "jump": "pilgrim_man/jump.png",
+   "run": "pilgrim_man/run.png",
+   "bend": "pilgrim_man/bend.png",
+   "hands_back": "pilgrim_man/hands_back.png",
+   "talk": "pilgrim_man/talk.png",
+   "point": "pilgrim_man/point.png",
+   "think": "pilgrim_man/think.png",
+   "happy": "pilgrim_man/happy.png",
+   "scared": "pilgrim_man/scared.png",
+   "surprised": "pilgrim_man/surprised.png",
+   "wave": "pilgrim_man/wave.png",
+   "shrug": "pilgrim_man/shrug.png",
+   "explain": "pilgrim_man/explain.png",
+   "point_side": "pilgrim_man/point_side.png",
+   "amazed": "pilgrim_man/amazed.png",
+   "laugh": "pilgrim_man/laugh.png",
+   "curious": "pilgrim_man/curious.png",
+   "thumbs_up": "pilgrim_man/thumbs_up.png",
+   "worried": "pilgrim_man/worried.png",
+   "offer": "pilgrim_man/offer.png"
+  },
+  "tags": [
+   "history",
+   "person",
+   "thanksgiving"
+  ],
+  "source": "gemini"
+ },
+ "wampanoag_man": {
+  "poses": {
+   "walk1": "wampanoag_man/walk1.png",
+   "walk2": "wampanoag_man/walk2.png",
+   "walk3": "wampanoag_man/walk3.png",
+   "walk4": "wampanoag_man/walk4.png",
+   "side": "wampanoag_man/side.png",
+   "front": "wampanoag_man/front.png",
+   "three_quarter": "wampanoag_man/three_quarter.png",
+   "three_quarter_left": "wampanoag_man/three_quarter_left.png",
+   "back": "wampanoag_man/back.png",
+   "sit": "wampanoag_man/sit.png",
+   "kneel": "wampanoag_man/kneel.png",
+   "step": "wampanoag_man/step.png",
+   "jump": "wampanoag_man/jump.png",
+   "run": "wampanoag_man/run.png",
+   "bend": "wampanoag_man/bend.png",
+   "hands_back": "wampanoag_man/hands_back.png",
+   "talk": "wampanoag_man/talk.png",
+   "point": "wampanoag_man/point.png",
+   "think": "wampanoag_man/think.png",
+   "happy": "wampanoag_man/happy.png",
+   "scared": "wampanoag_man/scared.png",
+   "surprised": "wampanoag_man/surprised.png",
+   "wave": "wampanoag_man/wave.png",
+   "shrug": "wampanoag_man/shrug.png",
+   "explain": "wampanoag_man/explain.png",
+   "point_side": "wampanoag_man/point_side.png",
+   "amazed": "wampanoag_man/amazed.png",
+   "laugh": "wampanoag_man/laugh.png",
+   "curious": "wampanoag_man/curious.png",
+   "thumbs_up": "wampanoag_man/thumbs_up.png",
+   "worried": "wampanoag_man/worried.png",
+   "offer": "wampanoag_man/offer.png"
+  },
+  "tags": [
+   "history",
+   "person",
+   "thanksgiving"
+  ],
+  "source": "gemini"
  }
 }
