@@ -8,6 +8,8 @@ Qué comprueba
 - Textos: contraste con lo que tienen detrás, que no se pisen entre sí, que no caigan bajo los botones de la app
   ni fuera de pantalla, y que las etiquetas y títulos duren lo bastante para leerse.
 - Dibujo: escenas que se salen de la banda de ilustración (cortes) y tramos en los que no se mueve nada.
+- Variedad (anti-slop, AVISOS): escenas seguidas con el mismo color dominante o casi la misma imagen, y vídeos con
+  menos de 3 colores dominantes distintos. Ver FACTORY.md 6e.
 - Vídeo final: duración mínima, fotogramas negros, volumen (LUFS) y picos.
 """
 import importlib, json, math, os, re, subprocess, sys
@@ -137,6 +139,27 @@ def run(slug):
         else:
             if still > 2.0: (fails if still > 3.5 else warns).append((f"{start:.1f}s", f"Nada se mueve durante {still:.1f}s"))
             still, start = 0.0, None
+    # 4b) variedad entre escenas (anti-slop; solo AVISOS): color dominante y corte casi invisible
+    names = [n for n in V.sc if V.sc[n][1] - V.sc[n][0] > 0.5]
+    def near(t):
+        return min(times, key=lambda x: abs(x - t))
+    doms, tails, heads = {}, {}, {}
+    for n in names:
+        a, b = V.sc[n]
+        mid = frames[near((a + b) / 2)]
+        doms[n] = np.median(mid[:, :, :].reshape(-1, 3), axis=0)
+        heads[n] = frames[near(a + 0.4)]
+        tails[n] = frames[near(b - 0.2)]
+    for x, y in zip(names, names[1:]):
+        if np.abs(doms[x] - doms[y]).sum() < 40:
+            warns.append((f"{V.sc[y][0]:.1f}s", f"Escenas «{x}» y «{y}» con el mismo color dominante: cambia el color de una"))
+        if np.abs(tails[x] - heads[y]).mean() < 12:
+            warns.append((f"{V.sc[y][0]:.1f}s", f"El corte «{x}» → «{y}» casi no se nota (misma imagen): cambia plano o composición"))
+    distinct = []
+    for n in names:
+        if all(np.abs(doms[n] - d).sum() >= 60 for d in distinct): distinct.append(doms[n])
+    if len(names) >= 4 and len(distinct) < 3:
+        warns.append(("—", f"Solo {len(distinct)} colores dominantes distintos en todo el vídeo (mínimo 3)"))
     # 5) mp4 final
     mp4 = os.path.join(out_dir, f"whiskerfact_{slug}.mp4")
     if not os.path.exists(mp4):

@@ -158,7 +158,7 @@ All public-facing content is in **English**. All design rules live in `factory/b
   5. Download the result to `voice/<slug>_music.mp3`. The engine then uses it automatically, matching its level and ducking it under the voice. Re-run `python3 <slug>.py mux`; there is no need to re-render.
   6. Delete `videos/music_src/` in the next commit.
   7. If music generation fails, keep the synthesized bed and say so in the notification. That alone is not a reason to skip publishing.
-- **Contact sheet before the full render (automatic).** `python3 <slug>.py render` first writes `out/<slug>_contact.jpg`: two frames per scene (just after the cut and mid-scene) plus one of the outro, each with the app-buttons zone (x 900–1080, y 900–1700) boxed in red and the time in the corner. **Open it and look at it before the render goes on** (it takes seconds; the render takes ~45 min): check composition, overlapping text, cropped drawings, unreadable colours, and that nothing important falls inside the red box. If something is wrong, stop the render, fix the scene and run `python3 <slug>.py preview` again (same sheet, now at `out/<slug>_preview.jpg`; or `preview t1 t2 ...` for chosen times).
+- **Contact sheet before the full render (automatic).** `python3 <slug>.py render` first writes `out/<slug>_contact.jpg`: two frames per scene (just after the cut and mid-scene) plus one of the outro, each with the app-buttons zone (x 900–1080, y 900–1700) boxed in red and the time in the corner. **Open it and look at it before the render goes on** (it takes seconds; the render takes ~45 min): check composition, overlapping text, cropped drawings, unreadable colours, and that nothing important falls inside the red box. If something is wrong, stop the render, fix the scene and run `python3 <slug>.py preview` again (same sheet, now at `out/<slug>_preview.jpg`; or `preview t1 t2 ...` for chosen times). **Then run the anti-slop questions of section 6e on the same sheet.**
 - **One-second test for any new or risky effect** (a new texture, lettering, stamp or transition): `python3 <slug>.py clip <t0> [seconds]` renders only that second, silent, to `out/<slug>_clip.mp4`. Judge texture and movement there before building the whole scene.
 
 ## 6b. Music composed for this reel (ElevenLabs)
@@ -191,6 +191,15 @@ All public-facing content is in **English**. All design rules live in `factory/b
 - **Letras sobre la tarjeta crema:** estilo `label`, color oscuro, trazo fino, tamaño algo menor; nunca el estilo de subtítulo.
 - **Revisión visual obligatoria:** además de la hoja de contactos, extraer 3-4 fotogramas a tamaño completo de las escenas con más dibujos y mirarlos antes de dar el reel por bueno. Si algo se ve blando o dentado, corregirlo antes de publicar.
 - **Gato hablando (v4, aún no integrado en la fábrica; ver `earth_tunnel_v4.py` como plantilla):** el labial lleva el desfase de la voz: `cat.lipsync(ph, fps, n, max(0.0, off - s), lead=3)` (sin eso, en el gancho la boca se adelanta 0,3 s). Sin vaivén de cintura; sí respiración suave y cambios de pose.
+
+## 6e. Anti-slop (17/11/2026): que no parezca IA en serie
+Checklist completa en el proyecto de claude.ai (`checklist-anti-slop.md`). Resumen para aplicar **con la hoja de contactos, antes del render completo**:
+- **Planos:** lista de escenas con plano, color dominante y qué hay de nuevo cada 3-4 s. Dos escenas seguidas no repiten plano ni composición. El gato sale como máximo en 1 de cada 3 escenas, y solo en las que no llevan tarjeta.
+- **Ilustración:** cada objeto significa algo en esa escena (sin decorado de relleno); un protagonista por escena; paleta corta (color dominante + 1 de apoyo + acento amarillo solo en la palabra clave); contorno plano y grueso, sin brillos ni degradados; algo de imperfección hecha a mano (contorno con ruido bajo, sin simetría perfecta). Rechazar imágenes con manos raras, texto inventado, objetos duplicados o estilo distinto.
+- **Movimiento:** pocos movimientos y con motivo; variar entrada y salida (no el mismo tipo más de 2 veces seguidas); entrada escalonada de palabras y objetos; rebote solo en 1-2 momentos; escenas con gráfico o dato, quietas.
+- **Ritmo:** alternar escenas rápidas (2-3 s) con alguna más larga (5-6 s) donde cae lo importante.
+- **Preguntas de la hoja (sí/no; con 3 o más «no», rehacer antes de renderizar):** ¿cada escena se distingue de la anterior a primera vista? ¿hay ≥3 colores dominantes? ¿cada objeto tiene un porqué? ¿el gato sale solo donde aporta? ¿hay algún detalle hecho a mano? ¿los textos se leen sin tapar nada? ¿se confundiría con el vídeo anterior sin el texto?
+- `qa.py` avisa (AVISO, no bloquea) de escenas seguidas con el mismo color dominante, cortes casi invisibles y menos de 3 colores dominantes. Anota en el log `variants.slop_check` con las respuestas «no» y qué se cambió.
 
 ## 7. Upload
 - Copy the mp4 to `videos/<YYYY-MM-DD>_<slug>.mp4`, then commit and push to `main`.
