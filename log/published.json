@@ -648,6 +648,16 @@
    "fails": 0,
    "warns": 0
   },
-  "note": "Ejecución nocturna automática. Guion 147 palabras (short), revisor independiente: 3 puntos corregidos (Why→So why won't it set; nearly full Earth; Earth hangs in your sky). Estilo v4 (gato hablando en gancho y cierre), paisaje lunar propio por código. 16/11 (chat): re-render con la Tierra y la Luna sin el contorno automático en sus bordes interiores (body() las pegaba desde una capa intermedia sin marcarlas como sprite de biblioteca). Hora movida de 20:30 a 00:30 (18:30 NY) por decisión de la usuaria: primera prueba del horario EE. UU., adelantada y mezclada con B2-length (anotar al medir). Segundo re-render (16/11): la Tierra se subía por encima de las montañas lunares; subida ~80 px en las escenas con paisaje. QA 0/0."
+  "note": "Ejecución nocturna automática. Guion 147 palabras (short), revisor independiente: 3 puntos corregidos (Why→So why won't it set; nearly full Earth; Earth hangs in your sky). Estilo v4 (gato hablando en gancho y cierre), paisaje lunar propio por código. 16/11 (chat): re-render con la Tierra y la Luna sin el contorno automático en sus bordes interiores (body() las pegaba desde una capa intermedia sin marcarlas como sprite de biblioteca). Hora movida de 20:30 a 00:30 (18:30 NY) por decisión de la usuaria: primera prueba del horario EE. UU., adelantada y mezclada con B2-length (anotar al medir). Segundo re-render (16/11): la Tierra se subía por encima de las montañas lunares; subida ~80 px en las escenas con paisaje. QA 0/0.",
+  "check": {
+   "at": "2026-11-18T00:40:00+01:00",
+   "instagram": "PUBLISHED",
+   "tiktok": "PUBLISHED",
+   "youtube": "PUBLISHED (warning: could not upload thumbnail)",
+   "instagram_url": "https://www.instagram.com/reel/Df0isXsub35/",
+   "tiktok_url": "https://www.tiktok.com/@mrwhiskerfact/video/7708915904481938710",
+   "youtube_url": "https://www.youtube.com/shorts/szP5Bf6x46k",
+   "by": "safety net (nightly run 18/11)"
+  }
  }
 ]
