@@ -69,12 +69,14 @@ def item(img, lib, name, x, y, h, a=1.0, anchor="center", flip=False, rot=0.0):
 
 def batt_color(f): return GREEN if f > 0.55 else (YELLOW if f > 0.25 else RED)
 
-def battery(img, cx, cy, w, f, a=1.0, col=None, bolt=False, cap_line=None):
+def battery(img, cx, cy, w, f, a=1.0, col=None, bolt=False, cap_line=None, plate=False):
     """icono de batería vectorial: f = carga 0..1; cap_line = línea de «memoria» (fracción) en rojo"""
     h = w * 0.5
     x0, y0, x1, y1 = cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2
     c = col or batt_color(f)
     def fn(d, P, s):
+        if plate:       # sobre fondos oscuros: placa crema, para que el contorno oscuro no se funda con el cielo
+            d.rounded_rectangle([P(x0 - w * 0.16, y0 - h * 0.34), P(x1 + w * 0.07 + w * 0.16, y1 + h * 0.34)], radius=int(h * 0.3 * s), fill=(236, 226, 196), outline=INK_T, width=int(6 * s))
         d.rounded_rectangle([P(x1, cy - h * 0.18), P(x1 + w * 0.07, cy + h * 0.18)], radius=int(6 * s), fill=INK_T)
         d.rounded_rectangle([P(x0, y0), P(x1, y1)], radius=int(h * 0.18 * s), fill=(250, 248, 240), outline=INK_T, width=int(7 * s))
         pad = w * 0.06
@@ -88,7 +90,7 @@ def battery(img, cx, cy, w, f, a=1.0, col=None, bolt=False, cap_line=None):
             pts = [(bx + 0.15 * k, by - k), (bx - 0.45 * k, by + 0.12 * k), (bx - 0.02 * k, by + 0.12 * k),
                    (bx - 0.18 * k, by + k), (bx + 0.45 * k, by - 0.15 * k), (bx + 0.02 * k, by - 0.15 * k)]
             d.polygon([P(*p) for p in pts], fill=(255, 236, 90), outline=INK_T, width=int(5 * s))
-    aa(img, (x0 - 14, y0 - 16, x1 + w * 0.07 + 14, y1 + 16), fn, a)
+    aa(img, (x0 - w * 0.2 - 14, y0 - h * 0.4 - 16, x1 + w * 0.27 + 14, y1 + h * 0.4 + 16), fn, a)
 
 def heat_waves(img, cx, y0, y1, T, a=1.0, n=3, spread=90, col=(240, 110, 50)):
     def fn(d, P, s):
@@ -224,7 +226,7 @@ def _(img, T, t, s, e):
     if T < th: f = lerp(0.35, 0.8, eio((T - s) / max(0.3, th - s)))
     elif T < tf: f = 0.8
     else: f = lerp(0.8, 1.0, eio((T - tf) / 0.8))
-    battery(img, 820, 860, 150, f, a=a)
+    battery(img, 815, 825, 170, f, a=a, plate=True)
     lab(img, "Holds ~80%", 1285, YELLOW, a * on(T, "eighty", s, e, need=3.2), x=470)
     lab(img, "Full when you unplug", 750, YELLOW, a * on(T, "finish", s, e, need=2.0), x=470)
     R.chrome(img, T)
@@ -251,7 +253,7 @@ def second_bg(img, T, t):
 V.backdrop("second")(second_bg)
 V.sounds("second", [(0.05, "tap", 0.5), (rel("second", "heat") - 0.05, "sparkle", 0.9)])
 
-GR = (150, 820, 900, 1300)     # caja de la gráfica
+GR = (150, 820, 860, 1300)     # caja de la gráfica
 @V.scene("high")
 def _(img, T, t, s, e):
     a = win(T, s, e)
@@ -259,15 +261,15 @@ def _(img, T, t, s, e):
     k = eio((T - s - 0.2) / 2.6)
     def graph(d, P, s_):
         d.line([P(x0, y0), P(x0, y1), P(x1, y1)], fill=INK_T, width=int(7 * s_))
-        n = 40; xe = x0 + (x1 - x0) * k
-        cool = [P(x0 + (xe - x0) * i / n, y0 + 60 + 90 * (i / n)) for i in range(n + 1)]
-        hot = [P(x0 + (xe - x0) * i / n, y0 + 60 + 330 * (i / n) ** 0.9) for i in range(n + 1)]
+        n = 40; m = max(1, int(round(n * k)))
+        cool = [P(x0 + (x1 - x0) * i / n, y0 + 60 + 90 * (i / n)) for i in range(m + 1)]
+        hot = [P(x0 + (x1 - x0) * i / n, y0 + 60 + 330 * (i / n) ** 0.9) for i in range(m + 1)]
         if k > 0.02:
             d.line(cool, fill=(40, 140, 200), width=int(12 * s_), joint="curve")
             d.line(hot, fill=RED, width=int(12 * s_), joint="curve")
     aa(img, (x0 - 10, y0 - 10, x1 + 10, y1 + 10), graph, a)
     xe = x0 + (x1 - x0) * k
-    lab(img, "Cool", y0 + 150 - 60, (30, 90, 150), a * clamp(k * 3 - 2), x=min(xe, x1) - 70)
+    lab(img, "Cool", y0 + 150 - 95, (30, 90, 150), a * clamp(k * 3 - 2), x=min(xe, x1) - 110)
     lab(img, "Hot", y0 + 60 + 330 - 120, (140, 26, 40), a * clamp(k * 3 - 2), x=min(xe, x1) - 60)
     lab(img, "Capacity", y0 - 40, INK_T, a, x=x0 + 110)
     lab(img, "Time", y1 + 14, INK_T, a, x=x1 - 70)
