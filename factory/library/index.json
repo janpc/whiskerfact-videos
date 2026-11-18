@@ -711,14 +711,21 @@
    "battery_cutaway": "large_w47/battery_cutaway.png",
    "bedroom_night": "large_w47/bedroom_night.png",
    "charging_phone_big": "large_w47/charging_phone_big.png",
-   "phone_under_pillow": "large_w47/phone_under_pillow.png"
+   "phone_under_pillow": "large_w47/phone_under_pillow.png",
+   "sun_cutaway": "large_w47/sun_cutaway.png",
+   "thunderstorm": "large_w47/thunderstorm.png",
+   "earth_sun": "large_w47/earth_sun.png",
+   "beach_strike": "large_w47/beach_strike.png"
   },
   "tags": [
    "battery",
-   "illustration"
+   "illustration",
+   "lightning",
+   "science",
+   "sun"
   ],
   "source": "gemini",
-  "notes": "Hoja 2x2 grande (17/11/2026), recortada con blobs. bedroom_night y charging_phone_big son TARJETAS con fondo propio (usar como tarjeta). battery_cutaway y phone_under_pillow son sueltos. ~430 px, ampliables ~2x."
+  "notes": "Hoja 2x2 grande (17/11/2026), recortada con blobs. bedroom_night y charging_phone_big son TARJETAS con fondo propio (usar como tarjeta). battery_cutaway y phone_under_pillow son sueltos. ~430 px, ampliables ~2x. | 18/11/2026: añadidas 4 TARJETAS de rayo vs Sol (~460 px, ampliables ~2x, con fondo propio y esquinas redondeadas): sun_cutaway (Sol cortado en capas, con brillo pintado y fondo de espacio), thunderstorm, earth_sun, beach_strike (rayo y fulgurita en la playa)."
  },
  "pilgrim_man": {
   "poses": {
@@ -845,5 +852,33 @@
   ],
   "source": "gemini",
   "notes": "Hoja 2x2 (18/11/2026): 4 TARJETAS con fondo propio y esquinas redondeadas, ~460 px (ampliables ~2x). harvest_feast_1621 (mesa larga al aire libre, sin personas), modern_table, plymouth_1621 (aldea con barco), autumn_forest (extra). Recortadas con llave por inundacion desde el exterior (las tarjetas llevan verdes reales)."
+ },
+ "lightning_items": {
+  "poses": {
+   "lightning_bolt": "lightning_items/lightning_bolt.png",
+   "storm_cloud": "lightning_items/storm_cloud.png",
+   "fulgurite": "lightning_items/fulgurite.png",
+   "lightning_rod": "lightning_items/lightning_rod.png",
+   "struck_tree": "lightning_items/struck_tree.png",
+   "solar_prominence": "lightning_items/solar_prominence.png",
+   "sun_core_glow": "lightning_items/sun_core_glow.png",
+   "hourglass_space": "lightning_items/hourglass_space.png",
+   "thermometer": "lightning_items/thermometer.png",
+   "sun_disc": "lightning_items/sun_disc.png",
+   "house_rod": "lightning_items/house_rod.png",
+   "white_cloud": "lightning_items/white_cloud.png",
+   "raindrop": "lightning_items/raindrop.png",
+   "stopwatch": "lightning_items/stopwatch.png",
+   "rubber_boots": "lightning_items/rubber_boots.png",
+   "beach_pail": "lightning_items/beach_pail.png"
+  },
+  "tags": [
+   "lightning",
+   "object",
+   "science",
+   "sun"
+  ],
+  "source": "gemini",
+  "notes": "Hoja 4x4 de 16 (18/11/2026), recortada con blobs y el quitafondos nuevo. Nombres: lightning_bolt, storm_cloud, fulgurite, lightning_rod, struck_tree, solar_prominence, sun_core_glow (disco naranja con anillo rojo, sin brillo), hourglass_space, thermometer, sun_disc, house_rod, white_cloud, raindrop, stopwatch, rubber_boots, beach_pail. 60-230 px: no ampliar mas de ~1,3x. lightning_rod es muy estrecho (60 px)."
  }
 }
