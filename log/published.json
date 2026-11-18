@@ -731,6 +731,6 @@
    "fails": 0,
    "warns": 5
   },
-  "note": "Ejecución nocturna automática. Primer reel en bucle (sin outro). Guion 148 palabras (short); revisor independiente: 7 puntos, todos corregidos (could seem to lose capacity, practically no memory effect, top-ups, learn your routine, heat gets trapped, sin 'In my professional opinion'). QA 0 fallos tras corregir contadores de % y sello bajo los botones."
+  "note": "Ejecución nocturna automática. Primer reel en bucle (sin outro). Guion 148 palabras (short); revisor independiente: 7 puntos, todos corregidos (could seem to lose capacity, practically no memory effect, top-ups, learn your routine, heat gets trapped, sin 'In my professional opinion'). QA 0 fallos tras corregir contadores de % y sello bajo los botones. Tarea de comprobación (CHECK.md) NO creada: create_trigger requiere aprobación de la usuaria en una ejecución programada; la red de seguridad de la próxima ejecución nocturna la hará."
  }
 ]
