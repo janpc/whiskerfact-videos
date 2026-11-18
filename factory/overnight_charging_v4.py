@@ -115,7 +115,8 @@ def draw_cat(im, n, s, T):
         if -1e-6 <= t - t0 < POSE_FADE:
             prev = pose_at(n, t0 - 1e-3)
             if prev != pose: c = Image.blend(cat_img(prev, mouth, eyes, sc), c, max(0.0, t - t0) / POSE_FADE)
-    br = 1 + 0.006 * np.sin(2 * np.pi * T / 3.2)           # respiración (se mantiene)
+    Tb = T - V.last_t if n == "bridge" else T      # en el puente la respiración acaba en fase 0, como en T=0 (último fotograma = primero)
+    br = 1 + 0.006 * np.sin(2 * np.pi * Tb / 3.2)           # respiración (se mantiene)
     cc = c.resize((round(c.width * br), round(c.height * br)), Image.LANCZOS)
     x0 = round(cx - 700 * sc - (cc.width - c.width) / 2); y0 = round(top - (cc.height - c.height))
     im.alpha_composite(cc, (x0, y0)) if x0 >= 0 else im.paste(cc, (x0, y0), cc)

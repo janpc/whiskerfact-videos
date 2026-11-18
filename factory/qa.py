@@ -38,7 +38,7 @@ def contrast(c1, c2):
 
 def fit_box(V, scene, box):
     """las cajas de texto dentro de la banda de ilustración se mueven con el reencuadre automático"""
-    p = V._fit_params(scene) if scene and V.autofit and scene != "hook" else None
+    p = V._fit_params(scene) if scene and V.autofit and scene not in V.hook_like else None
     zy0, zy1 = V.FIT_ZONE
     cy = (box[1] + box[3]) / 2
     if p is None or not (zy0 <= cy <= zy1): return box
@@ -54,7 +54,7 @@ def run(slug):
     fails, warns = [], []
     # 1) encuadre (calcula todos los reencuadres antes de registrar textos)
     for n in V.sc:
-        if n != "hook": V._fit_params(n)          # el gancho nunca se reencuadra
+        if n not in V.hook_like: V._fit_params(n)          # el gancho nunca se reencuadra
     for w in getattr(V, "warnings", []): warns.append(("—", f"Fuera de la banda (no se reencuadra; mira que no tape textos ni quede pequeño): {w}"))
     # 2) muestreo
     RL.QA_LOG = []

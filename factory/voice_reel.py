@@ -33,6 +33,7 @@ class VoiceReel:
         # loop=True (reels desde el 17/11/2026): sin eslogan ni círculo del gato; el vídeo acaba justo tras la última
         # palabra, que enlaza con el gancho, y al repetirse empalma con el primer fotograma (FACTORY.md, «Loop ending»)
         self.R, self.slug, self.voice, self.loop = R, slug, voice, loop
+        self.hook_like = {"hook"}            # escenas que nunca se reencuadran (en bucle, el puente tambien: debe ser igual que el gancho)
         self.outro_len = 0.0 if loop else OUTRO_LEN
         vdir = os.path.join(HERE, "voice")
         self.voice_mp3 = os.path.join(vdir, f"{slug}_{voice}.mp3")
@@ -48,6 +49,7 @@ class VoiceReel:
         self.outro_at = round(self.words[-1][2] + (LOOP_TAIL if loop else 0.6), 2)
         self.sc = {n: (cut[k], cut[k + 1] if k + 1 < len(names) else self.outro_at) for k, n in enumerate(names)}
         self.first = first
+        self.last_t = (round(self.outro_at * FPS) - 1) / FPS      # hora del ÚLTIMO fotograma que se renderiza (en bucle debe ser igual que el primero)
         R.total = self.outro_at + self.outro_len
         self.draw = {}
         self.backdrops = {}          # fondo propio por escena (paisaje, tarjeta crema, momento psicodélico) — style.py
@@ -95,7 +97,7 @@ class VoiceReel:
                     elif self.autofit: img = self._fit(n, img)
                     img = self._styled(n, img, T, T - s)
                 self.R.label_layer = None
-                if n != "hook" and self.autofit: labels = self._fit_layer(n, labels)
+                if n not in self.hook_like and self.autofit: labels = self._fit_layer(n, labels)
                 img.alpha_composite(labels)                         # etiquetas encima del contorno, limpias
                 if n != "hook": self._subs(img, T)
                 return img
@@ -123,6 +125,7 @@ class VoiceReel:
         lay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
         out = self.draw[n](lay, T, T - s, s, e); lay = out if out is not None else lay
         if n == "hook": lay = self.R.punch(lay, T, 0.0, dur=0.3, amt=0.06)
+        elif n in self.hook_like: pass
         elif self.autofit: lay = self._fit_layer(n, lay)
         if self.INK:
             mask = np.asarray(lay.split()[3], np.float32) / 255
@@ -136,7 +139,7 @@ class VoiceReel:
         import reel_lib as _RL
         m = _RL.NOINK["mask"]; _RL.NOINK["mask"] = None
         if m is None or not m.getbbox(): return None
-        if n != "hook" and self.autofit:
+        if n not in self.hook_like and self.autofit:
             lay = Image.new("RGBA", (W, H), (255, 255, 255, 0)); lay.putalpha(m)
             m = self._fit_layer(n, lay).split()[3]
         return np.asarray(m)
@@ -248,6 +251,7 @@ class VoiceReel:
         for words, t0, t1 in self.blocks:
             if not (t0 <= T < t1 + B.SUBS_BLOCK_EXIT): continue
             out_a = 1 - clamp((T - t1) / B.SUBS_BLOCK_EXIT)
+            if self.loop: out_a *= 1 - clamp((T - (self.last_t - 0.18)) / 0.17)   # el último fotograma no lleva subtítulo (como el primero)
             k = 0
             for li, line in enumerate(R.wrap(" ".join(w for w, _, _ in words), f, B.SUBS_MAX_W)):
                 x = B.SUBS_CENTER_X - f.getlength(line) / 2

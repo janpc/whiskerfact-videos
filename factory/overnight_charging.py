@@ -86,7 +86,7 @@ def battery(img, cx, cy, w, f, a=1.0, col=None, bolt=False, cap_line=None, plate
             xl = x0 + pad + (w - 2 * pad) * cap_line
             d.line([P(xl, y0 - 12), P(xl, y1 + 12)], fill=RED, width=int(8 * s))
         if bolt:
-            bx, by, k = cx, cy, h * 0.42
+            bx, by, k = cx, cy, h * 0.36
             pts = [(bx + 0.15 * k, by - k), (bx - 0.45 * k, by + 0.12 * k), (bx - 0.02 * k, by + 0.12 * k),
                    (bx - 0.18 * k, by + k), (bx + 0.45 * k, by - 0.15 * k), (bx + 0.02 * k, by - 0.15 * k)]
             d.polygon([P(*p) for p in pts], fill=(255, 236, 90), outline=INK_T, width=int(5 * s))
@@ -130,12 +130,14 @@ def stamp(img, text, cx, cy, k, a=1.0, col=RED_T):
     R.put_text(img, spr, cx, cy, a * clamp(k * 3), "mm", text=text)
 
 # =====================================================================  ESCENAS
-def hook_art(img, T, a=1.0):
+def hook_art(img, T, a=1.0, settle=0.0, phase=0.0):
+    """dibujo de la portada. En el puente (final del bucle) `settle` llega a 1 y `phase` alinea la batería para que
+    el ÚLTIMO fotograma sea idéntico al primero (misma batería, mismo tamaño y posición del móvil)"""
     x, y, h = HOOK_PHONE
-    bob = 6 * math.sin(T * 2.4)
-    item(img, LW, "charging_phone_big", x, y + bob, h * (1 + 0.04 * eo(T / 0.4)), a=a)
-    f = 0.15 + 0.85 * ((T * 0.9) % 1.0)                     # la batería se llena una y otra vez: algo se mueve desde 0 s
-    battery(img, 735, 905 + bob, 170, f, a=a, bolt=True)
+    bob = 6 * math.sin(T * 2.4) * (1 - settle)
+    item(img, LW, "charging_phone_big", x, y + bob, h * (1 + 0.04 * eo(T / 0.4) * (1 - settle)), a=a)
+    f = 0.15 + 0.85 * ((0.9 * (T - phase) + 1e-6) % 1.0)           # la batería se llena una y otra vez: algo se mueve desde 0 s
+    battery(img, 260, 985 + bob, 210, f, a=a, bolt=True)    # a la izquierda del dibujo: ya no pisa el enchufe
 
 @V.scene("hook")
 def _(img, T, t, s, e):
@@ -148,9 +150,9 @@ V.sounds("hook", [(0.0, "whoosh", 0.7), (0.3, "pop", 0.6), (rel("hook", "kill"),
 @V.scene("stamp")
 def _(img, T, t, s, e):
     a = win(T, s, e)
-    item(img, LW, "charging_phone_big", 540, 1060, 430, a=a)
+    item(img, LW, "charging_phone_big", 540, 985, 370, a=a)
     tm = wt("myth", s)
-    stamp(img, "MOSTLY MYTH", 490, 1010, clamp((T - tm + 0.05) / 0.25), a)
+    stamp(img, "MOSTLY MYTH", 490, 935, clamp((T - tm + 0.05) / 0.25), a)
     lab(img, "...not completely", 1250, INK_T, a * on(T, "not", s, e, need=2.0), x=500)
     R.chrome(img, T)
     title(img, T, s, e, "Myth or fact?")
@@ -344,17 +346,27 @@ V.backdrop("ask")(lambda img, T, t: ST.landscape(img, T, night=True, terrain="pi
 
 @V.scene("bridge")
 def _(img, T, t, s, e):
-    hook_art(img, T, a=clamp((T - s) / B.ENTER))
-    cover_mod.draw_header(img, CATEGORY)
     end = V.outro_at
+    Tl = V.last_t                                           # hora del último fotograma del vídeo
+    n = int(0.9 * (Tl - s)); phase = Tl - n / 0.9           # en Tl la batería vale justo lo mismo que en T=0
+    hook_art(img, T, a=clamp((T - s) / B.ENTER), settle=clamp((T - (end - 0.9)) / 0.7), phase=phase)
+    cover_mod.draw_header(img, CATEGORY)
     ka = clamp((T - (end - 0.7)) / 0.55)                    # el título de la portada vuelve justo antes del bucle
     if ka > 0: cover_mod.draw_title(img, LINE1, LINE2, SUB, a=ka)
+    return R.punch(img, max(0.0, V.last_t - T), 0.0, dur=0.3, amt=0.06)    # el golpe de entrada del gancho, al revés: el último fotograma ya viene con él
 V.sounds("bridge", [(0.05, "whoosh", 0.6)])
 
 # ---------- fondos ----------
 def card_bg(img, T, t): ST.card(img, CARD)
 V.backdrop("hook")(lambda img, T, t: cover_mod.draw_bg(img, CATEGORY, 0.05 * T))
-V.backdrop("bridge")(lambda img, T, t: cover_mod.draw_bg(img, CATEGORY, 0.05 * T))
+V.hook_like = {"hook", "bridge"}      # el puente es la portada otra vez: sin reencuadre, para que el último fotograma sea igual que el primero
+
+def bridge_bg(img, T, t):
+    """rayos de la portada: al final del bucle quedan en el mismo ángulo que en T=0 (el patrón se repite cada tau/14)"""
+    P = math.tau / 14; Tl = V.last_t; s0 = V.sc["bridge"][0]
+    m = int(0.05 * (Tl - s0) / P)
+    cover_mod.draw_bg(img, CATEGORY, 0.05 * (T - Tl) + m * P)
+V.backdrop("bridge")(bridge_bg)
 for n in ("stamp", "memory", "first", "high", "verdict"):
     V.backdrop(n)(card_bg)
 
