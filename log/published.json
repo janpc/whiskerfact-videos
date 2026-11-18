@@ -659,5 +659,78 @@
    "youtube_url": "https://www.youtube.com/shorts/szP5Bf6x46k",
    "by": "safety net (nightly run 18/11)"
   }
+ },
+ {
+  "date": "2026-11-18",
+  "category": "tech",
+  "slug": "overnight_charging",
+  "title": "Myth or fact: does charging your phone overnight kill its battery?",
+  "hook": "Does charging your phone overnight kill its battery?",
+  "sources": [
+   "https://batteryuniversity.com/article/bu-808-how-to-prolong-lithium-based-batteries",
+   "https://batteryuniversity.com/article/memory-myth-or-fact",
+   "https://science.org.au/curious/node/744",
+   "https://www.cqu.edu.au/news/1046614/should-you-charge-your-phone-overnight-will-overcharging-make-it-explode-common-battery-myths-debunk",
+   "https://www.samsung.com/ae/support/mobile-devices/how-to-avoid-overcharging-on-your-galaxy-phone",
+   "https://support.apple.com/108055",
+   "https://www.apple.com/in/batteries/maximizing-performance/",
+   "https://support.google.com/pixelphone/answer/6090612?hl=en"
+  ],
+  "metricool_uuid": "8901634678913647770",
+  "scheduled": "2026-11-18T20:30:00+01:00",
+  "duration_s": 54.8,
+  "variants": {
+   "time_slot": "20:30",
+   "hook_style": "question",
+   "caption_style": "teaser",
+   "format": "myth",
+   "personality": "light",
+   "cta": "👇 Tag someone who needs to know this.",
+   "closing": "loop (ask)",
+   "tiktok_mode": "api",
+   "look": {
+    "skies": [
+     "dusk",
+     "night",
+     "sunset",
+     "space_night"
+    ],
+    "terrains": [
+     "city",
+     "dunes",
+     "pines"
+    ],
+    "wow": [
+     "blobs"
+    ],
+    "card": true
+   },
+   "share_ask": "caption",
+   "length": "short",
+   "experiment": {
+    "batch": "B2-length",
+    "test": "length",
+    "option": "short",
+    "role": "variant"
+   },
+   "loop_join": "Because if it is, you're probably wondering: does charging your phone overnight kill its battery?",
+   "slop_check": "1 'no' (detalle hecho a mano: solo ondas de calor y gráfica por código). Cambios tras la hoja: etiquetas sin solapes, 'many' con cielo propio (mismo color que 'first' según QA), sello más pequeño fuera de la zona de botones",
+   "music_style": "playful electronic tech groove, plucky synth bass, marimba, ~105 BPM",
+   "quality_changes": [
+    "first_second_rule",
+    "share_rule",
+    "niche_hashtags"
+   ]
+  },
+  "music": "ElevenLabs video-to-music",
+  "credits": {
+   "voice": 880,
+   "music": 822
+  },
+  "qa": {
+   "fails": 0,
+   "warns": 5
+  },
+  "note": "Ejecución nocturna automática. Primer reel en bucle (sin outro). Guion 148 palabras (short); revisor independiente: 7 puntos, todos corregidos (could seem to lose capacity, practically no memory effect, top-ups, learn your routine, heat gets trapped, sin 'In my professional opinion'). QA 0 fallos tras corregir contadores de % y sello bajo los botones."
  }
 ]
