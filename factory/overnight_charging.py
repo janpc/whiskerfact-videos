@@ -114,7 +114,7 @@ def stamp(img, text, cx, cy, k, a=1.0, col=RED_T):
     """sello «MOSTLY MYTH»: texto a tamaño final en la capa de etiquetas, inclinación pequeña (≤ 6°), entra con golpe"""
     if a <= 0.003 or k <= 0: return
     if text not in _stamp_cache:
-        f = cover_mod._font("Black", 110)
+        f = cover_mod._font("Black", 88)
         tmp = ImageDraw.Draw(Image.new("RGBA", (10, 10)))
         tw = int(tmp.textlength(text, font=f))
         lay = Image.new("RGBA", (tw + 120, 220), (0, 0, 0, 0)); d = ImageDraw.Draw(lay)
@@ -148,8 +148,8 @@ def _(img, T, t, s, e):
     a = win(T, s, e)
     item(img, LW, "charging_phone_big", 540, 1060, 430, a=a)
     tm = wt("myth", s)
-    stamp(img, "MOSTLY MYTH", 540, 1010, clamp((T - tm + 0.05) / 0.25), a)
-    lab(img, "...not completely", 1250, INK_T, a * on(T, "not", s, e, need=1.5), x=540)
+    stamp(img, "MOSTLY MYTH", 490, 1010, clamp((T - tm + 0.05) / 0.25), a)
+    lab(img, "...not completely", 1250, INK_T, a * on(T, "not", s, e, need=2.0), x=500)
     R.chrome(img, T)
     title(img, T, s, e, "Myth or fact?")
     return R.punch(img, T, tm, amt=0.05)
@@ -210,9 +210,8 @@ def _(img, T, t, s, e):
         ph = ((T - tu) % 2.0) / 2.0                        # 100 → 95 → 100: el relleno
         f = 1.0 - 0.05 * math.sin(math.pi * ph)
     battery(img, 690, 1000, 280, f, a=a, bolt=T < tf)
-    lab(img, f"{int(round(f * 100))}%", 1110, INK_T, a, x=690)
-    lab(img, "Stops at 100%", 800, RED_T, a * on(T, "full", s, e, need=2.6) * until(T, "top", s, e, need=1.6), x=540)
-    lab(img, "Then small top-ups", 800, INK_T, a * on(T, "top", s, e, need=1.6), x=540)
+    lab(img, "Stops at 100%", 790, RED_T, a * on(T, "full", s, e, need=3.0), x=540)
+    lab(img, "Then small top-ups", 1270, INK_T, a * on(T, "top", s, e, need=2.0), x=560)
     R.chrome(img, T)
     title(img, T, s, e, "Step 1: it stops")
 V.sounds("first", [(0.05, "whoosh", 0.6), (rel("first", "full"), "click", 0.8), (rel("first", "top"), "tap", 0.6)])
@@ -226,10 +225,8 @@ def _(img, T, t, s, e):
     elif T < tf: f = 0.8
     else: f = lerp(0.8, 1.0, eio((T - tf) / 0.8))
     battery(img, 820, 860, 150, f, a=a)
-    lab(img, f"{int(round(f * 100))}%", 940, B.TEXT, a, x=820)
-    lab(img, "Learns your routine", 1285, B.TEXT, a * on(T, "routine", s, e, need=2.2) * until(T, "eighty", s, e, need=2.0), x=470)
-    lab(img, "Holds ~80%", 1285, YELLOW, a * on(T, "eighty", s, e, need=2.0) * until(T, "finish", s, e, need=1.6), x=470)
-    lab(img, "100% when you unplug", 1285, YELLOW, a * on(T, "finish", s, e, need=1.6), x=470)
+    lab(img, "Holds ~80%", 1285, YELLOW, a * on(T, "eighty", s, e, need=3.2), x=470)
+    lab(img, "Full when you unplug", 750, YELLOW, a * on(T, "finish", s, e, need=2.0), x=470)
     R.chrome(img, T)
     title(img, T, s, e, "Smart charging")
 V.sounds("many", [(0.05, "whoosh", 0.6), (rel("many", "eighty"), "pop", 0.7), (rel("many", "finish"), "sparkle", 0.6)])
@@ -240,11 +237,12 @@ def _(img, T, t, s, e):
     a = win(T, s, e)
     th = wt("heat", s)
     kh = clamp((T - th + 0.05) / 0.3)
+    kt = clamp((T - wt("real", s) + 0.05) / 0.3)
     item(img, BI, "thermometer", 520, 1060 - 10 * math.sin(T * 3) * kh, 320 * (1 + 0.08 * eo(kh)), a=a)
     heat_waves(img, 520, 860, 980, T, a * kh, n=3, spread=110)
     R.chrome(img, T)
     title(img, T, s, e, "The real enemy")
-    R.txt(img, "HEAT", TITLE_Y + 105, "title", (255, 222, 90), a * kh)
+    R.txt(img, "HEAT", TITLE_Y + 105, "title", (255, 222, 90), a * kt)
     return R.punch(img, T, th, amt=0.06)
 def second_bg(img, T, t):
     s = V.sc["second"][0]; th = wt("heat", s)
@@ -270,7 +268,7 @@ def _(img, T, t, s, e):
     aa(img, (x0 - 10, y0 - 10, x1 + 10, y1 + 10), graph, a)
     xe = x0 + (x1 - x0) * k
     lab(img, "Cool", y0 + 150 - 60, (30, 90, 150), a * clamp(k * 3 - 2), x=min(xe, x1) - 70)
-    lab(img, "Hot", y0 + 60 + 330 - 120, RED_T, a * clamp(k * 3 - 2), x=min(xe, x1) - 60)
+    lab(img, "Hot", y0 + 60 + 330 - 120, (140, 26, 40), a * clamp(k * 3 - 2), x=min(xe, x1) - 60)
     lab(img, "Capacity", y0 - 40, INK_T, a, x=x0 + 110)
     lab(img, "Time", y1 + 14, INK_T, a, x=x1 - 70)
     kf = on(T, "sitting", s, e, need=2.2)
@@ -337,8 +335,9 @@ def _(img, T, t, s, e):
     R.mascot(img, 230, 110, 980, a * eo((T - s - 0.2) / 0.4))
     R.chrome(img, T)
     title(img, T, s, e, "Charging right now?")
-    lab(img, "Tell me below", 790, YELLOW, a * on(T, "Tell", s, e, need=1.5), x=540)
+    lab(img, "Tell me below", 790, YELLOW, a * on(T, "Tell", s, e, need=2.0), x=540)
 V.sounds("ask", [(0.05, "whoosh", 0.6), (rel("ask", "Tell"), "pop", 0.7)])
+V.backdrop("many")(lambda img, T, t: (ST.sky(img, (30, 22, 66), (78, 44, 110)), ST.stars(img, T, n=60, seed=9, y1=H)))
 V.backdrop("ask")(lambda img, T, t: ST.landscape(img, T, night=True, terrain="pines", seed=5))
 
 @V.scene("bridge")
