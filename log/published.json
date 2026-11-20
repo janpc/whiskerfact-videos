@@ -731,6 +731,18 @@
    "fails": 0,
    "warns": 5
   },
-  "note": "Ejecución nocturna automática. Primer reel en bucle (sin outro). Guion 148 palabras (short); revisor independiente: 7 puntos, todos corregidos (could seem to lose capacity, practically no memory effect, top-ups, learn your routine, heat gets trapped, sin 'In my professional opinion'). QA 0 fallos tras corregir contadores de % y sello bajo los botones. Tarea de comprobación (CHECK.md) NO creada: create_trigger requiere aprobación de la usuaria en una ejecución programada; la red de seguridad de la próxima ejecución nocturna la hará."
+  "note": "Ejecución nocturna automática. Primer reel en bucle (sin outro). Guion 148 palabras (short); revisor independiente: 7 puntos, todos corregidos (could seem to lose capacity, practically no memory effect, top-ups, learn your routine, heat gets trapped, sin 'In my professional opinion'). QA 0 fallos tras corregir contadores de % y sello bajo los botones. Tarea de comprobación (CHECK.md) NO creada: create_trigger requiere aprobación de la usuaria en una ejecución programada; la red de seguridad de la próxima ejecución nocturna la hará.",
+  "check": {
+   "at": "2026-11-21T00:40:00+01:00",
+   "instagram": "PUBLISHED",
+   "tiktok": "PUBLISHED",
+   "youtube": "PUBLISHED (con aviso: no se pudo subir la miniatura)",
+   "by": "red de seguridad de la ejecución nocturna del 21/11"
+  },
+  "public_urls": {
+   "instagram": "https://www.instagram.com/reel/Df5Q1gGuW7X/",
+   "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7709596351616568598",
+   "youtube": "https://www.youtube.com/shorts/ungEEEK26WE"
+  }
  }
 ]
