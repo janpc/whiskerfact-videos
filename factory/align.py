@@ -12,6 +12,8 @@ EXTRA_PHONES = {   # pronunciaciones de nombres propios que no están en cmudict
     "fluffing": "F L AH F IH NG", "hairier": "HH EH R IY ER",
     "draculin": "D R AE K Y AH L IH N", "roostmates": "R UW S T M EY T S", "stoker's": "S T OW K ER Z",
     "venus's": "V IY N AH S IH Z",
+    "wampanoag": "W AA M P AH N OW AE G", "massasoit": "M AE S AH S OY T", "massasoit's": "M AE S AH S OY T S",
+    "wildfowl": "W AY L D F AW L", "winslow": "W IH N Z L OW",
 }
 LETTER = {"a": "AE", "b": "B", "c": "K", "d": "D", "e": "EH", "f": "F", "g": "G", "h": "HH", "i": "IH", "j": "JH", "k": "K",
           "l": "L", "m": "M", "n": "N", "o": "AA", "p": "P", "q": "K", "r": "R", "s": "S", "t": "T", "u": "AH", "v": "V",
