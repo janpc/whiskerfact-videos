@@ -26,6 +26,7 @@ export const Reel: React.FC = () => {
     <AbsoluteFill style={{background: '#000'}}>
       <Bg id={id} T={last ? T - DUR : T} />
       <div style={{position: 'absolute', inset: 0, opacity: fadeEnd}}><Content id={id} t={t} T={T} /></div>
+      {last && <div style={{position: 'absolute', inset: 0, opacity: 1 - fadeEnd}}><Content id={SC[0][0]} t={0} T={0} /></div>}
       {hasCat && <>
         <Cat T={T} x={-20} y={1236} pose="stand_front" o={1 - swap} curious={CURIOUS.has(id)} />
         <Cat T={T} x={-20} y={1236} pose="explain" o={swap} curious={CURIOUS.has(id)} />

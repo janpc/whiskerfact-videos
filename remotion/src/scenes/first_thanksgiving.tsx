@@ -57,16 +57,17 @@ export const Content: React.FC<{id: string; t: number; T: number}> = ({id, t, T}
   const k = (a: number, d = 0.35) => eo((t - a) / d);
   switch (id) {
     case 'hook': return <>
-      <Big text="POP QUIZ" y={300} size={190} t={t} at={0.15} col={ACC} />
-      <Title k={k(1.0)} text="What was NOT at the" y={560} /><Title k={k(1.3)} text="first Thanksgiving?" y={660} />
-      <Item lib={LT} name="harvest_feast_1621" x={620} y={1010} h={560} a={k(1.9)} />
+      <Big text="POP QUIZ" y={260} size={190} t={9} col={ACC} />
+      <Title k={1} text="What was NOT at the" y={480} /><Title k={1} text="first Thanksgiving?" y={580} />
+      <Item lib={LT} name="harvest_feast_1621" x={540} y={1010} h={500} a={1} />
+      <Item lib={PM} name="think" x={900} y={1150} h={290} a={1} />
     </>;
     case 'opts': return <>
       <Title k={k(0.1)} text="Which one is missing?" y={330} />
       <Opt cx={200} letter="A" name="deer" sprite="deer" h={270} a={k(0.0)} />
       <Opt cx={540} letter="B" name="wildfowl" sprite="duck" h={230} a={k(1.4)} />
       <Opt cx={880} letter="C" name="pumpkin pie" sprite="pumpkin_pie" h={170} a={k(3.2)} />
-      <Label text="comment your answer" y={1260} col={ACC} a={k(5.0)} />
+      <Item lib={PM} name="think" x={150} y={1295} h={180} a={k(5.0)} />
     </>;
     case 'reveal': {
       const win = clamp((t - 1.0) / 0.3);
@@ -75,41 +76,46 @@ export const Content: React.FC<{id: string; t: number; T: number}> = ({id, t, T}
         <Item lib={TI} name="pumpkin_pie" x={540} y={840} h={260} a={k(0.9)} rot={Math.sin(t * 5) * 3} />
         <Cross x={760} y={740} a={clamp((t - 1.6) / 0.2)} r={60} />
         <Label text="no pumpkin pie" y={1010} col={INK} a={k(1.8)} />
+        <Item lib={PM} name="amazed" x={880} y={1140} h={300} a={k(2.0)} />
       </>;
     }
     case 'plym': return <>
       <Title k={k(0.1)} text="Plymouth · autumn 1621" y={300} />
-      <Item lib={LT} name="plymouth_1621" x={540} y={820} h={640} a={k(0.3)} />
-      <Item lib={PM} name="talk" x={230} y={1180} h={300} a={k(2.5)} />
-      <Item lib={WM} name="front" x={850} y={1180} h={320} a={k(5.2)} />
-      <Label text="Massasoit + ~90 men" y={1330} col={TEXT} a={k(5.8)} />
+      <Item lib={LT} name="plymouth_1621" x={540} y={780} h={600} a={k(0.3)} />
+      <Item lib={PM} name="talk" x={230} y={1170} h={270} a={k(2.5)} />
+      {[0, 1, 2, 3].map((i) => <Item key={i} lib={WM} name={i % 2 ? 'front' : 'three_quarter'} x={700 + i * 90} y={1180 - (i % 2) * 20} h={250 - (i % 2) * 20} a={k(5.2 + i * 0.25)} />)}
     </>;
     case 'feast': return <>
       <Big text="3 DAYS" y={330} size={240} t={t} at={0.5} />
-      <Item lib={LT} name="harvest_feast_1621" x={540} y={1010} h={760} a={k(0.2)} />
+      <Item lib={LT} name="harvest_feast_1621" x={540} y={930} h={640} a={k(0.2)} />
+      <Item lib={PM} name="happy" x={110} y={1170} h={300} a={k(0.8)} /><Item lib={WM} name="happy" x={970} y={1170} h={300} a={k(1.1)} />
     </>;
     case 'deer': return <>
       <Title k={k(0.1)} text="Deer?" y={320} />
-      <Item lib={TI} name="deer" x={540} y={980} h={360} a={k(0.3)} />
-      <Tick x={760} y={800} a={clamp((t - 0.9) / 0.2)} r={70} />
+      <Item lib={TI} name="deer" x={640} y={980} h={340} a={k(0.3)} />
+      <Item lib={WM} name="offer" x={290} y={990} h={310} a={k(1.0)} />
+      <Tick x={860} y={790} a={clamp((t - 0.9) / 0.2)} r={70} />
       <Label text="5 deer, as gifts" y={1225} col={TEXT} a={k(2.5)} />
     </>;
     case 'birds': return <>
       <Title k={k(0.1)} text="Birds?" y={320} />
-      <Item lib={TI} name="duck" x={400} y={1000} h={300} a={k(0.3)} />
-      <Item lib={TI} name="wild_turkey" x={720} y={1010} h={300} a={k(2.0)} />
-      <Tick x={820} y={800} a={clamp((t - 0.9) / 0.2)} r={70} />
+      <Item lib={PM} name="point_side" x={170} y={990} h={300} a={k(0.5)} />
+      <Item lib={TI} name="duck" x={470} y={1000} h={280} a={k(0.3)} />
+      <Item lib={TI} name="wild_turkey" x={790} y={1010} h={280} a={k(2.0)} />
+      <Tick x={930} y={790} a={clamp((t - 0.9) / 0.2)} r={70} />
       <Label text="ducks and geese, probably" y={1225} col={INK} a={k(3.3)} />
     </>;
     case 'turkey': return <>
       <Title k={k(0.1)} text="Turkey?" y={320} />
-      <Item lib={TI} name="roast_turkey" x={540} y={1000} h={280} a={k(0.3)} />
+      <Item lib={TI} name="roast_turkey" x={540} y={1000} h={270} a={k(0.3)} />
+      <Item lib={PM} name="shrug" x={150} y={1040} h={330} a={k(1.6)} /><Item lib={WM} name="shrug" x={930} y={1040} h={330} a={k(1.9)} />
       <Big text="?" y={520} size={200} t={t} at={1.3} col={ACC} />
       <Label text="historians aren't sure" y={1250} col={TEXT} a={k(1.6)} />
     </>;
     case 'pie': return <>
       <Title k={k(0.1)} text="Why no pie?" y={300} />
-      <Item lib={TI} name="pumpkin_pie" x={540} y={860} h={220} a={k(0.3)} />
+      <Item lib={TI} name="pumpkin_pie" x={420} y={860} h={220} a={k(0.3)} />
+      <Item lib={PM} name="worried" x={900} y={1080} h={300} a={k(1.2)} />
       {[['no butter', 1.2], ['no wheat flour', 2.4], ['no oven (probably)', 4.0]].map(([s, at], i) => <React.Fragment key={s as string}>
         <Cross x={250} y={1040 + i * 85} a={clamp((t - (at as number)) / 0.2)} r={34} />
         <Label text={s as string} y={1008 + i * 85} col={TEXT} a={k(at as number)} x={620} />
@@ -117,14 +123,16 @@ export const Content: React.FC<{id: string; t: number; T: number}> = ({id, t, T}
     </>;
     case 'sugar': return <>
       <Title k={k(0.1)} text="Sugar?" y={320} color={INK} />
-      <Item lib={TI} name="sugar_loaf" x={780} y={900} h={300} a={k(0.3)} />
+      <Item lib={TI} name="sugar_loaf" x={640} y={900} h={280} a={k(0.3)} />
+      <Item lib={PM} name="think" x={930} y={1000} h={320} a={k(0.6)} />
       <Label text="running low, likely" y={1130} col={INK} a={k(0.9)} x={720} />
     </>;
     case 'pump': return <>
       <Title k={k(0.1)} text="Pumpkins + squash?" y={300} />
-      <Item lib={TI} name="pumpkin" x={400} y={960} h={280} a={k(0.3)} />
-      <Item lib={TI} name="cooking_pot" x={730} y={980} h={250} a={k(1.0)} />
-      <Tick x={560} y={820} a={clamp((t - 1.6) / 0.2)} r={60} />
+      <Item lib={TI} name="pumpkin" x={250} y={960} h={270} a={k(0.3)} />
+      <Item lib={TI} name="corn_ears" x={540} y={980} h={200} a={k(0.7)} />
+      <Item lib={TI} name="cooking_pot" x={830} y={980} h={240} a={k(1.0)} />
+      <Tick x={940} y={790} a={clamp((t - 1.6) / 0.2)} r={60} />
       <Label text="yes, just not in a crust" y={1225} col={INK} a={k(2.4)} />
     </>;
     case 'foot': {
@@ -137,22 +145,27 @@ export const Content: React.FC<{id: string; t: number; T: number}> = ({id, t, T}
         <Label text="the name" y={870} col={ACC} a={k(3.4)} x={x2} />
         <Label text="~200 years later" y={720} col={TEXT} a={k(3.6)} />
         <Item lib={TI} name="mayflower" x={x1} y={1100} h={210} a={k(0.6)} />
+        <Item lib={PM} name="explain" x={880} y={1130} h={300} a={k(3.6)} />
       </>;
     }
     case 'letter': return <>
       <Title k={k(0.1)} text="One eyewitness letter" y={300} />
-      <Item lib={TI} name="old_letter" x={540} y={940} h={330} a={k(0.3)} />
+      <Item lib={PM} name="think" x={200} y={1000} h={300} a={k(0.6)} />
+      <Item lib={TI} name="old_letter" x={560} y={960} h={330} a={k(0.3)} />
+      <Item lib={TI} name="mayflower" x={880} y={1000} h={200} a={k(1.2)} />
       <Label text="Edward Winslow" y={1170} col={INK} a={k(3.9)} />
     </>;
     case 'bonus': return <>
       <Title k={k(0.1)} text="Bonus" y={300} color={ACC} />
-      <Item lib={TI} name="mussels" x={330} y={920} h={260} a={k(0.9)} />
-      <Item lib={TI} name="eel" x={750} y={940} h={240} a={k(2.5)} />
+      <Item lib={TI} name="mussels" x={230} y={920} h={250} a={k(0.9)} />
+      <Item lib={TI} name="eel" x={560} y={940} h={230} a={k(2.5)} />
+      <Item lib={WM} name="amazed" x={900} y={1000} h={320} a={k(3.2)} />
       <Label text="mussels and eels, maybe" y={1100} col={TEXT} a={k(3.0)} />
     </>;
     default: return <>
       <Item lib={LT} name="modern_table" x={540} y={900} h={600} a={k(0.2)} />
       <Label text="this year, at your table…" y={470} col={ACC} a={k(0.5)} />
+      <Item lib={PM} name="point" x={910} y={1130} h={300} a={k(0.8)} />
     </>;
   }
 };
