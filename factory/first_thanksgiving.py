@@ -53,8 +53,8 @@ def wt(word, s): return V.word_time(word, after=s)
 def rel(scene, word): return V.word_time(word, after=V.sc[scene][0]) - V.sc[scene][0]
 def lab(img, text, y, col, a, x=W / 2): R.txt(img, text, y, "label", col, a, x=x, rise=False)
 def title(img, T, s, e, text, color=B.TEXT, delay=0.0): R.txt(img, text, TITLE_Y, "title", color, win(T, s + delay, e))
-def on(T, word, s, e, need=1.6, lead=0.1): return clamp((T - min(wt(word, s), e - need) + lead) / 0.3)
-def until(T, word, s, e, need=1.6):
+def on(T, word, s, e, need=2.0, lead=0.1): return clamp((T - min(wt(word, s), e - need) + lead) / 0.3)
+def until(T, word, s, e, need=2.0):
     tw = min(wt(word, s), e - need) - 0.1
     return 1 - clamp((T - (tw - 0.2)) / 0.15)
 
@@ -190,16 +190,16 @@ def _(img, T, t, s, e):
     tc = wt("C", s)
     k = eo((T - s) / 0.4)
     item(img, TI, "pumpkin_pie", 500, lerp(1150, 1110, k), 280, a=a)
-    stamp(img, "NOT THERE", 500, 960, clamp((T - wt("No", s) + 0.05) / 0.25), a)
+    stamp(img, "NOT THERE", 500, 960, clamp((T - tc - 0.05) / 0.25), a)
     R.chrome(img, T)
     title(img, T, s, e, "It's C!")
-    return R.punch(img, T, wt("No", s), amt=0.06)
+    return R.punch(img, T, tc + 0.1, amt=0.06)
 def reveal_bg(img, T, t):
     s = V.sc["reveal"][0]
     ST.landscape(img, T, sky_kind="sunset", terrain="autumn", seed=1)
     ST.wow_moment(img, T, V.word_time("C", after=s) - 0.05, CATEGORY, "swirl", dur=WOW_DUR, center=(500, 1100))
 V.backdrop("reveal")(reveal_bg)
-V.sounds("reveal", [(0.05, "whoosh", 0.7), (rel("reveal", "C") - 0.05, "sparkle", 0.9), (rel("reveal", "No"), "pop", 1.0)])
+V.sounds("reveal", [(0.05, "whoosh", 0.7), (rel("reveal", "C") - 0.05, "sparkle", 0.9), (rel("reveal", "C") + 0.1, "pop", 1.0)])
 
 @V.scene("picture")
 def _(img, T, t, s, e):
@@ -221,7 +221,7 @@ def _(img, T, t, s, e):
     LIB.place(img, PIL_M, pp, 280, GY, height=350, a=a)
     if T >= tw: walker(img, WAM, xw, GY, 345, T, kw < 1.0, flip=True, a=a, still="three_quarter_left")
     lab(img, "Colonists", 970, B.TEXT, a * on(T, "Plymouth", s, e, need=4.0), x=270)
-    lab(img, "~90 men", 970, YELLOW, a * on(T, "ninety", s, e, need=1.6), x=660)
+    lab(img, "~90 men", 970, YELLOW, a * on(T, "ninety", s, e, need=2.0), x=660)
     R.chrome(img, T)
     title(img, T, s, e, "Massasoit arrives")
 V.backdrop("arrive")(lambda img, T, t: ST.landscape(img, T, sky_kind="dusk", terrain="autumn", seed=3))
@@ -237,7 +237,7 @@ def _(img, T, t, s, e):
     for i in range(3):
         lit = clamp((T - (td - 0.3 + 0.3 * i)) / 0.2)
         sun(img, 360 + 180 * i, 820, 38, lit, a)
-    lab(img, "3 days", 905, YELLOW, a * on(T, "three", s, e, need=1.6), x=540)
+    lab(img, "3 days", 905, YELLOW, a * on(T, "three", s, e, need=2.0), x=540)
     R.chrome(img, T)
     title(img, T, s, e, "A harvest feast")
 V.backdrop("together")(lambda img, T, t: ST.landscape(img, T, night=True, terrain="forest", seed=4))
@@ -253,8 +253,8 @@ def _(img, T, t, s, e):
     for i in range(5):
         k = clamp((T - (tf - 0.1 + 0.15 * i)) / 0.25)
         LIB.place(img, TI, "deer", 480 + 90 * i, GY - 6 - (i % 2) * 40, height=170, a=a * k, squash=(1.0, 0.94 + 0.06 * eo(k)))
-    lab(img, "5 deer", 785, YELLOW, a * on(T, "five", s, e, need=1.6), x=670)
-    lab(img, "Gifts", 900, B.TEXT, a * on(T, "gifts", s, e, need=1.5), x=670)
+    lab(img, "5 deer", 785, YELLOW, a * on(T, "five", s, e, need=2.0), x=670)
+    lab(img, "Gifts", 900, B.TEXT, a * on(T, "gifts", s, e, need=2.0), x=670)
     R.chrome(img, T)
     title(img, T, s, e, "A: real!")
 V.backdrop("deer")(lambda img, T, t: ST.landscape(img, T, sky_kind="dawn", terrain="pines", seed=5))
@@ -268,8 +268,8 @@ def _(img, T, t, s, e):
         k = clamp((T - (s + 0.15 + 0.2 * i)) / 0.3)
         bob = 5 * math.sin(T * 2.2 + i * 1.4)
         LIB.place(img, TI, "duck", x, 1340 + bob, height=h, a=a * k, flip=i % 2 == 1)
-    lab(img, "Wildfowl", 800, YELLOW, a * on(T, "Real", s, e, need=1.6), x=640)
-    lab(img, "Ducks? Geese?", 880, B.TEXT, a * on(T, "probably", s, e, need=1.6), x=640)
+    lab(img, "Wildfowl", 800, YELLOW, a * on(T, "Real", s, e, need=2.0), x=640)
+    lab(img, "Ducks? Geese?", 880, B.TEXT, a * on(T, "probably", s, e, need=2.0), x=640)
     R.chrome(img, T)
     title(img, T, s, e, "B: real too!")
 V.backdrop("birds")(lambda img, T, t: ST.landscape(img, T, sky_kind="day", terrain="waves", seed=6))
@@ -279,10 +279,10 @@ V.sounds("birds", [(0.05, "whoosh", 0.6), (0.2, "pop", 0.4), (rel("birds", "fowl
 def _(img, T, t, s, e):
     a = win(T, s, e)
     k = eo((T - s) / 0.4)
-    item(img, TI, "wild_turkey", 440, 1070, lerp(270, 295, k), a=a)
+    item(img, TI, "wild_turkey", 440, 1345, lerp(270, 295, k), a=a, anchor="bottom")
     q = R.sprite("?", "number", RED_T)
     R.put_text(img, q, 740, 930 + 8 * math.sin(T * 3), a * clamp((T - s - 0.2) / 0.3), "mm", text="?")
-    lab(img, "Not sure", 1265, INK_T, a * on(T, "Historians", s, e, need=1.6), x=440)
+    lab(img, "Not sure", 830, B.TEXT, a * on(T, "Historians", s, e), x=440)
     R.chrome(img, T)
     title(img, T, s, e, "Turkey?")
 V.sounds("turkey", [(0.05, "whoosh", 0.6), (0.2, "pop", 0.6), (rel("turkey", "Historians"), "tap", 0.5)])
@@ -292,7 +292,7 @@ def _(img, T, t, s, e):
     a = win(T, s, e)
     rows = [("No butter", "butter", 860), ("No wheat flour", "wheat", 1010), ("No oven?", "oven", 1160)]
     for text, w, y in rows:
-        k = on(T, w, s, e, need=1.6)
+        k = on(T, w, s, e, need=2.0)
         cross(img, 130, y + 28, 30, clamp((T - min(wt(w, s), e - 1.6) + 0.1) / 0.4), a)
         lab(img, text, y, INK_T, a * k, x=370)
     ko = clamp((T - wt("oven", s)) / 0.6)
@@ -322,8 +322,8 @@ def _(img, T, t, s, e):
     kc = clamp((T - wt("crust", s) + 0.2) / 0.3)
     item(img, TI, "pumpkin_pie", 770, 1000, 170, a=a * kc)
     cross(img, 770, 1000, 70, clamp((T - wt("crust", s)) / 0.4), a)
-    lab(img, "On the menu", 800, YELLOW, a * on(T, "Likely", s, e, need=2.4) * until(T, "crust", s, e, need=1.5), x=460)
-    lab(img, "Not in a crust", 800, YELLOW, a * on(T, "crust", s, e, need=1.5), x=460)
+    lab(img, "On the menu", 800, YELLOW, a * clamp((T - s - 0.1) / 0.3) * until(T, "crust", s, e, need=2.0), x=460)
+    lab(img, "Not in a crust", 800, YELLOW, a * on(T, "crust", s, e), x=460)
     R.chrome(img, T)
     title(img, T, s, e, "Pumpkins? Yes")
 V.backdrop("pumpkins")(lambda img, T, t: ST.landscape(img, T, sky_kind="sunset", terrain="hills", seed=7))
@@ -334,15 +334,21 @@ def _(img, T, t, s, e):
     a = win(T, s, e)
     paw(img, 150, 840, 30, a)
     lab(img, "Not \"Thanksgiving\"", 810, INK_T, a * on(T, "call", s, e, need=3.0), x=540)
-    tc = wt("centuries", s) - 0.4
-    kc = eio((T - tc) / 1.2)
-    year = int(round(lerp(1621, 1841, kc)))
-    num = R.sprite(str(year), "number", RED_T)
-    R.put_text(img, num, 540, 1060, a * clamp((T - s - 0.3) / 0.3), "mm", text=str(year))
-    lab(img, "Named in 1841", 1240, INK_T, a * on(T, "later", s, e, need=1.6), x=540)
+    tc = min(wt("centuries", s) - 0.2, e - 2.0)
+    n1 = R.sprite("1621", "number", INK_T)
+    R.put_text(img, n1, 300, 1060, a * clamp((T - s - 0.1) / 0.3), "mm", text="1621")
+    k2 = clamp((T - tc) / 0.3)
+    def arrow(d, P, s_):
+        x1 = lerp(450, 600, eo(k2))
+        d.line([P(450, 1060), P(x1, 1060)], fill=RED_T, width=int(12 * s_))
+        if k2 > 0.6: d.polygon([P(x1 + 30, 1060), P(x1 - 6, 1036), P(x1 - 6, 1084)], fill=RED_T)
+    aa(img, (430, 1020, 650, 1100), arrow, a * clamp(k2 * 2))
+    n2 = R.sprite("1841", "number", RED_T)
+    R.put_text(img, n2, 770, 1060, a * k2, "mm", text="1841")
+    lab(img, "Named in 1841", 1240, INK_T, a * k2, x=540)
     R.chrome(img, T)
     title(img, T, s, e, "Footnote")
-V.sounds("footnote", [(0.05, "tap", 0.5), (0.3, "pop", 0.5)] + [(rel("footnote", "centuries") - 0.4 + 0.3 * k, "click", 0.5) for k in range(4)] + [(rel("footnote", "later"), "sparkle", 0.6)])
+V.sounds("footnote", [(0.05, "tap", 0.5), (0.3, "pop", 0.5)] + [(rel("footnote", "centuries") - 0.2, "sparkle", 0.7)])
 
 @V.scene("letter")
 def _(img, T, t, s, e):
@@ -351,7 +357,7 @@ def _(img, T, t, s, e):
     item(img, TI, "old_letter", 450, lerp(1110, 1060, k), 300, a=a, rot=2.0 * math.sin(T * 1.1))
     LIB.place(img, "cat_eye_night_items", "candle", 740, 1320, height=240, a=a * clamp((T - s - 0.3) / 0.3))
     lab(img, "1 eyewitness letter", 790, YELLOW, a * on(T, "eyewitness", s, e, need=2.6), x=470)
-    lab(img, "Edward Winslow", 1260, B.TEXT, a * on(T, "Winslow", s, e, need=1.6), x=470)
+    lab(img, "Edward Winslow", 1260, B.TEXT, a * on(T, "Winslow", s, e, need=2.0), x=470)
     R.chrome(img, T)
     title(img, T, s, e, "How we know")
 V.backdrop("letter")(lambda img, T, t: ST.landscape(img, T, night=True, terrain="pines", seed=9))
@@ -361,7 +367,7 @@ V.sounds("letter", [(0.05, "whoosh", 0.6), (rel("letter", "eyewitness"), "pop", 
 def _(img, T, t, s, e):
     a = win(T, s, e)
     km = on(T, "mussels", s, e, need=2.0)
-    ke = on(T, "eels", s, e, need=1.6)
+    ke = on(T, "eels", s, e, need=2.0)
     k0 = clamp((T - s - 0.1) / 0.35)
     LIB.place(img, TI, "mussels", 520, 1250, height=lerp(170, 220, eo(km)), a=a * k0)
     LIB.place(img, TI, "eel", 790 - 30 * eo(ke), 1150 + 6 * math.sin(T * 2.5), height=200, a=a * ke, rot=3 * math.sin(T * 2.0))
@@ -395,7 +401,8 @@ def bridge_bg(img, T, t):
     m = int(0.05 * (Tl - s0) / P)
     cover_mod.draw_bg(img, CATEGORY, 0.05 * (T - Tl) + m * P)
 V.backdrop("bridge")(bridge_bg)
-for n in ("opts", "optc", "picture", "turkey", "why", "footnote"):
+V.backdrop("turkey")(lambda img, T, t: ST.landscape(img, T, sky_kind="day", terrain="autumn", seed=11))
+for n in ("opts", "optc", "picture", "why", "footnote"):
     V.backdrop(n)(card_bg)
 
 if __name__ == "__main__":
