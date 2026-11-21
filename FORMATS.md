@@ -5,10 +5,10 @@ Each reel uses one format. They share the brand rules (colours, hook from frame 
 | Format | Hook on screen (frame 0) | Structure |
 |---|---|---|
 | **explainer** | "Why do we get goosebumps?" | hook → context → 2–3 numbered steps → surprising fact → closing |
-| **myth** | "MYTH OR FACT? Goldfish have a 3-second memory." | the belief, stated big → a stamp appears (MYTH / FACT / HALF TRUE) after a 1 s beat → where the belief comes from → what the evidence shows (2 steps) → the real answer → closing |
+| **myth** | "Goldfish have a 3-second memory. Myth or fact?" (claim first, label after) | the belief, stated big → a stamp appears (MYTH / FACT / HALF TRUE) after a 1 s beat → where the belief comes from → what the evidence shows (2 steps) → the real answer → closing |
 | **versus** | "Cheetah vs pronghorn: who wins a marathon?" | split screen: two sides with matching drawings → 3 rounds (each a stat or property, a bar or score that grows, one winner per round) → the twist → final score → closing |
 | **what_if** | "What if the Moon disappeared tonight?" | the premise → first minute or hour → first day → long term → what it teaches us about the real world → closing. Only use effects that published scientists describe, and say "scientists expect" |
-| **quiz** | "Pop quiz: which is older, sharks or trees?" | question with 3 options (A, B, C) on screen → "Comment your answer before I tell you" plus a 2-second ticking clock → reveal with stamp → why → closing |
+| **quiz** | "Which is older, sharks or trees? Pop quiz." (question first, label after; rule 21/11/2026, see FACTORY.md step 4 loop ending 5b) | question with 3 options (A, B, C) on screen → "Comment your answer before I tell you" plus a 2-second ticking clock → reveal with stamp → why → closing |
 
 ## Rules
 - The `myth` format needs a myth that is really widely believed (demand check), plus a source that addresses the myth directly.
