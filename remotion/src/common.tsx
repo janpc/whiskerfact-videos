@@ -91,7 +91,7 @@ export const Pines: React.FC<{y: number; color: string; seed: number}> = ({y, co
   for (let x = -30; x < W + 30; x += 58 + r() * 30) { const h = 170 + r() * 150, w = 80 + r() * 30; ps.push(<polygon key={x} points={`${x},${y} ${x + w / 2},${y - h} ${x + w},${y}`} fill={color} />); }
   return <Svg>{ps}<rect x={0} y={y - 4} width={W} height={H} fill={color} /></Svg>;
 };
-export const Card: React.FC = () => <div style={{position: 'absolute', left: 56, top: 742, width: 968, height: 642, boxSizing: 'border-box', borderRadius: 36, background: CREAM, border: `4px solid ${INK}`}} />;
+export const Card: React.FC = () => <div style={{position: 'absolute', left: 56, top: 720, width: 968, height: 600, boxSizing: 'border-box', borderRadius: 36, background: CREAM, border: `4px solid ${INK}`}} />;
 export const Rays: React.FC<{angle: number}> = ({angle}) => (
   <Svg>{Array.from({length: 14}).map((_, i) => {
     const a0 = angle + (i * Math.PI * 2) / 14, a1 = a0 + Math.PI / 14, R = 1800;
