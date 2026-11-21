@@ -137,7 +137,7 @@ def walker(img, name, x, base, h, T, moving, flip=False, a=1.0, still="front"):
     LIB.place(img, name, pose, x, base, height=h, a=a, flip=flip)
 
 # =====================================================================  ESCENAS
-HOOK_ITEMS = [("deer", 225, 1030, 300, 0.0), ("duck", 750, 1080, 230, 1.7), ("pumpkin_pie", 505, 990, 220, 3.1)]
+HOOK_ITEMS = [("deer", 225, 1030, 300, 0.0), ("duck", 830, 1080, 230, 1.7), ("pumpkin_pie", 505, 990, 220, 3.1)]
 def hook_art(img, T, a=1.0, settle=0.0):
     """dibujo de la portada: las tres opciones grandes. En T=0 y al final del puente (settle=1) están en reposo exacto"""
     for name, x, y, h, ph in HOOK_ITEMS:
