@@ -820,6 +820,6 @@
    "fails": 0,
    "warns": 6
   },
-  "note": "Ejecución nocturna automática. Reel temático de Thanksgiving (plan semanal). Guion 186 palabras (standard); revisor independiente: 2 puntos abiertos corregidos (opción B 'wildfowl' en vez de 'wild ducks and geese'; cierre 'swears the Pilgrims ate pumpkin pie at that first feast' en vez de 'Pilgrim tradition') + matices opcionales aplicados; segunda pasada sin puntos. Sin harvest_feast_1621 (lleva pavo asado y salsa de arándanos). Voz con 1,7 s de silencio insertado tras 'tell you.' para el reloj. Portada = fotograma 0 (gato v4). Último fotograma = primero (dif. media 1,9). Tarea de comprobación: ver campo check / red de seguridad."
+  "note": "Ejecución nocturna automática. Reel temático de Thanksgiving (plan semanal). Guion 186 palabras (standard); revisor independiente: 2 puntos abiertos corregidos (opción B 'wildfowl' en vez de 'wild ducks and geese'; cierre 'swears the Pilgrims ate pumpkin pie at that first feast' en vez de 'Pilgrim tradition') + matices opcionales aplicados; segunda pasada sin puntos. Sin harvest_feast_1621 (lleva pavo asado y salsa de arándanos). Voz con 1,7 s de silencio insertado tras 'tell you.' para el reloj. Portada = fotograma 0 (gato v4). Último fotograma = primero (dif. media 1,9). Tarea de comprobación (CHECK.md) NO creada: create_trigger requiere aprobación de la usuaria en una ejecución programada; la red de seguridad de la próxima ejecución nocturna la hará."
  }
 ]
