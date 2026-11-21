@@ -744,5 +744,82 @@
    "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7709596351616568598",
    "youtube": "https://www.youtube.com/shorts/ungEEEK26WE"
   }
+ },
+ {
+  "date": "2026-11-21",
+  "category": "history",
+  "slug": "first_thanksgiving",
+  "event": "Thanksgiving (US)",
+  "title": "Pop quiz: what was NOT at the first Thanksgiving?",
+  "hook": "Pop quiz: what was NOT at the first Thanksgiving?",
+  "sources": [
+   "https://www.smithsonianmag.com/history/what-was-on-the-menu-at-the-first-thanksgiving-511554/",
+   "https://www.history.com/articles/first-thanksgiving-meal",
+   "https://plimoth.org/yath/unit-4/eye-witness-account-of-the-1621-harvest-celebration",
+   "https://www.pilgrimhall.org/primary-sources-for-the-first-thanksgiving-at-plymouth/",
+   "https://mentalfloss.com/history/what-was-menu-first-thanksgiving",
+   "https://mentalfloss.com/article/652119/thanksgiving-dishes-pilgrims-didnt-eat",
+   "https://www.familysearch.org/en/blog/what-did-the-pilgrims-eat-first-thanksgiving",
+   "https://www.sec.state.ma.us/divisions/commonwealth-museum/exhibits/online/thanksgiving/thanksgiving-mysteries-3.htm"
+  ],
+  "metricool_uuid": "-5929839265234206104",
+  "scheduled": "2026-11-21T20:30:00+01:00",
+  "duration_s": 74.3,
+  "variants": {
+   "time_slot": "20:30",
+   "hook_style": "question",
+   "caption_style": "teaser",
+   "format": "quiz",
+   "personality": "light",
+   "cta": "👇 Tag someone who needs to know this.",
+   "closing": "loop (bonus)",
+   "tiktok_mode": "api",
+   "look": {
+    "skies": [
+     "sunset",
+     "dusk",
+     "night",
+     "dawn",
+     "day"
+    ],
+    "terrains": [
+     "autumn",
+     "forest",
+     "pines",
+     "waves",
+     "hills"
+    ],
+    "wow": [
+     "swirl"
+    ],
+    "card": true
+   },
+   "share_ask": "caption",
+   "length": "standard",
+   "experiment": {
+    "batch": "B2-length",
+    "test": "length",
+    "option": "standard",
+    "role": "base"
+   },
+   "loop_join": "So if someone at your table this year swears the Pilgrims ate pumpkin pie at that first feast, give them the same pop quiz: what was NOT at the first Thanksgiving?",
+   "slop_check": "notas finales: gancho 7, legibilidad 8, movimiento 7, variedad 8, marca 8, sincronía 7. 'No' en la hoja: 1 (opts/optc misma tarjeta, propio del quiz). Cambios: dibujos más grandes (ciervo grande antes de los 5, patos y personajes ~350 px), etiquetas sin solapes (5 deer/Gifts, Eels?), pavo sobre paisaje en vez de tarjeta (turkey→why ya no repiten plano), contador de años sustituido por 1621 → 1841",
+   "music_style": "warm autumn folk: plucked guitar, pizzicato, light hand percussion, fiddle motif, ~100 BPM",
+   "quality_changes": [
+    "first_second_rule",
+    "share_rule",
+    "niche_hashtags"
+   ]
+  },
+  "music": "ElevenLabs video-to-music",
+  "credits": {
+   "voice": 1100,
+   "music": 1115
+  },
+  "qa": {
+   "fails": 0,
+   "warns": 6
+  },
+  "note": "Ejecución nocturna automática. Reel temático de Thanksgiving (plan semanal). Guion 186 palabras (standard); revisor independiente: 2 puntos abiertos corregidos (opción B 'wildfowl' en vez de 'wild ducks and geese'; cierre 'swears the Pilgrims ate pumpkin pie at that first feast' en vez de 'Pilgrim tradition') + matices opcionales aplicados; segunda pasada sin puntos. Sin harvest_feast_1621 (lleva pavo asado y salsa de arándanos). Voz con 1,7 s de silencio insertado tras 'tell you.' para el reloj. Portada = fotograma 0 (gato v4). Último fotograma = primero (dif. media 1,9). Tarea de comprobación: ver campo check / red de seguridad."
  }
 ]
