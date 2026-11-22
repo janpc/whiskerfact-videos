@@ -820,6 +820,18 @@
    "fails": 0,
    "warns": 6
   },
-  "note": "Ejecución nocturna automática. Reel temático de Thanksgiving (plan semanal). Guion 186 palabras (standard); revisor independiente: 2 puntos abiertos corregidos (opción B 'wildfowl' en vez de 'wild ducks and geese'; cierre 'swears the Pilgrims ate pumpkin pie at that first feast' en vez de 'Pilgrim tradition') + matices opcionales aplicados; segunda pasada sin puntos. Sin harvest_feast_1621 (lleva pavo asado y salsa de arándanos). Voz con 1,7 s de silencio insertado tras 'tell you.' para el reloj. Portada = fotograma 0 (gato v4). Último fotograma = primero (dif. media 1,9). Tarea de comprobación (CHECK.md) NO creada: create_trigger requiere aprobación de la usuaria en una ejecución programada; la red de seguridad de la próxima ejecución nocturna la hará. 21/11 09:50: la usuaria vio que en el fotograma 1 el pico del pato pisaba el plato de la tarta; pato movido a la derecha (HOOK_ITEMS x 750→830), re-render, QA 0 fallos, vídeo sustituido en Metricool (id 436515865, misma hora 20:30)."
+  "note": "Ejecución nocturna automática. Reel temático de Thanksgiving (plan semanal). Guion 186 palabras (standard); revisor independiente: 2 puntos abiertos corregidos (opción B 'wildfowl' en vez de 'wild ducks and geese'; cierre 'swears the Pilgrims ate pumpkin pie at that first feast' en vez de 'Pilgrim tradition') + matices opcionales aplicados; segunda pasada sin puntos. Sin harvest_feast_1621 (lleva pavo asado y salsa de arándanos). Voz con 1,7 s de silencio insertado tras 'tell you.' para el reloj. Portada = fotograma 0 (gato v4). Último fotograma = primero (dif. media 1,9). Tarea de comprobación (CHECK.md) NO creada: create_trigger requiere aprobación de la usuaria en una ejecución programada; la red de seguridad de la próxima ejecución nocturna la hará. 21/11 09:50: la usuaria vio que en el fotograma 1 el pico del pato pisaba el plato de la tarta; pato movido a la derecha (HOOK_ITEMS x 750→830), re-render, QA 0 fallos, vídeo sustituido en Metricool (id 436515865, misma hora 20:30).",
+  "check": {
+   "at": "2026-11-23T00:36:00+01:00",
+   "instagram": "PUBLISHED",
+   "tiktok": "PUBLISHED",
+   "youtube": "PUBLISHED (con aviso: no se pudo subir la miniatura)",
+   "note": "comprobado por la red de seguridad de la ejecución nocturna del 23/11"
+  },
+  "urls": {
+   "instagram": "https://www.instagram.com/reel/DgA_H6JRe5o/",
+   "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7710709606342774019",
+   "youtube": "https://www.youtube.com/shorts/Tn0os4auHLE"
+  }
  }
 ]
