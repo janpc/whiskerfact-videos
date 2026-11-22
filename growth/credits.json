@@ -7,7 +7,7 @@
   "date": "2026-11-02",
   "note": "saldo real que marca ElevenLabs (dicho por la dueña)"
  },
- "estimated_balance": 7965,
+ "estimated_balance": 7129,
  "warn_below": 8000,
  "image_budget_month": 4000,
  "costs_estimate": {
@@ -142,6 +142,13 @@
    "what": "voice (eleven_v4, Brad, 1 take)",
    "credits": 846,
    "note": "flow Q4RWsQia6pHRGabsab5B, node FiA76YxTMdqWgclVfYPO, session ftTrx64dilw4TJ9zckvW, generation U0SYDCeKYXNe1NdVIFHs (63,8 s)"
+  },
+  {
+   "date": "2026-11-23",
+   "slug": "lightning_vs_sun",
+   "what": "music (video-to-music, 1 generation)",
+   "credits": 836,
+   "note": "flow Q4RWsQia6pHRGabsab5B, node nYPuPIvWaFhA7lcqqfGV, session qEX0k77zc6vjeKwq04se, generation XTfcYxThPnMVhOMSARru"
   }
  ],
  "renewal_day": 30,
