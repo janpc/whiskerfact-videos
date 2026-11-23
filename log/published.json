@@ -833,5 +833,77 @@
    "tiktok": "https://www.tiktok.com/@mrwhiskerfact/video/7710709606342774019",
    "youtube": "https://www.youtube.com/shorts/Tn0os4auHLE"
   }
+ },
+ {
+  "date": "2026-11-23",
+  "category": "science",
+  "slug": "lightning_vs_sun",
+  "title": "Lightning vs the Sun: which is really hotter?",
+  "hook": "Lightning vs the Sun: which is really hotter?",
+  "sources": [
+   "https://weather.gov/safety/lightning-temperature",
+   "https://www.weather.gov/mlb/what_is_lightning",
+   "https://nssl.noaa.gov/education/svrwx101/lightning/faq",
+   "https://britannica.com/one-good-fact/what-on-earth-is-hotter-than-the-sun",
+   "https://science.nasa.gov/sun/facts",
+   "https://britannica.com/science/How-Hot-Is-the-Sun",
+   "https://www.space.com/58-the-sun-formation-facts-and-characteristics.html",
+   "https://www.britannica.com/science/fulgurite",
+   "https://geology.utah.gov/fulgurites-when-lightning-strikes-sand-magic-is-formed"
+  ],
+  "metricool_uuid": "-4615782746732278562",
+  "metricool_id": 438117141,
+  "scheduled": "2026-11-23T20:30:00+01:00",
+  "duration_s": 55.7,
+  "variants": {
+   "time_slot": "20:30",
+   "hook_style": "question",
+   "caption_style": "teaser",
+   "format": "versus",
+   "personality": "light",
+   "cta": "🐱 Follow for more curious facts.",
+   "closing": "loop (cat_take)",
+   "tiktok_mode": "api",
+   "look": {
+    "skies": [
+     "storm",
+     "night",
+     "day",
+     "space_night",
+     "dawn"
+    ],
+    "terrains": [
+     "hills",
+     "dunes"
+    ],
+    "wow": [
+     "glitch"
+    ],
+    "card": true,
+    "split_screen": true
+   },
+   "share_ask": "none",
+   "length": "short",
+   "experiment": {
+    "batch": "B2-length",
+    "test": "length",
+    "option": "short",
+    "role": "variant"
+   },
+   "loop_join": "So it depends where you measure, which is exactly why people keep asking: Lightning versus the Sun: which is really hotter?",
+   "slop_check": "notas finales: gancho 7, legibilidad 8, movimiento 7, variedad 8, marca 8, sincronía 7. 'No' en la hoja: 0. Cambios: descarga en espiral sustituida por rayo vectorial con brillo; escena del cronómetro ya no vacía (el rayo está y se apaga en «second»); barras ×5 dejan sitio al marcador y «×» cambiado a «5x» (la fuente no tenía el signo); etiquetas sin tapar dibujos",
+   "music_style": "playful game-show science electronica ~112 BPM, synth plucks, crackling bass (storm) vs warm pad (sun)",
+   "quality_changes": [
+    "first_second_rule",
+    "share_rule",
+    "niche_hashtags"
+   ]
+  },
+  "music": "ElevenLabs video-to-music",
+  "credits": {
+   "voice": 846,
+   "music": 836
+  },
+  "note": "Ejecución nocturna automática. Plan semanal (versus, science). Guion 141 palabras (short); revisor independiente: 1 punto abierto corregido (fulgurita ya no es «prueba» de ser más caliente que el Sol) + 2 matices (skin→surface, hottest spot→deep inside); segunda pasada sin puntos. Voz descargada sin problemas de elevenlabsusercontent.com. Portada = fotograma 0; último fotograma = primero (dif. media 2,0)."
  }
 ]
