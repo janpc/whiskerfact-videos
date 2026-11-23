@@ -1,1 +1,9 @@
-{"daily_first": 5, "then_gaps": [2, 3], "_about": "After the first 5 published reels, the days between reels alternate 2, 3, 2, 3... (about 12-13 reels a month, which fits the ElevenLabs Starter credits with composed music)."}
+{
+ "daily_first": 5,
+ "daily_from": "2026-12-01",
+ "then_gaps": [
+  2,
+  3
+ ],
+ "_about": "Until daily_from, the old rule: after the first 5 published reels, the days between reels alternate 2, 3, 2, 3... From daily_from (Europe/Madrid date) onwards the factory publishes EVERY day (decided 2026-11-23; credits: Creator plan 121,000/month). daily_from is 2026-12-01, not Monday 11-30, because the weekly plan that sets the topic and the visual storyboard of the week is written on Monday 11-30 at 11:47, after the night run of 11-30."
+}

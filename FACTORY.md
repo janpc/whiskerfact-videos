@@ -13,7 +13,8 @@ All public-facing content is in **English**. All design rules live in `factory/b
   - Keep the run lean: no extra renders or reviews beyond what this file asks. The whole run should finish in well under 3 hours.
 
 ## 1. Is today a publishing day?
-- `schedule.json` holds `daily_first` (5) and `then_gaps` ([2, 3]).
+- `schedule.json` holds `daily_first` (5), `daily_from` (a date) and `then_gaps` ([2, 3]).
+- **From `daily_from` (Europe/Madrid date) onwards, publish EVERY day** and ignore the gap rules below (decided 23/11/2026, 1 reel a day). Each daily reel needs its entry in `growth/week_plan.json` with a `storyboard` and its illustration sheet already in the library; if the entry or the sheet is missing, say so in the notification.
 - Count the published entries in `log/published.json`. Entries with a `note` containing "test" don't count.
 - While that count is below `daily_first`, publish every day.
 - After that, the gaps between reels alternate 2 days, then 3 days, and so on. Use the gap that follows the previous one, which gives about 12–13 reels a month.
