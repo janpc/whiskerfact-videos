@@ -852,7 +852,7 @@
    "https://geology.utah.gov/fulgurites-when-lightning-strikes-sand-magic-is-formed"
   ],
   "metricool_uuid": "-4615782746732278562",
-  "metricool_id": 438117141,
+  "metricool_id": 438682214,
   "scheduled": "2026-11-23T20:30:00+01:00",
   "duration_s": 55.7,
   "variants": {
@@ -904,10 +904,11 @@
    "voice": 846,
    "music": 836
   },
-  "note": "Ejecución nocturna automática. Plan semanal (versus, science). Guion 141 palabras (short); revisor independiente: 1 punto abierto corregido (fulgurita ya no es «prueba» de ser más caliente que el Sol) + 2 matices (skin→surface, hottest spot→deep inside); segunda pasada sin puntos. Voz descargada sin problemas de elevenlabsusercontent.com. Portada = fotograma 0; último fotograma = primero (dif. media 2,0). Tarea de comprobación (CHECK.md) NO creada: create_trigger requiere aprobación de la usuaria en una ejecución programada; la red de seguridad de la próxima ejecución nocturna la hará.",
+  "note": "Ejecución nocturna automática. Plan semanal (versus, science). Guion 141 palabras (short); revisor independiente: 1 punto abierto corregido (fulgurita ya no es «prueba» de ser más caliente que el Sol) + 2 matices (skin→surface, hottest spot→deep inside); segunda pasada sin puntos. Voz descargada sin problemas de elevenlabsusercontent.com. Portada = fotograma 0; último fotograma = primero (dif. media 2,0). Tarea de comprobación (CHECK.md) NO creada: create_trigger requiere aprobación de la usuaria en una ejecución programada; la red de seguridad de la próxima ejecución nocturna la hará. | 23/11 13:02: a petición de la usuaria el medio del post se sustituyó por la versión Remotion (remotion/renders/2026-11-23_lightning_vs_sun_remotion.mp4, mismo texto y hora 20:30, mismo uuid; id nuevo 438682214). La versión Python queda solo como respaldo en videos/. Comprobador de diseño Remotion: 0 fallos; bucle primer=último.",
   "qa": {
    "fails": 0,
    "warns": 4
-  }
+  },
+  "engine": "remotion"
  }
 ]
