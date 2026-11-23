@@ -52,46 +52,34 @@
   ],
   "objects": [
    "wifi_objects:clock",
-   "nose_items:dog_nose_front",
-   "nose_items:sugar_spoon",
-   "nose_items:swimming_pool",
-   "nose_items:breakfast_plate",
-   "nose_items:coffee_mug",
-   "nose_items:chocolate_bar",
-   "nose_items:rose",
-   "nose_items:fire_hydrant",
-   "nose_items:newspaper",
-   "nose_items:shoe_prints",
-   "nose_items:paw_prints",
-   "nose_items:bloodhound",
-   "nose_items:tennis_ball",
-   "nose_items:leash",
-   "nose_items:lamp_post",
-   "nose_items:sandwich"
+   "nose_w48:man_dog_nose",
+   "nose_w48:nose_cutaway",
+   "nose_w48:brain_compare",
+   "nose_w48:dog_sniffing",
+   "nose_w48:human_crawl_trail",
+   "nose_w48:breakfast_plate",
+   "nose_w48:fried_eggs",
+   "nose_w48:bacon",
+   "nose_w48:toast",
+   "nose_w48:coffee_mug",
+   "nose_w48:sugar_spoon",
+   "nose_w48:swimming_pool",
+   "nose_w48:shoe_prints",
+   "nose_w48:newspaper",
+   "nose_w48:lamp_post",
+   "nose_w48:chocolate_bar"
   ],
-  "illustrations": [
-   "large_w48:nose_cutaway",
-   "large_w48:brain_compare",
-   "large_w48:dog_sniffing"
-  ],
-  "missing": [
-   "nose_items",
-   "large_w48:nose_cutaway",
-   "large_w48:brain_compare",
-   "large_w48:dog_sniffing"
-  ],
-  "large": [
-   "nose_cutaway",
-   "brain_compare",
-   "dog_sniffing"
-  ],
+  "illustrations": [],
+  "missing": [],
+  "large": [],
   "notes": "Grounded what_if, not scary. Premise: you wake up with a dog's nose (dogs have up to ~300 million olfactory receptors vs ~6 million in people, NOVA/PBS). First minute: breakfast smells as separate layers, not one smell; a dog could notice a teaspoon of sugar in a million gallons of water, about two Olympic pools (NOVA, Alexandra Horowitz). First hour: on a walk you smell in stereo (each nostril samples separately, so you know where a smell comes from) and the slits at the side of the nose push exhaled air away so sniffing never stops; you can 'smell time': an old trail smells weaker than a fresh one, so you know how long ago someone passed (Horowitz). Long term: the part of the brain that analyses smells is, proportionally, about 40x bigger in a dog (NOVA). What it teaches: a walk is your dog's newspaper, so let it sniff; twist: humans are not as bad as we think (McGann 2017, Science: human smell is a 19th-century myth; people can follow a chocolate scent trail on all fours, Porter et al. 2007). Say 'scientists estimate'; receptor counts vary by source and breed, keep 'up to'. Sources to check on the day: pbs.org/wgbh/nova/article/dogs-sense-of-smell, NOVA '6 stinking cool facts about dog noses', AKC 'The nose knows', McGann 2017 (Science), Porter 2007 (Nature Neuroscience). Plausibility 23/11: NOVA and AKC agree on the figures. Hook (control, question), max 10 words, e.g. 'What if you had a dog's nose for one day?'. First second: the young man sniffing with a big dog nose and smell trails flying in. Category nature: rotation after science (23/11). Format what_if: fewest reels in the log (2; the others have 3). 26/11 is Thanksgiving but the themed reel was already published 21/11 (reels: 1), so this is a regular reel. Closing: not cat_take (23/11); a light cat_take could fit but use real_life or bonus. Length standard (control): B2-length has no free slots.",
   "experiment": {
    "batch": "B2-length",
    "test": "length",
    "option": "standard",
    "role": "base"
-  }
+  },
+  "storyboard": "growth/storyboards/2026-11-26_dog_nose.md"
  },
  {
   "date": "2026-11-28",
@@ -99,45 +87,39 @@
   "category": "history",
   "format": "explainer",
   "characters": [
-   "ancient_person",
-   "young_man"
+   "young_man",
+   "ancient_person"
   ],
   "objects": [
    "moon_items:sun",
    "moon_items:moon_near",
-   "mammoth_quiz_items:sundial",
-   "week_items:clay_tablet",
-   "week_items:ziggurat",
-   "week_items:moon_phases",
-   "week_items:saturn",
-   "week_items:jupiter",
-   "week_items:mars",
-   "week_items:venus",
-   "week_items:mercury",
-   "week_items:wall_calendar",
-   "week_items:roman_coin",
-   "week_items:market_stall",
-   "week_items:decimal_clock",
-   "week_items:revolution_calendar",
-   "week_items:weekend_hammock",
-   "week_items:star_chart"
+   "week_w48:wall_calendar",
+   "week_w48:ziggurat",
+   "week_w48:clay_tablet",
+   "week_w48:babylon_night_sky",
+   "week_w48:saturn",
+   "week_w48:jupiter",
+   "week_w48:mars",
+   "week_w48:venus",
+   "week_w48:mercury",
+   "week_w48:moon_phases",
+   "week_w48:market_stall",
+   "week_w48:roman_coin",
+   "week_w48:revolution_calendar",
+   "week_w48:decimal_clock",
+   "week_w48:weekend_hammock",
+   "week_w48:star_chart"
   ],
-  "illustrations": [
-   "large_w48:babylon_night_sky"
-  ],
-  "missing": [
-   "week_items",
-   "large_w48:babylon_night_sky"
-  ],
-  "large": [
-   "babylon_night_sky"
-  ],
+  "illustrations": [],
+  "missing": [],
+  "large": [],
   "notes": "Explainer: hook 'Why does a week have 7 days?' (question, control). Context: days, months and years follow the sky; the week does not. Steps: 1) the Babylonians watched seven moving lights (Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn) and the Moon's phases change about every 7 days (a lunar cycle of ~29.5 days split in four); 2) the Jewish seven-day week with a day of rest spread it; the Romans (who used an 8-day market week, the nundinae) adopted the planetary week, and Emperor Constantine made it official in 321 AD; 3) the day names still carry the planets: Saturday = Saturn, Sunday = Sun, Monday = Moon (other languages keep more: Spanish martes = Mars). Surprising fact: France tried a 10-day week after the Revolution (1793) and dropped it by 1805; the Soviet Union tried 5- and 6-day weeks (1929-1940) and went back. Say 'historians think' where the origin is uncertain (the exact Babylonian link is debated); keep religion neutral and factual. Sources to check on the day: Britannica 'week', Astronomy.com 'Why are there 7 days in a week? Thank the Babylonians', Atlas Obscura 'Why can't we get rid of the 7-day week?', Almanac.com, webexhibits.org/calendars/week.html. Plausibility 23/11: Astronomy.com, Atlas Obscura and Almanac agree. Characters: reuse ancient_person (generic ancient tunic) as the sky-watcher, young_man with a calendar. Category history: rotation after nature (26/11). Format explainer: all other formats tie at 3 once 26/11 (what_if) is out; explainer used longest ago (goosebumps 30/10). Not the same format as 26/11. Length standard (control).",
   "experiment": {
    "batch": "B2-length",
    "test": "length",
    "option": "standard",
    "role": "base"
-  }
+  },
+  "storyboard": "growth/storyboards/2026-11-28_week_7_days.md"
  }
 ]
