@@ -1,1 +1,1 @@
-export * from './first_thanksgiving';
+export * from './lightning_vs_sun';
