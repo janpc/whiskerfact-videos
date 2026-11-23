@@ -113,7 +113,7 @@ def status():
         try: sp = spec(p)
         except SystemExit as x: print(f"{e['date']}: {x}"); continue
         have = sp["sheet"] in idx and all(c["name"] in idx[sp["sheet"]]["poses"] for c in sp["cells"])
-        print(f"{e['date']}: hoja {sp['sheet']} {'en la biblioteca' if have else 'POR GENERAR (918 creditos, preguntar antes)'}")
+        print(f"{e['date']}: hoja {sp['sheet']} {'en la biblioteca' if have else 'POR GENERAR (918 creditos; la primera vez se genera sin preguntar)'}")
 
 if __name__ == "__main__":
     a = sys.argv[1:]

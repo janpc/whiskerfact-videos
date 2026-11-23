@@ -4,7 +4,7 @@ Lo lee el plan semanal antes de escribir los prompts de las hojas, y lo amplía 
 
 ## Orden obligatorio
 1. Guion de voz → 2. guion visual escena por escena (`growth/storyboards/`) → 3. inventario sacado de esa tabla → 4. prompt de la hoja. **Nunca** al revés: una ilustración que ninguna escena usa sobra, y una escena sin ilustración se anota como pendiente.
-2. Una hoja 4x4 a 2K por vídeo. Si hay que regenerar, se regenera la hoja entera con el inventario corregido, no se edita.
+2. Una hoja 4x4 a 2K por vídeo. **La primera generación no se consulta a la dueña** (decidido el 23/11). Si falla la comprobación, se regenera la hoja entera con el inventario o prompt corregido (no se edita), como máximo una vez sin preguntar; más veces, o saldo <8.000, se le pregunta.
 
 ## Receta que funciona (23/11/2026)
 - UNA sola referencia: `growth/style_ref_objects_4x4.png`, «úsala SOLO para el estilo, no dibujes nada de lo que aparece». Con varias referencias o un collage se contamina y salen blancos y figuras repetidas.
