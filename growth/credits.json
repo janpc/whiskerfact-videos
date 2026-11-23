@@ -7,7 +7,7 @@
   "date": "2026-11-23",
   "note": "7.234 dicho por la dueña el 23/11 menos 1.836 de las dos hojas (estimado) ; -609 de la prueba A v2 (estimado)"
  },
- "estimated_balance": 4789,
+ "estimated_balance": 3871,
  "warn_below": 8000,
  "image_budget_month": 4000,
  "costs_estimate": {
@@ -168,6 +168,13 @@
    "what": "prueba hoja A v2 (1K, solo referencia de estilo, gemini-3.1-flash-image)",
    "credits": 609,
    "note": "flow VtGRWmIPbUvuCGPkfEpr, generation tkxkbPqyHZlp5s6Mqqhz"
+  },
+  {
+   "date": "2026-11-23",
+   "slug": "library",
+   "what": "hoja A v3 a 2K (solo referencia de estilo, gemini-3.1-flash-image)",
+   "credits": 918,
+   "note": "flow VtGRWmIPbUvuCGPkfEpr, generation LhLNav3FOU3KGlqeJ340. La dueña ya ha ampliado a Creator (23/11); renovación y saldo real pendientes de confirmar."
   }
  ],
  "renewal_day": 30,
