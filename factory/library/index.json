@@ -507,7 +507,7 @@
    "pet"
   ],
   "source": "gemini",
-  "notes": "Gato doméstico normal (no es Mr. Whiskerfact). DECISIÓN 4/11/2026: NO animar el andar (walk1-8, sneak1-4, tail1-4) ni usar library/cat_rig: se probó y queda mal. Usar poses fijas con cambios de pose al ritmo de la voz, y el ciclo de correr (run1-4) solo para cruzar la pantalla."
+  "notes": "Gato dom\u00e9stico normal (no es Mr. Whiskerfact). DECISI\u00d3N 4/11/2026: NO animar el andar (walk1-8, sneak1-4, tail1-4) ni usar library/cat_rig: se prob\u00f3 y queda mal. Usar poses fijas con cambios de pose al ritmo de la voz, y el ciclo de correr (run1-4) solo para cruzar la pantalla."
  },
  "woolly_mammoth": {
   "poses": {
@@ -551,7 +551,7 @@
    "prehistory"
   ],
   "source": "gemini",
-  "notes": "Hoja 1 (4x4). three_quarter_left mira hacia la IZQUIERDA (3/4 frontal), el resto de perfiles miran a la derecha. Sin ciclo de andar: usar run1-4 solo para cruzar, el resto poses fijas. Hoja 2: look_back no mira realmente atrás (es de pie, mirando a la derecha); sleep es de pie con los ojos cerrados (lie, de la hoja 1, es el tumbado)."
+  "notes": "Hoja 1 (4x4). three_quarter_left mira hacia la IZQUIERDA (3/4 frontal), el resto de perfiles miran a la derecha. Sin ciclo de andar: usar run1-4 solo para cruzar, el resto poses fijas. Hoja 2: look_back no mira realmente atr\u00e1s (es de pie, mirando a la derecha); sleep es de pie con los ojos cerrados (lie, de la hoja 1, es el tumbado)."
  },
  "mammoth_quiz_items": {
   "poses": {
@@ -605,7 +605,7 @@
    "objects"
   ],
   "source": "gemini",
-  "notes": "Hoja 4x4 de 16 (13/11, hueso vs acero). xray_leg sale como TARJETA con película azul propia. bone_healed y bone_cracked son casi iguales (grieta fina): el brillo de 'curado' se dibuja por código. xray_leg, test_press y femur_section se sustituyeron el 12/11 por versiones grandes de una hoja 2x2 y skeleton por un esqueleto de un solo elemento (481x957 px, protagonista). Los tres de la hoja 2x2 miden ≈400-500 px, ampliables ~1,5-2x; el resto mide ~185 px: no ampliar más de ~1,3x."
+  "notes": "Hoja 4x4 de 16 (13/11, hueso vs acero). xray_leg sale como TARJETA con pel\u00edcula azul propia. bone_healed y bone_cracked son casi iguales (grieta fina): el brillo de 'curado' se dibuja por c\u00f3digo. xray_leg, test_press y femur_section se sustituyeron el 12/11 por versiones grandes de una hoja 2x2 y skeleton por un esqueleto de un solo elemento (481x957 px, protagonista). Los tres de la hoja 2x2 miden \u2248400-500 px, ampliables ~1,5-2x; el resto mide ~185 px: no ampliar m\u00e1s de ~1,3x."
  },
  "astronaut": {
   "poses": {
@@ -704,7 +704,7 @@
    "object"
   ],
   "source": "gemini",
-  "notes": "Hoja 4x4 de 16 (17/11/2026). battery_full/half/low REDIBUJADOS POR CODIGO (iconos limpios; los de Gemini perdian las barras verdes). li_battery salio como pila de 9 V. phone_charging con cable fino. Tamaño 80-230 px: no ampliar mas de ~1,3x."
+  "notes": "Hoja 4x4 de 16 (17/11/2026). battery_full/half/low REDIBUJADOS POR CODIGO (iconos limpios; los de Gemini perdian las barras verdes). li_battery salio como pila de 9 V. phone_charging con cable fino. Tama\u00f1o 80-230 px: no ampliar mas de ~1,3x."
  },
  "large_w47": {
   "poses": {
@@ -725,7 +725,7 @@
    "sun"
   ],
   "source": "gemini",
-  "notes": "Hoja 2x2 grande (17/11/2026), recortada con blobs. bedroom_night y charging_phone_big son TARJETAS con fondo propio (usar como tarjeta). battery_cutaway y phone_under_pillow son sueltos. ~430 px, ampliables ~2x. | 18/11/2026: añadidas 4 TARJETAS de rayo vs Sol (~460 px, ampliables ~2x, con fondo propio y esquinas redondeadas): sun_cutaway (Sol cortado en capas, con brillo pintado y fondo de espacio), thunderstorm, earth_sun, beach_strike (rayo y fulgurita en la playa)."
+  "notes": "Hoja 2x2 grande (17/11/2026), recortada con blobs. bedroom_night y charging_phone_big son TARJETAS con fondo propio (usar como tarjeta). battery_cutaway y phone_under_pillow son sueltos. ~430 px, ampliables ~2x. | 18/11/2026: a\u00f1adidas 4 TARJETAS de rayo vs Sol (~460 px, ampliables ~2x, con fondo propio y esquinas redondeadas): sun_cutaway (Sol cortado en capas, con brillo pintado y fondo de espacio), thunderstorm, earth_sun, beach_strike (rayo y fulgurita en la playa)."
  },
  "pilgrim_man": {
   "poses": {
@@ -880,5 +880,33 @@
   ],
   "source": "gemini",
   "notes": "Hoja 4x4 de 16 (18/11/2026), recortada con blobs y el quitafondos nuevo. Nombres: lightning_bolt, storm_cloud, fulgurite, lightning_rod, struck_tree, solar_prominence, sun_core_glow (disco naranja con anillo rojo, sin brillo), hourglass_space, thermometer, sun_disc, house_rod, white_cloud, raindrop, stopwatch, rubber_boots, beach_pail. 60-230 px: no ampliar mas de ~1,3x. lightning_rod es muy estrecho (60 px)."
+ },
+ "nose_w48": {
+  "poses": {
+   "man_dog_nose": "nose_w48/man_dog_nose.png",
+   "nose_cutaway": "nose_w48/nose_cutaway.png",
+   "brain_compare": "nose_w48/brain_compare.png",
+   "dog_sniffing": "nose_w48/dog_sniffing.png",
+   "human_crawl_trail": "nose_w48/human_crawl_trail.png",
+   "breakfast_plate": "nose_w48/breakfast_plate.png",
+   "fried_eggs": "nose_w48/fried_eggs.png",
+   "bacon": "nose_w48/bacon.png",
+   "toast": "nose_w48/toast.png",
+   "coffee_mug": "nose_w48/coffee_mug.png",
+   "sugar_spoon": "nose_w48/sugar_spoon.png",
+   "swimming_pool": "nose_w48/swimming_pool.png",
+   "shoe_prints": "nose_w48/shoe_prints.png",
+   "newspaper": "nose_w48/newspaper.png",
+   "lamp_post": "nose_w48/lamp_post.png",
+   "chocolate_bar": "nose_w48/chocolate_bar.png"
+  },
+  "tags": [
+   "dog",
+   "illustration",
+   "nature",
+   "object",
+   "smell"
+  ],
+  "source": "elevenlabs"
  }
 }
