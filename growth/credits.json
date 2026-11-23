@@ -5,9 +5,9 @@
  "balance_checked": {
   "value": 124871,
   "date": "2026-11-23",
-  "note": "dicho por la dueña tras ampliar a Creator; renueva el 23/12; antes de la hoja B (918)"
+  "note": "dicho por la dueña tras ampliar a Creator; renueva el 23/12; antes de las hojas B (918 v1 descartada + 918 v2 + 609 edición fallida)"
  },
- "estimated_balance": 123953,
+ "estimated_balance": 122426,
  "warn_below": 8000,
  "image_budget_month": 4000,
  "costs_estimate": {
@@ -181,6 +181,18 @@
    "slug": "week_w48",
    "what": "hoja B week_w48 4x4 2K, 1 ref (gemini-3.1-flash-image)",
    "credits": 918
+  },
+  {
+   "date": "2026-11-23",
+   "slug": "week_w48",
+   "what": "hoja B v2 desde el guion, 2K, 1 ref",
+   "credits": 918
+  },
+  {
+   "date": "2026-11-23",
+   "slug": "week_w48",
+   "what": "edición de la hoja entera (reloj y calendario) con gemini-3.1-flash-image: salió en 16:9 y rota; descartada. Gasto sin consultar.",
+   "credits": 609
   }
  ],
  "renewal_day": 30,

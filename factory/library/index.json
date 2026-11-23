@@ -911,22 +911,22 @@
  },
  "week_w48": {
   "poses": {
-   "clay_tablet": "week_w48/clay_tablet.png",
+   "wall_calendar": "week_w48/wall_calendar.png",
+   "seasons_wheel": "week_w48/seasons_wheel.png",
    "ziggurat": "week_w48/ziggurat.png",
-   "moon_phases": "week_w48/moon_phases.png",
-   "saturn": "week_w48/saturn.png",
-   "jupiter": "week_w48/jupiter.png",
+   "clay_tablet": "week_w48/clay_tablet.png",
+   "babylon_night_sky": "week_w48/babylon_night_sky.png",
+   "star_chart": "week_w48/star_chart.png",
+   "seven_lights": "week_w48/seven_lights.png",
    "mars": "week_w48/mars.png",
    "venus": "week_w48/venus.png",
-   "mercury": "week_w48/mercury.png",
-   "wall_calendar": "week_w48/wall_calendar.png",
-   "roman_coin": "week_w48/roman_coin.png",
+   "moon_phases": "week_w48/moon_phases.png",
    "market_stall": "week_w48/market_stall.png",
+   "roman_coin": "week_w48/roman_coin.png",
    "decimal_clock": "week_w48/decimal_clock.png",
    "revolution_calendar": "week_w48/revolution_calendar.png",
    "weekend_hammock": "week_w48/weekend_hammock.png",
-   "star_chart": "week_w48/star_chart.png",
-   "babylon_night_sky": "week_w48/babylon_night_sky.png"
+   "saturn": "week_w48/saturn.png"
   },
   "tags": [
    "calendar",
