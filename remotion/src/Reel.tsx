@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import words from '../public/words.json';
 import {FPS, clamp, useFonts, Grain} from './common';
 import {Cat} from './Cat';
@@ -12,7 +12,10 @@ const sceneOf = (T: number) => SC.find(([, a, b]) => T >= a && T < b) ?? SC[SC.l
 export const Reel: React.FC = () => {
   useFonts();
   const frame = useCurrentFrame();
-  const T = frame / FPS;
+  const {durationInFrames} = useVideoConfig();
+  // el ÚLTIMO fotograma es exactamente el primero (bucle): se dibuja con T=0, sin ninguna animación en curso
+  const isLastFrame = frame >= durationInFrames - 1;
+  const T = isLastFrame ? 0 : frame / FPS;
   const [id, s0] = sceneOf(T);
   const t = T - s0;
   const last = id === SC[SC.length - 1][0];
@@ -30,11 +33,11 @@ export const Reel: React.FC = () => {
       {last && <div style={{position: 'absolute', inset: 0, opacity: 1 - fadeEnd}}><Content id={SC[0][0]} t={0} T={0} /></div>}
       {hasCat && <>
         <div data-box="cat" data-name="cat" style={{position: 'absolute', left: 40, top: 1236, width: 420, height: 684, visibility: 'hidden'}} />
-        <Cat T={T} x={-20} y={1236} pose="stand_front" o={1 - swap} curious={CURIOUS.has(id)} />
-        <Cat T={T} x={-20} y={1236} pose="explain" o={swap} curious={CURIOUS.has(id)} />
+        <Cat T={T} x={-20} y={1236} pose="stand_front" o={1 - swap} curious={CURIOUS.has(id) || (last && T > DUR - 0.35)} />
+        <Cat T={T} x={-20} y={1236} pose="explain" o={swap} curious={CURIOUS.has(id) || (last && T > DUR - 0.35)} />
       </>}
       <Subs T={T} narrow={hasCat} />
-      <Grain frame={frame} />
+      <Grain frame={isLastFrame ? 0 : frame} />
       {probeOn() && <Probe id={id} />}
       <Sequence from={9}><Audio src={staticFile('voice.mp3')} volume={1} /></Sequence>
       <Audio src={staticFile('music.mp3')} volume={vol} />
