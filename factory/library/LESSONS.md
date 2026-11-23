@@ -13,6 +13,8 @@ Lo lee el plan semanal antes de escribir los prompts de las hojas, y lo amplía 
 - Coste a 2K con una referencia: 918 créditos. Editar la hoja con IA cuesta 609 y NO es fiable (devuelve 16:9 y rompe la rejilla).
 
 ## Lecciones
+Cualquier línea que contenga `PROMPT: <frase en inglés>` se añade sola al final del prompt de todas las hojas (`factory/weekly_sheets.py prompt`). Úsalo para reglas que el prompt debe repetir siempre.
+
 - 23/11 · Gemini dibuja caras sonrientes en objetos (taza) → pedir «los objetos NO tienen cara, ojos ni sonrisa».
 - 23/11 · Pinta letras en los objetos («DAILY NEWS», inscripción de la moneda) → pedir «sin texto, letras ni números pintados»; las etiquetas van en la capa de texto.
 - 23/11 · **No sabe contar**: relojes con 12 marcas aunque pidas 10; calendarios con 7 columnas aunque pidas 10. Cualquier elemento cuyo número importa (marcas, columnas, dedos, pasos) se corrige por código sobre el sprite (reloj y rejilla en `week_w48`), no se confía en el prompt.
@@ -26,3 +28,5 @@ Lo lee el plan semanal antes de escribir los prompts de las hojas, y lo amplía 
 3. Elementos con número (marcas, columnas, pasos): contados; si fallan, corregir por código.
 4. Todo lo que pide el guion visual está y nada sobra.
 5. Después de recortar: anotar aquí lo que haya fallado, con fecha y regla.
+
+- 23/11 · Para que una tira ancha (varios objetos en fila) no se coma la celda vecina: PROMPT: For any single horizontal strip item, keep it on a flat green background with no black bar behind it.
