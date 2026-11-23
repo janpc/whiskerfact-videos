@@ -1,13 +1,13 @@
 {
  "_about": "Libro de créditos de ElevenLabs (no hay herramienta para leer el saldo: se apunta cada gasto y la dueña corrige el saldo real cuando lo ve). Cada run: añade sus gastos aquí, recalcula 'estimated_balance' y avisa si queda menos de 'warn_below'.",
- "plan": "Starter",
- "monthly_allowance": 30000,
+ "plan": "Creator",
+ "monthly_allowance": 121000,
  "balance_checked": {
-  "value": 5398,
+  "value": 124871,
   "date": "2026-11-23",
-  "note": "7.234 dicho por la dueña el 23/11 menos 1.836 de las dos hojas (estimado) ; -609 de la prueba A v2 (estimado)"
+  "note": "dicho por la dueña tras ampliar a Creator; renueva el 23/12; antes de la hoja B (918)"
  },
- "estimated_balance": 3871,
+ "estimated_balance": 123953,
  "warn_below": 8000,
  "image_budget_month": 4000,
  "costs_estimate": {
@@ -175,6 +175,12 @@
    "what": "hoja A v3 a 2K (solo referencia de estilo, gemini-3.1-flash-image)",
    "credits": 918,
    "note": "flow VtGRWmIPbUvuCGPkfEpr, generation LhLNav3FOU3KGlqeJ340. La dueña ya ha ampliado a Creator (23/11); renovación y saldo real pendientes de confirmar."
+  },
+  {
+   "date": "2026-11-23",
+   "slug": "week_w48",
+   "what": "hoja B week_w48 4x4 2K, 1 ref (gemini-3.1-flash-image)",
+   "credits": 918
   }
  ],
  "renewal_day": 30,
