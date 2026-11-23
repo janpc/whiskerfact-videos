@@ -2,6 +2,44 @@
 
 Written by the weekly review. Newest first. Each entry: date, what was compared, numbers, conclusion, and what changed.
 
+## 2026-11-23 — weekly review
+
+**Data.** 13 public reels in Metricool (29 Oct – 21 Nov). `first_thanksgiving` (21 Nov, base) is 38 h old: stored, not scored. `lightning_vs_sun` (23 Nov, third B2-length variant) goes out tonight 20:30. Snapshot: `growth/metrics/2026-11-23.json`.
+- Watch % still comes from **Instagram only** (`IGRE24` ÷ length). TikTok `TKPO13/15/16` null; YouTube `YTVV` empty. `IGRE27` null.
+- Followers: Instagram 15 → 16 (14 → 21 Nov), **TikTok 4 → 10 (jump on 21 Nov, the day of the Thanksgiving reel: 664 TikTok views at 38 h, best since hottest_planet)**, YouTube 8 → 8.
+- Country: Instagram `IGDP01/02` still returns no rows; nothing for YouTube. TikTok countries still pending from the owner (next monthly ask ~7 Dec).
+- TikTok `api` mode: api reels 239–664 views (mammoth_quiz 265, moon_earth_view 239, overnight_charging 270, first_thanksgiving 664) vs manual bone_vs_steel 271 → no warning.
+
+| Video | Length | Role | Window (age) | IG watch % | Avg watch | IG views | 3-s skip | Eng/100 | TikTok views |
+|---|---|---|---|---|---|---|---|---|---|
+| earth_tunnel | 86.2 s | B1 variant | final (399 h) | 28.7 | 24.8 s | 192 | 47.0 | 2.08 | 281 |
+| cat_night_vision | 73.3 s | B1 variant | final (350 h) | **36.5** | 26.7 s | 1270 | **32.9** | **4.96** | 251 |
+| mammoth_quiz | 78.4 s | B1 variant | final (279 h) | 27.9 | 21.9 s | 1503 | 38.3 | 2.40 | 265 |
+| bone_vs_steel | 79.9 s | base | final (231 h) | 21.7 | 17.3 s | 140 | 46.8 | 2.86 | 271 |
+| moon_earth_view | 56.2 s | B2 variant (00:30) | early (154 h) | **17.0** | 9.5 s | 193 | 59.2 | 2.07 | 239 |
+| overnight_charging | 54.8 s | B2 variant | early (110 h) | 30.2 | 16.5 s | 694 | 40.1 | 2.74 | 270 |
+| first_thanksgiving | 74.3 s | base | too early (39 h) | (40.3) | 29.9 s | 1416 | 26.1 | 2.97 | 664 |
+
+Older reels barely moved since 16 Nov (all final; see snapshot).
+
+**Baseline** (last 5 base/control with final figures: goosebumps, vampire_bats, hottest_planet, wifi_bands, bone_vs_steel): watch % **29.5** (13.8, 35.3, 34.0, 29.5, 21.7) — down from 34.0 because bone_vs_steel replaced pyramids. For B2: median IG views **1,408**, median 3-s skip **42.3 %**.
+
+**Batch B1-hook-style — closed: inconclusive.** 3 of 3 final: earth_tunnel −2.7 %, cat_night_vision **+23.7 %**, mammoth_quiz −5.4 % vs 29.5 %. Only 1 of 3 beyond +20 %, none below −20 % (against the old 34.0 baseline it is −15.6 / +7.4 / −17.9: same verdict). Not "statement doesn't work": no detectable difference yet. Moved to `history`; `B1b-hook-style` queued for the one repeat, after `time_slots` (the owner put that first on 15 Nov). `hook_style` stays fixed at `question`.
+
+**Batch B2-length (short vs standard) — now the running batch, 0 of 3 final.** Early read, provisional: moon_earth_view 193 IG views (−86 % vs 1,408), skip 59.2 % (worse than 42.3); overnight_charging 694 views (−51 %), skip 40.1 % (better). Both are >20 % below on views → if this holds at 7 days it is a **failure** (2 of 3). moon_earth_view also went out at 00:30, so it mixes two variables. lightning_vs_sun goes out tonight; it only reaches 7 days after 30 Nov 20:30, so the verdict most likely comes on 7 Dec.
+
+**Best / worst by watch % (final figures).** Best: cat_night_vision, 36.5 % of 73 s (lowest skip 32.9 %, top engagement). Worst final: bone_vs_steel, 21.7 % of 80 s, 46.8 % skip, 140 views. Worst overall (early): moon_earth_view, 17.0 % of 56 s, 59.2 % skip.
+
+**Hypotheses (not rules):**
+- *3-s skip rate predicts Instagram reach* — still holds on the high side: every reel with skip ≥ 44.9 % has 140–338 views (5 reels). Reels with skip ≤ 42.3 % have 1,270–2,521 views (6 final reels), but overnight_charging (40.1 %, early) has only 694 — the line may be fuzzier than "below 42 % → 1,300+".
+- *"People watch ~25 s whatever the length" is NOT holding for short reels:* the two short reels average 9.5 s and 16.5 s, against 17–36 s (mostly 22–27 s) for the standard reels. Shorter reels seem to lose seconds, not just add percentage. Two early reads only.
+- *`body` topics hook worst:* now with final figures for both (goosebumps 57.1 %, bone_vs_steel 46.8 % skip; 140–192 views). Still only 2 videos.
+- *Myth format does well:* overnight_charging (myth) is the better of the two short reels (40.1 % skip, 3 saves). Three myth reels, all with skip ≤ 40.1 %.
+- *Themed / seasonal reels travel:* first_thanksgiving has the lowest skip ever (26.1 %) and 1,416 IG views in 38 h, plus the TikTok follower jump; vampire_bats (Halloween) also did well. Early and only 2 cases.
+- *TikTok* stays flat at 240–310 except for hottest_planet (907) and first_thanksgiving (664) — both quiz format.
+
+**Changed:** `experiments.json` → B1-hook-style closed (inconclusive) and moved to `history`; `next_batch` B2-length moved into `batch` with its 2026-11-23 early read; `B1b-hook-style` added to `queue` (2nd, after time_slots); `hook_style.note` updated. Status of every test unchanged (length testing, the rest fixed).
+
 ## 2026-11-16 — weekly review
 
 **Data.** 10 public reels in Metricool (29 Oct – 13 Nov). `moon_earth_view` (16 Nov, first B2-length variant) is scheduled for tonight 20:30 and not published yet. Snapshot: `growth/metrics/2026-11-16.json`.

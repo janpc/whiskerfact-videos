@@ -30,45 +30,44 @@
   "side_experiment": "none. `variants.tiktok_mode` is `api` for every reel since 2026-11-15 (closed: API posts get the same views as manual ones)."
  },
  "batch": {
-  "id": "B1-hook-style",
+  "id": "B2-length",
   "status": "running",
-  "test": "hook_style",
-  "variant": "statement",
-  "control": "question",
-  "hypothesis": "A hook that opens with a surprising statement and then asks the question holds more viewers than a direct question, because it gives a reason to stay in the first 3 seconds. Measured on watch_pct (7-day figures, averaged over the networks with data; today Instagram only) of the 3 variant videos (2026-11-06, 2026-11-08, 2026-11-11) against the baseline (median watch_pct of the last 5 base/control videos). Success: the variant beats the baseline by >20% in at least 2 of the 3; failure: worse by >20% in at least 2 of the 3; anything else inconclusive (repeat once).",
+  "test": "length",
+  "variant": "short",
+  "control": "standard",
+  "opened": "2026-11-15",
+  "hypothesis": "Instagram's 3-second skip rate decides reach (10 videos, 29/10-13/11: skip 33-42% -> 1,270-2,500 views; skip 44-57% -> 140-340 views) and viewers watch about 25 s whatever the length (62 s: 41% watched; 79-86 s: 22-30%). A 45-58 s reel should hold a larger share of viewers and keep Instagram showing it. Hook style stays at the control (question) so length is the only variable. Measured on the 7-day Instagram figures of the 3 variant videos (2026-11-16, 2026-11-18, 2026-11-23): ig_views and ig_skip_rate_3s against the median of the last 5 base/control videos (see `measurement` and `success`).",
+  "measurement": {
+   "note": "watch_pct is reported next to the length but NOT decisive here: a shorter video has a higher watch % by construction. Decisive metrics are Instagram only (YouTube and TikTok retention are not available in Metricool), 7-day figures.",
+   "decisive": [
+    "ig_views (IGRE23)",
+    "ig_skip_rate_3s (IGRE30)"
+   ],
+   "also_report": [
+    "watch_pct and absolute average watch time in seconds",
+    "(likes+comments+shares+saves) per 100 views",
+    "shares and saves",
+    "tiktok_views"
+   ],
+   "baseline": "median ig_views and median ig_skip_rate_3s of the last 5 videos with role `base` or `control` (final figures). Reference before the test, 2026-11-15: skip 33-57%, views 139-2,518 (very noisy)."
+  },
+  "success": "in at least 2 of the 3 variant videos, ig_views is more than 20% above the baseline median AND ig_skip_rate_3s is lower than the baseline median",
+  "failure": "in at least 2 of the 3 variant videos, ig_views is more than 20% below the baseline median",
+  "inconclusive": "anything else: repeat once with a new batch id (B2b-length); if still inconclusive, keep `standard`.",
+  "adopt": "if it succeeds, `short` becomes the new control. Check then whether to go back above 1 minute: TikTok Creator Rewards only pays videos over 1 min and needs 10,000 followers and 100,000 views in 30 days.",
   "slots": 3,
   "videos": [
-   "2026-11-06",
-   "2026-11-08",
-   "2026-11-11"
+   "2026-11-16",
+   "2026-11-18",
+   "2026-11-23"
   ],
-  "opened": "2026-11-04",
-  "note": "Batch full since the Monday plan of 2026-11-09 (third video 2026-11-11). The review closes it once 2026-11-11 has 7-day figures (2026-11-18). 2026-11-13 and 2026-11-16 are `base` with the control hook (question), which also adds real question-hook videos to the baseline (see insights 2026-11-09: the baseline is mostly statement hooks).",
+  "note": "Batch full since the Monday plan of 2026-11-16: variants 2026-11-16, 2026-11-18 and 2026-11-23 (2026-11-21 is the themed Thanksgiving reel, role base, length standard). Promoted from `next_batch` to `batch` on 2026-11-23 when B1-hook-style closed. 2026-11-23 goes out at 20:30, so it is only ~158 h old at the Monday review of 2026-11-30 (early read); the batch closes at the review of 2026-12-07 unless a review runs after 2026-11-30 20:30.",
   "reads": [
    {
-    "review": "2026-11-09",
-    "baseline_watch_pct": 35.6,
-    "videos": {
-     "2026-11-06": {
-      "window": "early",
-      "age_h": 62.5,
-      "watch_pct": 28.9,
-      "length_s": 86.2,
-      "vs_baseline_pct": -18.8,
-      "ig_views": 189,
-      "tiktok_views": 278,
-      "note": "provisional"
-     },
-     "2026-11-08": {
-      "window": "too_early",
-      "note": "under 48 h, not yet in Metricool"
-     }
-    },
-    "final_figures": "0 of 3"
-   },
-   {
     "review": "2026-11-16",
-    "baseline_watch_pct": 34.0,
+    "final_figures": "0 of 3",
+    "baseline_ig_views_median": 1407,
+    "baseline_ig_skip_rate_3s_median": 42.3,
     "baseline_videos": [
      "pyramids",
      "goosebumps",
@@ -77,40 +76,63 @@
      "wifi_bands"
     ],
     "videos": {
-     "2026-11-06": {
-      "window": "final",
-      "age_h": 230.5,
-      "watch_pct": 28.8,
-      "length_s": 86.2,
-      "vs_baseline_pct": -15.3,
-      "ig_views": 191,
-      "ig_skip_rate_3s": 47.3,
-      "tiktok_views": 281
-     },
-     "2026-11-08": {
-      "window": "final",
-      "age_h": 182.4,
-      "watch_pct": 36.5,
-      "length_s": 73.3,
-      "vs_baseline_pct": 7.4,
-      "ig_views": 1268,
-      "ig_skip_rate_3s": 32.8,
-      "tiktok_views": 251
-     },
-     "2026-11-11": {
+     "2026-11-16": {
+      "window": "too_early",
+      "note": "scheduled for 2026-11-16 20:30, not published at review time"
+     }
+    }
+   },
+   {
+    "review": "2026-11-23",
+    "final_figures": "0 of 3",
+    "baseline_ig_views_median": 1408,
+    "baseline_ig_skip_rate_3s_median": 42.3,
+    "baseline_videos": [
+     "goosebumps",
+     "vampire_bats",
+     "hottest_planet",
+     "wifi_bands",
+     "bone_vs_steel"
+    ],
+    "videos": {
+     "2026-11-16": {
       "window": "early",
-      "age_h": 110.5,
-      "watch_pct": 27.9,
-      "length_s": 78.4,
-      "vs_baseline_pct": -17.9,
-      "ig_views": 1502,
-      "ig_skip_rate_3s": 38.3,
-      "tiktok_views": 265,
+      "age_h": 154.4,
+      "length_s": 56.2,
+      "ig_views": 193,
+      "vs_baseline_views_pct": -86.3,
+      "ig_skip_rate_3s": 59.2,
+      "skip_below_baseline": false,
+      "watch_pct": 17.0,
+      "avg_watch_s": 9.5,
+      "eng_per_100": 2.07,
+      "shares": 0,
+      "saves": 0,
+      "tiktok_views": 239,
+      "note": "provisional; also published at 00:30 (time_slot test leak), so not a clean length read"
+     },
+     "2026-11-18": {
+      "window": "early",
+      "age_h": 110.4,
+      "length_s": 54.8,
+      "ig_views": 694,
+      "vs_baseline_views_pct": -50.7,
+      "ig_skip_rate_3s": 40.1,
+      "skip_below_baseline": true,
+      "watch_pct": 30.2,
+      "avg_watch_s": 16.5,
+      "eng_per_100": 2.74,
+      "shares": 0,
+      "saves": 3,
+      "tiktok_views": 270,
       "note": "provisional"
+     },
+     "2026-11-23": {
+      "window": "too_early",
+      "note": "scheduled for 2026-11-23 20:30, not published at review time"
      }
     },
-    "final_figures": "2 of 3",
-    "note": "Not closed: 2026-11-11 reaches 7 days on 2026-11-18. Two of the three videos are already inside the +/-20% band with final figures, so neither success (2 of 3 > +20%) nor failure (2 of 3 < -20%) can be reached: the batch will close as inconclusive at the next review, whatever 2026-11-11 does."
+    "note": "Early reads only (provisional). Both published variants are >20% below the baseline median on IG views; if that holds at 7 days the batch closes as failure (2 of 3 below -20%). Absolute average watch time fell to 9.5-16.5 s (standard reels: ~21-27 s), so shorter reels are not keeping the same seconds watched. Closes once 2026-11-23 has 7-day figures (after 2026-11-30 20:30, so most likely the review of 2026-12-07)."
    }
   ]
  },
@@ -120,6 +142,14 @@
    "variant": "00:30",
    "control": "20:30",
    "why": "does the 6:30 pm NY slot beat 2:30 pm NY (20:30). Moved to the front of the queue on 2026-11-15; opens only after B2-length is closed, to keep one variable per batch. TikTok is automatic now, so a night time costs nothing"
+  },
+  {
+   "test": "hook_style",
+   "batch_id": "B1b-hook-style",
+   "variant": "statement",
+   "control": "question",
+   "hypothesis": "A surprising-statement hook holds more viewers than a direct question (repeat of the inconclusive B1, 3 new variant videos, same success rule on watch_pct).",
+   "why": "B1-hook-style closed inconclusive on 2026-11-23 (+23.7, -2.7, -5.4% vs baseline); the protocol repeats it once. Placed after time_slots because the owner moved time_slots to the front on 2026-11-15; swap if the owner prefers."
   },
   {
    "test": "caption_style",
@@ -134,7 +164,148 @@
    "why": "does a second signature touch help"
   }
  ],
- "history": [],
+ "history": [
+  {
+   "id": "B1-hook-style",
+   "status": "closed",
+   "test": "hook_style",
+   "variant": "statement",
+   "control": "question",
+   "hypothesis": "A hook that opens with a surprising statement and then asks the question holds more viewers than a direct question, because it gives a reason to stay in the first 3 seconds. Measured on watch_pct (7-day figures, averaged over the networks with data; today Instagram only) of the 3 variant videos (2026-11-06, 2026-11-08, 2026-11-11) against the baseline (median watch_pct of the last 5 base/control videos). Success: the variant beats the baseline by >20% in at least 2 of the 3; failure: worse by >20% in at least 2 of the 3; anything else inconclusive (repeat once).",
+   "slots": 3,
+   "videos": [
+    "2026-11-06",
+    "2026-11-08",
+    "2026-11-11"
+   ],
+   "opened": "2026-11-04",
+   "note": "Batch full since the Monday plan of 2026-11-09 (third video 2026-11-11). The review closes it once 2026-11-11 has 7-day figures (2026-11-18). 2026-11-13 and 2026-11-16 are `base` with the control hook (question), which also adds real question-hook videos to the baseline (see insights 2026-11-09: the baseline is mostly statement hooks).",
+   "reads": [
+    {
+     "review": "2026-11-09",
+     "baseline_watch_pct": 35.6,
+     "videos": {
+      "2026-11-06": {
+       "window": "early",
+       "age_h": 62.5,
+       "watch_pct": 28.9,
+       "length_s": 86.2,
+       "vs_baseline_pct": -18.8,
+       "ig_views": 189,
+       "tiktok_views": 278,
+       "note": "provisional"
+      },
+      "2026-11-08": {
+       "window": "too_early",
+       "note": "under 48 h, not yet in Metricool"
+      }
+     },
+     "final_figures": "0 of 3"
+    },
+    {
+     "review": "2026-11-16",
+     "baseline_watch_pct": 34.0,
+     "baseline_videos": [
+      "pyramids",
+      "goosebumps",
+      "vampire_bats",
+      "hottest_planet",
+      "wifi_bands"
+     ],
+     "videos": {
+      "2026-11-06": {
+       "window": "final",
+       "age_h": 230.5,
+       "watch_pct": 28.8,
+       "length_s": 86.2,
+       "vs_baseline_pct": -15.3,
+       "ig_views": 191,
+       "ig_skip_rate_3s": 47.3,
+       "tiktok_views": 281
+      },
+      "2026-11-08": {
+       "window": "final",
+       "age_h": 182.4,
+       "watch_pct": 36.5,
+       "length_s": 73.3,
+       "vs_baseline_pct": 7.4,
+       "ig_views": 1268,
+       "ig_skip_rate_3s": 32.8,
+       "tiktok_views": 251
+      },
+      "2026-11-11": {
+       "window": "early",
+       "age_h": 110.5,
+       "watch_pct": 27.9,
+       "length_s": 78.4,
+       "vs_baseline_pct": -17.9,
+       "ig_views": 1502,
+       "ig_skip_rate_3s": 38.3,
+       "tiktok_views": 265,
+       "note": "provisional"
+      }
+     },
+     "final_figures": "2 of 3",
+     "note": "Not closed: 2026-11-11 reaches 7 days on 2026-11-18. Two of the three videos are already inside the +/-20% band with final figures, so neither success (2 of 3 > +20%) nor failure (2 of 3 < -20%) can be reached: the batch will close as inconclusive at the next review, whatever 2026-11-11 does."
+    },
+    {
+     "review": "2026-11-23",
+     "baseline_watch_pct": 29.5,
+     "baseline_videos": [
+      "goosebumps",
+      "vampire_bats",
+      "hottest_planet",
+      "wifi_bands",
+      "bone_vs_steel"
+     ],
+     "baseline_values": [
+      13.8,
+      35.3,
+      34.0,
+      29.5,
+      21.7
+     ],
+     "videos": {
+      "2026-11-06": {
+       "window": "final",
+       "age_h": 398.5,
+       "watch_pct": 28.7,
+       "length_s": 86.2,
+       "vs_baseline_pct": -2.7,
+       "ig_views": 192,
+       "ig_skip_rate_3s": 47.0,
+       "tiktok_views": 281
+      },
+      "2026-11-08": {
+       "window": "final",
+       "age_h": 350.4,
+       "watch_pct": 36.5,
+       "length_s": 73.3,
+       "vs_baseline_pct": 23.7,
+       "ig_views": 1270,
+       "ig_skip_rate_3s": 32.9,
+       "tiktok_views": 251
+      },
+      "2026-11-11": {
+       "window": "final",
+       "age_h": 278.5,
+       "watch_pct": 27.9,
+       "length_s": 78.4,
+       "vs_baseline_pct": -5.4,
+       "ig_views": 1503,
+       "ig_skip_rate_3s": 38.3,
+       "tiktok_views": 265
+      }
+     },
+     "final_figures": "3 of 3",
+     "note": "bone_vs_steel (base, question hook) reached final figures and enters the baseline, replacing pyramids; median drops 34.0 -> 29.5. Against the previous baseline (34.0) the result is the same: -15.6, +7.4, -17.9."
+    }
+   ],
+   "closed": "2026-11-23",
+   "verdict": "inconclusive",
+   "result": "1 of 3 variants above +20% (cat_night_vision +23.7%), 0 of 3 below -20% (earth_tunnel -2.7%, mammoth_quiz -5.4%) vs baseline 29.5% watch. Neither success nor failure: inconclusive, not 'statement does not work'. Per protocol, repeat once as B1b-hook-style (queued); if B1b is also inconclusive, close as 'no detectable difference' and keep `question`."
+  }
+ ],
  "time_slots": {
   "status": "fixed",
   "options": {
@@ -156,7 +327,7 @@
   },
   "control": "question",
   "rule": "fixed: always use `control`. testing: use the option the week plan assigns in `experiment`; if the plan has no entry for today, alternate (the option with fewer videos in the log). decided: `control` is the winner and stays fixed.",
-  "note": "15/11/2026: B1 has all 3 variant videos published (it only waits for 7-day figures), so new videos use the control (question) while B2-length runs. The review sets `decided` when it closes B1."
+  "note": "23/11/2026: B1-hook-style closed as inconclusive (see history). Not decided: `question` stays the control and B1b-hook-style is queued for one repeat. Until then, always use `question`."
  },
  "caption_style": {
   "status": "fixed",
@@ -196,61 +367,6 @@
   },
   "control": "standard",
   "rule": "testing: use the option the week plan assigns in `experiment`; if the plan has no entry for today use the control. Shorter videos are NOT a way to skip the retention rules: the hook, the new-visual-every-3-4-seconds rule and the verification stay the same."
- },
- "next_batch": {
-  "id": "B2-length",
-  "status": "running",
-  "test": "length",
-  "variant": "short",
-  "control": "standard",
-  "opened": "2026-11-15",
-  "hypothesis": "Instagram's 3-second skip rate decides reach (10 videos, 29/10-13/11: skip 33-42% -> 1,270-2,500 views; skip 44-57% -> 140-340 views) and viewers watch about 25 s whatever the length (62 s: 41% watched; 79-86 s: 22-30%). A 45-58 s reel should hold a larger share of viewers and keep Instagram showing it. Hook style stays at the control (question) so length is the only variable. Measured on the 7-day Instagram figures of the 3 variant videos (2026-11-16, 2026-11-18, 2026-11-23): ig_views and ig_skip_rate_3s against the median of the last 5 base/control videos (see `measurement` and `success`).",
-  "measurement": {
-   "note": "watch_pct is reported next to the length but NOT decisive here: a shorter video has a higher watch % by construction. Decisive metrics are Instagram only (YouTube and TikTok retention are not available in Metricool), 7-day figures.",
-   "decisive": [
-    "ig_views (IGRE23)",
-    "ig_skip_rate_3s (IGRE30)"
-   ],
-   "also_report": [
-    "watch_pct and absolute average watch time in seconds",
-    "(likes+comments+shares+saves) per 100 views",
-    "shares and saves",
-    "tiktok_views"
-   ],
-   "baseline": "median ig_views and median ig_skip_rate_3s of the last 5 videos with role `base` or `control` (final figures). Reference before the test, 2026-11-15: skip 33-57%, views 139-2,518 (very noisy)."
-  },
-  "success": "in at least 2 of the 3 variant videos, ig_views is more than 20% above the baseline median AND ig_skip_rate_3s is lower than the baseline median",
-  "failure": "in at least 2 of the 3 variant videos, ig_views is more than 20% below the baseline median",
-  "inconclusive": "anything else: repeat once with a new batch id (B2b-length); if still inconclusive, keep `standard`.",
-  "adopt": "if it succeeds, `short` becomes the new control. Check then whether to go back above 1 minute: TikTok Creator Rewards only pays videos over 1 min and needs 10,000 followers and 100,000 views in 30 days.",
-  "slots": 3,
-  "videos": [
-   "2026-11-16",
-   "2026-11-18",
-   "2026-11-23"
-  ],
-  "note": "Batch full since the Monday plan of 2026-11-16: variants 2026-11-16, 2026-11-18 and 2026-11-23 (2026-11-21 is the themed Thanksgiving reel, role base, length standard). Final 7-day figures for all three by 2026-11-30. B1-hook-style (key `batch`) stays only as a measurement: the review closes it when 2026-11-11 has 7-day figures, then moves `next_batch` into `batch`.",
-  "reads": [
-   {
-    "review": "2026-11-16",
-    "final_figures": "0 of 3",
-    "baseline_ig_views_median": 1407,
-    "baseline_ig_skip_rate_3s_median": 42.3,
-    "baseline_videos": [
-     "pyramids",
-     "goosebumps",
-     "vampire_bats",
-     "hottest_planet",
-     "wifi_bands"
-    ],
-    "videos": {
-     "2026-11-16": {
-      "window": "too_early",
-      "note": "scheduled for 2026-11-16 20:30, not published at review time"
-     }
-    }
-   }
-  ]
  },
  "future_ideas": [
   {
