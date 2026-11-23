@@ -5,9 +5,9 @@
  "balance_checked": {
   "value": 5398,
   "date": "2026-11-23",
-  "note": "7.234 dicho por la dueña el 23/11 menos 1.836 de las dos hojas (estimado)"
+  "note": "7.234 dicho por la dueña el 23/11 menos 1.836 de las dos hojas (estimado) ; -609 de la prueba A v2 (estimado)"
  },
- "estimated_balance": 5398,
+ "estimated_balance": 4789,
  "warn_below": 8000,
  "image_budget_month": 4000,
  "costs_estimate": {
@@ -161,6 +161,13 @@
    "what": "2 hojas 4x4 a 2K en bloque (nose_w48 y week_w48; gemini-3.1-flash-image, 1 referencia collage cada una)",
    "credits": 1836,
    "note": "flow VtGRWmIPbUvuCGPkfEpr, generations btLzR0o9XTfAqGf0Kzjg y L4VzgqmJ4HEgSHZAwqlE. Coste medido: 2K sin referencia 612; cada referencia suma 306 (a 1K suma 203): usar UN collage de referencias por hoja (918). Saldo real dicho por la dueña antes de generar: 7.234."
+  },
+  {
+   "date": "2026-11-23",
+   "slug": "library",
+   "what": "prueba hoja A v2 (1K, solo referencia de estilo, gemini-3.1-flash-image)",
+   "credits": 609,
+   "note": "flow VtGRWmIPbUvuCGPkfEpr, generation tkxkbPqyHZlp5s6Mqqhz"
   }
  ],
  "renewal_day": 30,
