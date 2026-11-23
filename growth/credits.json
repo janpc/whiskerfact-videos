@@ -3,11 +3,11 @@
  "plan": "Starter",
  "monthly_allowance": 30000,
  "balance_checked": {
-  "value": 26522,
-  "date": "2026-11-02",
-  "note": "saldo real que marca ElevenLabs (dicho por la dueña)"
+  "value": 5398,
+  "date": "2026-11-23",
+  "note": "7.234 dicho por la dueña el 23/11 menos 1.836 de las dos hojas (estimado)"
  },
- "estimated_balance": 7129,
+ "estimated_balance": 5398,
  "warn_below": 8000,
  "image_budget_month": 4000,
  "costs_estimate": {
@@ -15,7 +15,12 @@
   "music": 1284,
   "image_text_only": 410,
   "image_with_reference": 610,
-  "transcribe_fallback": 400
+  "transcribe_fallback": 400,
+  "image_2k_one_reference": 918,
+  "image_2k_no_reference": 612,
+  "image_1k_no_reference": 406,
+  "image_4k_no_reference": 915,
+  "image_per_extra_reference_2k": 306
  },
  "spent": [
   {
@@ -149,6 +154,13 @@
    "what": "music (video-to-music, 1 generation)",
    "credits": 836,
    "note": "flow Q4RWsQia6pHRGabsab5B, node nYPuPIvWaFhA7lcqqfGV, session qEX0k77zc6vjeKwq04se, generation XTfcYxThPnMVhOMSARru"
+  },
+  {
+   "date": "2026-11-23",
+   "slug": "library",
+   "what": "2 hojas 4x4 a 2K en bloque (nose_w48 y week_w48; gemini-3.1-flash-image, 1 referencia collage cada una)",
+   "credits": 1836,
+   "note": "flow VtGRWmIPbUvuCGPkfEpr, generations btLzR0o9XTfAqGf0Kzjg y L4VzgqmJ4HEgSHZAwqlE. Coste medido: 2K sin referencia 612; cada referencia suma 306 (a 1K suma 203): usar UN collage de referencias por hoja (918). Saldo real dicho por la dueña antes de generar: 7.234."
   }
  ],
  "renewal_day": 30,
