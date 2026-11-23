@@ -223,7 +223,7 @@ def _(img, T, t, s, e):
     sun(img, lerp(260, 330, k), 1060, 230, T * 0.3, a, rays=False)
     lab(img, "Visible surface", 760, INK_T, a * on(T, "visible", s, e, need=2.4), x=360)
     thermo(img, 760, 880, 360, 0.28 * eio((T - s) / 1.0), (240, 150, 40), a)
-    lab(img, "~10,000°F", 1300, RED_T, a * on(T, "ten", s, e, need=1.6), x=560)
+    lab(img, "~10,000°F", 1300, RED_T, a * on(T, "About", s, e, need=1.8), x=560)
     R.chrome(img, T)
     title(img, T, s, e, "The Sun")
 V.backdrop("surf")(lambda img, T, t: ST.card(img, CARD))
@@ -240,7 +240,7 @@ def _(img, T, t, s, e):
     bar(img, 720, base, 190, 100 * k, SUN_B, ab)
     bolt(img, 360, base - 500 * k - 90, 130, ab)
     sun(img, 720, base - 100 * k - 80, 50, T, ab)
-    lab(img, "5x hotter", 900, YELLOW, a * on(T, "five", s, e, need=2.0) * (1 if T < tp - 0.15 else 0), x=620)
+    lab(img, "5x hotter", 900, YELLOW, a * on(T, "runs", s, e, need=2.0) * (1 if T < tp - 0.1 else 0), x=620)
     kp = clamp((T - tp + 0.05) / 0.25)
     R.chrome(img, T)
     title(img, T, s, e, "Air vs surface")
@@ -259,7 +259,7 @@ def _(img, T, t, s, e):
     item(img, LW, "beach_strike", 470, lerp(1090, 1060, k), 560, a=a * (1 - kg))     # 454 → ×1,23
     item(img, LI, "fulgurite", 420, lerp(1150, 1060, eo(kg)), 320, a=a * kg, rot=-6)  # 210 → ×1,52
     lab(img, "Sand to glass", 790, YELLOW, a * on(T, "glass", s, e, need=2.0), x=470)
-    lab(img, "Fulgurite", 1280, B.TEXT, a * on(T, "fulgurites.", s, e, need=1.6), x=470)
+    lab(img, "Fulgurite", 1280, B.TEXT, a * on(T, "called", s, e, need=1.8), x=470)
     R.chrome(img, T)
     title(img, T, s, e, "Hot enough to melt sand")
 V.backdrop("glass")(lambda img, T, t: ST.landscape(img, T, sky_kind="storm", terrain="dunes", seed=6))
@@ -276,7 +276,7 @@ def _(img, T, t, s, e):
     kf = (1 - clamp((T - tg - 0.25) / 0.12)) * clamp((T - s - 0.1) / 0.15)    # el rayo está… y se apaga en «second»
     bolt(img, 700, 1020, 360 * (1 + 0.06 * clamp((T - tf) / 0.1) * (1 - clamp((T - tf - 0.2) / 0.3))), a * kf, rot=6)
     if kf > 0.05: glow(img, 700, 1020, 160, (255, 240, 150), a * kf * fl)
-    lab(img, "< 1 second", 1270, RED_T, a * on(T, "less", s, e, need=1.6), x=520)
+    lab(img, "< 1 second", 1270, RED_T, a * on(T, "over", s, e, need=2.0), x=520)
     R.chrome(img, T)
     R.txt(img, "Round 2: Staying power", TITLE_Y, "title", YELLOW, win(T, s, e) * k)
     return R.punch(img, T, tf, amt=0.05)
@@ -290,7 +290,7 @@ def _(img, T, t, s, e):
     sun(img, 330, lerp(1150, 1030, k), 175, T, a)
     item(img, LI, "hourglass_space", 720, 1050, 300, a=a, rot=8 * math.sin(T * 0.8))   # 207 → ×1,45
     tp = wt("Point,", s)
-    lab(img, "Billions of years", 1290, YELLOW, a * on(T, "billions", s, e, need=1.5) * (1 if T < tp - 0.15 else 0), x=520)
+    lab(img, "Billions of years", 1290, YELLOW, a * on(T, "shining", s, e, need=2.0) * (1 if T < tp - 0.1 else 0), x=520)
     kp = clamp((T - tp + 0.05) / 0.25)
     R.chrome(img, T)
     title(img, T, s, e, "The Sun")
@@ -348,7 +348,7 @@ def _(img, T, t, s, e):
     bolt(img, 300, 1130, 260 * (0.9 + 0.1 * eo(kb)), a, rot=6)
     sun(img, 760, 1110, 120, T, a)
     lab(img, "Surface: bolt", 1290, YELLOW, a * kb, x=300)
-    lab(img, "Core: Sun", 1290, YELLOW, a * on(T, "heart.", s, e, need=1.5), x=760)
+    lab(img, "Core: Sun", 1290, YELLOW, a * on(T, "not", s, e, need=2.0), x=760)
     R.chrome(img, T)
     R.txt(img, "Sun wins 2–1", TITLE_Y, "title", YELLOW, a * clamp((T - wt("two", s)) / 0.3))
     return R.punch(img, T, wt("Sun.", s), amt=0.05)
