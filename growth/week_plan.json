@@ -1,131 +1,5 @@
 [
  {
-  "date": "2026-11-16",
-  "topic": "What if you stood on the Moon and looked back at Earth?",
-  "category": "space",
-  "format": "what_if",
-  "characters": [
-   "astronaut"
-  ],
-  "objects": [
-   "moon_items",
-   "earth_tunnel_items:earth"
-  ],
-  "illustrations": [
-   "moon_items"
-  ],
-  "missing": [
-   "astronaut",
-   "moon_items"
-  ],
-  "notes": "Planned on 2026-11-09 because the nightly run renders it in the night of 15→16, before the next Monday plan. Uses the top space backlog idea 'Why does the Moon always show us the same face?' (score 8) as a grounded what_if: premise (you land on the near side) → first hour (Earth hangs almost still in the sky, it never rises or sets; it only wobbles a little, libration) → first day (one lunar day lasts ~29.5 Earth days; the Sun takes about two weeks to cross the sky; Earth shows phases, opposite to the Moon's phases seen from Earth) → long term (the Moon drifts ~3.8 cm a year away) → what it teaches: the Moon is tidally locked, it turns once per orbit, so we always see the same face. Not scary: no dangers, no emergencies. Say 'astronomers' / 'NASA'. Sources to check: NASA (tidal locking, Moon facts), Live Science 'Earth phases from the Moon', Astronomy.com (Dec 2025) 'Why does the same side of the Moon always face Earth?', timeanddate (far side). Earth sprite: earth_tunnel_items:earth (phases masked in code). Category space: rotation after body. Format what_if: fewest reels in the log once 11/11 (quiz) and 11/13 (versus) are out. Remove the backlog line in topics.md when used.",
-  "experiment": {
-   "batch": "B2-length",
-   "test": "length",
-   "option": "short",
-   "role": "variant"
-  }
- },
- {
-  "date": "2026-11-18",
-  "topic": "Myth or fact: does charging your phone overnight ruin the battery?",
-  "category": "tech",
-  "format": "myth",
-  "characters": [
-   "young_man"
-  ],
-  "objects": [
-   "wifi_objects:phone",
-   "wifi_objects:clock",
-   "battery_items:charger_plug",
-   "battery_items:charging_cable",
-   "battery_items:phone_charging",
-   "battery_items:nightstand",
-   "battery_items:li_battery",
-   "battery_items:nicd_battery",
-   "battery_items:old_phone",
-   "battery_items:thermometer",
-   "battery_items:hot_car",
-   "battery_items:power_bank",
-   "battery_items:battery_full",
-   "battery_items:battery_low"
-  ],
-  "illustrations": [
-   "large_w47:battery_cutaway",
-   "large_w47:bedroom_night"
-  ],
-  "missing": [
-   "battery_items",
-   "large_w47:battery_cutaway",
-   "large_w47:bedroom_night"
-  ],
-  "large": [
-   "battery_cutaway",
-   "bedroom_night"
-  ],
-  "notes": "Verdict stamp HALF TRUE (mostly myth): modern phones stop charging at 100% and some (iPhone Optimized Battery Charging, Pixel Adaptive Charging, Samsung Protect Battery) hold at ~80% overnight; what really ages a lithium-ion battery is heat and long hours at full charge, not the night itself. Where the belief comes from: older nickel batteries (NiCd/NiMH) had the 'memory effect' and cheap old chargers could overcharge. Evidence steps: 1) the phone's charge controller cuts the current at 100%; 2) heat (phone under a pillow, in a hot car; Apple says avoid above 35 C) and sitting at 100% are the real wear. Sources to check on the day: Apple support 'About Optimized Battery Charging' and apple.com/batteries/maximizing-performance, Battery University BU-808 and BU-807, Google Pixel Help 'Adaptive Charging', Samsung. Plausibility 16/11: many explainers agree (SlashGear, Mental Floss). No brand logos on the phones. Hook (control, question): 'Does charging overnight kill your battery?' First second: phone on a nightstand plugged in, battery icon draining/filling. Category tech: rotation after space (16/11). Format myth: tie at 2 reels with quiz/versus/what_if, used longest ago (8/11); myth also has the best skip rates so far (insights 16/11). Closing: not callback (16/11) nor cat_take (13/11); 'ask' fits here ('Do you charge overnight?') and was last used 8/11.",
-  "experiment": {
-   "batch": "B2-length",
-   "test": "length",
-   "option": "short",
-   "role": "variant"
-  }
- },
- {
-  "date": "2026-11-21",
-  "topic": "Pop quiz: which of these was NOT at the first Thanksgiving in 1621?",
-  "category": "history",
-  "format": "quiz",
-  "event": "Thanksgiving (US)",
-  "characters": [
-   "pilgrim_man",
-   "wampanoag_man"
-  ],
-  "objects": [
-   "wifi_objects:clock",
-   "thanksgiving_items:wild_turkey",
-   "thanksgiving_items:roast_turkey",
-   "thanksgiving_items:deer",
-   "thanksgiving_items:duck",
-   "thanksgiving_items:pumpkin",
-   "thanksgiving_items:pumpkin_pie",
-   "thanksgiving_items:corn_ears",
-   "thanksgiving_items:cranberries",
-   "thanksgiving_items:mussels",
-   "thanksgiving_items:eel",
-   "thanksgiving_items:sugar_loaf",
-   "thanksgiving_items:old_letter",
-   "thanksgiving_items:mayflower",
-   "thanksgiving_items:cooking_pot",
-   "thanksgiving_items:corn_porridge"
-  ],
-  "illustrations": [
-   "large_thanksgiving:harvest_feast_1621",
-   "large_thanksgiving:modern_table",
-   "large_thanksgiving:plymouth_1621"
-  ],
-  "missing": [
-   "pilgrim_man",
-   "wampanoag_man",
-   "thanksgiving_items",
-   "large_thanksgiving:harvest_feast_1621",
-   "large_thanksgiving:modern_table",
-   "large_thanksgiving:plymouth_1621"
-  ],
-  "large": [
-   "harvest_feast_1621",
-   "modern_table",
-   "plymouth_1621"
-  ],
-  "notes": "Themed reel for Thanksgiving (US) 26/11: 21/11 is the first publishing day inside the 7-day window and the event has 1 reel. Options: A) deer (venison), B) wild fowl, C) pumpkin pie. Answer C: Edward Winslow's 1621 letter (Mourt's Relation) mentions fowling and five deer brought by Massasoit's men (about 90 Wampanoag); the colonists had no butter or wheat flour and no ovens for pies, and sugar was scarce. Turkey itself is uncertain (Bradford mentions wild turkeys that autumn), so it is NOT an option. Say 'historians think', 'probably' where the sources do. Show the Wampanoag respectfully and accurately (17th-century New England, deerskin clothing; no Plains feather headdress); no 'Indians and pilgrims' cliches. Sources to check: Smithsonian Magazine 'What Was on the Menu at the First Thanksgiving?', Plimoth Patuxet Museums, History.com, Mourt's Relation text. Plausibility 16/11: Smithsonian, Mental Floss, Wayne State all agree. Category history (themed reels may use any category; rotation resumes after tech). Format quiz (themed reels may use any format; not myth twice in a row). Length standard (control).",
-  "experiment": {
-   "batch": "B2-length",
-   "test": "length",
-   "option": "standard",
-   "role": "base"
-  }
- },
- {
   "date": "2026-11-23",
   "topic": "Lightning vs the Sun: which is really hotter?",
   "category": "science",
@@ -165,6 +39,105 @@
    "test": "length",
    "option": "short",
    "role": "variant"
+  }
+ },
+ {
+  "date": "2026-11-26",
+  "topic": "What if you had a dog's nose for one day?",
+  "category": "nature",
+  "format": "what_if",
+  "characters": [
+   "dog",
+   "young_man"
+  ],
+  "objects": [
+   "wifi_objects:clock",
+   "nose_items:dog_nose_front",
+   "nose_items:sugar_spoon",
+   "nose_items:swimming_pool",
+   "nose_items:breakfast_plate",
+   "nose_items:coffee_mug",
+   "nose_items:chocolate_bar",
+   "nose_items:rose",
+   "nose_items:fire_hydrant",
+   "nose_items:newspaper",
+   "nose_items:shoe_prints",
+   "nose_items:paw_prints",
+   "nose_items:bloodhound",
+   "nose_items:tennis_ball",
+   "nose_items:leash",
+   "nose_items:lamp_post",
+   "nose_items:sandwich"
+  ],
+  "illustrations": [
+   "large_w48:nose_cutaway",
+   "large_w48:brain_compare",
+   "large_w48:dog_sniffing"
+  ],
+  "missing": [
+   "nose_items",
+   "large_w48:nose_cutaway",
+   "large_w48:brain_compare",
+   "large_w48:dog_sniffing"
+  ],
+  "large": [
+   "nose_cutaway",
+   "brain_compare",
+   "dog_sniffing"
+  ],
+  "notes": "Grounded what_if, not scary. Premise: you wake up with a dog's nose (dogs have up to ~300 million olfactory receptors vs ~6 million in people, NOVA/PBS). First minute: breakfast smells as separate layers, not one smell; a dog could notice a teaspoon of sugar in a million gallons of water, about two Olympic pools (NOVA, Alexandra Horowitz). First hour: on a walk you smell in stereo (each nostril samples separately, so you know where a smell comes from) and the slits at the side of the nose push exhaled air away so sniffing never stops; you can 'smell time': an old trail smells weaker than a fresh one, so you know how long ago someone passed (Horowitz). Long term: the part of the brain that analyses smells is, proportionally, about 40x bigger in a dog (NOVA). What it teaches: a walk is your dog's newspaper, so let it sniff; twist: humans are not as bad as we think (McGann 2017, Science: human smell is a 19th-century myth; people can follow a chocolate scent trail on all fours, Porter et al. 2007). Say 'scientists estimate'; receptor counts vary by source and breed, keep 'up to'. Sources to check on the day: pbs.org/wgbh/nova/article/dogs-sense-of-smell, NOVA '6 stinking cool facts about dog noses', AKC 'The nose knows', McGann 2017 (Science), Porter 2007 (Nature Neuroscience). Plausibility 23/11: NOVA and AKC agree on the figures. Hook (control, question), max 10 words, e.g. 'What if you had a dog's nose for one day?'. First second: the young man sniffing with a big dog nose and smell trails flying in. Category nature: rotation after science (23/11). Format what_if: fewest reels in the log (2; the others have 3). 26/11 is Thanksgiving but the themed reel was already published 21/11 (reels: 1), so this is a regular reel. Closing: not cat_take (23/11); a light cat_take could fit but use real_life or bonus. Length standard (control): B2-length has no free slots.",
+  "experiment": {
+   "batch": "B2-length",
+   "test": "length",
+   "option": "standard",
+   "role": "base"
+  }
+ },
+ {
+  "date": "2026-11-28",
+  "topic": "Why does a week have 7 days?",
+  "category": "history",
+  "format": "explainer",
+  "characters": [
+   "ancient_person",
+   "young_man"
+  ],
+  "objects": [
+   "moon_items:sun",
+   "moon_items:moon_near",
+   "mammoth_quiz_items:sundial",
+   "week_items:clay_tablet",
+   "week_items:ziggurat",
+   "week_items:moon_phases",
+   "week_items:saturn",
+   "week_items:jupiter",
+   "week_items:mars",
+   "week_items:venus",
+   "week_items:mercury",
+   "week_items:wall_calendar",
+   "week_items:roman_coin",
+   "week_items:market_stall",
+   "week_items:decimal_clock",
+   "week_items:revolution_calendar",
+   "week_items:weekend_hammock",
+   "week_items:star_chart"
+  ],
+  "illustrations": [
+   "large_w48:babylon_night_sky"
+  ],
+  "missing": [
+   "week_items",
+   "large_w48:babylon_night_sky"
+  ],
+  "large": [
+   "babylon_night_sky"
+  ],
+  "notes": "Explainer: hook 'Why does a week have 7 days?' (question, control). Context: days, months and years follow the sky; the week does not. Steps: 1) the Babylonians watched seven moving lights (Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn) and the Moon's phases change about every 7 days (a lunar cycle of ~29.5 days split in four); 2) the Jewish seven-day week with a day of rest spread it; the Romans (who used an 8-day market week, the nundinae) adopted the planetary week, and Emperor Constantine made it official in 321 AD; 3) the day names still carry the planets: Saturday = Saturn, Sunday = Sun, Monday = Moon (other languages keep more: Spanish martes = Mars). Surprising fact: France tried a 10-day week after the Revolution (1793) and dropped it by 1805; the Soviet Union tried 5- and 6-day weeks (1929-1940) and went back. Say 'historians think' where the origin is uncertain (the exact Babylonian link is debated); keep religion neutral and factual. Sources to check on the day: Britannica 'week', Astronomy.com 'Why are there 7 days in a week? Thank the Babylonians', Atlas Obscura 'Why can't we get rid of the 7-day week?', Almanac.com, webexhibits.org/calendars/week.html. Plausibility 23/11: Astronomy.com, Atlas Obscura and Almanac agree. Characters: reuse ancient_person (generic ancient tunic) as the sky-watcher, young_man with a calendar. Category history: rotation after nature (26/11). Format explainer: all other formats tie at 3 once 26/11 (what_if) is out; explainer used longest ago (goosebumps 30/10). Not the same format as 26/11. Length standard (control).",
+  "experiment": {
+   "batch": "B2-length",
+   "test": "length",
+   "option": "standard",
+   "role": "base"
   }
  }
 ]
