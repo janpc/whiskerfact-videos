@@ -1,6 +1,6 @@
 import React from 'react';
 import meta from '../../public/meta.json';
-import {FPS, TEXT, ACC, INK, GREEN, RED, clamp, eo, eio, Grad, Stars, Dunes, Pines, Card, Rays, Title, Label, Item, Svg} from '../common';
+import {FPS, TEXT, ACC, INK, GREEN, RED, clamp, eo, eio, Grad, Stars, Dunes, Pines, Card, Rays, Title, Label, Item, Big, Tick, Cross} from '../common';
 
 export const DUR = meta.frames / FPS;
 const LI = 'lightning_items', SC_ = 'scientist', CG = 'child_girl';
@@ -34,131 +34,122 @@ export const Bg: React.FC<{id: string; T: number}> = ({id, T}) => {
   }
 };
 
-const Big: React.FC<{text: string; y: number; size: number; t: number; at?: number; col?: string; x?: number}> = ({text, y, size, t, at = 0, col = TEXT, x = 540}) => (
-  <div style={{position: 'absolute', left: x, top: y, translate: '-50% 0', fontFamily: 'Londrina', fontSize: size, color: col, whiteSpace: 'nowrap', opacity: clamp((t - at) / 0.1),
-    scale: `${0.65 + 0.35 * eo((t - at) / 0.28)}`, WebkitTextStroke: '12px rgb(44,32,30)', paintOrder: 'stroke fill'}}>{text}</div>
-);
-const Tick: React.FC<{x: number; y: number; a: number; r?: number}> = ({x, y, a, r = 46}) => (
-  <Svg a={a}><circle cx={x} cy={y} r={r} fill={GREEN} stroke={INK} strokeWidth={6} /><polyline points={`${x - r * 0.45},${y} ${x - r * 0.1},${y + r * 0.38} ${x + r * 0.5},${y - r * 0.38}`} fill="none" stroke="#fff" strokeWidth={r * 0.2} strokeLinecap="round" strokeLinejoin="round" /></Svg>
-);
-const Cross: React.FC<{x: number; y: number; a: number; r?: number}> = ({x, y, a, r = 46}) => (
-  <Svg a={a}><circle cx={x} cy={y} r={r} fill={RED} stroke={INK} strokeWidth={6} /><path d={`M${x - r * 0.38},${y - r * 0.38} L${x + r * 0.38},${y + r * 0.38} M${x + r * 0.38},${y - r * 0.38} L${x - r * 0.38},${y + r * 0.38}`} stroke="#fff" strokeWidth={r * 0.2} strokeLinecap="round" /></Svg>
-);
 
 export const Content: React.FC<{id: string; t: number; T: number}> = ({id, t, T}) => {
   const k = (a: number, d = 0.35) => eo((t - a) / d);
   const bob = Math.sin(T * 2.2) * 6;
+  // Zona segura (igual que factory/brand.py): por debajo de y=900 nada pasa de x=900 (botones de la app); centro óptico ≈ x=485.
   switch (id) {
     case 'hook': return <>
       <Title k={1} text="Lightning vs the Sun" y={330} />
       <Title k={1} text="Which is hotter?" y={440} color={ACC} />
-      <Item lib={LI} name="lightning_bolt" x={420} y={900 + bob} h={330} a={1} />
-      <Item lib={LI} name="sun_disc" x={800} y={870 - bob} h={300} a={1} />
-      <Big text="VS" y={650} size={150} t={9} col={ACC} x={610} />
-      <Item lib={SC_} name="think" x={930} y={1170} h={290} a={1} />
+      <Item lib={LI} name="lightning_bolt" x={250} y={880 + bob} h={330} a={1} />
+      <Big text="VS" y={730} size={150} t={9} col={ACC} x={470} />
+      <Item lib={LI} name="sun_disc" x={740} y={830 - bob} h={290} a={1} />
+      <Item lib={SC_} name="think" x={760} y={1150} h={250} a={1} />
     </>;
     case 'rounds': return <>
       <Big text="3 ROUNDS" y={290} size={190} t={t} at={0.1} col={ACC} />
-      {[['thermometer', 'heat', 200], ['stopwatch', 'time', 540], ['sun_core_glow', 'core', 880]].map(([n, l, x], i) => <React.Fragment key={n as string}>
+      {[['thermometer', 'heat', 180], ['stopwatch', 'time', 470], ['sun_core_glow', 'core', 760]].map(([n, l, x], i) => <React.Fragment key={n as string}>
         <Item lib={LI} name={n as string} x={x as number} y={850} h={230} a={k(0.4 + i * 0.4)} />
         <Label text={`${i + 1} · ${l}`} y={1000} col={TEXT} a={k(0.5 + i * 0.4)} x={x as number} />
       </React.Fragment>)}
-      <Item lib={SC_} name="talk" x={300} y={1200} h={280} a={k(0.3)} />
+      <Item lib={SC_} name="talk" x={470} y={1250} h={240} a={k(0.3)} />
     </>;
     case 'heat': return <>
       <Title k={k(0.1)} text="Round 1 · Heat" y={300} />
-      <Item lib={LI} name="storm_cloud" x={300} y={650} h={190} a={k(0.5)} />
-      <Item lib={LI} name="lightning_bolt" x={300} y={960} h={340} a={k(0.9)} />
-      <Item lib={LI} name="thermometer" x={780} y={900} h={330} a={k(2.8)} />
-      <Big text="50,000°F" y={1100} size={140} t={t} at={3.6} col={ACC} x={680} />
-      <Item lib={CG} name="surprised" x={540} y={1160} h={260} a={k(4.8)} />
+      <Item lib={LI} name="storm_cloud" x={240} y={640} h={170} a={k(0.5)} />
+      <Item lib={LI} name="lightning_bolt" x={220} y={940} h={320} a={k(0.9)} />
+      <Item lib={LI} name="thermometer" x={700} y={860} h={300} a={k(2.8)} />
+      <Big text="50,000°F" y={1130} size={120} t={t} at={3.6} col={ACC} x={460} />
+      <Item lib={CG} name="surprised" x={800} y={1190} h={230} a={k(4.8)} />
     </>;
     case 'surf': return <>
       <Title k={k(0.1)} text="The Sun's surface" y={300} />
-      <Item lib={LI} name="sun_disc" x={540} y={820} h={380} rot={T * 6} a={k(0.3)} />
-      <Big text="10,000°F" y={1060} size={150} t={t} at={1.5} col={TEXT} />
-      <Item lib={SC_} name="think" x={900} y={1000} h={280} a={k(0.8)} />
+      <Item lib={LI} name="sun_disc" x={500} y={820} h={380} rot={T * 6} a={k(0.3)} />
+      <Big text="10,000°F" y={1060} size={150} t={t} at={1.5} col={TEXT} x={500} />
+      <Item lib={SC_} name="think" x={800} y={800} h={270} a={k(0.8)} />
     </>;
     case 'five': return <>
       <Big text="5 times hotter" y={280} size={170} t={t} at={0.3} col={ACC} />
-      <Item lib={SC_} name="happy" x={150} y={1090} h={230} a={k(1.0)} />
-      <Item lib={LI} name="lightning_bolt" x={380} y={1030} h={330} a={k(0.3)} />
-      <Item lib={LI} name="sun_disc" x={800} y={1050} h={190} a={k(0.6)} />
-      <Tick x={590} y={1030} a={clamp((t - 2.5) / 0.2)} r={56} />
-      <Label text="Point · lightning" y={1235} col={INK} a={k(2.6)} />
+      <Item lib={SC_} name="happy" x={130} y={1090} h={230} a={k(1.0)} />
+      <Item lib={LI} name="lightning_bolt" x={340} y={1030} h={330} a={k(0.3)} />
+      <Item lib={LI} name="sun_disc" x={740} y={1050} h={190} a={k(0.6)} />
+      <Tick x={540} y={1030} a={clamp((t - 2.5) / 0.2)} r={56} />
+      <Label text="Point · lightning" y={1235} col={INK} a={k(2.6)} x={485} />
     </>;
     case 'fulg': return <>
       <Title k={k(0.1)} text="Sand into glass" y={300} />
-      <Item lib={LI} name="lightning_bolt" x={540} y={650} h={260} a={k(0.5)} />
-      <Item lib={LI} name="fulgurite" x={540} y={1000} h={330} a={k(3.8)} />
-      <Item lib={LI} name="beach_pail" x={850} y={1130} h={220} a={k(1.0)} />
-      <Item lib={CG} name="surprised" x={200} y={1130} h={300} a={k(1.6)} />
-      <Label text="fulgurite" y={1230} col={TEXT} a={k(4.3)} />
+      <Item lib={LI} name="lightning_bolt" x={500} y={650} h={260} a={k(0.5)} />
+      <Item lib={LI} name="fulgurite" x={500} y={1000} h={330} a={k(3.8)} />
+      <Item lib={LI} name="beach_pail" x={790} y={1120} h={210} a={k(1.0)} />
+      <Item lib={CG} name="surprised" x={190} y={1130} h={300} a={k(1.6)} />
+      <Label text="fulgurite" y={1230} col={TEXT} a={k(4.3)} x={500} />
     </>;
     case 'flash': return <>
       <Title k={k(0.1)} text="Round 2 · Time" y={300} />
       <Item lib={LI} name="lightning_bolt" x={230} y={1010} h={300} a={clamp(Math.sin(T * 30) * 3 + 1.2)} />
-      <Item lib={LI} name="stopwatch" x={560} y={940} h={340} a={k(0.3)} />
-      <Big text="< 1 s" y={540} size={170} t={t} at={3.3} col={ACC} />
-      <Item lib={SC_} name="think" x={880} y={1080} h={280} a={k(1.0)} />
+      <Item lib={LI} name="stopwatch" x={520} y={940} h={340} a={k(0.3)} />
+      <Big text="< 1 s" y={540} size={170} t={t} at={3.3} col={ACC} x={500} />
+      <Item lib={SC_} name="think" x={800} y={1080} h={280} a={k(1.0)} />
     </>;
     case 'years': return <>
       <Title k={k(0.1)} text="Billions of years" y={300} />
-      <Item lib={LI} name="sun_disc" x={540} y={800} h={320} rot={T * 6} a={k(0.3)} />
-      <Item lib={LI} name="hourglass_space" x={220} y={1000} h={270} a={k(0.8)} />
-      <Item lib={CG} name="talk" x={860} y={1100} h={290} a={k(1.2)} />
-      <Tick x={760} y={640} a={clamp((t - 2.8) / 0.2)} r={50} />
-      <Label text="Point · Sun" y={1230} col={TEXT} a={k(2.9)} />
+      <Item lib={LI} name="sun_disc" x={500} y={800} h={320} rot={T * 6} a={k(0.3)} />
+      <Item lib={LI} name="hourglass_space" x={200} y={1000} h={270} a={k(0.8)} />
+      <Item lib={CG} name="talk" x={790} y={1120} h={260} a={k(1.2)} />
+      <Tick x={800} y={700} a={clamp((t - 2.8) / 0.2)} r={50} />
+      <Label text="Point · Sun" y={1230} col={TEXT} a={k(2.9)} x={470} />
     </>;
     case 'final': return <>
       <Big text="ROUND 3" y={330} size={230} t={t} at={0.2} col={ACC} />
-      <Item lib={LI} name="sun_core_glow" x={540} y={900} h={380} a={k(0.5)} />
-      <Item lib={SC_} name="point" x={880} y={1130} h={270} a={k(1.2)} />
-      <Label text="deep inside" y={1180} col={TEXT} a={k(1.0)} x={300} />
+      <Item lib={LI} name="sun_core_glow" x={480} y={900} h={380} a={k(0.5)} />
+      <Item lib={SC_} name="point" x={780} y={1130} h={270} a={k(1.2)} />
+      <Label text="deep inside" y={1180} col={TEXT} a={k(1.0)} x={260} />
     </>;
     case 'core': return <>
       <Title k={k(0.1)} text="The Sun's core" y={300} />
-      <Item lib={LI} name="sun_core_glow" x={560} y={720} h={270} a={k(0.3)} />
-      <Item lib={LI} name="thermometer" x={220} y={1000} h={330} a={k(0.8)} />
-      <Big text="27,000,000°F" y={930} size={130} t={t} at={2.2} col={ACC} x={640} />
-      <Item lib={SC_} name="surprised" x={880} y={1250} h={220} a={k(2.8)} />
+      <Item lib={LI} name="sun_core_glow" x={480} y={720} h={270} a={k(0.3)} />
+      <Big text="27,000,000°F" y={880} size={105} t={t} at={2.2} col={ACC} x={540} />
+      <Item lib={LI} name="thermometer" x={150} y={1090} h={300} a={k(0.8)} />
+      <Item lib={SC_} name="surprised" x={780} y={1190} h={250} a={k(2.8)} />
     </>;
     case 'cant': return <>
       <Title k={k(0.1)} text="Out of reach" y={300} />
-      <Item lib={LI} name="lightning_bolt" x={230} y={1020} h={290} a={k(0.3)} />
-      <Item lib={LI} name="sun_core_glow" x={820} y={1020} h={250} a={k(0.5)} />
-      <Cross x={540} y={1020} a={clamp((t - 0.8) / 0.2)} r={64} />
-      <Label text="Point · Sun" y={1230} col={INK} a={k(1.5)} />
+      <Item lib={LI} name="lightning_bolt" x={200} y={1020} h={290} a={k(0.3)} />
+      <Item lib={LI} name="sun_core_glow" x={700} y={1020} h={250} a={k(0.5)} />
+      <Cross x={450} y={1020} a={clamp((t - 0.8) / 0.2)} r={64} />
+      <Label text="Point · Sun" y={1230} col={INK} a={k(1.5)} x={450} />
     </>;
     case 'score': return <>
       <Title k={k(0.1)} text="Final score" y={300} />
-      <Item lib={LI} name="sun_disc" x={300} y={1010} h={230} a={k(0.2)} />
-      <Item lib={LI} name="lightning_bolt" x={780} y={1010} h={280} a={k(0.2)} />
-      <Big text="2" y={640} size={260} t={t} at={0.5} col={ACC} x={300} />
-      <Big text="1" y={640} size={260} t={t} at={1.0} col={TEXT} x={780} />
-      <Item lib={CG} name="happy" x={540} y={1230} h={260} a={k(1.2)} />
+      <Item lib={LI} name="sun_disc" x={240} y={1040} h={230} a={k(0.2)} />
+      <Item lib={LI} name="lightning_bolt" x={740} y={1030} h={280} a={k(0.2)} />
+      <Big text="2" y={560} size={260} t={t} at={0.5} col={ACC} x={240} />
+      <Big text="1" y={560} size={260} t={t} at={1.0} col={TEXT} x={740} />
+      <Item lib={CG} name="happy" x={480} y={1230} h={260} a={k(1.2)} />
     </>;
     case 'beats': return <>
       <Title k={k(0.1)} text="Surface vs heart" y={300} />
-      <Item lib={LI} name="sun_disc" x={290} y={960} h={230} a={k(0.2)} />
-      <Item lib={LI} name="lightning_bolt" x={540} y={1000} h={300} a={k(0.2)} />
-      <Item lib={LI} name="sun_core_glow" x={790} y={960} h={230} a={k(0.2)} />
-      <Tick x={290} y={800} a={clamp((t - 0.9) / 0.2)} r={50} />
-      <Cross x={790} y={800} a={clamp((t - 2.0) / 0.2)} r={50} />
-      <Label text="surface" y={1130} col={INK} a={k(0.5)} x={290} />
-      <Label text="core" y={1130} col={INK} a={k(1.6)} x={790} />
+      <Item lib={LI} name="sun_disc" x={270} y={960} h={230} a={k(0.2)} />
+      <Item lib={LI} name="lightning_bolt" x={520} y={1000} h={300} a={k(0.2)} />
+      <Item lib={LI} name="sun_core_glow" x={760} y={960} h={230} a={k(0.2)} />
+      <Tick x={270} y={740} a={clamp((t - 0.9) / 0.2)} r={50} />
+      <Cross x={760} y={740} a={clamp((t - 2.0) / 0.2)} r={50} />
+      <Label text="surface" y={1130} col={INK} a={k(0.5)} x={270} />
+      <Label text="core" y={1130} col={INK} a={k(1.6)} x={760} />
     </>;
     case 'nap': return <>
       <Title k={k(0.1)} text="Sunbeam nap" y={300} color={INK} />
-      <Item lib={LI} name="sun_disc" x={800} y={800} h={300} rot={T * 6} a={k(0.3)} />
-      <Big text="z z z" y={1000} size={140} t={t} at={1.2} col={TEXT} x={700} />
-      <Item lib={CG} name="shrug" x={920} y={1170} h={250} a={k(0.8)} />
+      <Item lib={LI} name="sun_disc" x={640} y={760} h={280} rot={T * 6} a={k(0.3)} />
+      <Big text="z z z" y={1000} size={110} t={t} at={1.2} col={TEXT} x={470} />
+      <Item lib={CG} name="shrug" x={770} y={1070} h={240} a={k(0.8)} />
     </>;
     default: return <>
       <Big text="?" y={330} size={260} t={t} at={0.2} col={ACC} />
-      <Item lib={LI} name="lightning_bolt" x={470} y={820} h={320} a={k(0.3)} />
-      <Item lib={LI} name="sun_disc" x={800} y={800} h={280} a={k(0.5)} />
-      <Item lib={SC_} name="shrug" x={930} y={1210} h={260} a={k(1.0)} />
+      <Item lib={LI} name="lightning_bolt" x={430} y={820} h={320} a={k(0.3)} />
+      <Item lib={LI} name="sun_disc" x={740} y={800} h={280} a={k(0.5)} />
+      <Item lib={SC_} name="shrug" x={720} y={1150} h={260} a={k(1.0)} />
     </>;
   }
 };

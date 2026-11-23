@@ -19,7 +19,7 @@ export const Subs: React.FC<{T: number; narrow: boolean; y?: number}> = ({T, nar
   const outA = 1 - clamp((T - (b[b.length - 1].e + 0.12)) / 0.2);
   const size = narrow ? 58 : 70;
   return (
-    <div style={{position: 'absolute', left: narrow ? 545 : 60, width: narrow ? 480 : 960, top: y ?? (narrow ? 1450 : 1390), display: 'flex', flexWrap: 'wrap', justifyContent: narrow ? 'flex-start' : 'center',
+    <div data-box="sub" data-name="subs" style={{position: 'absolute', left: narrow ? 500 : 70, width: narrow ? 400 : 830, top: y ?? (narrow ? 1450 : 1390), display: 'flex', flexWrap: 'wrap', justifyContent: narrow ? 'flex-start' : 'center',
       columnGap: size * 0.28, rowGap: 2, fontFamily: 'Londrina', fontSize: size, lineHeight: 1.1, opacity: outA}}>
       {b.map((w, i) => {
         const a = clamp((T - w.s) / 0.08), hot = T >= w.s && T < w.e + 0.05;

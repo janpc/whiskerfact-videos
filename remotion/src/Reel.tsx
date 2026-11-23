@@ -4,6 +4,7 @@ import words from '../public/words.json';
 import {FPS, clamp, useFonts, Grain} from './common';
 import {Cat} from './Cat';
 import {Subs} from './Subs';
+import {Probe, probeOn} from './Probe';
 import {SC, CATS, Bg, Content, SFX, SWAP_AT, CURIOUS, DUR} from './scenes/current';
 
 const sceneOf = (T: number) => SC.find(([, a, b]) => T >= a && T < b) ?? SC[SC.length - 1];
@@ -28,11 +29,13 @@ export const Reel: React.FC = () => {
       <div style={{position: 'absolute', inset: 0, opacity: fadeEnd}}><Content id={id} t={t} T={T} /></div>
       {last && <div style={{position: 'absolute', inset: 0, opacity: 1 - fadeEnd}}><Content id={SC[0][0]} t={0} T={0} /></div>}
       {hasCat && <>
+        <div data-box="cat" data-name="cat" style={{position: 'absolute', left: 40, top: 1236, width: 420, height: 684, visibility: 'hidden'}} />
         <Cat T={T} x={-20} y={1236} pose="stand_front" o={1 - swap} curious={CURIOUS.has(id)} />
         <Cat T={T} x={-20} y={1236} pose="explain" o={swap} curious={CURIOUS.has(id)} />
       </>}
       <Subs T={T} narrow={hasCat} />
       <Grain frame={frame} />
+      {probeOn() && <Probe id={id} />}
       <Sequence from={9}><Audio src={staticFile('voice.mp3')} volume={1} /></Sequence>
       <Audio src={staticFile('music.mp3')} volume={vol} />
       {SFX.map(([tt, n, v], i) => <Sequence key={i} from={Math.round(tt * FPS)} durationInFrames={30}><Audio src={staticFile(`sfx/${n}.wav`)} volume={v} /></Sequence>)}

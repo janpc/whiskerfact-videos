@@ -24,7 +24,7 @@ export const Svg: React.FC<{a?: number; children: React.ReactNode}> = ({a = 1, c
   a <= 0.003 ? null : <svg width={W} height={H} style={{position: 'absolute', left: 0, top: 0, opacity: a}}>{children}</svg>;
 
 export const Item: React.FC<{lib: string; name: string; x: number; y: number; h: number; a?: number; rot?: number}> = ({lib, name, x, y, h, a = 1, rot = 0}) =>
-  a <= 0.003 ? null : <Img src={staticFile(`spr/${lib}__${name}.png`)} style={{position: 'absolute', left: x, top: y, height: h, translate: '-50% -50%', rotate: `${-rot}deg`, opacity: a}} />;
+  a <= 0.003 ? null : <Img data-box="item" data-name={`${lib}/${name}`} src={staticFile(`spr/${lib}__${name}.png`)} style={{position: 'absolute', left: x, top: y, height: h, translate: '-50% -50%', rotate: `${-rot}deg`, opacity: a}} />;
 export const BI = 'battery_items', LW = 'large_w47';
 
 const battColor = (f: number) => (f > 0.55 ? GREEN : f > 0.25 ? YELLOW : RED);
@@ -56,13 +56,13 @@ export const HeatWaves: React.FC<{cx: number; y0: number; y1: number; T: number;
 
 // ---------- texto ----------
 export const Title: React.FC<{k: number; text: string; color?: string; y?: number}> = ({k, text, color = TEXT, y = 360}) => (
-  <div style={{position: 'absolute', left: 540, top: y + (1 - eo(k)) * 30, translate: '-50% 0', fontFamily: 'Londrina', fontSize: 94, lineHeight: 1.15, color, opacity: k, whiteSpace: 'nowrap', ...stroke(3)}}>{text}</div>
+  <div data-box="text" data-name={text} style={{position: 'absolute', left: 540, top: y + (1 - eo(k)) * 30, translate: '-50% 0', fontFamily: 'Londrina', fontSize: 94, lineHeight: 1.15, color, opacity: k, whiteSpace: 'nowrap', ...stroke(3)}}>{text}</div>
 );
 export const Label: React.FC<{text: string; y: number; col: string; a: number; x?: number}> = ({text, y, col, a, x = 540}) => {
   if (a <= 0.003) return null;
   const light = (/rgb\((\d+),(\d+),(\d+)\)/.exec(col)?.slice(1).reduce((p, v) => p + +v, 0) ?? 0) > 380;
   return (
-    <div style={{position: 'absolute', left: x, top: y + (1 - eo(a)) * 30, translate: '-50% 0', fontFamily: 'Londrina', fontSize: 52, lineHeight: 1.1, color: col, opacity: a, whiteSpace: 'nowrap',
+    <div data-box="text" data-name={text} style={{position: 'absolute', left: x, top: y + (1 - eo(a)) * 30, translate: '-50% 0', fontFamily: 'Londrina', fontSize: 52, lineHeight: 1.1, color: col, opacity: a, whiteSpace: 'nowrap',
       padding: light ? '4px 18px 6px' : 0, borderRadius: 999, background: light ? 'rgba(30,22,22,0.67)' : 'none'}}>{text}</div>
   );
 };
@@ -103,4 +103,16 @@ export const Grain: React.FC<{frame: number}> = ({frame}) => (
     <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" seed={frame % 4} stitchTiles="stitch" /><feColorMatrix type="saturate" values="0" /></filter>
     <rect width={W} height={H} filter="url(#g)" />
   </svg>
+);
+
+// ---------- elementos compartidos por las escenas (antes copiados en cada escena) ----------
+export const Big: React.FC<{text: string; y: number; size: number; t: number; at?: number; col?: string; x?: number}> = ({text, y, size, t, at = 0, col = TEXT, x = 540}) => (
+  <div data-box="text" data-name={text} style={{position: 'absolute', left: x, top: y, translate: '-50% 0', fontFamily: 'Londrina', fontSize: size, color: col, whiteSpace: 'nowrap', opacity: clamp((t - at) / 0.1),
+    scale: `${0.65 + 0.35 * eo((t - at) / 0.28)}`, WebkitTextStroke: '12px rgb(44,32,30)', paintOrder: 'stroke fill'}}>{text}</div>
+);
+export const Tick: React.FC<{x: number; y: number; a: number; r?: number}> = ({x, y, a, r = 46}) => (
+  <Svg a={a}><circle data-box="mark" data-name="tick" cx={x} cy={y} r={r} fill={GREEN} stroke={INK} strokeWidth={6} /><polyline points={`${x - r * 0.45},${y} ${x - r * 0.1},${y + r * 0.38} ${x + r * 0.5},${y - r * 0.38}`} fill="none" stroke="#fff" strokeWidth={r * 0.2} strokeLinecap="round" strokeLinejoin="round" /></Svg>
+);
+export const Cross: React.FC<{x: number; y: number; a: number; r?: number}> = ({x, y, a, r = 46}) => (
+  <Svg a={a}><circle data-box="mark" data-name="cross" cx={x} cy={y} r={r} fill={RED} stroke={INK} strokeWidth={6} /><path d={`M${x - r * 0.38},${y - r * 0.38} L${x + r * 0.38},${y + r * 0.38} M${x + r * 0.38},${y - r * 0.38} L${x - r * 0.38},${y + r * 0.38}`} stroke="#fff" strokeWidth={r * 0.2} strokeLinecap="round" /></Svg>
 );
