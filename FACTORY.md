@@ -215,20 +215,21 @@ Checklist completa en el proyecto de claude.ai (`checklist-anti-slop.md`). Resum
 - **Gráficas:** las líneas se dibujan progresivamente (los puntos van apareciendo con el mismo ancho), nunca estirando una curva ya completa; el gráfico queda fuera de la zona de botones y las etiquetas («Cool», «Hot») no tapan las líneas.
 - **Tarjeta con sello + texto debajo:** dibujo más pequeño y más alto dentro de la tarjeta y el texto por debajo del dibujo, sin solaparse; el sello centrado sobre el dibujo.
 - **Mirar a tamaño completo las escenas con baterías, gráficos y sellos, y el primer y último fotograma, antes de publicar** (los avisos automáticos no los detectan). Si algo falla, rehacer solo esas escenas con `ONLY=hook,stamp,bridge` (sin gastar créditos: voz y música ya están en el repo) y volver a subir el mp4 y la portada (la portada = fotograma 0).
-- **Si la usuaria avisa antes de la hora de publicación:** corregir, renderizar, subir el mp4 y la portada al repo y sustituir el medio en el post de Metricool con `updateScheduledPost` (mismo texto y hora; el id del post cambia en cada actualización, el uuid no).
+- **Si la usuaria avisa antes de la hora de publicación:** corregir, renderizar, subir el mp4 y la portada al repo y sustituir el vídeo de los 3 posts de Buffer con la herramienta `edit_post` del conector (solo `postId` y `assets`; texto, hora y metadatos se conservan y el id no cambia).
 
 ## 7. Upload
 - Copy the mp4 to `videos/<YYYY-MM-DD>_<slug>.mp4`, then commit and push to `main`.
 - Also copy the thumbnail to `videos/<YYYY-MM-DD>_<slug>_cover.png` (made in step 6).
 - Check that `https://raw.githubusercontent.com/janpc/whiskerfact-videos/main/videos/<file>` returns 200 for both the mp4 and the cover png.
 
-## 8. Publish (Metricool connector)
-- Call `createScheduledPost` with `blogId 7740980` and timezone `Europe/Madrid`. Create **ONE post** with the three providers (instagram, tiktok and youtube), `autoPublish: true`, and `videoThumbnailUrl` = the raw.githubusercontent URL of the `_cover.png` (TikTok personal accounts ignore thumbnails; the first frame is already the cover there).
-  - **Why one post (decided 15/11/2026):** the owner is on Metricool's free plan, which allows 20 publications a month, and Metricool counts **each post (publication group), not each network**: on 1/11 one post with three networks used 1, and from 3/11 on, with TikTok as a separate post, every reel used 2 (11 used by 15/11, 9 left). One post per reel uses 1. Each network still has its own status inside the post, so a TikTok error (like the 503 of 1/11) does not stop Instagram or YouTube.
-  - TikTok is published automatically too (decision of 15/11/2026; before that it was manual, since 2/11, because the first API posts got 0 views; mammoth_quiz by API on 11/11 got 265 views, the same as the manual ones). Record `variants.tiktok_mode: "api"`. **Never create a second post just for one network:** it would use another of the 20 publications. Going back to manual TikTok would need a separate post (`autoPublish: false`), so ask the owner first and tell her it costs one more publication per reel.
-  - Store the single uuid in the log as `metricool_uuid` (reels from 3/11 to 13/11 also have `metricool_uuid_tiktok`; new ones do not).
-  - **Monthly count:** before creating the post, call `getScheduledPosts` for the whole current month and count the posts (each post = 1). If 20 or more are already counted, do not schedule it: tell the owner in tonight's notification ("⚠️ Sin publicaciones disponibles en Metricool este mes") and stop.
-- **Immediately after the post is created**, append the log entry with everything known so far (step 9 fields), commit and push. Then go on to 8b. Step 9 only completes it.
+## 8. Publish (Buffer connector)
+Desde el 24/11/2026 se publica con **Buffer** (plan gratis), no con Metricool. Se usa el conector de claude.ai «Buffer» (herramientas `create_post`, `edit_post`, `list_posts`, `get_post`, `delete_post`). Organización «My organization», id `6b0492eb2977e5ad81690395`, zona horaria `Europe/Madrid`.
+- **Canales (ids fijos):** TikTok `6b0493c48541f09ecb7bc60a`, YouTube `6b04939e8541f09ecb7bc487`, Instagram `6b04934b8541f09ecb7bc0e7`. Si `list_channels` no los devuelve o alguno sale `isDisconnected`, no programes ese canal y avísalo en la notificación.
+- **Se crean 3 posts, uno por canal** (Buffer no tiene un post multi-red), con `create_post`: `mode: customScheduled`, `dueAt` con el desfase de Madrid (`+01:00` en invierno, `+02:00` en verano; hora futura), `schedulingType: automatic`, `assets: [{video: {url: <raw.githubusercontent de videos/<fichero>.mp4>, metadata: {thumbnailOffset: 0}}}]`. Buffer no admite portada propia: la portada es el fotograma 0, que ya es la portada del vídeo. Si falla una red, las otras siguen.
+  - **Límites del plan gratis (comprobados el 24/11/2026):** 3 canales, **10 posts programados a la vez en toda la organización** (cada red cuenta aparte, así que un reel ocupa 3), 2 publicaciones al día en YouTube, 25 en TikTok y 50 en Instagram. Ya no hay tope mensual de 20. Los borradores no cuentan. **Antes de crear:** `list_posts` con `status: [scheduled]`; si ya hay 8 o más, no hay hueco para los 3 posts: no programes, avísalo en la notificación («⚠️ Sin huecos en Buffer: hay N posts programados») y para.
+  - TikTok se publica automáticamente. Anota `variants.tiktok_mode: "api"`. **No crees un cuarto post solo para una red.**
+  - Guarda los 3 ids en el log como `buffer_post_ids: {"tiktok": ..., "instagram": ..., "youtube": ...}` (los reels anteriores a esta fecha tienen `metricool_uuid`).
+- **Inmediatamente después de crear los posts**, añade la entrada del log con lo que ya se sabe (campos del paso 9), haz commit y push. Luego sigue con 8b. El paso 9 solo la completa.
 - **Experiments (one variable per batch):** read `growth/experiments.json` and choose every option before writing the script, because the hook style changes the script.
   - A test with status `fixed` always uses its `control` option. Do not rotate it. (From 15/11/2026 the `length` test is `testing` and `hook_style` is `fixed`; the active batch is `next_batch` B2-length, see below.)
   - The test with status `testing` uses the option in today's `week_plan.json` `experiment` field. If the plan has no entry for today, alternate: use the option with fewer videos in `log/published.json` (the `batch.control` and `batch.variant` options only), and use role `base` when today is a themed special-date reel.
@@ -248,37 +249,23 @@ Checklist completa en el proyecto de claude.ai (`checklist-anti-slop.md`). Resum
   4b. (from 17/11/2026, loop ending) the slogan on its own line: "🎓 Class dismissed. Stay curious.";
   5. 3–5 hashtags in English (15/11/2026: more specific than before): `#mrwhiskerfact`, the topic, **one niche tag for the category** (animals `#animalfacts`, science/space `#sciencefacts`, history `#historyfacts`, tech `#techfacts`, body `#humanbody`) and `#didyouknow` or `#funfacts`. Add the event hashtag on special dates.
   Keep it under 400 characters.
-- **TikTok:** `tiktokData`:
-  - `privacyOption PUBLIC_TO_EVERYONE`
-  - `title` set to the question (required)
-  - `isAigc true`
-  - `autoAddMusic false`
-- **Instagram:** `instagramData`:
-  - `type REEL`
-  - `showReelOnFeed true`
-  - `isAiGenerated true`
-- **YouTube:** `youtubeData`:
-  - `type short`
-  - `privacy public`
-  - `title` set to the question plus ` #shorts`
-  - `category EDUCATION` (or `SCIENCE_TECHNOLOGY` for science, space and tech)
-  - `madeForKids false`
-  - `isAiGeneratedContent false`
-  - 5 tags
-- Metricool copies the video when the post is created, so the GitHub file only needs to exist at that moment.
+- **TikTok** (`metadata.tiktok`): `isAiGenerated: true`. El título del vídeo sale del `text`. Ya no hay `privacyOption` (público por defecto) ni `autoAddMusic` (la música ya va dentro del mp4).
+- **Instagram** (`metadata.instagram`): `type: reel`, `shouldShareToFeed: true`, `isAiGenerated: true`.
+- **YouTube** (`metadata.youtube`): `title` = la pregunta + ` #shorts`, `categoryId` `"27"` (Education) o `"28"` (Science & Technology, para ciencia, espacio y tecnología), `privacy: public`, `madeForKids: false`, `isAiGenerated: false`. Buffer no tiene etiquetas (tags) ni tipo «short» (un vertical de menos de 3 min ya lo es): las 5 etiquetas se quitan y la descripción es el `text`.
+- **No borres el mp4 de GitHub hasta que los 3 posts estén `sent`:** Buffer lee el vídeo desde la URL y no está confirmado si lo copia al crear el post.
 
 ## 8b. Schedule the post check
-- Right after `createScheduledPost` succeeds, create a one-shot scheduled task with the Claude_Code_Remote connector (`create_trigger`):
+- Right after the three posts are created, create a one-shot scheduled task with the Claude_Code_Remote connector (`create_trigger`):
   - `run_once_at`: the publish time + 30 minutes (UTC)
   - `name`: "Mr. Whiskerfact check <slug>"
   - `notifications`: `{"push": true}`
   - `initiation`: `"human_schedule"`
-  - prompt: "Clone janpc/whiskerfact-videos (attach it with push access if needed), read CHECK.md and follow it for the reel '<title>' (slug <slug>), Metricool uuid <uuid> (one post for Instagram, TikTok and YouTube; mode <tiktok_mode>), scheduled at <ISO time Europe/Madrid>. Never publish or edit posts."
+  - prompt: "Clone janpc/whiskerfact-videos (attach it with push access if needed), read CHECK.md and follow it for the reel '<title>' (slug <slug>), Buffer post ids TikTok <id>, Instagram <id>, YouTube <id> (mode <tiktok_mode>), scheduled at <ISO time Europe/Madrid>. Never publish or edit posts."
 - **Safety net:** at the start of every nightly run, look in the log for any published entry from the last 3 days without a `check` field and with its time already passed. Run CHECK.md for it inline and include the result in tonight's notification.
 
 ## 9. Log and clean-up
 - Complete the entry written in step 8 in `log/published.json` (append it now if it is somehow missing):
-  - the date, category, slug, title, hook, sources (URLs), the Metricool uuid and the scheduled time
+  - the date, category, slug, title, hook, sources (URLs), the three Buffer post ids (`buffer_post_ids`) and the scheduled time
   - `duration_s`
   - `event` (themed reels only)
   - `variants`, as in `{"time_slot": "20:30", "hook_style": "statement", "caption_style": "teaser"}`. Include `format`, `personality`, `cta`, `closing`, `tiktok_mode`, `look`, `share_ask` and `experiment` too. Reels made from 2026-11-16 also carry `"quality_changes": ["first_second_rule", "share_rule", "niche_hashtags"]` (15/11/2026, applied in the middle of batch B2-length as quality improvements that are not measured as a test; the review must mention them when it explains a result). The weekly review needs these to compare results.

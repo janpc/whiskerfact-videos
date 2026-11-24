@@ -167,7 +167,7 @@ SFX_MAX_PER_SECOND = 2    # nunca más de dos efectos por segundo
 
 # ---------- publicación ----------
 PUBLISH = dict(
-    via="metricool",                                  # conector de claude.ai: createScheduledPost
+    via="buffer",                                     # desde 24/11/2026: conector de claude.ai «Buffer» (create_post, un post por red); antes Metricool
     mode="auto",                                      # totalmente automático, sin revisión previa
     networks=["tiktok", "instagram", "youtube"],      # TikTok, Instagram Reels, YouTube Shorts
     when="best_time",
@@ -175,7 +175,7 @@ PUBLISH = dict(
     tiktok=dict(privacyOption="PUBLIC_TO_EVERYONE", autoAddMusic=False,
                 mode="api",               # 15/11/2026: TikTok vuelve a publicarse solo (autoPublish=True). Motivo: mammoth_quiz por API tuvo 265 visitas, igual que los manuales (250-310)
                 ),
-    youtube=dict(type="short", madeForKids=False, category="EDUCATION", privacy="public"),
+    youtube=dict(type="short", madeForKids=False, category="EDUCATION", categoryId="27", privacy="public"),   # Buffer usa categoryId (27 Education, 28 Science & Technology)
     instagram=dict(type="REEL"),
     caption="hook + 1 línea + 3-5 hashtags (#mrwhiskerfact + categoría + tema)",
     notify="push",                                    # aviso al móvil con el enlace y el resumen

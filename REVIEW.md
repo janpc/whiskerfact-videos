@@ -4,6 +4,7 @@ This is the run book for the weekly scheduled task. It reads the metrics, learns
 It never changes the brand rules (`factory/brand.py`) or the run book's quality rules. It only edits `growth/` and sends the owner a summary in Spanish.
 
 ## 1. Collect
+- **Nota 24/11/2026:** los reels nuevos se publican con Buffer, pero Metricool sigue siendo la fuente de métricas mientras la cuenta exista (el plan gratis de Buffer solo da estadísticas de los últimos 31 días). Para un reel publicado con Buffer, si Metricool no lo devuelve, lee sus métricas con el conector Buffer (`get_post` con `includeMetrics: true`, ids en `buffer_post_ids` del log; vistas, alcance, tiempo de visionado medio, compartidos y comentarios; se actualizan una vez al día). Anota en el snapshot de qué herramienta salió cada cifra.
 - Clone `janpc/whiskerfact-videos` and read `log/published.json`, `growth/experiments.json` and `growth/insights.md`.
 - Use the Metricool connector `getAnalyticsDataByMetrics` with brandId `7740980`, from the channel start (2026-10-29) to today. Request these metrics:
   - **TikTok:** `TKPO02` (date and time), `TKPO05` (description), `TKPO07` views, `TKPO08` likes, `TKPO09` comments, `TKPO10` shares, `TKPO13` full-watch rate, `TKPO15` average watch time, `TKPO16` For You share.
