@@ -172,7 +172,7 @@ def _(img, T, t, s, e):
     ky = clamp((T - ty + 0.1) / 0.3)
     item(img, "young_man", "think", 200, 1365, 300, a=a * ky, anchor="bottom")
     bar(img, 370, 1215, 12 * eo(ky), 70, (250, 248, 240), a * ky)
-    lab(img, "About 6 million", 1222, B.TEXT, a * on(T, "six", s, e, need=1.8), x=600)
+    lab(img, "About 6 million", 1222, B.TEXT, a * on(T, "six", s, e, need=2.2), x=600)
     R.chrome(img, T)
     title(img, T, s, e, "Smell receptors")
     return R.punch(img, T, tm, amt=0.04)
@@ -185,7 +185,7 @@ def _(img, T, t, s, e):
     k = eo((T - s) / 0.45)
     tsp = wt("teaspoon", s)
     item(img, NW, "sugar_spoon", 450, lerp(790, 860, k), 230, a=a, rot=-4 + 4 * eio((T - tsp) / 0.6))
-    lab(img, "1 teaspoon", 930, B.TEXT, a * on(T, "teaspoon", s, e, need=2.2), x=760)
+    lab(img, "1 teaspoon", 760, B.TEXT, a * on(T, "teaspoon", s, e, need=2.2), x=800)
     tg = tsp + 0.4                                   # un granito cae de la cuchara al agua
     kg = clamp((T - tg) / 0.7)
     if 0 < kg < 1:
@@ -195,7 +195,7 @@ def _(img, T, t, s, e):
     for i, (x, w) in enumerate(((262, "two"), (640, "Olympic"))):
         kp = clamp((T - wt(w, s) + 0.05) / 0.3)
         item(img, NW, "swimming_pool", x, 1150 + 20 * (1 - eo(kp)), 285, a=a * kp)
-    lab(img, "2 Olympic pools", 1310, YELLOW, a * on(T, "pools", s, e, need=1.8), x=460)
+    lab(img, "2 Olympic pools", 1310, YELLOW, a * on(T, "pools", s, e, need=2.3), x=460)
     R.chrome(img, T)
     title(img, T, s, e, "A sugar test")
 V.backdrop("sugar")(lambda img, T, t: ST.sky(img, (176, 222, 246), (92, 156, 214)))
@@ -207,7 +207,7 @@ def _(img, T, t, s, e):
     sc = 520 / 307
     step = LIB.stride("young_man", scale=sc)
     dt = max(0.0, T - s)
-    x = 170 + step * 2.0 * min(dt, 3.2) * 0.5          # 8 dibujos/s, una zancada cada 4 dibujos (a media velocidad: ~1 px/frame)
+    x = 170 + 110 * min(dt, 3.6)          # avance lento (el joven no llega a la farola ni a la etiqueta)
     pose = LIB.cycle("young_man", "walk", T, fps=8)
     tl = wt("street", s)
     kl = clamp((T - tl + 0.1) / 0.35)
@@ -215,7 +215,7 @@ def _(img, T, t, s, e):
     if kl > 0:
         scent(img, (740, 1010), (x + 40, 905), (T * 0.6) % 1.0, a * kl, n=7, amp=18)
     LIB.place(img, "young_man", pose, x, 1335, scale=sc, a=a, xanchor="head")
-    lab(img, "Smell map", 790, YELLOW, a * on(T, "map", s, e, need=1.6), x=560)
+    lab(img, "Smell map", 770, YELLOW, a * on(T, "map", s, e, need=2.2), x=790)
     R.chrome(img, T)
     title(img, T, s, e, "Outside")
 V.backdrop("street")(lambda img, T, t: ST.landscape(img, T, sky_kind="day", terrain="city", seed=5))
@@ -254,7 +254,7 @@ def _(img, T, t, s, e):
     item(img, NW, "dog_sniffing", lerp(680, 630, k), 1335, 360, a=a, anchor="bottom")
     tw = wt("way", s)
     arrow(img, 520, 130, 1050, eo((T - tw + 0.1) / 0.5), a)
-    lab(img, "This way", 930, YELLOW, a * on(T, "way", s, e, need=1.6), x=330)
+    lab(img, "This way", 930, YELLOW, a * on(T, "way", s, e, need=2.0), x=330)
     R.chrome(img, T)
     title(img, T, s, e, "Which way?")
 V.backdrop("trail")(lambda img, T, t: ST.landscape(img, T, sky_kind="dusk", terrain="pines", seed=2))
@@ -279,7 +279,7 @@ def _(img, T, t, s, e):
     aa(img, (420, 780, 525, 880), hands, a * kc)
     look_old = T >= to
     item(img, "dog", "sit", 472, 1365, 300, a=a, anchor="bottom", flip=not look_old)
-    lab(img, "Fresh", 1090, RED_T, a * on(T, "fresh", s, e, need=1.5), x=255)
+    lab(img, "Fresh", 1090, RED_T, a * on(T, "fresh", s, e, need=2.2), x=255)
     lab(img, "Old", 1090, INK_T, a * ko, x=690)
     R.chrome(img, T)
     title(img, T, s, e, "Smelling time?")
@@ -310,7 +310,7 @@ def _(img, T, t, s, e):
     tn = wt("news.", s)
     kn = eo((T - tn + 0.3) / 0.45)
     item(img, NW, "newspaper", lerp(1000, 700, kn), 925, 330, a=a * clamp(kn * 2), rot=lerp(-12, -4, kn))
-    lab(img, "Let them sniff", 1160, YELLOW, a * on(T, "Let", s, e, need=1.5), x=650)
+    lab(img, "Let them sniff", 790, YELLOW, a * on(T, "Let", s, e, need=2.2), x=330)
     R.chrome(img, T)
     title(img, T, s, e, "The daily news")
 V.backdrop("news")(lambda img, T, t: ST.landscape(img, T, sky_kind="day", terrain="autumn", seed=7))
@@ -343,9 +343,9 @@ def _(img, T, t, s, e):
     item(img, NW, "human_crawl_trail", lerp(340, 390, k), 1340, 400, a=a, anchor="bottom",
          rot=1.0 * math.sin(T * 2.2))
     tb = wt("blindfolded", s)
-    lab(img, "Blindfolded", 830, B.TEXT, a * on(T, "blindfolded", s, e, need=2.0) * (1 if T < wt("Two", s) - 0.1 else 0), x=380)
+    lab(img, "Blindfolded", 830, B.TEXT, a * on(T, "blindfolded", s, e, need=2.0) * (1 if T < wt("Two", s) - 0.5 else 0), x=380)
     tt = wt("Two", s)
-    R.txt(img, "2 out of 3", 800, "number", YELLOW, a * clamp((T - tt + 0.05) / 0.25), x=470, rise=False)
+    R.txt(img, "2 out of 3", 765, "number", YELLOW, a * clamp((T - tt + 0.45) / 0.25), x=470, rise=False)
     R.chrome(img, T)
     title(img, T, s, e, "Humans on all fours")
     return R.punch(img, T, tt, amt=0.05)
