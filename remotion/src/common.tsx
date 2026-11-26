@@ -25,6 +25,17 @@ export const Svg: React.FC<{a?: number; children: React.ReactNode}> = ({a = 1, c
 
 export const Item: React.FC<{lib: string; name: string; x: number; y: number; h: number; a?: number; rot?: number}> = ({lib, name, x, y, h, a = 1, rot = 0}) =>
   a <= 0.003 ? null : <Img data-box="item" data-name={`${lib}/${name}`} src={staticFile(`spr/${lib}__${name}.png`)} style={{position: 'absolute', left: x, top: y, height: h, translate: '-50% -50%', rotate: `${-rot}deg`, opacity: a}} />;
+
+// ---------- suelo ----------
+export const GROUND_Y = 1300;   // horizonte: aquí empieza la franja de suelo
+export const FLOOR = 1345;      // línea donde apoyan los pies (dentro de la franja)
+// Personaje u objeto APOYADO: su borde inferior (los sprites vienen recortados al ras) queda en FLOOR, con sombra de contacto.
+// `lift` > 0 solo para saltos: lo marca como "en el aire" para el comprobador; la sombra se queda en el suelo.
+export const Stand: React.FC<{lib: string; name: string; x: number; h: number; a?: number; lift?: number}> = ({lib, name, x, h, a = 1, lift = 0}) =>
+  a <= 0.003 ? null : <>
+    <div style={{position: 'absolute', left: x, top: FLOOR, width: h * 0.55, height: 26, translate: '-50% -50%', borderRadius: '50%', background: 'rgba(0,0,0,0.4)', filter: 'blur(5px)', opacity: a * (1 - clamp(lift / 80, 0, 0.6))}} />
+    <Img data-box="item" data-anchor="bottom" data-air={lift > 0 ? '1' : undefined} data-name={`${lib}/${name}`} src={staticFile(`spr/${lib}__${name}.png`)} style={{position: 'absolute', left: x, top: FLOOR - lift, height: h, translate: '-50% -100%', opacity: a}} />
+  </>;
 export const BI = 'battery_items', LW = 'large_w47';
 
 const battColor = (f: number) => (f > 0.55 ? GREEN : f > 0.25 ? YELLOW : RED);
@@ -69,9 +80,9 @@ export const Label: React.FC<{text: string; y: number; col: string; a: number; x
 
 // ---------- fondos propios ----------
 export const Grad: React.FC<{top: string; bot: string}> = ({top, bot}) => <div style={{position: 'absolute', inset: 0, background: `linear-gradient(${top}, ${bot})`}} />;
-export const Stars: React.FC<{T: number; n?: number; seed?: number}> = ({T, n = 70, seed = 5}) => {
+export const Stars: React.FC<{T: number; n?: number; seed?: number; maxY?: number}> = ({T, n = 70, seed = 5, maxY = 1500}) => {
   const r = rng(seed);
-  return <Svg>{Array.from({length: n}).map((_, i) => <circle key={i} cx={r() * W} cy={r() * 1500} r={1.5 + r() * 2.4} fill="#fff" opacity={0.35 + 0.5 * Math.abs(Math.sin(T * (0.6 + r()) + i))} />)}</Svg>;
+  return <Svg>{Array.from({length: n}).map((_, i) => <circle key={i} cx={r() * W} cy={r() * maxY} r={1.5 + r() * 2.4} fill="#fff" opacity={0.35 + 0.5 * Math.abs(Math.sin(T * (0.6 + r()) + i))} />)}</Svg>;
 };
 export const Skyline: React.FC<{y: number; color: string; seed: number; T: number}> = ({y, color, seed}) => {
   const r = rng(seed); let x = -20; const bs: React.ReactNode[] = [];
@@ -91,7 +102,57 @@ export const Pines: React.FC<{y: number; color: string; seed: number}> = ({y, co
   for (let x = -30; x < W + 30; x += 58 + r() * 30) { const h = 170 + r() * 150, w = 80 + r() * 30; ps.push(<polygon key={x} points={`${x},${y} ${x + w / 2},${y - h} ${x + w},${y}`} fill={color} />); }
   return <Svg>{ps}<rect x={0} y={y - 4} width={W} height={H} fill={color} /></Svg>;
 };
-export const Card: React.FC = () => <div style={{position: 'absolute', left: 56, top: 720, width: 968, height: 600, boxSizing: 'border-box', borderRadius: 36, background: CREAM, border: `4px solid ${INK}`}} />;
+export const Card: React.FC<{y?: number; h?: number}> = ({y = 720, h = 600}) => <div style={{position: 'absolute', left: 56, top: y, width: 968, height: h, boxSizing: 'border-box', borderRadius: 36, background: CREAM, border: `4px solid ${INK}`, boxShadow: '10px 14px 0 rgba(0,0,0,0.28)'}} />;
+
+// ---------- paisajes en capas (ver refs/fondos/) ----------
+export const SKIES = {
+  sunset: ['rgb(70,52,120)', 'rgb(196,96,130)', 'rgb(246,176,96)', 'rgb(250,214,120)'],
+  dawn: ['rgb(64,84,150)', 'rgb(150,140,190)', 'rgb(240,180,170)', 'rgb(252,222,170)'],
+  dusk: ['rgb(30,36,90)', 'rgb(96,60,130)', 'rgb(200,100,120)', 'rgb(236,150,110)'],
+  day: ['rgb(70,140,210)', 'rgb(120,180,230)', 'rgb(180,216,240)', 'rgb(220,236,246)'],
+  storm: ['rgb(40,44,60)', 'rgb(70,76,96)', 'rgb(110,116,130)', 'rgb(150,150,160)'],
+  night: ['rgb(24,22,70)', 'rgb(44,42,120)'],
+};
+const TERRAINS = {
+  forest: ['rgb(30,70,52)', 'rgb(24,60,44)', 'rgb(18,48,36)'],
+  pines: ['rgb(36,76,70)', 'rgb(28,62,58)', 'rgb(20,48,46)'],
+  autumn: ['rgb(150,80,50)', 'rgb(120,60,40)', 'rgb(90,44,30)'],
+  hills: ['rgb(80,110,70)', 'rgb(60,90,56)', 'rgb(44,70,42)'],
+  dunes: ['rgb(214,160,100)', 'rgb(196,140,84)', 'rgb(170,116,66)'],
+  city: ['rgb(70,64,100)', 'rgb(54,50,84)', 'rgb(40,36,66)'],
+};
+export const Ground: React.FC<{color?: string}> = ({color = 'rgb(40,44,30)'}) => <div style={{position: 'absolute', left: 0, top: GROUND_Y, width: W, height: H - GROUND_Y, background: color}} />;
+const PERIOD = W + 400;
+const Layer: React.FC<{terrain: keyof typeof TERRAINS; i: number; color: string; T: number; seed: number}> = ({terrain, i, color, T, seed}) => {
+  const r = rng(seed * 7919 + i * 104729 + 17); for (let n = 0; n < 4; n++) r();
+  const base = GROUND_Y - 120 + i * 60, hh = [300, 240, 190][i], shift = T * [6, 12, 22][i];
+  const wrap = (x: number) => ((((x - shift) % PERIOD) + PERIOD) % PERIOD) - 200;
+  const els: React.ReactNode[] = [];
+  if (terrain === 'hills' || terrain === 'dunes') {
+    const ph = r() * 6.3, f = 180 + r() * 120, amp = hh * 0.5;
+    const pts = Array.from({length: 96}).map((_, k) => { const x = -20 + k * 12; return `${x},${base - amp * (0.5 + 0.5 * Math.sin((x + shift) / f + ph)) - amp * 0.25 * Math.sin((x + shift) / (f * 0.45) + ph * 2)}`; }).join(' ');
+    els.push(<polygon key="d" points={`-20,${H} ${pts} ${W + 140},${H}`} fill={color} />);
+  } else if (terrain === 'city') {
+    for (let x = 0; x < PERIOD;) { const w = 50 + r() * 80, h = (0.35 + r() * 0.65) * hh * 1.3; els.push(<rect key={x} x={wrap(x)} y={base - h} width={w - 6} height={h + 400} fill={color} />); x += w; }
+  } else {
+    const th = terrain === 'pines' ? hh * 1.2 : hh, n = terrain === 'pines' ? 28 : 18;
+    els.push(<rect key="b" x={0} y={base - th * 0.35} width={W} height={400} fill={color} />);
+    for (let j = 0; j < n; j++) {
+      const x0 = ((j + r() * 0.8) / n) * PERIOD, h = (0.75 + r() * 0.25) * th, R = h * 0.32 * (0.8 + r() * 0.4), x = wrap(x0), cy = base - h * 0.55;
+      for (let k = 0; k < 7; k++) { const g = (k / 7) * Math.PI; els.push(<circle key={`${j}-${k}`} cx={x + Math.cos(g) * R * 0.9 + r() * 16 - 8} cy={cy - Math.sin(g) * R * 0.7 + r() * 16 - 8} r={R * (0.55 + r() * 0.25)} fill={color} />); }
+      els.push(<ellipse key={`e${j}`} cx={x} cy={cy + R * 0.3} rx={R} ry={R * 0.9} fill={color} />);
+    }
+  }
+  return <Svg>{els}</Svg>;
+};
+export const Landscape: React.FC<{sky: keyof typeof SKIES; terrain: keyof typeof TERRAINS; T: number; seed?: number}> = ({sky, terrain, T, seed = 1}) => (
+  <>
+    <div style={{position: 'absolute', left: 0, top: 0, width: W, height: GROUND_Y, background: `linear-gradient(${SKIES[sky].join(', ')})`}} />
+    {sky === 'night' && <Stars T={T} seed={seed + 3} n={60} maxY={1000} />}
+    {TERRAINS[terrain].map((c, i) => <Layer key={i} terrain={terrain} i={i} color={c} T={T} seed={seed} />)}
+    <Ground />
+  </>
+);
 export const Rays: React.FC<{angle: number}> = ({angle}) => (
   <Svg>{Array.from({length: 14}).map((_, i) => {
     const a0 = angle + (i * Math.PI * 2) / 14, a1 = a0 + Math.PI / 14, R = 1800;

@@ -41,7 +41,7 @@ for (const f of frames) {
 }
 await browser.close({silent: true});
 
-const RULES = {botones: 'bajo los botones de la app (x>900, y>900)', arriba: 'bajo la interfaz superior', abajo: 'bajo la descripción de la app', cortado: 'cortado por el borde', borde: 'pegado al borde',
+const RULES = {flota: 'personaje sin apoyar en el suelo', botones: 'bajo los botones de la app (x>900, y>900)', arriba: 'bajo la interfaz superior', abajo: 'bajo la descripción de la app', cortado: 'cortado por el borde', borde: 'pegado al borde',
   solape: 'dibujos que se superponen', solape_texto: 'texto tapado o tapando un dibujo', pegados: 'dibujos casi pegados (<20 px)'};
 const list = [...found.values()].sort((a, b) => a.t0 - b.t0 || (a.sev < b.sev ? -1 : 1));
 const fails = list.filter((x) => x.sev === 'FAIL');

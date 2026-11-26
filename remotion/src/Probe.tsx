@@ -1,5 +1,6 @@
 import React from 'react';
 import {delayRender, continueRender, getInputProps} from 'remotion';
+import {FLOOR} from './common';
 
 // Comprobador de diseño (equivalente al QA de Python para texto/solapes/zona de botones).
 // Solo actúa cuando se renderiza con inputProps {probe: true} (lo hace remotion/check.mjs); en el render normal no existe.
@@ -12,7 +13,9 @@ const TOL = 15;           // px de tolerancia en la zona de botones (como qa.py)
 const OVERLAP_PX = 200;   // px² de solape visible que ya cuenta como fallo
 
 type Mask = {data: Uint8ClampedArray; w: number; h: number} | null;
-type Box = {kind: string; name: string; x0: number; y0: number; x1: number; y1: number; mask: Mask; rect: DOMRect; solid: boolean};
+type Box = {kind: string; name: string; x0: number; y0: number; x1: number; y1: number; mask: Mask; rect: DOMRect; solid: boolean; air?: boolean};
+// personajes y objetos que tienen que apoyar en el suelo (si no están saltando)
+const GROUNDED = /^(dog|scientist|young_man|child_boy|child_girl|pilgrim_man|wampanoag_man|ancient_person|ancient_youth|early_human|astronaut|cow|mouse|monkey|woolly_mammoth)\/|\/(man_dog_nose|dog_sniffing|human_crawl_trail|lamp_post)$/;
 export type Issue = {sev: 'FAIL' | 'WARN'; rule: string; a: string; b?: string; box?: number[]; box2?: number[]};
 
 const maskCache = new Map<string, Mask>();
@@ -56,9 +59,10 @@ const collect = (): Box[] => {
     if (kind === 'item' && el instanceof HTMLImageElement) {
       // el sprite puede girar (sol): se mide su caja SIN girar (centro = left/top por el translate -50%), que es la silueta real de un disco
       const he = el as HTMLElement, w = he.offsetWidth, h = he.offsetHeight, cx = he.offsetLeft, cy = he.offsetTop;
-      const r0 = {left: cx - w / 2, top: cy - h / 2, width: w, height: h, right: cx + w / 2, bottom: cy + h / 2} as DOMRect;
+      const top = el.getAttribute('data-anchor') === 'bottom' ? cy - h : cy - h / 2;
+      const r0 = {left: cx - w / 2, top, width: w, height: h, right: cx + w / 2, bottom: top + h} as DOMRect;
       const [x0, y0, x1, y1, mask] = tight(el, r0);
-      out.push({kind, name, x0, y0, x1, y1, mask, rect: r0, solid: false});
+      out.push({kind, name, x0, y0, x1, y1, mask, rect: r0, solid: false, air: el.getAttribute('data-air') === '1'});
       return;
     }
     out.push({kind, name, x0: r.left, y0: r.top, x1: r.right, y1: r.bottom, mask: null, rect: r, solid: true});
@@ -83,6 +87,8 @@ export const analyse = (boxes: Box[]): Issue[] => {
       const w = Math.min(b.x1, W + 999) - Math.max(b.x0, SAFE_RIGHT_LOW), h = b.y1 - Math.max(b.y0, RAIL_TOP);
       if (w > TOL && h > TOL) iss.push({sev: 'FAIL', rule: 'botones', a: b.name, box: bx(b)});            // tapado por los botones de la app
     }
+    if (b.kind === 'item' && !b.air && GROUNDED.test(b.name) && Math.abs(b.y1 - FLOOR) > 20)
+      iss.push({sev: 'FAIL', rule: 'flota', a: b.name, box: bx(b)});                                       // sin apoyar en el suelo
     if (b.kind !== 'sub') {
       if (b.y0 < SAFE_TOP) iss.push({sev: 'FAIL', rule: 'arriba', a: b.name, box: bx(b)});               // bajo la interfaz superior
       if (b.y1 > SAFE_BOTTOM) iss.push({sev: 'FAIL', rule: 'abajo', a: b.name, box: bx(b)});              // bajo la descripción de la app

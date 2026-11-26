@@ -7,6 +7,10 @@ Parte de los mismos materiales de origen y diseña las escenas por su cuenta. Es
 - `factory/<slug>.py`, `factory/<slug>_v4.py` y cualquier otro script de escenas de `factory/*.py` (salvo `mascot.py`, `sfx.py`, `library.py` para el exportador);
 - `factory/out/`, el mp4 y la portada de `videos/`, y los fotogramas o QA de Python;
 - el texto de los pasos de `FACTORY.md` sobre cómo se construyó ese reel (sí puedes leer 6e anti-slop y 6f).
+**Fondos (26/11):** Python se va a retirar, así que su estilo de fondos queda guardado como imágenes en `refs/fondos/`. Míralas antes de diseñar y usa `Landscape` (cielo + 3 capas + franja de suelo), `Card` y `Rays` de `common.tsx`; no abras `style.py`.
+
+**Suelo:** los personajes (y objetos de calle, como la farola) van con `Stand`, que los apoya en `FLOOR` con sombra de contacto; nunca con `Item` flotando. Un salto usa `lift`. `check.mjs` falla («flota») si un personaje no toca el suelo. Evita ciclos de andar (`walk1-4`) y poses quietas deslizándose.
+
 Sí puedes usar: el guion, la voz, la música, los tiempos de palabras, `factory/library/index.json` y sus sprites, y el gato por piezas.
 
 ## Pasos
@@ -15,7 +19,7 @@ Sí puedes usar: el guion, la voz, la música, los tiempos de palabras, `factory
 3. **Exportar materiales:** lee `factory/voice/<slug>_script.txt` y `factory/library/index.json`, decide qué bibliotecas te sirven y ejecuta, desde `factory/` (`pip install --break-system-packages pocketsphinx` si falta):
    `python3 ../remotion/export_raw.py <slug> --libs lib1,lib2`
    Deja en `remotion/public/` voz, música, guion, palabras, sprites (`spr/<lib>__<nombre>.png`), piezas del gato, fuentes, efectos, `mouth.json` y `meta.json` (nº de fotogramas).
-4. **Diseñar las escenas** en `remotion/src/scenes/<slug>.tsx` y poner `export * from './<slug>'` en `src/scenes/current.ts`. Tomas como plantilla `src/scenes/overnight_charging.tsx` (es código Remotion mío de otro reel, no de Python) y `src/common.tsx` (Title, Label, Item, Battery, HeatWaves, fondos Grad/Stars/Skyline/Dunes/Pines/Card/Rays, Grain). El módulo exporta: `SC` (escenas [id, inicio, fin] en segundos, cortadas en los límites de frase de `public/words.json`; la última es el cierre en bucle y termina en `DUR`), `CATS` (escenas con gato), `Bg`, `Content`, `SFX`, `SWAP_AT`, `CURIOUS`, `DUR`. Reglas:
+4. **Diseñar las escenas** en `remotion/src/scenes/<slug>.tsx` y poner `export * from './<slug>'` en `src/scenes/current.ts`. Tomas como plantilla `src/scenes/overnight_charging.tsx` (es código Remotion mío de otro reel, no de Python) y `src/common.tsx` (Title, Label, Item, Battery, HeatWaves, Stand, fondos Landscape/Ground/Grad/Stars/Card/Rays, Grain). El módulo exporta: `SC` (escenas [id, inicio, fin] en segundos, cortadas en los límites de frase de `public/words.json`; la última es el cierre en bucle y termina en `DUR`), `CATS` (escenas con gato), `Bg`, `Content`, `SFX`, `SWAP_AT`, `CURIOUS`, `DUR`. Reglas:
    - Texto en pantalla en inglés. Cada escena con su propio fondo y un elemento visual distinto (nada de dos escenas seguidas iguales). Aplica `FACTORY.md` 6e (anti-slop) y 6f.
    - Subtítulos van aparte (palabra a palabra, en `Subs.tsx`): no repitas en una etiqueta lo que ya dicen.
    - Deja aire: ilustraciones y etiquetas no se tocan ni se solapan; nada en la franja derecha baja (x > 900, y > 900) ni en los 220 px superiores. Los objetos dentro de una tarjeta quedan a ≥ 40 px del borde y de otras etiquetas.
