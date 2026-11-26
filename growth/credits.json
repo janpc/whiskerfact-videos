@@ -7,7 +7,7 @@
   "date": "2026-11-23",
   "note": "dicho por la dueña tras ampliar a Creator; renueva el 23/12; antes de las hojas B (918 v1 descartada + 918 v2 + 609 edición fallida)"
  },
- "estimated_balance": 121382,
+ "estimated_balance": 120382,
  "warn_below": 8000,
  "image_budget_month": 4000,
  "costs_estimate": {
@@ -200,6 +200,13 @@
    "what": "voice (eleven_v4, Brad, 1 take)",
    "credits": 1044,
    "note": "flow Q4RWsQia6pHRGabsab5B, node AmsS7wsz9X7XkvT4fosc, generation Sn77vYvvhkNza3eOwByZ, session kKN8waJyasgW770yhI01"
+  },
+  {
+   "date": "2026-11-26",
+   "slug": "dog_nose",
+   "what": "music (video-to-music, 1 generation)",
+   "credits": 1000,
+   "note": "flow Q4RWsQia6pHRGabsab5B, node bKqg8NbADM7VCktI6vbB, generation 3o18RzxtQcKfTedGvtkc"
   }
  ],
  "renewal_day": 30,
