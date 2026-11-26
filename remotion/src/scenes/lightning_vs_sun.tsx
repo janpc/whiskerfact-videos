@@ -16,7 +16,7 @@ export const SFX: [number, string, number][] = [...SC.slice(1, -1).map(([, a]): 
 
 export const Bg: React.FC<{id: string; T: number}> = ({id, T}) => {
   switch (id) {
-    case 'hook': case 'loop': return <><Grad top="rgb(40,40,96)" bot="rgb(232,120,50)" /><Rays angle={(id === 'loop' ? T - DUR : T) * 0.1} /></>;
+    case 'hook': case 'loop': return <><Grad top="rgb(40,40,96)" bot="rgb(232,120,50)" /><Rays angle={T * 0.1} /></>;
     case 'rounds': return <><Grad top="rgb(60,34,96)" bot="rgb(30,22,64)" /><Stars T={T} seed={7} n={40} /></>;
     case 'heat': return <><Grad top="rgb(34,30,58)" bot="rgb(176,60,40)" /><Pines y={1560} color="rgb(26,20,34)" seed={5} /></>;
     case 'surf': return <><Grad top="rgb(250,214,70)" bot="rgb(240,130,40)" /><Rays angle={-T * 0.12} /></>;

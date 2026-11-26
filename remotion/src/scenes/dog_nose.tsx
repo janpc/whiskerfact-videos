@@ -1,6 +1,6 @@
 import React from 'react';
 import meta from '../../public/meta.json';
-import {FPS, TEXT, ACC, INK, clamp, eo, eio, Svg, Grad, Stars, Card, Rays, Landscape, Ground, Stand, Title, Label, Item, Big, Tick, Cross, HeatWaves} from '../common';
+import {FPS, TEXT, ACC, INK, clamp, eo, eio, Svg, Grad, Stars, Card, Rays, Landscape, Ground, Stand, Medallion, Title, Label, Item, Big, Tick, Cross, HeatWaves} from '../common';
 
 export const DUR = meta.frames / FPS;
 const NS = 'nose_w48', D = 'dog', SCI = 'scientist', YM = 'young_man';
@@ -18,7 +18,8 @@ export const SFX: [number, string, number][] = [...SC.slice(1, -1).map(([, a]): 
 export const Bg: React.FC<{id: string; T: number}> = ({id, T}) => {
   const rays = (angle: number) => <><Grad top="rgb(30,180,86)" bot="rgb(12,80,40)" /><Rays angle={angle} /><Ground /></>;
   switch (id) {
-    case 'hook': case 'loop': return rays((id === 'loop' ? T - DUR : T) * 0.1);
+    // portada: solo rayos (sin suelo). En la última escena Reel ya pasa T-DUR, así que el giro llega a 0 al cerrar el bucle.
+    case 'hook': case 'loop': return <><Grad top="rgb(30,180,86)" bot="rgb(12,80,40)" /><Rays angle={T * 0.1} /></>;
     case 'wake': return <Landscape sky="dawn" terrain="hills" T={T} seed={4} />;
     case 'food': return <><Grad top="rgb(30,150,80)" bot="rgb(14,76,44)" /><Card y={430} h={860} /></>;
     case 'dogm': return <Landscape sky="night" terrain="pines" T={T} seed={2} />;
@@ -70,8 +71,7 @@ export const Content: React.FC<{id: string; t: number; T: number}> = ({id, t, T}
     case 'hook': return <>
       <Big text="A DOG'S NOSE" y={250} size={165} t={9} col={ACC} />
       <Big text="for one day?" y={455} size={125} t={9} />
-      <Stand lib={NS} name="man_dog_nose" x={595} h={500} />
-      <Stand lib={D} name="curious" x={825} h={160} />
+      <Medallion lib={NS} name="man_dog_nose" x={600} y={920} d={540} />
     </>;
     case 'wake': return <>
       <Title k={k(0.05)} text="Good morning" y={290} />

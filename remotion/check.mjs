@@ -39,9 +39,14 @@ for (const f of frames) {
   }
   if (++done % 20 === 0) console.error(`  ${done}/${frames.length}`);
 }
+// bucle: el primer fotograma y los últimos tienen que ser idénticos (se comparan los PNG renderizados)
+const still = async (frame) => (await renderStill({composition: comp, serveUrl, frame, output: null, inputProps: {probe: false}, puppeteerInstance: browser, imageFormat: 'png', scale: 0.25})).buffer;
+const first = await still(0);
+for (const f of [N - 6, N - 1]) if (!first.equals(await still(f)))
+  found.set(`bucle|${f}`, {sev: 'FAIL', rule: 'bucle', a: `fotograma ${f}`, scene: 'loop', t0: f / FPS, t1: f / FPS, frame: f});
 await browser.close({silent: true});
 
-const RULES = {flota: 'personaje sin apoyar en el suelo', botones: 'bajo los botones de la app (x>900, y>900)', arriba: 'bajo la interfaz superior', abajo: 'bajo la descripción de la app', cortado: 'cortado por el borde', borde: 'pegado al borde',
+const RULES = {bucle: 'no es igual al primer fotograma', flota: 'personaje sin apoyar en el suelo', botones: 'bajo los botones de la app (x>900, y>900)', arriba: 'bajo la interfaz superior', abajo: 'bajo la descripción de la app', cortado: 'cortado por el borde', borde: 'pegado al borde',
   solape: 'dibujos que se superponen', solape_texto: 'texto tapado o tapando un dibujo', pegados: 'dibujos casi pegados (<20 px)'};
 const list = [...found.values()].sort((a, b) => a.t0 - b.t0 || (a.sev < b.sev ? -1 : 1));
 const fails = list.filter((x) => x.sev === 'FAIL');

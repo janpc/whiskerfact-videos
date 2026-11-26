@@ -65,6 +65,13 @@ export const HeatWaves: React.FC<{cx: number; y0: number; y1: number; T: number;
   </Svg>
 );
 
+// Busto (dibujo cortado por la cintura) dentro de un círculo: el corte queda tapado por el borde y se lee como retrato.
+export const Medallion: React.FC<{lib: string; name: string; x: number; y: number; d: number}> = ({lib, name, x, y, d}) => (
+  <div data-box="item" data-name={`medallion:${lib}/${name}`} style={{position: 'absolute', left: x - d / 2, top: y - d / 2, width: d, height: d, boxSizing: 'border-box', borderRadius: '50%', overflow: 'hidden', background: CREAM, border: `8px solid ${INK}`, boxShadow: '0 14px 0 rgba(0,0,0,0.25)'}}>
+    <Img src={staticFile(`spr/${lib}__${name}.png`)} style={{position: 'absolute', left: '50%', bottom: -14, height: d * 0.94, translate: '-50% 0'}} />
+  </div>
+);
+
 // ---------- texto ----------
 export const Title: React.FC<{k: number; text: string; color?: string; y?: number}> = ({k, text, color = TEXT, y = 360}) => (
   <div data-box="text" data-name={text} style={{position: 'absolute', left: 540, top: y + (1 - eo(k)) * 30, translate: '-50% 0', fontFamily: 'Londrina', fontSize: 94, lineHeight: 1.15, color, opacity: k, whiteSpace: 'nowrap', ...stroke(3)}}>{text}</div>

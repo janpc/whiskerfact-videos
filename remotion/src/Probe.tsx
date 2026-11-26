@@ -15,7 +15,7 @@ const OVERLAP_PX = 200;   // px² de solape visible que ya cuenta como fallo
 type Mask = {data: Uint8ClampedArray; w: number; h: number} | null;
 type Box = {kind: string; name: string; x0: number; y0: number; x1: number; y1: number; mask: Mask; rect: DOMRect; solid: boolean; air?: boolean};
 // personajes y objetos que tienen que apoyar en el suelo (si no están saltando)
-const GROUNDED = /^(dog|scientist|young_man|child_boy|child_girl|pilgrim_man|wampanoag_man|ancient_person|ancient_youth|early_human|astronaut|cow|mouse|monkey|woolly_mammoth)\/|\/(man_dog_nose|dog_sniffing|human_crawl_trail|lamp_post)$/;
+const GROUNDED = /^(dog|scientist|young_man|child_boy|child_girl|pilgrim_man|wampanoag_man|ancient_person|ancient_youth|early_human|astronaut|cow|mouse|monkey|woolly_mammoth)\/|\/(dog_sniffing|human_crawl_trail|lamp_post)$/;
 export type Issue = {sev: 'FAIL' | 'WARN'; rule: string; a: string; b?: string; box?: number[]; box2?: number[]};
 
 const maskCache = new Map<string, Mask>();
