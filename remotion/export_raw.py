@@ -23,16 +23,28 @@ for lib in a.libs.split(","):
         if f.endswith(".png") and not f.startswith("sheet"): shutil.copy(f"library/{lib}/{f}", f"{OUT}/spr/{lib}__{f}")
 shutil.copy("mascot/v3/base.png", f"{OUT}/cat/base.png"); shutil.copy("mascot/v3/eyes_03.png", f"{OUT}/cat/eyes_closed.png")
 shutil.copy(f"{D4}/eyes2_01.png", f"{OUT}/cat/eyes_curious.png")
-for k in ("closed", "mid", "wide", "round", "teeth", "laugh"): shutil.copy(f"{D4}/singles/mouth_{k}.png", f"{OUT}/cat/mouth_{k}.png")
+# bocas: una imagen ya ajustada por fonema (labio superior a la misma altura, línea de la nariz intacta); Remotion solo las superpone
+cat4 = M.Cat4()
+mouths4 = {k: cat4.mouth[k] for k in ("smile", "m", "a", "ah", "oo", "f", "slight", "e", "ee", "o")}
+# línea de la nariz limpia (la de "a") para las bocas que la traen cortada o con costura: oo, o y ah
+TOP = 687
+stem = mouths4["a"].copy(); stem.paste((0, 0, 0, 0), (0, 660, 1024, 1024))
+row = mouths4["a"].crop((0, 659, 1024, 660))                            # fila limpia de la línea, repetida hasta el labio
+for yy in range(660, TOP + 3): stem.paste(row, (0, yy), row)
+def on_stem(low, xy=(0, 0)):
+    im = stem.copy(); im.alpha_composite(low, xy); return im
+ah = mouths4["ah"].copy(); ah.paste((0, 0, 0, 0), (0, 0, 1024, TOP - 1)); mouths4["ah"] = on_stem(ah)
+rnd = cat4.mouth["oo"]; al = np.asarray(rnd)[..., 3] > 128
+ys = np.where(al.sum(1) > 24)[0]; ys = ys[ys > 640]                     # filas más anchas que la línea = el círculo
+y0, y1 = int(ys.min()) - 3, int(ys.max()) + 2; xs = np.where(al[y0 + 3:y1].any(0))[0]
+circle = rnd.crop((int(xs.min()) - 2, y0, int(xs.max()) + 3, y1))
+for k, sc in (("oo", 1.05), ("o", 1.55)):
+    c = circle.resize((round(circle.width * sc), round(circle.height * sc)))
+    mouths4[k] = on_stem(c, (528 - c.width // 2, TOP - 1))
+for k, im in mouths4.items(): im.save(f"{OUT}/cat/mouth_{k}.png")
 for p in ("stand_front", "explain"): shutil.copy(f"{D4}/body_{p}.png", f"{OUT}/cat/body_{p}.png")
 shutil.copy(f"{D4}/fonts/LondrinaSolid-Regular.ttf", f"{OUT}/fonts/Londrina.ttf")
 for f in ("Black", "ExtraBold"): shutil.copy(f"/usr/share/fonts/opentype/inter/Inter-{f}.otf", f"{OUT}/fonts/Inter-{f}.otf")
-TOP = 687; info = {}
-for k in ("closed", "mid", "wide", "round", "teeth", "laugh"):
-    im = np.asarray(Image.open(f"{OUT}/cat/mouth_{k}.png").convert("RGBA"))[..., 3] > 128; im[:, 500:560] = False; im[:645] = False
-    ys = np.where(im.any(1))[0]; info[k] = TOP - int(ys.min()) if len(ys) else 0
-info["round"] = 14   # corregido a mano (19/11): la boca redonda queda pegada a la nariz
-json.dump(info, open(f"{OUT}/cat/mouth_dy.json", "w"))
 def wav(name, x):
     x = np.asarray(x, np.float32); x = x / (np.max(np.abs(x)) or 1) * 0.9
     with wave.open(f"{OUT}/sfx/{name}.wav", "wb") as w:

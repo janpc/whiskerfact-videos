@@ -34,7 +34,7 @@ Sí puedes usar: el guion, la voz, la música, los tiempos de palabras, `factory
 8. **Notificar:** una notificación de máximo 4 líneas en español: título del reel, duración, tiempo de render, y 1-2 defectos que veas tú mismo (solapes, bocas, bucle). El enlace es `https://raw.githubusercontent.com/janpc/whiskerfact-videos/main/remotion/renders/<fichero>`.
 
 ## Lo aprendido (19-21/11/2026)
-- Cada boca se alinea con su borde superior bajo la nariz y se escala desde ahí; la máscara del cuello solo afecta a la cabeza (no a la boca). La boca ancha (`ah`) se acorta a 0,72 y la redonda se agranda poco.
+- **Bocas:** `export_raw.py` genera una imagen ya ajustada por fonema (`public/cat/mouth_<fonema>.png`: labio superior a la misma altura y una sola línea de nariz continua) y `Cat.tsx` solo la superpone. No mover ni escalar bocas en Remotion (mover la imagen entera duplicaba la nariz, 26/11). La máscara del cuello no afecta a la boca. Tras tocarlas, mirar `CatTest`.
 - El render completo tarda ≈ 4-5 min con 2 CPU. El audio sale a ≈ −20 LUFS y se sube a −15 con `loudnorm` tras el render.
 - Fallos conocidos de la plantilla: grano y contorno simples; el gato queda algo más blando que en Python.
 
