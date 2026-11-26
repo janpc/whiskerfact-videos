@@ -2,6 +2,9 @@
 
 Cada noche, DESPUÉS de que `FACTORY.md` haya publicado el reel con Python, una segunda tarea hace **la misma pieza otra vez con Remotion**, solo para compararlas. **No publica nada, no gasta créditos de ElevenLabs y no toca `factory/*.py`, `videos/*.mp4` anteriores ni `log/`.** Python sigue siendo el motor principal y el respaldo.
 
+## Gato: cambios de pose
+Corte seco con un saltito (`Reel.tsx`); nunca fundido entre dos poses, porque el gato se transparenta y parece que desaparece (26/11).
+
 ## Regla de oro: la versión Remotion no puede «ver» la de Python
 Parte de los mismos materiales de origen y diseña las escenas por su cuenta. Está **prohibido** abrir, leer o mirar:
 - `factory/<slug>.py`, `factory/<slug>_v4.py` y cualquier otro script de escenas de `factory/*.py` (salvo `mascot.py`, `sfx.py`, `library.py` para el exportador);

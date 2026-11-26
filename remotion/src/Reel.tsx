@@ -35,8 +35,9 @@ export const Reel: React.FC = () => {
       {last && <div style={{position: 'absolute', inset: 0, opacity: 1 - fadeEnd}}><Content id={SC[0][0]} t={0} T={0} /></div>}
       {hasCat && <>
         <div data-box="cat" data-name="cat" style={{position: 'absolute', left: 40, top: 1236, width: 420, height: 684, visibility: 'hidden'}} />
-        <Cat T={T} x={-20} y={1236} pose="stand_front" o={1 - swap} curious={CURIOUS.has(id) || (last && T > DUR - 0.4)} />
-        <Cat T={T} x={-20} y={1236} pose="explain" o={swap} curious={CURIOUS.has(id) || (last && T > DUR - 0.4)} />
+        {/* cambio de pose: corte seco con un saltito. Nunca fundir dos poses: a media transición el gato se transparenta (destello) */}
+        {['stand_front', 'explain'].map((p) => <Cat key={p} T={T} x={-20} y={1236 - 14 * Math.sin(Math.PI * swap)} pose={p}
+          o={(swap >= 0.5) === (p === 'explain') ? 1 : 0} curious={CURIOUS.has(id) || (last && T > DUR - 0.4)} />)}
       </>}
       <Subs T={T} narrow={hasCat} />
       <Grain frame={isLastFrame ? 0 : frame} />
