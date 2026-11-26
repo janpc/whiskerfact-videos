@@ -18,7 +18,8 @@ export const Cat: React.FC<{T: number; x: number; y: number; k?: number; pose?: 
     // lienzo 1400x1900; cabeza 1024x1024 en (188,0)
     const head = (
       <div style={{position: 'absolute', left: 188, top: 0, width: 1024, height: 1024}}>
-        <div style={{position: 'absolute', inset: 0}}>
+        {/* la máscara del cuello es obligatoria: sin ella la base tapa la ropa del cuerpo */}
+        <div style={{position: 'absolute', inset: 0, WebkitMaskImage: 'linear-gradient(to bottom, #000 0, #000 790px, transparent 835px)'}}>
           <Img src={staticFile('cat/base.png')} style={{position: 'absolute', inset: 0, width: 1024, height: 1024}} />
         </div>
         {eyes && <Img src={staticFile(`cat/eyes_${eyes}.png`)} style={{position: 'absolute', inset: 0, width: 1024, height: 1024}} />}
