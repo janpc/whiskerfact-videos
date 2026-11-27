@@ -14,12 +14,17 @@ EXTRA_PHONES = {   # pronunciaciones de nombres propios que no están en cmudict
     "venus's": "V IY N AH S IH Z",
     "wampanoag": "W AA M P AH N OW AE G", "massasoit": "M AE S AH S OY T", "massasoit's": "M AE S AH S OY T S",
     "wildfowl": "W AY L D F AW L", "winslow": "W IH N Z L OW",
+    "n321": "TH R IY HH AH N D R AH D T W EH N T IY W AH N", "n1793": "S EH V AH N T IY N N AY N T IY TH R IY",
+    "n1806": "EY T IY N OW S IH K S", "tenday": "T EH N D EY", "eightday": "EY T D EY", "tenhour": "T EH N AW ER",
+    "skywatchers": "S K AY W AA CH ER Z", "martes": "M AA R T EH S", "viernes": "V Y EH R N EH S",
 }
 LETTER = {"a": "AE", "b": "B", "c": "K", "d": "D", "e": "EH", "f": "F", "g": "G", "h": "HH", "i": "IH", "j": "JH", "k": "K",
           "l": "L", "m": "M", "n": "N", "o": "AA", "p": "P", "q": "K", "r": "R", "s": "S", "t": "T", "u": "AH", "v": "V",
           "w": "W", "x": "K S", "y": "Y", "z": "Z"}
 
 def norm(w):
+    d = re.sub(r"[^0-9]", "", w)
+    if d and d == re.sub(r"[^0-9a-z]", "", w.lower()): return "n" + d      # número suelto (321, 1793): pronunciación en EXTRA_PHONES
     return re.sub(r"[^a-z']", "", w.lower().replace("’", "'"))
 
 def align(mp3, text):
