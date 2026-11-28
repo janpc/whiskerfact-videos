@@ -113,7 +113,7 @@ SKY_ITEMS = [("moon_items", "sun", 210, "Sun.", "DAY"), ("moon_items", "moon_nea
 def _(img, T, t, s, e):
     a = win(T, s, e)
     for lib, name, x, w, label in SKY_ITEMS:
-        tw = wt(w, s) - 0.35
+        tw = min(wt(w, s) - 0.35, e - 2.0)
         k = clamp((T - tw) / 0.35)
         if k <= 0: continue
         sq = 1 + 0.04 * math.sin(clamp((T - tw - 0.2) / 0.4) * math.pi)
@@ -151,7 +151,7 @@ def _(img, T, t, s, e):
     sq = 1 + 0.04 * math.sin(clamp((T - s - 0.7) / 0.4) * math.pi)
     item(img, WK, "clay_tablet", 160, lerp(1400, 1255, eo(kt)), 180 * sq, a=a * kt)
     item(img, "ancient_person", "think", 790, 1350, 470, a=a, anchor="bottom")
-    lab(img, "Ancient Babylon", 790, YELLOW, a * on(T, "Babylon", s, e, need=1.6), x=440)
+    lab(img, "Ancient Babylon", 790, YELLOW, a * on(T, "Babylon", s, e, need=2.1), x=440)
     R.chrome(img, T)
     title(img, T, s, e, "Roots: Babylon")
     return R.punch(img, T, tb, amt=0.04)
@@ -178,7 +178,7 @@ def _(img, T, t, s, e):
         for i, fx in enumerate(LIGHT_FX):
             if i == 0: ti = t_sun
             elif i == 1: ti = t_moon
-            else: ti = lerp(t_five, t_eye, (i - 2) / 4)
+            else: ti = min(lerp(t_five, min(t_eye, t_five + 0.8), (i - 2) / 4), e - 2.0)
             kn = clamp((T - ti + 0.1) / 0.25)
             if kn > 0:
                 lab(img, str(i + 1), int(cy - h / 2 - 90 - 14 * (1 - eo(kn))), YELLOW, a * kn, x=cx - w / 2 + fx * w)
@@ -284,12 +284,12 @@ def _(img, T, t, s, e):
     k0 = eo((T - s) / 0.4)
     item(img, WK, "seven_lights", 470, 860 - 20 * (1 - k0), 86, a=a * (1 - 0.5 * clamp((T - wt("Saturday", s) + 0.2) / 0.4)))
     for lib, name, x, h, w, label in NAME_ITEMS:
-        tw = wt(w, s) - 0.1
+        tw = min(wt(w, s) - 0.4, e - 2.1)
         k = clamp((T - tw) / 0.3)
         if k <= 0: continue
         item(img, lib, name, x, lerp(1100, 1060, eo(k)), h * 1.2 * (0.9 + 0.1 * eo(k)), a=a * k)
         hot = clamp((T - tw) / 0.2) * clamp((tw + 1.2 - T) / 0.3)
-        lab(img, label, 1215, RED_T if hot > 0.5 else INK_T, a * k, x=x)
+        lab(img, label, 1215, YELLOW if hot > 0.5 else B.TEXT, a * k, x=x)
     R.chrome(img, T)
     title(img, T, s, e, "Names from the sky")
 V.backdrop("names")(lambda img, T, t: ST.card(img, CARD))
@@ -298,12 +298,12 @@ V.sounds("names", [(rel("names", w) - 0.1, "pop", 0.7) for _, _, _, _, w, _ in N
 @V.scene("spanish")
 def _(img, T, t, s, e):
     a = win(T, s, e)
-    tm, tv = s + 0.6, wt("viernes", s)
+    tm, tv = s + 0.6, min(wt("viernes", s), e - 2.2)
     km = eo((T - tm + 0.2) / 0.4); kv = eo((T - tv + 0.2) / 0.4)
     item(img, WK, "mars", lerp(60, 260, km), 1020, 340, a=a * clamp(km * 2), rot=4 * T)
     item(img, WK, "venus", lerp(900, 680, kv), 1020, 340, a=a * clamp(kv * 2), rot=-4 * T)
     lab(img, "Martes: Mars", 1215, YELLOW, a * on(T, "martes", s, e, need=2.5), x=260)
-    lab(img, "Viernes: Venus", 1215, YELLOW, a * on(T, "viernes", s, e, need=1.6), x=680)
+    lab(img, "Viernes: Venus", 1215, YELLOW, a * on(T, "viernes", s, e, need=2.1), x=680)
     R.chrome(img, T)
     title(img, T, s, e, "In Spanish")
 V.backdrop("spanish")(lambda img, T, t: (ST.sky(img, (20, 52, 92), (12, 24, 52)), ST.stars(img, T, n=60, seed=21, y1=H)))
@@ -371,7 +371,7 @@ def _(img, T, t, s, e):
     kf = clamp((T - wt("faded", s) + 0.1) / 0.6)
     item(img, WK, "revolution_calendar", cx, cy, h, a=a * (1 - 0.35 * kf))
     cross(img, cx, cy, 180, clamp((T - tn) / 0.4), a)
-    num(img, "1806", 770, YELLOW, a * clamp((T - wt("1806", s) + 0.1) / 0.3), x=cx)
+    num(img, "1806", 770, YELLOW, a * clamp((T - min(wt("1806", s), e - 1.8) + 0.1) / 0.3), x=cx)
     lab(img, "Calendar ended", 1340, YELLOW, a * on(T, "ended", s, e, need=2.0), x=cx)
     R.chrome(img, T)
     title(img, T, s, e, "Back to seven")
@@ -384,7 +384,7 @@ def _(img, T, t, s, e):
     a = win(T, s, e)
     k = eo((T - s) / 0.5)
     item(img, WK, "weekend_hammock", 620, 1180 + 20 * (1 - k), 420, a=a, anchor="bottom", rot=1.2 * math.sin(T * 1.6))
-    lab(img, "An old habit", 790, YELLOW, a * on(T, "habit", s, e, need=1.6), x=560)
+    lab(img, "An old habit", 790, YELLOW, a * on(T, "habit", s, e, need=2.1), x=560)
     R.chrome(img, T)
     title(img, T, s, e, "Human-made")
 V.backdrop("habit")(lambda img, T, t: ST.landscape(img, T, sky_kind="sunset", terrain="waves", seed=12))
