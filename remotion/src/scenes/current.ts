@@ -1,1 +1,1 @@
-export * from './dog_nose';
+export * from './week_7_days';
