@@ -1000,5 +1000,84 @@
    "instagram": "sent https://www.instagram.com/reel/DgN3HHYygs_/",
    "youtube": "sent https://www.youtube.com/shorts/CNncIkcPA6I"
   }
+ },
+ {
+  "date": "2026-11-28",
+  "category": "history",
+  "slug": "week_7_days",
+  "title": "Why does a week have seven days?",
+  "hook": "Why does a week have seven days?",
+  "scheduled": "2026-11-28T20:30:00+01:00",
+  "buffer_post_ids": {
+   "tiktok": "6b0a267eeada83daa6b1d16c",
+   "instagram": "6b0a267e2a2e4f66cae8b68e",
+   "youtube": "6b0a267feab081a3f50f0dd3"
+  },
+  "video": "videos/2026-11-28_week_7_days.mp4",
+  "cover": "videos/2026-11-28_week_7_days_cover.png",
+  "duration_s": 80.0,
+  "sources": [
+   "https://theconversation.com/why-are-there-seven-days-in-a-week-128761",
+   "https://www.thecollector.com/why-do-we-follow-a-seven-day-week",
+   "https://www.timeanddate.com/calendar/days/7-days-week.html",
+   "https://www.livescience.com/45432-days-of-the-week.html",
+   "https://en.wikipedia.org/wiki/Nundinae",
+   "https://imperiumromanum.pl/en/curiosities/sunday-is-day-off-from-work",
+   "https://www.almanac.com/origin-day-names",
+   "https://www.merriam-webster.com/wordplay/etymologies-for-every-day-of-the-week",
+   "https://www.worldhistory.org/French_Republican_Calendar/",
+   "https://www.webexhibits.org/calendars/calendar-french.html",
+   "https://francetoday.com/learn/the-french-revolutionary-calendar/"
+  ],
+  "qa": {
+   "fails": 0,
+   "warns": 0
+  },
+  "variants": {
+   "time_slot": "20:30",
+   "hook_style": "question",
+   "caption_style": "teaser",
+   "format": "explainer",
+   "personality": "light",
+   "cta": "👇 Tag someone who needs to know this.",
+   "closing": "loop (real_life)",
+   "tiktok_mode": "api",
+   "look": {
+    "skies": [
+     "day",
+     "night",
+     "sunset",
+     "dusk"
+    ],
+    "terrains": [
+     "dunes",
+     "hills",
+     "city",
+     "waves"
+    ],
+    "wow": [
+     "swirl"
+    ],
+    "card": true
+   },
+   "share_ask": "caption",
+   "length": "standard",
+   "experiment": {
+    "batch": "B2-length",
+    "test": "length",
+    "option": "standard",
+    "role": "base"
+   },
+   "loop_join": "Enjoy your weekend, which brings us back to the question: why does a week have seven days?",
+   "slop_check": "notas finales: gancho 7, legibilidad 8, movimiento 7, variedad 8, marca 8, sincronía 7. 'No' en la hoja: 0. Cambios: sprites ampliados (calendarios, zigurat, moneda, Marte/Venus); fila de siete astros al inicio de 'names' y Marte entrando desde el principio de 'spanish' (había tarjeta vacía); números 8/7 separados de los dibujos y etiquetas fuera de la zona de botones; etiquetas sostenidas ≥1,5 s tras el QA",
+   "music_style": "light documentary-history ~100 BPM, plucked lute/harp, frame drum, low strings, glockenspiel",
+   "quality_changes": [
+    "first_second_rule",
+    "share_rule",
+    "niche_hashtags"
+   ],
+   "engine": "python"
+  },
+  "note": "Ejecución nocturna automática. Plan semanal (explainer, history) con guion visual (storyboard). Guion 205 palabras (standard); revisor independiente: 3 puntos corregidos (origen babilonio presentado como seguro -> 'Many historians trace its roots'; 'phases change' -> 'main phases come roughly'; 1806: Napoleon no lo dejó por la impopularidad y la semana de 10 días ya había caído en 1802 -> frase separada 'The ten-day week faded, and Napoleon ended the whole calendar in 1806'); segunda pasada sin puntos. Añadida la semana judía (no estaba en el storyboard; escena con wall_calendar y columna 7 resaltada, sin ilustración nueva). Cortado del storyboard: tablillas de arcilla como dato (sin fuente doble; la tablilla queda solo como dibujo). Voz descargada sin problemas de elevenlabsusercontent.com. align.py ahora alinea números sueltos (321, 1793, 1806). Portada = fotograma 0; último fotograma = primero (dif. media 2,0). QA 0 fallos, 0 avisos."
  }
 ]
