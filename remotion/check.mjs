@@ -1,4 +1,4 @@
-// Comprobador de diseño de la versión Remotion (equivale a la parte de texto/solapes/botones de factory/qa.py).
+// Comprobador de diseño de la versión Remotion (texto, solapes, zona de botones, apoyo en el suelo y bucle).
 //   cd remotion && node check.mjs [--step 0.5] [--overlay out/check]   (usa /usr/bin/google-chrome si existe)
 // Renderiza fotogramas sueltos con inputProps {probe:true}; src/Probe.tsx mide las cajas reales en el navegador y las
 // reglas son las de factory/brand.py (RAIL_TOP/SAFE_RIGHT_LOW = 900, SAFE_TOP). Sale con código 1 si hay algún FALLO.
@@ -23,11 +23,13 @@ if (overlayDir) fs.mkdirSync(overlayDir, {recursive: true});
 const found = new Map();   // clave -> {sev, rule, a, b, scene, t0, t1}
 const frames = []; for (let t = 0.2; t < N / FPS - 0.5; t += step) frames.push(Math.round(t * FPS));
 let done = 0;
+const textSeen = new Map();   // texto -> {n, t0, scene}
 for (const f of frames) {
   let got = null;
   await renderStill({composition: comp, serveUrl, frame: f, output: overlayDir ? null : null, inputProps: {probe: true}, puppeteerInstance: browser, imageFormat: 'jpeg', scale: 0.2,
     onBrowserLog: (l) => { if (l.text.startsWith('PROBE ')) got = JSON.parse(l.text.slice(6)); }});
   if (!got) { console.error(`sin datos del comprobador en el fotograma ${f}`); process.exit(2); }
+  for (const x of got.texts ?? []) { const c = textSeen.get(x) ?? {n: 0, t0: f / FPS, scene: got.id}; c.n++; textSeen.set(x, c); }
   for (const s of got.issues) {
     const k = `${got.id}|${s.rule}|${s.a}|${s.b ?? ''}`;
     const cur = found.get(k) ?? {...s, scene: got.id, t0: f / FPS, t1: f / FPS, frame: f}; cur.t1 = f / FPS;
@@ -44,9 +46,11 @@ const still = async (frame) => (await renderStill({composition: comp, serveUrl, 
 const first = await still(0);
 for (const f of [N - 6, N - 1]) if (!first.equals(await still(f)))
   found.set(`bucle|${f}`, {sev: 'FAIL', rule: 'bucle', a: `fotograma ${f}`, scene: 'loop', t0: f / FPS, t1: f / FPS, frame: f});
+for (const [x, c] of textSeen) if (c.n * step < 1.5)
+  found.set(`breve|${x}`, {sev: 'WARN', rule: 'breve', a: x, scene: c.scene, t0: c.t0, t1: c.t0 + c.n * step, frame: Math.round(c.t0 * FPS)});
 await browser.close({silent: true});
 
-const RULES = {bucle: 'no es igual al primer fotograma', flota: 'personaje sin apoyar en el suelo', botones: 'bajo los botones de la app (x>900, y>900)', arriba: 'bajo la interfaz superior', abajo: 'bajo la descripción de la app', cortado: 'cortado por el borde', borde: 'pegado al borde',
+const RULES = {breve: 'texto menos de 1,5 s en pantalla', bucle: 'no es igual al primer fotograma', flota: 'personaje sin apoyar en el suelo', botones: 'bajo los botones de la app (x>900, y>900)', arriba: 'bajo la interfaz superior', abajo: 'bajo la descripción de la app', cortado: 'cortado por el borde', borde: 'pegado al borde',
   solape: 'dibujos que se superponen', solape_texto: 'texto tapado o tapando un dibujo', pegados: 'dibujos casi pegados (<20 px)'};
 const list = [...found.values()].sort((a, b) => a.t0 - b.t0 || (a.sev < b.sev ? -1 : 1));
 const fails = list.filter((x) => x.sev === 'FAIL');

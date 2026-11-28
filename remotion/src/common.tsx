@@ -184,3 +184,26 @@ export const Tick: React.FC<{x: number; y: number; a: number; r?: number}> = ({x
 export const Cross: React.FC<{x: number; y: number; a: number; r?: number}> = ({x, y, a, r = 46}) => (
   <Svg a={a}><circle data-box="mark" data-name="cross" cx={x} cy={y} r={r} fill={RED} stroke={INK} strokeWidth={6} /><path d={`M${x - r * 0.38},${y - r * 0.38} L${x + r * 0.38},${y + r * 0.38} M${x + r * 0.38},${y - r * 0.38} L${x - r * 0.38},${y + r * 0.38}`} stroke="#fff" strokeWidth={r * 0.2} strokeLinecap="round" /></Svg>
 );
+
+// ---------- portada del canal (plantilla A «rayos»): la escena del gancho de TODOS los reels; el fotograma 0 es la miniatura ----------
+export const CATEGORIES = {
+  science: ['SCIENCE', [59, 130, 246]], nature: ['NATURE', [34, 197, 94]], history: ['HISTORY', [249, 115, 22]],
+  body: ['BODY', [239, 68, 68]], space: ['SPACE', [139, 92, 246]], tech: ['TECH', [250, 204, 21]],
+} as const;
+export type Category = keyof typeof CATEGORIES;
+export const CoverBg: React.FC<{cat: Category; angle: number}> = ({cat, angle}) => {
+  const c = CATEGORIES[cat][1], col = (k: number) => `rgb(${c.map((v) => Math.round(v * k)).join(',')})`;
+  return <><Grad top={col(0.95)} bot={col(0.42)} /><div style={{position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 470px 390px at 540px 1080px, rgba(255,255,255,0.28), transparent)'}} /><Rays angle={angle} /></>;
+};
+// line1/line2: título corto (máx. ≈9 caracteres por línea); sub: la pregunta del gancho. La ilustración va entre y=860 y 1300.
+export const CoverTitle: React.FC<{cat: Category; line1: string; line2: string; sub?: string}> = ({cat, line1, line2, sub}) => {
+  const big: React.CSSProperties = {fontFamily: 'InterBlack', fontSize: 150, lineHeight: '170px', textTransform: 'uppercase', ...stroke(6)};
+  return <>
+    <div data-box="text" data-name="brand" style={{position: 'absolute', left: 90, top: 266, lineHeight: '50px', fontFamily: 'InterXB', fontSize: 38, color: GOLD, whiteSpace: 'nowrap', ...stroke(2)}}>MR. WHISKERFACT</div>
+    <div data-box="text" data-name="category" style={{position: 'absolute', right: 90, top: 266, lineHeight: '40px', padding: '0 22px', borderRadius: 25, background: '#fff', border: `5px solid ${INK}`, fontFamily: 'InterBlack', fontSize: 34, color: INK}}>{CATEGORIES[cat][0]}</div>
+    <div data-box="text" data-name={`${line1} ${line2}`} style={{position: 'absolute', left: 540, top: 385, translate: '-50% 0', textAlign: 'center', whiteSpace: 'nowrap'}}>
+      <div style={{...big, color: '#fff'}}>{line1}</div><div style={{...big, color: 'rgb(255,222,90)'}}>{line2}</div>
+    </div>
+    {sub && <div data-box="text" data-name={sub} style={{position: 'absolute', left: 540, top: 745, translate: '-50% 0', fontFamily: 'InterXB', fontSize: 66, lineHeight: '90px', color: '#fff', whiteSpace: 'nowrap', ...stroke(4)}}>{sub}</div>}
+  </>;
+};

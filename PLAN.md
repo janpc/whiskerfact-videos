@@ -20,3 +20,5 @@ Goal: decide the reels of the coming week in advance, so the owner can generate 
 7. **Notification in Spanish, at most 7 lines:** the week's dates and topics in one line each, then one line "Experimento: <variable>, <opción> en <fechas> (se mide a 7 días)" (or "Sin experimento esta semana"), then "Falta por generar: X, Y" listing characters, objects and illustrations (or "No falta nada"), marking with "(GRANDE)" every item of step 4b that needs the 2x2 big sheet and adding the words "hojas grandes 2x2" if there is any, then "Los prompts están en growth/week_prompts.md o pídemelos en el chat." Never generate images yourself and never spend ElevenLabs credits.
 
 Copy-paste format for `week_prompts.md`: one block per sheet, starting with which images to attach (`STYLE_REF.png`, plus the character's movement sheet when it is an acting sheet), then the full prompt text.
+
+**Motor Remotion (28/11/2026):** los guiones visuales describen escenas para `remotion/` (componentes de `remotion/src/common.tsx`); no hay código de escenas en Python. El gancho usa la plantilla de portada (`CoverBg` + `CoverTitle`).

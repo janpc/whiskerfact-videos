@@ -119,7 +119,8 @@ export const Probe: React.FC<{id: string}> = ({id}) => {
       await Promise.all([...document.images].map((im) => im.decode().catch(() => undefined)));
       await new Promise((r) => setTimeout(r, 120));
       const res = analyse(collect());
-      console.log('PROBE ' + JSON.stringify({id, issues: res}));
+      const texts = [...document.querySelectorAll('[data-box="text"]')].filter((e) => opacityOf(e) >= 0.6).map((e) => e.getAttribute('data-name'));
+      console.log('PROBE ' + JSON.stringify({id, issues: res, texts}));
       setIss(res);
       setTimeout(() => continueRender(h), 60);
     })();

@@ -48,3 +48,5 @@ It never changes the brand rules (`factory/brand.py`) or the run book's quality 
   - what changed in the tests
   - one suggestion for the owner, if any
 - If no videos are old enough or Metricool returns no data yet, say so in one line and change nothing.
+
+**Motor (28/11/2026):** desde el 29/11 todos los reels son de Remotion (`variants.engine: remotion`; el del 26/11 también). Tenerlo en cuenta al comparar con los anteriores. Las referencias a `factory/brand.py` valen como constantes de marca.

@@ -3,7 +3,6 @@
 import path from 'node:path'; import fs from 'node:fs'; import {execFileSync} from 'node:child_process';
 import {bundle} from '@remotion/bundler'; import {openBrowser, selectComposition, renderStill} from '@remotion/renderer';
 const out = process.argv[2] ?? 'out/sheet.jpg'; const meta = JSON.parse(fs.readFileSync('public/meta.json', 'utf8'));
-const src = fs.readFileSync('src/scenes/lightning_vs_sun.tsx', 'utf8');
 const chrome = fs.existsSync('/usr/bin/google-chrome') ? {browserExecutable: '/usr/bin/google-chrome', chromeMode: 'chrome-for-testing'} : {};
 const serveUrl = await bundle({entryPoint: path.resolve('src/index.ts')}); const browser = await openBrowser('chrome', chrome);
 const comp = await selectComposition({serveUrl, id: 'Reel', inputProps: {probe: true}, puppeteerInstance: browser});
